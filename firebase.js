@@ -10,23 +10,31 @@
     measurementId: "G-XNM9BJZ3F7"
   };
 
+firebase.initializeApp(firebaseConfig);
+
+// Get references to auth and firestore
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+
+
+
 
 
 // Check if Firebase is already loaded and Firestore is available
 if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function') {
-    // Initialize Firebase and get a reference to the Firestore database
+/*    // Initialize Firebase and get a reference to the Firestore database
     firebase.initializeApp(firebaseConfig);
     const firestore = firebase.firestore();
 
     // Access the necessary Firebase functions
     const auth = firebase.auth();
     const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-    const FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
     const createUserWithEmailAndPassword = firebase.auth().createUserWithEmailAndPassword;
     const signInWithPopup = firebase.auth().signInWithPopup;
 
     // Enable Firestore offline persistence if needed
-    /*if (firebase.firestore().enablePersistence) {
+    if (firebase.firestore().enablePersistence) {
         firebase.firestore().enablePersistence({ synchronizeTabs: false })
             .catch((err) => {
                 console.error("Error enabling Firestore offline persistence:", err);
@@ -37,7 +45,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
 } else {
     // If Firebase scripts are not loaded, dynamically load them
     console.log('Firebase scripts not found.');
-
+/*
     const firebaseAppScript = document.createElement('script');
     firebaseAppScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
 
@@ -51,7 +59,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
     document.head.appendChild(firebaseAppScript);
     document.head.appendChild(firestoreScript);
     document.head.appendChild(firebaseAuthScript);
-
+*/
     // You may also want to listen for the 'load' event on these scripts
     // before initializing Firebase to ensure they are fully loaded.
 }
