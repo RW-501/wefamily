@@ -1,9 +1,5 @@
 // firebase.js
 
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/firestore';
-
   const firebaseConfig = {
     apiKey: "AIzaSyCt2g6HmhffcrVvsH3urZynlJq_fLL0_A8",
     authDomain: "wefamily-44c0b.firebaseapp.com",
@@ -14,7 +10,49 @@ import 'firebase/firestore';
     measurementId: "G-XNM9BJZ3F7"
   };
 
-firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+
+// Check if Firebase is already loaded and Firestore is available
+if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function') {
+    // Initialize Firebase and get a reference to the Firestore database
+    firebase.initializeApp(firebaseConfig);
+    const firestore = firebase.firestore();
+
+    // Access the necessary Firebase functions
+    const auth = firebase.auth();
+    const GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+    const FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
+    const createUserWithEmailAndPassword = firebase.auth().createUserWithEmailAndPassword;
+    const signInWithPopup = firebase.auth().signInWithPopup;
+
+    // Enable Firestore offline persistence if needed
+    /*if (firebase.firestore().enablePersistence) {
+        firebase.firestore().enablePersistence({ synchronizeTabs: false })
+            .catch((err) => {
+                console.error("Error enabling Firestore offline persistence:", err);
+            });
+    }*/
+
+    console.log('Firebase found.');
+} else {
+    // If Firebase scripts are not loaded, dynamically load them
+    console.log('Firebase scripts not found.');
+
+    const firebaseAppScript = document.createElement('script');
+    firebaseAppScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js';
+
+    const firestoreScript = document.createElement('script');
+    firestoreScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js';
+
+    const firebaseAuthScript = document.createElement('script');
+    firebaseAuthScript.src = 'https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js';
+
+    // Append the script elements to the document's head
+    document.head.appendChild(firebaseAppScript);
+    document.head.appendChild(firestoreScript);
+    document.head.appendChild(firebaseAuthScript);
+
+    // You may also want to listen for the 'load' event on these scripts
+    // before initializing Firebase to ensure they are fully loaded.
+}
+
