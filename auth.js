@@ -1,5 +1,5 @@
 // Function to log in with email and password
-export const loginWithEmailPassword = async (email, password) => {
+ const loginWithEmailPassword = async (email, password) => {
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
     return true;
@@ -10,7 +10,7 @@ export const loginWithEmailPassword = async (email, password) => {
 };
 
 // Function to log out the user
-export const logout = async () => {
+ const logout = async () => {
   try {
     await firebase.auth().signOut();
   } catch (error) {
@@ -19,7 +19,7 @@ export const logout = async () => {
 };
 
 // Function to register a new user with email and password
-export const registerWithEmailPassword = async (email, password) => {
+ const registerWithEmailPassword = async (email, password) => {
   try {
     const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
     // Create a user document in Firestore
