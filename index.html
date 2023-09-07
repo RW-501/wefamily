@@ -16,7 +16,9 @@
                 <h3>Login</h3>
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
-                <button onclick="login()">Login</button>
+                <button onclick="loginWithEmailPassword()">Login with Email</button>
+                <button onclick="loginWithPhone()">Login with Phone</button>
+                <button onclick="loginAnonymously()">Login Anonymously</button>
             </div>
             <div id="register-form">
                 <h3>Register</h3>
@@ -28,17 +30,91 @@
     </div>
     <script>
         // JavaScript functions for login and registration
-        function login() {
-            const email = document.getElementById("login-email").value;
-            const password = document.getElementById("login-password").value;
-            loginWithEmailPassword(email, password);
-        }
+     async function loginWithEmailPassword(email, password) {
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+        // Save login status to local storage
+        localStorage.setItem('userLoggedIn', 'true');
+        return true;
+    } catch (error) {
+        console.error('Login failed:', error.message);
+        return false;
+    }
+}
 
-        function register() {
-            const email = document.getElementById("register-email").value;
-            const password = document.getElementById("register-password").value;
-            registerWithEmailPassword(email, password);
-        }
+// Function to log in with phone (Note: Implement Firebase phone login pop-up)
+function loginWithPhone() {
+    // Get the user's phone number from user input (you can add input fields for phone number)
+    const phoneNumber = '+1234567890'; // Replace with actual phone number
+
+    // Create a Recaptcha verifier for phone number verification
+    const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        size: 'invisible',
+    });
+
+    // Send the verification code to the user's phone
+    auth.signInWithPhoneNumber(phoneNumber, recaptcha)
+        .then((confirmationResult) => {
+            // The SMS verification code has been sent to the user's phone
+            // Implement UI to allow the user to enter the code and confirm their phone number
+            const verificationCode = prompt('Enter the verification code sent to your phone:');
+            return confirmationResult.confirm(verificationCode);
+        })
+        .then((userCredential) => {
+            // Phone number authentication successful, you can now save login status to local storage
+            localStorage.setItem('userLoggedIn', 'true');
+            // Create a user document in Firestore (if needed)
+            const user = userCredential.user;
+            firestore.collection('users').doc(user.uid).set({
+                phoneNumber: user.phoneNumber,
+                // Add more user-related data here
+            });
+        })
+        .catch((error) => {
+            console.error('Phone login failed:', error.message);
+        });
+}
+
+
+// Function to log in anonymously
+async function loginAnonymously() {
+    try {
+        await auth.signInAnonymously();
+        // Save login status to local storage
+        localStorage.setItem('userLoggedIn', 'true');
+        return true;
+    } catch (error) {
+        console.error('Anonymous login failed:', error.message);
+        return false;
+    }
+}
+
+// Function to register a new user with email and password
+async function registerWithEmailPassword(email, password) {
+    try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        // Save login status to local storage
+        localStorage.setItem('userLoggedIn', 'true');
+        // Create a user document in Firestore
+        await firestore.collection('users').doc(userCredential.user.uid).set({
+            email: email,
+            // Add more user-related data here
+        });
+        return true;
+    } catch (error) {
+        console.error('Registration failed:', error.message);
+        return false;
+    }
+}
+
+// Function to check if a user is logged in
+export const checkUserLogin = () => {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+    if (userLoggedIn === 'true') {
+        return auth.currentUser;
+    }
+    return null;
+};
     </script>
 </body>
 </html>
