@@ -37,7 +37,7 @@
             cursor: pointer;
         }
 
-        #login-form, #register-form {
+        #login-form, #register-form #phone-form{
             display: none;
         }
 
@@ -45,13 +45,14 @@
             display: block;
         }
 
-        input[type="email"], input[type="password"] {
+        input[type="tel"], input[type="email"], input[type="password"] {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+    box-sizing: border-box;
         }
 
         button {
@@ -63,23 +64,33 @@
             font-size: 16px;
             cursor: pointer;
         }
+      #tab-container{
+          display:flex;
+            cursor: pointer;
+
+      }
+      #auth-container input{
+
+      }
+
+      
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Family Tree App</h1>
         <div id="auth-container">
+        <div id="tab-container">
             <button class="tab-button" onclick="toggleTab('login')">Login</button>
             <button class="tab-button" onclick="toggleTab('register')">Register</button>
 <!-- Add a new button for Phone Authentication -->
 <button class="tab-button" onclick="toggleTab('phone')">Login with Phone</button>
-
+        </div>
             <div id="login-form" class="active-tab">
           <h3>Login</h3>
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
                 <button onclick="loginWithEmailPassword()">Login</button>
-                <button onclick="loginWithPhoneAuthentication()">Login with Phone</button>
                 <button onclick="loginAnonymously()">Login Anonymously</button>
             </div>
 
