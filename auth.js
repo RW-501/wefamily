@@ -35,6 +35,6 @@
 };
 
 // Function to check if a user is logged in
- const checkUserLogin = () => {
+ var checkUserLogin = () => {
   return firebase.auth().currentUser;
 };
