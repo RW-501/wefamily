@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="auth.js"></script>
+    <script src="dashboard.js"></script>
+    <title>User Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Dashboard</h1>
+        <div id="dashboard-container">
+            <h2>Your Family Trees</h2>
+            <ul id="family-tree-list">
+                <!-- Family tree items will be added here dynamically -->
+            </ul>
+            <button id="create-family-tree" onclick="createFamilyTree()">Create New Family Tree</button>
+        </div>
+    </div>
+    <script>
+        // JavaScript functions for dashboard functionality
+        async function fetchFamilyTrees() {
+            // Fetch and display the user's family trees from Firestore
+            const user = checkUserLogin();
+            if (user) {
+                const userId = user.uid;
+                const familyTrees = await getFamilyTrees(userId);
+                displayFamilyTrees(familyTrees);
+            } else {
+                // Redirect to login page if the user is not logged in
+                window.location.href = "index.html";
+            }
+        }
+
+        // Function to create a new family tree
+        function createFamilyTree() {
+            // Redirect to the family tree creation page
+            window.location.href = "familytree.html";
+        }
+
+        // Function to display family trees
+        function displayFamilyTrees(familyTrees) {
+            const list = document.getElementById("family-tree-list");
+            list.innerHTML = ""; // Clear existing list items
+
+            familyTrees.forEach((tree) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="familytree.html?treeId=${tree.id}">${tree.name}</a>`;
+                list.appendChild(listItem);
+            });
+        }
+
+        // Call the fetchFamilyTrees function on page load
+        window.onload = fetchFamilyTrees;
+    </script>
+</body>
+</html>
