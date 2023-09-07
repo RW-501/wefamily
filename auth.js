@@ -1,3 +1,4 @@
+/*
 // Function to log in with email and password
  const loginWithEmailPassword = async (email, password) => {
   try {
@@ -8,6 +9,7 @@
     return false;
   }
 };
+*/
 
 // Function to log out the user
  const logout = async () => {
@@ -17,7 +19,7 @@
     console.error('Logout failed:', error.message);
   }
 };
-
+/*
 // Function to register a new user with email and password
  const registerWithEmailPassword = async (email, password) => {
   try {
@@ -33,7 +35,7 @@
     return false;
   }
 };
-
+*/
 // Function to check if a user is logged in
  var checkUserLogin = () => {
   return firebase.auth().currentUser;
