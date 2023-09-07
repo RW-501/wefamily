@@ -4,20 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
+    <script src="/auth.js"></script>
     <title>Family Tree App</title>
+  <style>
+        /* Add your CSS styles here */
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+
+        #auth-container {
+            margin-top: 20px;
+        }
+
+        .tab-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #login-form, #register-form {
+            display: none;
+        }
+
+        .active-tab {
+            display: block;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Family Tree App</h1>
         <div id="auth-container">
-            <h2>Login or Register</h2>
-            <div id="login-form">
-                <h3>Login</h3>
+            <button class="tab-button" onclick="toggleTab('login')">Login</button>
+            <button class="tab-button" onclick="toggleTab('register')">Register</button>
+            <div id="login-form" class="active-tab">
+          <h3>Login</h3>
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
-                <button onclick="loginWithEmailPassword()">Login with Email</button>
-                <button onclick="loginWithPhone()">Login with Phone</button>
+                <button onclick="loginWithEmailPassword()">Login</button>
+                <button onclick="loginWithPhoneAuthentication()">Login with Phone</button>
                 <button onclick="loginAnonymously()">Login Anonymously</button>
             </div>
             <div id="register-form">
@@ -28,10 +87,27 @@
             </div>
         </div>
     </div>
+
     <script>
         // JavaScript functions for login and registration
-     async function loginWithEmailPassword(email, password) {
+        function toggleTab(tabName) {
+            // Hide all forms
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'none';
+
+            // Show the selected tab
+            document.getElementById(tabName + '-form').style.display = 'block';
+        }
+
+        
+        // JavaScript functions for login and registration
+
+async function loginWithEmailPassword() {
     try {
+        // Get input values
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
         await auth.signInWithEmailAndPassword(email, password);
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
@@ -43,7 +119,7 @@
 }
 
 // Function to log in with phone (Note: Implement Firebase phone login pop-up)
-function loginWithPhone() {
+        function loginWithPhoneAuthentication() {
     // Get the user's phone number from user input (you can add input fields for phone number)
     const phoneNumber = '+1234567890'; // Replace with actual phone number
 
@@ -90,8 +166,12 @@ async function loginAnonymously() {
 }
 
 // Function to register a new user with email and password
-async function registerWithEmailPassword(email, password) {
+async function register() {
     try {
+        // Get input values
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
