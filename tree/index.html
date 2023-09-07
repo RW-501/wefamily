@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+    <script src="familytree.js"></script>
+    <title>Family Tree Management</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Family Tree Management</h1>
+        <div id="family-tree-container">
+            <div id="tree-details">
+                <h2>Tree Details</h2>
+                <label for="tree-name">Name:</label>
+                <input type="text" id="tree-name" placeholder="Family Tree Name" required>
+                <label for="tree-location">Location:</label>
+                <input type="text" id="tree-location" placeholder="Location">
+                <label for="tree-description">Description:</label>
+                <textarea id="tree-description" placeholder="Brief Description"></textarea>
+            </div>
+            <div id="tree-content">
+                <h2>Family Tree</h2>
+                <div id="family-members">
+                    <!-- Family member details will be added here dynamically -->
+                </div>
+                <button id="add-member" onclick="addFamilyMember()">Add Family Member</button>
+                <button id="edit-mode-toggle" onclick="toggleEditMode()">Toggle Edit Mode</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // JavaScript functions for family tree management
+        async function fetchFamilyTree() {
+            // Fetch and display the family tree details and members from Firestore
+            const user = checkUserLogin();
+            if (user) {
+                const treeId = getTreeIdFromQueryParams();
+                if (treeId) {
+                    const tree = await getFamilyTree(user.uid, treeId);
+                    if (tree) {
+                        displayTreeDetails(tree);
+                        displayFamilyMembers(tree.members);
+                    } else {
+                        // Handle tree not found
+                    }
+                } else {
+                    // Handle missing treeId parameter
+                }
+            } else {
+                // Redirect to login page if the user is not logged in
+                window.location.href = "index.html";
+            }
+        }
+
+        // Function to add a new family member
+        function addFamilyMember() {
+            // Implement functionality to add a family member
+        }
+
+        // Function to toggle between view and edit modes
+        function toggleEditMode() {
+            // Implement functionality to toggle edit mode
+        }
+
+        // Function to get the treeId from query parameters
+        function getTreeIdFromQueryParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get("treeId");
+        }
+
+        // Function to display tree details
+        function displayTreeDetails(tree) {
+            document.getElementById("tree-name").value = tree.name;
+            document.getElementById("tree-location").value = tree.location;
+            document.getElementById("tree-description").value = tree.description;
+        }
+
+        // Function to display family members
+        function displayFamilyMembers(members) {
+            const familyMembersContainer = document.getElementById("family-members");
+            familyMembersContainer.innerHTML = ""; // Clear existing members
+
+            members.forEach((member) => {
+                // Implement dynamic population of family member details here
+            });
+        }
+
+        // Call the fetchFamilyTree function on page load
+        window.onload = fetchFamilyTree;
+    </script>
+</body>
+</html>
