@@ -1,11 +1,7 @@
-// auth.js
-
-import { auth, firestore } from './firebase';
-
 // Function to log in with email and password
 export const loginWithEmailPassword = async (email, password) => {
   try {
-    await auth.signInWithEmailAndPassword(email, password);
+    await firebase.auth().signInWithEmailAndPassword(email, password);
     return true;
   } catch (error) {
     console.error('Login failed:', error.message);
@@ -16,7 +12,7 @@ export const loginWithEmailPassword = async (email, password) => {
 // Function to log out the user
 export const logout = async () => {
   try {
-    await auth.signOut();
+    await firebase.auth().signOut();
   } catch (error) {
     console.error('Logout failed:', error.message);
   }
@@ -25,9 +21,9 @@ export const logout = async () => {
 // Function to register a new user with email and password
 export const registerWithEmailPassword = async (email, password) => {
   try {
-    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
     // Create a user document in Firestore
-    await firestore.collection('users').doc(userCredential.user.uid).set({
+    await firebase.firestore().collection('users').doc(userCredential.user.uid).set({
       email: email,
       // Add more user-related data here
     });
@@ -40,5 +36,5 @@ export const registerWithEmailPassword = async (email, password) => {
 
 // Function to check if a user is logged in
 export const checkUserLogin = () => {
-  return auth.currentUser;
+  return firebase.auth().currentUser;
 };
