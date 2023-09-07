@@ -28,6 +28,14 @@
             z-index: -1; /* Place it behind other content */
         }
         /* Add your CSS styles here */
+      #mainContainer{
+    position: absolute;
+    left: 0;
+    right: 0;
+    border: 0;
+    top: 0;
+    z-index: 2;
+      }
         .container {
             max-width: 400px;
             margin: 0 auto;
@@ -98,11 +106,11 @@
     </style>
 </head>
 <body>
-    <div class="container">
 
  <!-- Photo area filler -->
     <div id="photo-area"></div>
-        
+            <div id="mainContainer" class="container">
+
         <h1>Welcome to Family Tree App</h1>
         <div id="auth-container">
         <div id="tab-container">
