@@ -188,7 +188,7 @@ async function register() {
 }
 
 // Function to check if a user is logged in
-export const checkUserLogin = () => {
+ const checkUserLogin = () => {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
     if (userLoggedIn === 'true') {
         return auth.currentUser;
