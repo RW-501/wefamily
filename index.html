@@ -71,6 +71,9 @@
         <div id="auth-container">
             <button class="tab-button" onclick="toggleTab('login')">Login</button>
             <button class="tab-button" onclick="toggleTab('register')">Register</button>
+<!-- Add a new button for Phone Authentication -->
+<button class="tab-button" onclick="toggleTab('phone')">Login with Phone</button>
+
             <div id="login-form" class="active-tab">
           <h3>Login</h3>
                 <input type="email" id="login-email" placeholder="Email" required>
@@ -79,6 +82,14 @@
                 <button onclick="loginWithPhoneAuthentication()">Login with Phone</button>
                 <button onclick="loginAnonymously()">Login Anonymously</button>
             </div>
+
+<!-- Create a new form for phone authentication -->
+<div id="phone-form">
+    <h3>Login with Phone</h3>
+    <input type="tel" id="phone-number" placeholder="Phone Number" required>
+    <button onclick="loginWithPhoneAuthentication()">Send Verification Code</button>
+</div>
+            
             <div id="register-form">
                 <h3>Register</h3>
                 <input type="email" id="register-email" placeholder="Email" required>
@@ -90,14 +101,15 @@
 
     <script>
         // JavaScript functions for login and registration
-        function toggleTab(tabName) {
-            // Hide all forms
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'none';
+function toggleTab(tabName) {
+    // Hide all forms
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('register-form').style.display = 'none';
+    document.getElementById('phone-form').style.display = 'none';
 
-            // Show the selected tab
-            document.getElementById(tabName + '-form').style.display = 'block';
-        }
+    // Show the selected tab
+    document.getElementById(tabName + '-form').style.display = 'block';
+}
 
         
         // JavaScript functions for login and registration
@@ -119,9 +131,15 @@ async function loginWithEmailPassword() {
 }
 
 // Function to log in with phone (Note: Implement Firebase phone login pop-up)
-        function loginWithPhoneAuthentication() {
-    // Get the user's phone number from user input (you can add input fields for phone number)
-    const phoneNumber = '+1234567890'; // Replace with actual phone number
+   function loginWithPhoneAuthentication() {
+    // Get the user's phone number from the input field
+    const phoneNumber = document.getElementById('phone-number').value;
+
+    // Validate the phone number (you can add more validation if needed)
+    if (!phoneNumber || !/^\+\d{10,}$/g.test(phoneNumber)) {
+        alert('Please enter a valid phone number in the format: +1234567890');
+        return;
+    }
 
     // Create a Recaptcha verifier for phone number verification
     const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
