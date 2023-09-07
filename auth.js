@@ -35,6 +35,6 @@
 };
 
 // Function to check if a user is logged in
-export const checkUserLogin = () => {
+ const checkUserLogin = () => {
   return firebase.auth().currentUser;
 };
