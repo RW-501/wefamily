@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+  <!-- Firebase SDK -->
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
     <script src="auth.js"></script>
+    <script src="firebase.js"></script>
     <script src="familytree.js"></script>
     <title>Family Tree Management</title>
 </head>
@@ -68,7 +74,7 @@
         // Function to get the treeId from query parameters
         function getTreeIdFromQueryParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get("treeId");
+            return urlParams.get("user");
         }
 
         // Function to display tree details
