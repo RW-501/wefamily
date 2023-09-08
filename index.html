@@ -167,9 +167,36 @@ async function loginWithEmailPassword() {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
 
-        await auth.signInWithEmailAndPassword(email, password);
+        // Sign in the user
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
+
+        // Get the user's ID
+        const userId = userCredential.user.uid;
+
+        // Reference to the user document in Firestore
+        const userDocRef = firestore.collection('users').doc(userId);
+
+        // Get the current login count
+        let loginCount = 0;
+
+        // Fetch the user document to get the current login count
+        const userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            loginCount = userData.loginCount || 0;
+        }
+
+        // Update the login count in Firestore
+        await userDocRef.update({
+            loginCount: loginCount + 1,
+        });
+
+        // Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `/dashboard/?user=${userId}`;
+
         return true;
     } catch (error) {
         console.error('Login failed:', error.message);
@@ -177,52 +204,71 @@ async function loginWithEmailPassword() {
     }
 }
 
+
+
 // Function to log in with phone (Note: Implement Firebase phone login pop-up)
-   function loginWithPhoneAuthentication() {
-    // Get the user's phone number from the input field
-    const phoneNumber = document.getElementById('phone-number').value;
+ async function loginWithPhoneAuthentication() {
+    try {
+        // Get the user's phone number from the input field
+        const phoneNumber = document.getElementById('phone-number').value;
 
-    // Validate the phone number (you can add more validation if needed)
-    if (!phoneNumber || !/^\+\d{10,}$/g.test(phoneNumber)) {
-        alert('Please enter a valid phone number in the format: +1234567890');
-        return;
-    }
+        // Validate the phone number (you can add more validation if needed)
+        if (!phoneNumber || !/^\+\d{10,}$/g.test(phoneNumber)) {
+            alert('Please enter a valid phone number in the format: +1234567890');
+            return;
+        }
 
-    // Create a Recaptcha verifier for phone number verification
-    const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        size: 'invisible',
-    });
-
-    // Send the verification code to the user's phone
-    auth.signInWithPhoneNumber(phoneNumber, recaptcha)
-        .then((confirmationResult) => {
-            // The SMS verification code has been sent to the user's phone
-            // Implement UI to allow the user to enter the code and confirm their phone number
-            const verificationCode = prompt('Enter the verification code sent to your phone:');
-            return confirmationResult.confirm(verificationCode);
-        })
-        .then((userCredential) => {
-            // Phone number authentication successful, you can now save login status to local storage
-            localStorage.setItem('userLoggedIn', 'true');
-            // Create a user document in Firestore (if needed)
-            const user = userCredential.user;
-            firestore.collection('users').doc(user.uid).set({
-                phoneNumber: user.phoneNumber,
-                // Add more user-related data here
-            });
-        })
-        .catch((error) => {
-            console.error('Phone login failed:', error.message);
+        // Create a Recaptcha verifier for phone number verification
+        const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+            size: 'invisible',
         });
+
+        // Send the verification code to the user's phone
+        const confirmationResult = await auth.signInWithPhoneNumber(phoneNumber, recaptcha);
+
+        // Implement UI to allow the user to enter the code and confirm their phone number
+        const verificationCode = prompt('Enter the verification code sent to your phone:');
+        const userCredential = await confirmationResult.confirm(verificationCode);
+
+        // Phone number authentication successful, you can now save login status to local storage
+        localStorage.setItem('userLoggedIn', 'true');
+
+        // Create a user document in Firestore (if needed)
+        const user = userCredential.user;
+        const userId = user.uid;
+        await firestore.collection('users').doc(userId).set({
+            phoneNumber: user.phoneNumber,
+            // Add more user-related data here
+        });
+
+        // Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `/dashboard/?user=${userId}`;
+    } catch (error) {
+        console.error('Phone login failed:', error.message);
+    }
 }
+
 
 
 // Function to log in anonymously
 async function loginAnonymously() {
     try {
-        await auth.signInAnonymously();
+        const userCredential = await auth.signInAnonymously();
+        
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
+        
+        // Get the user's unique ID
+        const userId = userCredential.user.uid;
+        
+        // Update the user's login count in the database (Firestore)
+        await firestore.collection('users').doc(userId).update({
+            loginCount: firebase.firestore.FieldValue.increment(1)
+        });
+        
+        // Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `/dashboard/?user=${userId}`;
+        
         return true;
     } catch (error) {
         console.error('Anonymous login failed:', error.message);
@@ -237,20 +283,28 @@ async function register() {
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
 
+        // Create a new user in Firebase Authentication
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
-        // Create a user document in Firestore
+
+        // Create a user document in Firestore with the user's UID
         await firestore.collection('users').doc(userCredential.user.uid).set({
             email: email,
             // Add more user-related data here
         });
+
+        // Redirect to the dashboard page with user ID as a query parameter
+        window.location.href = `/dashboard/?user=${userCredential.user.uid}`;
+
         return true;
     } catch (error) {
         console.error('Registration failed:', error.message);
         return false;
     }
 }
+
 // Function to check if a user is logged in
  var checkUserLogin = () => {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
