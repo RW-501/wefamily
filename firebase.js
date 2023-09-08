@@ -67,7 +67,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
 // Function to check if a user is logged in
  var checkUserLogin = () => {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
-    if (userLoggedIn === 'true') {
+    if (userLoggedIn === true) {
         return auth.currentUser;
     }
     return null;
