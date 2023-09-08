@@ -64,3 +64,11 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
     // before initializing Firebase to ensure they are fully loaded.
 }
 
+// Function to check if a user is logged in
+ var checkUserLogin = () => {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+    if (userLoggedIn === 'true') {
+        return auth.currentUser;
+    }
+    return null;
+};
