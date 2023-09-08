@@ -255,6 +255,7 @@ async function loginWithEmailPassword() {
 // Function to log in anonymously
 async function loginAnonymously() {
     try {
+        // Attempt to sign in anonymously
         const userCredential = await auth.signInAnonymously();
         
         // Save login status to local storage
@@ -263,10 +264,21 @@ async function loginAnonymously() {
         // Get the user's unique ID
         const userId = userCredential.user.uid;
         
-        // Update the user's login count in the database (Firestore)
-        await firestore.collection('users').doc(userId).update({
-            loginCount: firebase.firestore.FieldValue.increment(1)
-        });
+        // Check if the user document exists in Firestore
+        const userDoc = await firestore.collection('users').doc(userId).get();
+        
+        if (userDoc.exists) {
+            // User document exists, update the login count
+            await firestore.collection('users').doc(userId).update({
+                loginCount: firebase.firestore.FieldValue.increment(1)
+            });
+        } else {
+            // User document doesn't exist, create a new user document
+            await firestore.collection('users').doc(userId).set({
+                loginCount: 1, // Initialize login count to 1
+                // Add more user-related data here
+            });
+        }
         
         // Redirect to the dashboard with user ID as a query parameter
         window.location.href = `/dashboard/?user=${userId}`;
