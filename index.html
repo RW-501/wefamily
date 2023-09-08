@@ -275,13 +275,14 @@ async function loginAnonymously() {
         } else {
             // User document doesn't exist, create a new user document
             await firestore.collection('users').doc(userId).set({
+                userName: "Anonymous", 
                 loginCount: 1, // Initialize login count to 1
                 // Add more user-related data here
             });
         }
         
         // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `/dashboard/?user=${userId}`;
+        window.location.href = `../dashboard/?user=${userId}`;
         
         return true;
     } catch (error) {
