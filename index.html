@@ -197,7 +197,7 @@ async function loginWithEmailPassword() {
         });
 
         // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `/dashboard/?user=${userId}`;
+        window.location.href = `dashboard/?user=${userId}`;
 
         return true;
     } catch (error) {
@@ -244,7 +244,7 @@ async function loginWithEmailPassword() {
         });
 
         // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `/dashboard/?user=${userId}`;
+        window.location.href = `dashboard/?user=${userId}`;
     } catch (error) {
         console.error('Phone login failed:', error.message);
     }
@@ -282,7 +282,7 @@ async function loginAnonymously() {
         }
         
         // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `../dashboard/?user=${userId}`;
+        window.location.href = `dashboard/?user=${userId}`;
         
         return true;
     } catch (error) {
@@ -312,7 +312,7 @@ async function register() {
         });
 
         // Redirect to the dashboard page with user ID as a query parameter
-        window.location.href = `/dashboard/?user=${userCredential.user.uid}`;
+        window.location.href = `dashboard/?user=${userCredential.user.uid}`;
 
         return true;
     } catch (error) {
