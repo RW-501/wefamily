@@ -69,7 +69,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
     const userLoggedIn = localStorage.getItem('userLoggedIn');
         console.log(` userLoggedIn `,userLoggedIn);
 
-    if (userLoggedIn === true) {
+    if (userLoggedIn === "true") {
               console.log(` auth.currentUser `,auth.currentUser);
 
         return auth.currentUser;
