@@ -70,7 +70,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
         console.log(` userLoggedIn `,userLoggedIn);
 
     if (userLoggedIn === "true") {
-              console.log(` auth.currentUser `,auth.id);
+              console.log(` auth.uid `,auth.uid);
 
         return auth.id;
     }else{
