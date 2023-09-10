@@ -17,7 +17,7 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 
-
+     console.log(` auth `,auth);
 
 
 
@@ -65,10 +65,12 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
 }
 
 // Function to check if a user is logged in
- var checkUserLogin = () => {
+ function checkUserLogin(){
     const userLoggedIn = localStorage.getItem('userLoggedIn');
+        console.log(` userLoggedIn `,userLoggedIn);
+
     if (userLoggedIn === true) {
         return auth.currentUser;
     }
     return null;
-};
+}
