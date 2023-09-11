@@ -13,50 +13,197 @@
     <script src="../firebase.js"></script>
     <script src="familytree.js"></script>
     <title>Family Tree Management</title>
-      <style>
-        /* Add your CSS styles here */
-        /* Styles for the pop-up */
-        .popup-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
+<style>
+    /* Global styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
 
-        .popup {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            margin:  auto;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: fit-content;
-    height: fit-content;
-        }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
 
-        /* Styles for the "Join a family tree" button */
-        #join-tree-button {
-            margin-top: 20px;
-            display: block;
-            text-align: center;
-        }
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
 
-          /* Define a CSS class to hide elements */
-.hidden {
-    display: none;
-}
+    /* Styles for buttons */
+    button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
 
-    </style>
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Tree details section */
+    #tree-details {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
+    }
+
+    label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    /* Family tree section */
+    #tree-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
+    }
+
+    #family-members {
+        margin-top: 20px;
+    }
+
+    /* Pop-up styles */
+    .popup-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Tree sections */
+    .tree-section {
+        display: none;
+    }
+
+    .tree-section h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* Switch button styles */
+    #join-create-button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    #join-create-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Search input and button styles */
+    #family-tree-search,
+    #family-tree-code {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #search-button,
+    #enter-code-button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    #search-button:hover,
+    #enter-code-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Add member modal styles */
+    #add-member-modal {
+        display: none;
+    }
+
+    #add-member-modal .popup {
+        width: 400px;
+    }
+
+    #add-member-form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    #add-member-form input[type="text"],
+    #add-member-form input[type="date"],
+    #add-member-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #add-member-form button {
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4
+
 </head>
 <body>
     <div class="container">
