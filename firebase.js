@@ -69,27 +69,27 @@ function checkUserLogin() {
     console.log('userLoggedIn', userLoggedIn);
 
     if (userLoggedIn === 'true') {
-const auth = firebase.auth();
+        return new Promise((resolve, reject) => {
+            const auth = firebase.auth();
 
-        const user = auth.currentUser;
-            console.log('User :', user);
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    // User is logged in
-    const userId = user.uid;
-    console.log('User is logged in with UID:', userId);
-            return user;
-    // You can also perform actions here when the user is logged in.
-  } else {
-    // User is logged out
-           console.error('No user is signed in');
-            return null;
-    // You can also perform actions here when the user is logged out.
-  }
-});
+            const unsubscribe = auth.onAuthStateChanged((user) => {
+                unsubscribe(); // Unsubscribe to avoid memory leaks
 
-
+                if (user) {
+                    // User is logged in
+                    const userId = user.uid;
+                    console.log('User is logged in with UID:', userId);
+                    resolve(user);
+                    // You can also perform actions here when the user is logged in.
+                } else {
+                    // User is logged out
+                    console.error('No user is signed in');
+                    resolve(null);
+                    // You can also perform actions here when the user is logged out.
+                }
+            });
+        });
     } else {
-        return null;
+        return Promise.resolve(null);
     }
 }
