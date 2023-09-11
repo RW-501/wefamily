@@ -291,12 +291,12 @@ text-align: end;
     <button id="enter-code-button">Enter</button>
 </div>
  </div>
-<div id="join-tree-section" class="tree-section hidden">
+<div id="join-familytree-section" class="tree-section hidden">
     <h2>Family Tree</h2>
     <div id="join_tree_name">tree name</div>
     <div id="join_tree_location">family locations</div>
-                <button onclick="createFamilyTree()">Resquest To Join</button>
-                <button onclick="createFamilyTree()">Back</button>
+                <button onclick="joinFunction()">Resquest To Join</button>
+                <button onclick="toggleJoinTree()">Back</button>
 
 </div>       
             <hr>
@@ -340,6 +340,27 @@ text-align: end;
 
     
     <script>
+
+function toggleJoinTree() {
+    const joinFamilytreeSection = document.getElementById("join-familytree-section");
+    const joinTreeSection = document.getElementById("join-tree-section");
+
+    // Check if the Create Tree section is currently visible
+    if (!joinFamilytreeSection.classList.contains("hidden")) {
+        // Hide the Create Tree section
+        joinTreeSection.classList.add("hidden");
+        // Show the Join Tree section
+        joinFamilytreeSection.classList.remove("hidden");
+    } else {
+        // Hide the Join Tree section
+        joinFamilytreeSection.classList.add("hidden");
+        // Show the Create Tree section
+        joinTreeSection.classList.remove("hidden");
+    }
+}
+
+
+        
 // Function to search for family tree names
 function searchFamilyTrees() {
     const searchInput = document.getElementById("family-tree-search").value;
@@ -359,13 +380,14 @@ function searchFamilyTrees() {
                     console.log("Family Tree Name:", data.name);
                     console.log("Family Tree Location:", data.location);
                     // Display more information as needed
-                    
     const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
 join_tree_location.innerHTL = data.name;
  join_tree_name.innerHTML = data.location;                   
                     
                 });
+                                    toggleJoinTree();
+
             }
         })
         .catch((error) => {
@@ -373,6 +395,10 @@ join_tree_location.innerHTL = data.name;
         });
 }
 
+
+
+
+        
 // Function to get a family tree with the code
 function getFamilyTreeWithCode() {
     const familyTreeCode = document.getElementById("family-tree-code").value;
@@ -399,6 +425,7 @@ function getFamilyTreeWithCode() {
     const join_tree_location = document.getElementById("join_tree_location");
 join_tree_location.innerHTL = familyTreeData.name;
  join_tree_name.innerHTML = familyTreeData.location;  
+                    toggleJoinTree();
 
     
             }
