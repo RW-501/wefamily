@@ -352,11 +352,95 @@ text-align: end;
     </div>
 </div>
 
+<div id="join-request-popup" class="popup-container">
+    <div class="popup">
+        <span class="close" onclick="closeJoinRequestPopup()">&times;</span>
+        <h2>Join Requests</h2>
+        <ul id="join-request-list">
+            <!-- Join requests will be added here dynamically -->
+        </ul>
+    </div>
+</div>
 
     
     <script>
 var currentFamilyID = "";
 
+function openJoinRequestPopup() {
+    document.getElementById('join-request-popup').style.display = 'block';
+    loadJoinRequests(); // Load join requests when the pop-up is opened
+}
+
+function closeJoinRequestPopup() {
+    document.getElementById('join-request-popup').style.display = 'none';
+}
+
+function acceptJoinRequest(requestID, userID) {
+    // Update the user's document to add the currentFamilyID to the userTrees array
+    firestore.collection('users').doc(userID)
+        .update({
+            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+        })
+        .then(() => {
+            // Delete the join request from the memberRequest collection
+            firestore.collection('memberRequest').doc(requestID).delete()
+                .then(() => {
+                    console.log('Join request accepted and deleted.');
+                    loadJoinRequests(); // Reload the list of join requests
+                })
+                .catch((error) => {
+                    console.error('Error deleting join request:', error);
+                });
+        })
+        .catch((error) => {
+            console.error('Error updating user document:', error);
+        });
+}
+
+function declineJoinRequest(requestID) {
+    // Delete the join request from the memberRequest collection
+    firestore.collection('memberRequest').doc(requestID).delete()
+        .then(() => {
+            console.log('Join request declined and deleted.');
+            loadJoinRequests(); // Reload the list of join requests
+        })
+        .catch((error) => {
+            console.error('Error deleting join request:', error);
+        });
+}
+
+
+
+        
+function loadJoinRequests() {
+    // Get the join requests for the current family tree (currentFamilyID)
+    firestore.collection('memberRequest').where('treeID', '==', currentFamilyID)
+        .get()
+        .then((querySnapshot) => {
+            const joinRequestList = document.getElementById('join-request-list');
+            joinRequestList.innerHTML = ''; // Clear the list
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span>${data.firstName} ${data.lastName}</span>
+                    <button onclick="acceptJoinRequest('${doc.id}', '${data.userID}')">Accept</button>
+                    <button onclick="declineJoinRequest('${doc.id}')">Decline</button>
+                `;
+                joinRequestList.appendChild(listItem);
+            });
+        })
+        .catch((error) => {
+            console.error('Error loading join requests:', error);
+        });
+}
+
+
+
+
+
+        
 function joinRequestFunc() {
     // Get input values
     const firstName = document.getElementById('request_first-name').value;
@@ -733,6 +817,7 @@ function addFamilyMember() {
         private: isPrivate,
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
+        userID: "",
         spouse: [],
         parents: [],
         children: [],
