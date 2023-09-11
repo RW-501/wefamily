@@ -290,11 +290,16 @@ text-align: end;
     <input type="text" id="family-tree-code" placeholder="Enter Code">
     <button id="enter-code-button">Enter</button>
 </div>
+ </div>
+<div id="join-tree-section" class="tree-section hidden">
+    <h2>Family Tree</h2>
+    <div id="join_tree_name">tree name</div>
+    <div id="join_tree_location">family locations</div>
+                <button onclick="createFamilyTree()">Resquest To Join</button>
+                <button onclick="createFamilyTree()">Back</button>
 
-
-
-                     </div>
-<hr>
+</div>       
+            <hr>
                     <button id="join-create-button" onclick="toggleTreeSections()">Join a family tree</button>
 
         </div>
@@ -354,6 +359,12 @@ function searchFamilyTrees() {
                     console.log("Family Tree Name:", data.name);
                     console.log("Family Tree Location:", data.location);
                     // Display more information as needed
+                    
+    const join_tree_name = document.getElementById("join_tree_name");
+    const join_tree_location = document.getElementById("join_tree_location");
+join_tree_location.innerHTL = data.name;
+ join_tree_name.innerHTML = data.location;                   
+                    
                 });
             }
         })
@@ -383,6 +394,13 @@ function getFamilyTreeWithCode() {
                 console.log("Family Tree Name:", familyTreeData.name);
                 console.log("Family Tree Location:", familyTreeData.location);
                 // Display more information as needed
+
+   const join_tree_name = document.getElementById("join_tree_name");
+    const join_tree_location = document.getElementById("join_tree_location");
+join_tree_location.innerHTL = familyTreeData.name;
+ join_tree_name.innerHTML = familyTreeData.location;  
+
+    
             }
         })
         .catch((error) => {
