@@ -161,6 +161,7 @@ function createFamilyTree() {
         name: treeName,
         location: treeLocation,
         description: treeDescription,
+        adminID: userID,
         photo: "",
         // Add more fields as needed
     };
@@ -262,6 +263,7 @@ function addFamilyMember() {
         birthdate: birthdate,
         photo: photo,
         private: isPrivate,
+        addByID: userID,
         contact: contact,
         note: note,
         // Add other fields as needed
