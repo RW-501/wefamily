@@ -145,12 +145,16 @@ window.onclick = function(event) {
         }
 var currentFamilyID = "";
         
- function createFamilyTree() {
+function createFamilyTree() {
     const treeName = document.getElementById("tree-name").value;
     const treeLocation = document.getElementById("tree-location").value;
     const treeDescription = document.getElementById("tree-description").value;
 
-    // Perform data validation if necessary
+    // Perform data validation
+    if (!treeName || !treeLocation || !treeDescription) {
+        alert("Please fill in all required fields.");
+        return;
+    }
 
     // Create an object to represent the family tree data
     const familyTreeData = {
@@ -167,7 +171,7 @@ var currentFamilyID = "";
             console.log('Family tree added with ID:', docRef.id);
             // You can perform further actions or navigation after successfully adding the family tree
             currentFamilyID = docRef.id;
-              // Close the pop-up after creating the family tree
+            // Close the pop-up after creating the family tree
             closePopup();
 
             showAddMemberModal();
@@ -175,6 +179,8 @@ var currentFamilyID = "";
         .catch((error) => {
             console.error('Error adding family tree:', error);
         });
+}
+
 
 
 
