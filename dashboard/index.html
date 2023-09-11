@@ -79,6 +79,12 @@
                 <input type="text" id="tree_name" placeholder="Family Tree Name" required>
                 <label for="tree_location">Location:</label>
                 <input type="text" id="tree_location" placeholder="Location">
+                
+                <label for="tree_public">Public:</label>
+                 <input type="radio" id="tree_public" placeholder="public" checked>
+                <label for="tree_code">Code:</label>
+                <input type="text" id="tree_code" placeholder="code">
+                
                 <label for="tree_description">Description:</label>
                 <textarea id="tree_description" placeholder="Brief Description"></textarea>
                 <button onclick="createFamilyTree()">Create</button>
@@ -149,6 +155,8 @@ function createFamilyTree() {
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
     const treeDescription = document.getElementById("tree_description").value;
+    const pubicBool = document.getElementById("tree_public").value;
+    const familyCode = document.getElementById("tree_code").value;
 
     // Perform data validation
     if (!treeName || !treeLocation || !treeDescription) {
@@ -162,6 +170,8 @@ function createFamilyTree() {
         location: treeLocation,
         description: treeDescription,
         adminID: userID,
+        public: pubicBool,
+        familyCode: familyCode,
         photo: "",
         // Add more fields as needed
     };
