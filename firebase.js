@@ -69,7 +69,10 @@ function checkUserLogin() {
     console.log('userLoggedIn', userLoggedIn);
 
     if (userLoggedIn === 'true') {
+const auth = firebase.auth();
+
         const user = auth.currentUser;
+            console.log('User :', user);
 
         if (user) {
             const uid = user.uid;
