@@ -136,8 +136,11 @@
         <h2>Add Family Member</h2>
         <form id="add-member-form">
             <p>
-            <label for="member-name">Name:</label>
-            <input type="text" id="member-name" required>
+            <label for="member-first_name">First Name:</label>
+            <input type="text" id="member-first_name" required>
+                </p><p>
+<label for="member-last_name">Last Name:</label>
+            <input type="text" id="member-last_name" required>
                 </p><p>
             <label for="member-birthdate">Birthdate:</label>
             <input type="date" id="member-birthdate" required>
@@ -384,7 +387,8 @@ async function getFamilyTree(treeId) {
 // Function to add a family member
 function addFamilyMember() {
     // Get input values
-    const name = document.getElementById('member-name').value;
+    const first_name = document.getElementById('member-first_name').value;
+    const last_name = document.getElementById('member-last_name').value;
     const birthdate = document.getElementById('member-birthdate').value;
     const photo = document.getElementById('member-photo').value;
     const isPrivate = document.getElementById('member-private').checked;
@@ -395,7 +399,8 @@ function addFamilyMember() {
 
     // Create a new family member document and add it to the database
     const familyMember = {
-        name: name,
+        first_name: first_name,
+        last_name: last_name,
         birthdate: birthdate,
         photo: photo,
         private: isPrivate,
