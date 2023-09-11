@@ -75,18 +75,22 @@
             <span onclick="closePopup()" class="close-button">&times;</span>
             <h2>Create a Family Tree</h2>
             <div id="tree-details">
+                <p>
                 <label for="tree_name">Name:</label>
                 <input type="text" id="tree_name" placeholder="Family Tree Name" required>
+                    </p><p>
                 <label for="tree_location">Location:</label>
                 <input type="text" id="tree_location" placeholder="Location">
-                
+                </p>
                 <label for="tree_public">Public:</label>
                  <input type="radio" id="tree_public" placeholder="public" checked>
+                </p><p>
                 <label for="tree_code">Code:</label>
                 <input type="text" id="tree_code" placeholder="code">
-                
+                </p><p>
                 <label for="tree_description">Description:</label>
                 <textarea id="tree_description" placeholder="Brief Description"></textarea>
+                </p>
                 <button onclick="createFamilyTree()">Create</button>
             </div>
 <hr>
@@ -100,18 +104,25 @@
         <span class="close" onclick="closeAddMemberModal()">&times;</span>
         <h2>Add Family Member</h2>
         <form id="add-member-form">
+            <p>
             <label for="member-name">Name:</label>
             <input type="text" id="member-name" required>
+                </p><p>
             <label for="member-birthdate">Birthdate:</label>
             <input type="date" id="member-birthdate" required>
+                    </p><p>
             <label for="member-photo">Photo URL:</label>
             <input type="text" id="member-photo">
+                        </p><p>
             <label for="member-private">Private:</label>
             <input type="checkbox" id="member-private">
+                            </p><p>
             <label for="member-contact">Contact:</label>
             <input type="text" id="member-contact">
+                                </p><p>
             <label for="member-note">Note:</label>
             <textarea id="member-note"></textarea>
+                                </p>
             <button type="submit">Add Member</button>
         </form>
     </div>
