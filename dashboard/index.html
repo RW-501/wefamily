@@ -75,12 +75,12 @@
             <span onclick="closePopup()" class="close-button">&times;</span>
             <h2>Create a Family Tree</h2>
             <div id="tree-details">
-                <label for="tree-name">Name:</label>
-                <input type="text" id="tree-name" placeholder="Family Tree Name" required>
-                <label for="tree-location">Location:</label>
-                <input type="text" id="tree-location" placeholder="Location">
-                <label for="tree-description">Description:</label>
-                <textarea id="tree-description" placeholder="Brief Description"></textarea>
+                <label for="tree_name">Name:</label>
+                <input type="text" id="tree_name" placeholder="Family Tree Name" required>
+                <label for="tree_location">Location:</label>
+                <input type="text" id="tree_location" placeholder="Location">
+                <label for="tree_description">Description:</label>
+                <textarea id="tree_description" placeholder="Brief Description"></textarea>
                 <button onclick="createFamilyTree()">Create</button>
             </div>
 <hr>
@@ -146,9 +146,9 @@ window.onclick = function(event) {
 var currentFamilyID = "";
         
 function createFamilyTree() {
-    const treeName = document.getElementById("tree-name").value;
-    const treeLocation = document.getElementById("tree-location").value;
-    const treeDescription = document.getElementById("tree-description").value;
+    const treeName = document.getElementById("tree_name").value;
+    const treeLocation = document.getElementById("tree_location").value;
+    const treeDescription = document.getElementById("tree_description").value;
 
     // Perform data validation
     if (!treeName || !treeLocation || !treeDescription) {
