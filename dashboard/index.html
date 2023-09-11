@@ -312,6 +312,25 @@ function createFamilyTree() {
             // You can perform further actions or navigation after successfully adding the family tree
             currentFamilyID = docRef.id;
             // Close the pop-up after creating the family tree
+
+const familyTreeId = currentFamilyID; // Replace with the actual family tree ID
+
+// Reference to the user document in Firestore
+const userDocRef = firestore.collection('users').doc(userId);
+
+// Update the user document to add the family tree ID to the "userTrees" array field
+userDocRef.update({
+    userTrees: firebase.firestore.FieldValue.arrayUnion(familyTreeId)
+})
+.then(() => {
+    console.log('Family tree ID added to user document successfully.');
+})
+.catch((error) => {
+    console.error('Error adding family tree ID to user document:', error);
+});
+
+
+            
             closePopup();
 
             showAddMemberModal();
