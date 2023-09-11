@@ -765,11 +765,11 @@ userDocRef.get()
         async function fetchFamilyTree() {
             // Fetch and display the family tree details and members from Firestore
             const user = checkUserLogin();
-             console.log(`44 dash user: ${user} `);
+             console.log(`768 dash user: ${user} `);
             if (user) {
-                const treeId = getTreeIdFromQueryParams();
+               // const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
-                    const tree = await getFamilyTree(treeId);
+                   // const tree = await getFamilyTree(treeId);
                     if (tree) {
                         displayTreeDetails(tree);
                         displayFamilyMembers(tree);
