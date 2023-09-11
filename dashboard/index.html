@@ -64,8 +64,7 @@
                 <div id="family-members">
                     <!-- Family member details will be added here dynamically -->
                 </div>
-                <button id="add-member" onclick="addFamilyMember()">Add Family Member</button>
-                <button id="edit-mode-toggle" onclick="toggleEditMode()">Toggle Edit Mode</button>
+                <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
             </div>
         </div>
     </div>
@@ -170,6 +169,8 @@ var currentFamilyID = "";
             currentFamilyID = docRef.id;
               // Close the pop-up after creating the family tree
             closePopup();
+
+            showAddMemberModal();
         })
         .catch((error) => {
             console.error('Error adding family tree:', error);
