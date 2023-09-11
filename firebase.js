@@ -63,6 +63,7 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
     // You may also want to listen for the 'load' event on these scripts
     // before initializing Firebase to ensure they are fully loaded.
 }
+var userID = "";
 
 function checkUserLogin() {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
@@ -77,8 +78,8 @@ function checkUserLogin() {
 
                 if (user) {
                     // User is logged in
-                    const userId = user.uid;
-                    console.log('User is logged in with UID:', userId);
+                    userID = user.uid;
+                    console.log('User is logged in with UID:', userID);
                     resolve(user);
                     // You can also perform actions here when the user is logged in.
                 } else {
