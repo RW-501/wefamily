@@ -297,17 +297,17 @@ text-align: end;
     <div id="join_tree_location">family locations</div>
 <hr>
    <form id="join-request-form">
-        <label for="first-name">First Name:</label>
-        <input type="text" id="first-name" required><br><br>
+        <label for="request_first-name">First Name:</label>
+        <input type="text" id="request_first-name" required><br><br>
         
-        <label for="last-name">Last Name:</label>
-        <input type="text" id="last-name" required><br><br>
+        <label for="request_last-name">Last Name:</label>
+        <input type="text" id="request_last-name" required><br><br>
         
-        <label for="location">Location:</label>
-        <input type="text" id="location" required><br><br>
+        <label for="request_location">Location:</label>
+        <input type="text" id="request_location" required><br><br>
         
-        <label for="note">Note:</label>
-        <textarea id="note"></textarea><br><br>
+        <label for="request_note">Note:</label>
+        <textarea id="request_note"></textarea><br><br>
         
         <button type="button" onclick="joinRequestFunc()">Resquest To Join</button>
                 <button  type="button" onclick="toggleJoinTree()">Back</button>
@@ -355,40 +355,7 @@ text-align: end;
 
     
     <script>
-
-function joinRequestFunc() {
-    // Get input values
-    const firstName = document.getElementById('first-name').value;
-    const lastName = document.getElementById('last-name').value;
-    const location = document.getElementById('location').value;
-    const note = document.getElementById('note').value;
-
-    // Validate input data if needed
-
-    // Create an object to represent the join request data
-    const joinRequestData = {
-        firstName: firstName,
-        lastName: lastName,
-        location: location,
-        note: note,
-        // Add more fields as needed
-    };
-
-    // Add the join request to the Firestore collection
-    firestore.collection('memberRequest').add(joinRequestData)
-        .then((docRef) => {
-            console.log('Join request added with ID:', docRef.id);
-            // You can perform further actions or provide feedback to the user
-            // Clear form fields if needed
-            document.getElementById('first-name').value = '';
-            document.getElementById('last-name').value = '';
-            document.getElementById('location').value = '';
-            document.getElementById('note').value = '';
-        })
-        .catch((error) => {
-            console.error('Error adding join request:', error);
-        });
-}
+var currentFamilyID = "";
 
 function joinRequestFunc() {
     // Get input values
@@ -404,6 +371,8 @@ function joinRequestFunc() {
         firstName: firstName,
         lastName: lastName,
         location: location,
+        treeID: currentFamilyID,
+        userID: userID,
         note: note,
         // Add more fields as needed
     };
@@ -579,7 +548,6 @@ window.onclick = function(event) {
         function closePopup() {
             document.getElementById("popup-container").style.display = "none";
         }
-var currentFamilyID = "";
         
 function createFamilyTree() {
     const treeName = document.getElementById("tree_name").value;
