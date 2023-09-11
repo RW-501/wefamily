@@ -470,7 +470,7 @@ function createFamilyTree() {
 const familyTreeId = currentFamilyID; // Replace with the actual family tree ID
 
 // Reference to the user document in Firestore
-const userDocRef = firestore.collection('users').doc(userId);
+const userDocRef = firestore.collection('users').doc(userID);
 
 // Update the user document to add the family tree ID to the "userTrees" array field
 userDocRef.update({
