@@ -43,6 +43,12 @@
             display: block;
             text-align: center;
         }
+
+          /* Define a CSS class to hide elements */
+.hidden {
+    display: none;
+}
+
     </style>
 </head>
 <body>
@@ -73,8 +79,9 @@
     <div class="popup-container" id="popup-container">
         <div class="popup">
             <span onclick="closePopup()" class="close-button">&times;</span>
+            
+<div id="create-tree-section" class="tree-section">
             <h2>Create a Family Tree</h2>
-            <div id="tree-details">
                 <p>
                 <label for="tree_name">Name:</label>
                 <input type="text" id="tree_name" placeholder="Family Tree Name" required>
@@ -93,8 +100,25 @@
                 </p>
                 <button onclick="createFamilyTree()">Create</button>
             </div>
+<div id="join-tree-section" class="tree-section hidden">
+            <h2>Join a Family Tree</h2>
+<div id="search-family-tree">
+    <h2>Search for a Family Tree</h2>
+    <input type="text" id="family-tree-search" placeholder="Enter Family Tree Name">
+    <button id="search-button">Search</button>
+</div>
+
+<div id="enter-family-tree-code">
+    <h2>Enter Family Tree Code</h2>
+    <input type="text" id="family-tree-code" placeholder="Enter Code">
+    <button id="enter-code-button">Enter</button>
+</div>
+
+
+
+                     </div>
 <hr>
-                    <button id="join-tree-button">Join a family tree</button>
+                    <button id="join-create-button" onclick="toggleTreeSections()">Join a family tree</button>
 
         </div>
     </div>
@@ -131,6 +155,90 @@
 
     
     <script>
+// Function to search for family tree names
+function searchFamilyTrees() {
+    const searchInput = document.getElementById("family-tree-search").value;
+
+    // Perform a Firestore query to search for family trees by name
+    firestore.collection("familyTrees")
+        .where("name", "==", searchInput)
+        .get()
+        .then((querySnapshot) => {
+            if (querySnapshot.empty) {
+                // No matching family trees found
+                alert("No matching family trees found.");
+            } else {
+                // Display the matching family trees (you can decide how to display them)
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    console.log("Family Tree Name:", data.name);
+                    console.log("Family Tree Location:", data.location);
+                    // Display more information as needed
+                });
+            }
+        })
+        .catch((error) => {
+            console.error("Error searching for family trees:", error);
+        });
+}
+
+// Function to get a family tree with the code
+function getFamilyTreeWithCode() {
+    const familyTreeCode = document.getElementById("family-tree-code").value;
+
+    // Perform a Firestore query to get the family tree with the specified code
+    firestore.collection("familyTrees")
+        .where("code", "==", familyTreeCode)
+        .get()
+        .then((querySnapshot) => {
+            if (querySnapshot.empty) {
+                // No family tree found with the specified code
+                alert("No family tree found with the entered code.");
+            } else {
+                // Retrieve the family tree (assuming there is only one match)
+                const familyTreeDoc = querySnapshot.docs[0];
+                const familyTreeData = familyTreeDoc.data();
+
+                // Use the family tree data as needed (e.g., display tree details)
+                console.log("Family Tree Name:", familyTreeData.name);
+                console.log("Family Tree Location:", familyTreeData.location);
+                // Display more information as needed
+            }
+        })
+        .catch((error) => {
+            console.error("Error getting family tree with code:", error);
+        });
+}
+
+// Add click event listeners to the search and enter code buttons
+document.getElementById("search-button").addEventListener("click", searchFamilyTrees);
+document.getElementById("enter-code-button").addEventListener("click", getFamilyTreeWithCode);
+
+        // Function to toggle the visibility of Create Tree and Join Tree sections
+function toggleTreeSections() {
+    const createTreeSection = document.getElementById("create-tree-section");
+    const joinTreeSection = document.getElementById("join-tree-section");
+    const join_create_btn = document.getElementById("join-create-button");
+
+    // Check if the Create Tree section is currently visible
+    if (!createTreeSection.classList.contains("hidden")) {
+        // Hide the Create Tree section
+        createTreeSection.classList.add("hidden");
+        // Show the Join Tree section
+        joinTreeSection.classList.remove("hidden");
+        join_create_btn.innerHTML= "Create Family Tree";
+    } else {
+        // Hide the Join Tree section
+        joinTreeSection.classList.add("hidden");
+        // Show the Create Tree section
+        createTreeSection.classList.remove("hidden");
+                join_create_btn.innerHTML= "Join Family Tree";
+
+    }
+}
+
+
+
 // Function to display the add member modal
 function showAddMemberModal() {
     const modal = document.getElementById('add-member-modal');
