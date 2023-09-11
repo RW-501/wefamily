@@ -73,15 +73,22 @@ const auth = firebase.auth();
 
         const user = auth.currentUser;
             console.log('User :', user);
-
-        if (user) {
-            const uid = user.uid;
-            console.log('User UID:', uid);
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is logged in
+    const userId = user.uid;
+    console.log('User is logged in with UID:', userId);
             return user;
-        } else {
-            console.error('No user is signed in');
+    // You can also perform actions here when the user is logged in.
+  } else {
+    // User is logged out
+           console.error('No user is signed in');
             return null;
-        }
+    // You can also perform actions here when the user is logged out.
+  }
+});
+
+
     } else {
         return null;
     }
