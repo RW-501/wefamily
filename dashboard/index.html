@@ -295,7 +295,7 @@ text-align: end;
     <h2>Family Tree</h2>
     <div id="join_tree_name">tree name</div>
     <div id="join_tree_location">family locations</div>
-                <button onclick="joinFunction()">Resquest To Join</button>
+                <button onclick="joinRequestFunc()">Resquest To Join</button>
                 <button onclick="toggleJoinTree()">Back</button>
 
 </div>       
@@ -346,7 +346,7 @@ function toggleJoinTree() {
     const joinTreeSection = document.getElementById("join-tree-section");
 
     // Check if the Create Tree section is currently visible
-    if (!joinFamilytreeSection.classList.contains("hidden")) {
+    if (joinFamilytreeSection.classList.contains("hidden")) {
         // Hide the Create Tree section
         joinTreeSection.classList.add("hidden");
         // Show the Join Tree section
