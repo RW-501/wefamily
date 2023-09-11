@@ -13,11 +13,44 @@
     <script src="../firebase.js"></script>
     <script src="familytree.js"></script>
     <title>Family Tree Management</title>
+      <style>
+        /* Add your CSS styles here */
+        /* Styles for the pop-up */
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        /* Styles for the "Join a family tree" button */
+        #join-tree-button {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Family Tree Management</h1>
         <div id="family-tree-container">
+            <button onclick="createFamilyTree()">Create Family Tree</button>
+
             <div id="tree-details">
                 <h2>Tree Details</h2>
                 <label for="tree-name">Name:</label>
@@ -37,7 +70,142 @@
             </div>
         </div>
     </div>
+
+   <!-- Pop-up for creating a family tree -->
+    <div class="popup-container" id="popup-container">
+        <div class="popup">
+            <span onclick="closePopup()" class="close-button">&times;</span>
+            <h2>Create a Family Tree</h2>
+            <div id="tree-details">
+                <label for="tree-name">Name:</label>
+                <input type="text" id="tree-name" placeholder="Family Tree Name" required>
+                <label for="tree-location">Location:</label>
+                <input type="text" id="tree-location" placeholder="Location">
+                <label for="tree-description">Description:</label>
+                <textarea id="tree-description" placeholder="Brief Description"></textarea>
+                <button onclick="createFamilyTree()">Create</button>
+            </div>
+<hr>
+                    <button id="join-tree-button">Join a family tree</button>
+
+        </div>
+    </div>
+
+<div id="add-member-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddMemberModal()">&times;</span>
+        <h2>Add Family Member</h2>
+        <form id="add-member-form">
+            <label for="member-name">Name:</label>
+            <input type="text" id="member-name" required>
+            <label for="member-birthdate">Birthdate:</label>
+            <input type="date" id="member-birthdate" required>
+            <label for="member-photo">Photo URL:</label>
+            <input type="text" id="member-photo">
+            <label for="member-private">Private:</label>
+            <input type="checkbox" id="member-private">
+            <label for="member-contact">Contact:</label>
+            <input type="text" id="member-contact">
+            <label for="member-note">Note:</label>
+            <textarea id="member-note"></textarea>
+            <button type="submit">Add Member</button>
+        </form>
+    </div>
+</div>
+
+
+    
     <script>
+// Function to display the add member modal
+function showAddMemberModal() {
+    const modal = document.getElementById('add-member-modal');
+    modal.style.display = 'block';
+}
+
+// Function to close the add member modal
+function closeAddMemberModal() {
+    const modal = document.getElementById('add-member-modal');
+    modal.style.display = 'none';
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('add-member-modal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+
+     // Function to open the pop-up
+        function openPopup() {
+            document.getElementById("popup-container").style.display = "flex";
+        }
+
+        // Function to close the pop-up
+        function closePopup() {
+            document.getElementById("popup-container").style.display = "none";
+        }
+var currentFamilyID = "";
+        
+ function createFamilyTree() {
+    const treeName = document.getElementById("tree-name").value;
+    const treeLocation = document.getElementById("tree-location").value;
+    const treeDescription = document.getElementById("tree-description").value;
+
+    // Perform data validation if necessary
+
+    // Create an object to represent the family tree data
+    const familyTreeData = {
+        name: treeName,
+        location: treeLocation,
+        description: treeDescription,
+        photo: "",
+        // Add more fields as needed
+    };
+
+    // Add the family tree to Firestore
+    firestore.collection('familyTrees').add(familyTreeData)
+        .then((docRef) => {
+            console.log('Family tree added with ID:', docRef.id);
+            // You can perform further actions or navigation after successfully adding the family tree
+            currentFamilyID = docRef.id;
+              // Close the pop-up after creating the family tree
+            closePopup();
+        })
+        .catch((error) => {
+            console.error('Error adding family tree:', error);
+        });
+
+
+
+          
+        }
+
+async function getFamilyTree(treeId) {
+    try {
+        // Reference to the Firestore collection
+        const familyTreesCollection = firestore.collection('familyTrees');
+
+        // Query the collection for the specific treeId
+        const querySnapshot = await familyTreesCollection.where('treeId', '==', treeId).get();
+
+        // Check if a document matching the query exists
+        if (querySnapshot.empty) {
+            console.log('No matching documents.');
+            return null;
+        }
+
+        // Retrieve the data from the first matching document (assuming treeId is unique)
+        const familyTreeData = querySnapshot.docs[0].data();
+
+        return familyTreeData;
+    } catch (error) {
+        console.error('Error getting family tree:', error);
+        return null;
+    }
+}
+
+        
         // JavaScript functions for family tree management
         async function fetchFamilyTree() {
             // Fetch and display the family tree details and members from Firestore
@@ -46,14 +214,15 @@
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
-                    const tree = await getFamilyTree(user.uid, treeId);
+                    const tree = await getFamilyTree(treeId);
                     if (tree) {
                         displayTreeDetails(tree);
-                        displayFamilyMembers(tree.members);
+                        displayFamilyMembers(tree);
                     } else {
                         // Handle tree not found
                       //  console.log(`question ${pollData.question} `);
                         console.log(`Handle tree not found `);
+                        openPopup();
                     }
                 } else {
                     // Handle missing treeId parameter
@@ -69,10 +238,45 @@
         }
 
         // Function to add a new family member
-        function addFamilyMember() {
-            // Implement functionality to add a family member
-        }
+// Function to add a family member
+function addFamilyMember() {
+    // Get input values
+    const name = document.getElementById('member-name').value;
+    const birthdate = document.getElementById('member-birthdate').value;
+    const photo = document.getElementById('member-photo').value;
+    const isPrivate = document.getElementById('member-private').checked;
+    const contact = document.getElementById('member-contact').value;
+    const note = document.getElementById('member-note').value;
 
+    // You can perform data validation and error handling here
+
+    // Create a new family member document and add it to the database
+    const familyMember = {
+        name: name,
+        birthdate: birthdate,
+        photo: photo,
+        private: isPrivate,
+        contact: contact,
+        note: note,
+        // Add other fields as needed
+    };
+
+    // Add the family member to the database (you will need to implement this)
+    // Example: firestore.collection('familyMembers').add(familyMember);
+
+    // Close the modal after adding the member
+    closeAddMemberModal();
+}
+
+document.getElementById('add-member-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form submission
+    addFamilyMember(); // Call the function to add the family member
+});
+
+
+
+
+        
         // Function to toggle between view and edit modes
         function toggleEditMode() {
             // Implement functionality to toggle edit mode
