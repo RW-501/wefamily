@@ -292,12 +292,27 @@ text-align: end;
 </div>
  </div>
 <div id="join-familytree-section" class="tree-section hidden">
-    <h2>Family Tree</h2>
+    <h2>Join Request</h2>
     <div id="join_tree_name">tree name</div>
     <div id="join_tree_location">family locations</div>
-                <button onclick="joinRequestFunc()">Resquest To Join</button>
-                <button onclick="toggleJoinTree()">Back</button>
-
+<hr>
+   <form id="join-request-form">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" required><br><br>
+        
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" required><br><br>
+        
+        <label for="location">Location:</label>
+        <input type="text" id="location" required><br><br>
+        
+        <label for="note">Note:</label>
+        <textarea id="note"></textarea><br><br>
+        
+        <button type="button" onclick="joinRequestFunc()">Resquest To Join</button>
+                <button  type="button" onclick="toggleJoinTree()">Back</button>
+    </form>
+    
 </div>       
             <hr>
                     <button id="join-create-button" onclick="toggleTreeSections()">Join a family tree</button>
@@ -341,6 +356,77 @@ text-align: end;
     
     <script>
 
+function joinRequestFunc() {
+    // Get input values
+    const firstName = document.getElementById('first-name').value;
+    const lastName = document.getElementById('last-name').value;
+    const location = document.getElementById('location').value;
+    const note = document.getElementById('note').value;
+
+    // Validate input data if needed
+
+    // Create an object to represent the join request data
+    const joinRequestData = {
+        firstName: firstName,
+        lastName: lastName,
+        location: location,
+        note: note,
+        // Add more fields as needed
+    };
+
+    // Add the join request to the Firestore collection
+    firestore.collection('memberRequest').add(joinRequestData)
+        .then((docRef) => {
+            console.log('Join request added with ID:', docRef.id);
+            // You can perform further actions or provide feedback to the user
+            // Clear form fields if needed
+            document.getElementById('first-name').value = '';
+            document.getElementById('last-name').value = '';
+            document.getElementById('location').value = '';
+            document.getElementById('note').value = '';
+        })
+        .catch((error) => {
+            console.error('Error adding join request:', error);
+        });
+}
+
+function joinRequestFunc() {
+    // Get input values
+    const firstName = document.getElementById('request_first-name').value;
+    const lastName = document.getElementById('request_last-name').value;
+    const location = document.getElementById('request_location').value;
+    const note = document.getElementById('request_note').value;
+
+    // Validate input data if needed
+
+    // Create an object to represent the join request data
+    const joinRequestData = {
+        firstName: firstName,
+        lastName: lastName,
+        location: location,
+        note: note,
+        // Add more fields as needed
+    };
+
+    // Add the join request to the Firestore collection
+    firestore.collection('memberRequest').add(joinRequestData)
+        .then((docRef) => {
+            console.log('Join request added with ID:', docRef.id);
+            // You can perform further actions or provide feedback to the user
+            // Clear form fields if needed
+            document.getElementById('request_first-name').value = '';
+            document.getElementById('request_last-name').value = '';
+            document.getElementById('request_location').value = '';
+            document.getElementById('request_note').value = '';
+        })
+        .catch((error) => {
+            console.error('Error adding join request:', error);
+        });
+}
+
+
+
+        
 function toggleJoinTree() {
     const joinFamilytreeSection = document.getElementById("join-familytree-section");
     const joinTreeSection = document.getElementById("join-tree-section");
