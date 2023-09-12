@@ -957,8 +957,8 @@ async function fetchFamilyTree() {
                 const tree = await getFamilyTreeData(treeId);
                 if (tree) {
                     console.log(`Family Tree Name: ${tree.name}`);
-                    //displayTreeDetails(tree);
-                 //   displayFamilyMembers(tree);
+                    displayTreeDetails(tree);
+                    displayFamilyMembers(tree);
                 } else {
                     console.log('Family tree not found.');
                     // Handle the case when the family tree is not found.
