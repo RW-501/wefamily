@@ -1012,13 +1012,13 @@ async function getFamilyTree(userID) {
 async function fetchFamilyTree() {
     try {
         const userID = await checkUserLogin();
+		    		loadPosts();
 
         if (userID) {
             const treeId = getTreeIdFromQueryParams();
             
             if (treeId) {
                 const tree = await getFamilyTreeData(treeId);
-		    		loadPosts();
 
                 if (tree) {
                     displayTreeDetails(tree);
