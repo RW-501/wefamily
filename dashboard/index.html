@@ -285,10 +285,60 @@ text-align: end;
     border-radius: 4px;
 }
 
+#family-tree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.family-member {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  min-width: 150px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.member-details {
+  margin-bottom: 10px;
+}
+
+.family-member button {
+  display: none;
+}
+
+.family-member:hover button {
+  display: inline-block;
+}
+
+/* Adjust styling as needed */
 
 
 </style>
+<script>
+function initializeFamilyTreeChart() {
+  const familyMembers = document.querySelectorAll('.family-member');
 
+  familyMembers.forEach((member) => {
+    const memberName = member.querySelector('.member-details');
+    const buttons = member.querySelectorAll('button');
+
+    memberName.addEventListener('click', () => {
+      buttons.forEach((button) => {
+        button.style.display = button.style.display === 'none' ? 'inline-block' : 'none';
+      });
+    });
+  });
+}
+
+
+
+
+</script>
 </head>
 <body>
     <div class="container">
@@ -305,7 +355,7 @@ text-align: end;
                 <textarea id="tree-description" placeholder="Brief Description"></textarea>
             </div>
             <div id="tree-content">
-                <h2>Family Member</h2>
+                <h2>Family Members</h2>
                 <div id="family-members">
                     <!-- Family member details will be added here dynamically -->
                 </div>
@@ -1291,6 +1341,8 @@ if (data.userID === userID) {
 
     
             familyMembersContainer.appendChild(memberDiv);
+
+		initializeFamilyTreeChart();
         });
     } catch (error) {
         console.error('Error displaying family members:', error);
