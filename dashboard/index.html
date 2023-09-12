@@ -556,12 +556,14 @@ function acceptJoinRequest(requestID, userID) {
 	if(!requestID && !userID){
 		return;
 	}
+	
     // Update the user's document to add the currentFamilyID to the userTrees array
     firestore.collection('users').doc(userID)
         .update({
             userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
         })
         .then(() => {
+		/*
             // Get the document reference
             const requestRef = firestore.collection('memberRequest').doc(requestID);
             
@@ -610,7 +612,7 @@ function acceptJoinRequest(requestID, userID) {
                             .catch((error) => {
                                 console.error('Error adding family member:', error);
                             });
-                        
+                        */
                         // Delete the document
                         requestRef.delete()
                             .then(() => {
