@@ -577,7 +577,8 @@ function acceptJoinRequest(requestID, userID) {
                             .then(() => {
                                 console.log('Join request accepted and deleted.');
                                 loadJoinRequests(); // Reload the list of join requests
-                                
+                                       //         showMainMessage("No matching family trees found.");
+
                                 // Now you can use 'requestData' to access the field data of the deleted document
                                 console.log('Field data of deleted document:', requestData);
                             })
