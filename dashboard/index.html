@@ -809,7 +809,7 @@ function createFamilyTree() {
           
         
 
-async function getFamilyTree(treeId) {
+async function getFamilyTreeData(treeId) {
     try {
         // Reference to the Firestore collection
         const familyTreesCollection = firestore.collection('familyTrees');
@@ -882,7 +882,7 @@ async function getFamilyTree(treeId) {
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
-                    const tree = await getFamilyTree(treeId);
+                    const tree = await getFamilyTreeData(treeId);
                     if (tree) {
                         displayTreeDetails(tree);
                         displayFamilyMembers(tree);
@@ -977,6 +977,8 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
 
             members.forEach((member) => {
                 // Implement dynamic population of family member details here
+                     console.log(` member`member.first_name);
+
             });
         }
 
