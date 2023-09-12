@@ -888,8 +888,8 @@ async function getFamilyTreeData(treeId) {
             const user = checkUserLogin();
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
-                if (treeId) {
-                    const tree = await getFamilyTreeData(treeId);
+                if (treeId || currentFamilyID) {
+                    const tree = await getFamilyTreeData(treeId || currentFamilyID);
                     if (tree) {
                         displayTreeDetails(tree);
                         displayFamilyMembers(tree);
@@ -967,7 +967,7 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
         // Function to get the treeId from query parameters
         function getTreeIdFromQueryParams() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get("user");
+            return urlParams.get("tree");
         }
 
         // Function to display tree details
