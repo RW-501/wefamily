@@ -811,6 +811,13 @@ function createFamilyTree() {
 
 async function getFamilyTreeData(treeId) {
     try {
+
+            // Ensure userID is defined and not empty
+    if (!treeId) {
+        
+
+          return;
+    }
         // Reference to the Firestore collection
         const familyTreesCollection = firestore.collection('familyTrees');
 
