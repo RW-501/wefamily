@@ -526,20 +526,77 @@ function acceptJoinRequest(requestID, userID) {
             userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
         })
         .then(() => {
-            // Delete the join request from the memberRequest collection
-            firestore.collection('memberRequest').doc(requestID).delete()
-                .then(() => {
-                    console.log('Join request accepted and deleted.');
-                    loadJoinRequests(); // Reload the list of join requests
+            // Get the document reference
+            const requestRef = firestore.collection('memberRequest').doc(requestID);
+            
+            // Get the field data before deleting the document
+            requestRef.get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const requestData = doc.data();
+                        
+                        const familyMember = {
+                            first_name: requestData.first_name,
+                            last_name: requestData.last_name,
+                            location: requestData.location,
+                            birthdate: "", // Corrected
+                            photo: '',
+                            private: "NO", // Corrected
+                            addByID: userID,
+                            familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
+                            userID: "",
+                            spouse: [],
+                            parents: [],
+                            children: [],
+                            contact: "",
+                            note: "",
+                            // Add other fields as needed
+                        };
+                        
+                        // Add the family member to the 'familyMembers' collection
+                        firestore.collection('familyMembers').add(familyMember)
+                            .then((docRef) => {
+                                // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
+                                const updatedFamilyMember = { ...familyMember, userID: docRef.id };
+                                
+                                // Update the 'familyMembers' collection document with the generated document ID
+                                firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
+                                    .then(() => {
+                                        console.log('Family member added with ID:', docRef.id);
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error updating family member:', error);
+                                    });
+                            })
+                            .catch((error) => {
+                                console.error('Error adding family member:', error);
+                            });
+                        
+                        // Delete the document
+                        requestRef.delete()
+                            .then(() => {
+                                console.log('Join request accepted and deleted.');
+                                loadJoinRequests(); // Reload the list of join requests
+                                
+                                // Now you can use 'requestData' to access the field data of the deleted document
+                                console.log('Field data of deleted document:', requestData);
+                            })
+                            .catch((error) => {
+                                console.error('Error deleting join request:', error);
+                            });
+                    } else {
+                        console.log('Document does not exist.');
+                    }
                 })
                 .catch((error) => {
-                    console.error('Error deleting join request:', error);
+                    console.error('Error getting join request document:', error);
                 });
         })
         .catch((error) => {
             console.error('Error updating user document:', error);
         });
 }
+
 
 function declineJoinRequest(requestID) {
     // Delete the join request from the memberRequest collection
@@ -905,7 +962,6 @@ async function getFamilyTreeData(treeId) {
    function getFamilyTree(userID) {
     
 
-                        console.log('getFamilyTree no user id  :  ',userID);
     
     // Ensure userID is defined and not empty
     if (!userID) {
@@ -913,7 +969,6 @@ async function getFamilyTreeData(treeId) {
         return;
     }
     
-                    console.log('getFamilyTree');
 
     // Reference to the user document in Firestore
     const userDocRef = firestore.collection('users').doc(userID);
@@ -998,6 +1053,7 @@ function addFamilyMember() {
     const familyMember = {
         first_name: first_name,
         last_name: last_name,
+        location: "",
         birthdate: birthdate,
         photo: photo,
         private: isPrivate,
@@ -1012,8 +1068,26 @@ function addFamilyMember() {
         // Add other fields as needed
     };
 
-    // Add the family member to the database (you will need to implement this)
-    // Example: firestore.collection('familyMembers').add(familyMember);
+// Add the family member to the 'familyMembers' collection
+firestore.collection('familyMembers').add(familyMember)
+    .then((docRef) => {
+        // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
+        const updatedFamilyMember = { ...familyMember, userID: docRef.id };
+
+        // Update the 'familyMembers' collection document with the generated document ID
+        firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
+            .then(() => {
+                console.log('Family member added with ID:', docRef.id);
+            })
+            .catch((error) => {
+                console.error('Error updating family member:', error);
+            });
+    })
+    .catch((error) => {
+        console.error('Error adding family member:', error);
+    });
+
+
 
     // Close the modal after adding the member
     closeAddMemberModal();
