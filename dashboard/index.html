@@ -990,8 +990,9 @@ async function getFamilyTree(userID) {
                 console.log('User has a family tree with ID:', familyTreeId);
 
                 const tree = await getFamilyTreeData(familyTreeId);
-                    displayTreeDetails(tree);
+                     displayTreeDetails(tree);
 			const treeID = tree.treeID;
+			currentFamilyID =treeID;
                     displayFamilyMembers(treeID);
                 return;
             } else {
@@ -1023,7 +1024,9 @@ async function fetchFamilyTree() {
                 if (tree) {
                     displayTreeDetails(tree);
 			const treeID = tree.treeID;
+			currentFamilyID =treeID;
                     displayFamilyMembers(treeID);
+
                 } else {
                     console.log('Family tree not found.');
                     // Handle the case when the family tree is not found.
@@ -1090,6 +1093,7 @@ firestore.collection('familyMembers').add(familyMember)
         firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
             .then(() => {
                 console.log('Family member added with ID:', docRef.id);
+		    displayFamilyMembers(currentFamilyID);
             })
             .catch((error) => {
                 console.error('Error updating family member:', error);
