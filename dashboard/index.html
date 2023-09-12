@@ -299,7 +299,11 @@ Loading
  </div>
 <div id="join-familytree-section" class="tree-section hidden">
     <h2>Join Request</h2>
+
+            <label for="join_tree_name">Family Tree:</label>
     <div id="join_tree_name">tree name</div>
+    
+            <label for="join_tree_location">Locations:</label>
     <div id="join_tree_location">family locations</div>
 <hr>
    <form id="join-request-form">
@@ -528,9 +532,9 @@ function searchFamilyTrees() {
                     // Display more information as needed
     const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
-join_tree_location.innerHTL = data.name;
- join_tree_name.innerHTML = data.location;                   
-                    
+ join_tree_name.innerHTML = data.name;                   
+join_tree_location.innerHTL = data.location;
+
                 });
                                     toggleJoinTree();
 
@@ -569,8 +573,8 @@ function getFamilyTreeWithCode() {
 
    const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
-join_tree_location.innerHTL = familyTreeData.name;
- join_tree_name.innerHTML = familyTreeData.location;  
+ join_tree_name.innerHTML = data.name;                   
+join_tree_location.innerHTL = data.location; 
                     toggleJoinTree();
 
     
