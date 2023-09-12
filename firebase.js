@@ -95,3 +95,105 @@ function checkUserLogin() {
         return Promise.resolve(null);
     }
 }
+
+
+
+
+
+
+
+  const badWords = ['shit', 's h i t', 'queer', 'q u e e r', 'gay', 'pussy', 'dick', 'nigger', 'n i g g e r', 'nigga', 'damn', 'd a m n', 'God damn', 'fucking','fuck', 'f u c k', 'b i t c h', 'bitch', 'cum'];
+
+function filterContent(content) {
+  if (content == null) {
+    return '';
+  }
+
+  // Convert content to a string if it's not already
+let  trimmedStr = String(content);
+ content = trimmedStr.trim();
+
+  // Perform case-insensitive matching for bad words
+  const caseInsensitiveBadWords = badWords.map((word) => word.toLowerCase());
+
+  // Replace bad words with asterisks
+  caseInsensitiveBadWords.forEach((word) => {
+    const regex = new RegExp(`\\b(${escapeRegExp(word)})\\b`, 'gi');
+    content = content.replace(regex, '***');
+  });
+
+  // Regular expression for matching contact information
+  const contactInfoRegex = /\b(?:\d{10}|\d{3}[-.\s]\d{3}[-.\s]\d{4}|(?:\+\d{1,2}\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})\b/g;
+
+  // Replace contact information with asterisks
+  content = content.replace(contactInfoRegex, '***');
+
+content = sanitizeHTMLscript(content);
+
+  // Sanitize HTML content to remove potentially harmful elements and attributes
+  content = sanitizeHTML(content);
+
+  return content;
+}
+
+// Sample HTML sanitizer function (replace with a more robust library in your implementation)
+function sanitizeHTML(content) {
+ const parser = new DOMParser();
+  const doc = parser.parseFromString(content, 'text/html');
+  const sanitizedContent = doc.body.textContent || doc.body.innerText;
+  return content;
+}
+function sanitizeHTMLscript(html) {
+  const cleanHTML = DOMPurify.sanitize(html);
+  return cleanHTML;
+}
+/*
+// Example usage:
+const dirtyHTML = "<script>alert('XSS attack!')</script>";
+console.log(sanitizedHTML);
+*/
+
+// Helper function to escape special characters in the word
+function escapeRegExp(word) {
+  return word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/*
+// Example usage:
+const userInput = "Hello, this is a muthafucking malicious <script>alert('Gotcha hoe ass!');</script> Bitch content!";
+const filteredContent = filterContent(userInput);
+console.log("filteredContent   "   +filteredContent);
+
+*/
+
+function input(text){
+
+	let userInput = filterContent(text);
+	return userInput;
+}
+
+
+
+function showMainMessage(message) {
+  const messageBox = document.getElementById('mainMessageBox');
+  const messageText = document.getElementById('mainMessageText');
+
+  messageText.innerHTML = message;
+
+  // Show the message box by setting 'top' to 0
+      messageBox.style.display = 'block'; 
+  messageBox.style.top = '0';
+
+  // Add a click event listener to the close button
+  const closeButton = document.getElementById('mainCloseButton');
+  closeButton.addEventListener('click', () => {
+    // Hide the message box by moving it back above the viewport
+    messageBox.style.top = '-300px';
+      messageBox.style.display = 'none'; 
+
+  });
+}
+
+// Example usage:
+//showMainMessage("Thank you for rating the quiz!");
+
