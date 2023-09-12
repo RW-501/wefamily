@@ -745,7 +745,7 @@ async function getFamilyTree(treeId) {
 
         
         function getFamilyTree(){
-
+/*
 // Reference to the user document in Firestore
 const userDocRef = firestore.collection('users').doc(userID);
 
@@ -772,7 +772,7 @@ userDocRef.get()
     .catch((error) => {
         console.error('Error getting user document:', error);
     });
-
+*/
         }
 
         // JavaScript functions for family tree management
@@ -785,8 +785,8 @@ userDocRef.get()
                 if (treeId) {
                     const tree = await getFamilyTree(treeId);
                     if (tree) {
-                      //  displayTreeDetails(tree);
-                      //  displayFamilyMembers(tree);
+                        displayTreeDetails(tree);
+                        displayFamilyMembers(tree);
                     } else {
                         // Handle tree not found
                       //  console.log(`question ${pollData.question} `);
