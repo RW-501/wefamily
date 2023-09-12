@@ -877,7 +877,7 @@ async function getFamilyTreeData(treeId) {
         const familyTreesCollection = firestore.collection('familyTrees');
 
         // Query the collection for the specific treeId
-        const querySnapshot = await familyTreesCollection.where('treeId', '==', treeId).get();
+        const querySnapshot = await familyTreesCollection.where('treeID', '==', treeId).get();
 
         // Check if a document matching the query exists
         if (querySnapshot.empty) {
@@ -957,8 +957,8 @@ async function fetchFamilyTree() {
                 const tree = await getFamilyTreeData(treeId);
                 if (tree) {
                     console.log(`Family Tree Name: ${tree.name}`);
-                    displayTreeDetails(tree);
-                    displayFamilyMembers(tree);
+                    //displayTreeDetails(tree);
+                 //   displayFamilyMembers(tree);
                 } else {
                     console.log('Family tree not found.');
                     // Handle the case when the family tree is not found.
@@ -979,47 +979,7 @@ async function fetchFamilyTree() {
     }
 }
 
-     /*   // JavaScript functions for family tree management
-        async function fetchFamilyTree() {
-            // Fetch and display the family tree details and members from Firestore
-checkUserLogin()
-    .then((userID) => {
-        if (userID) {
-            // You can use userID here after the user is logged in
-            console.log('UserID:', userID);
-  const treeId = getTreeIdFromQueryParams();
-                if (treeId) {
-                    const tree =  getFamilyTreeData(treeId);
-                    if (tree) {
-                          console.log(`894 tree `,tree.name);
-                        displayTreeDetails(tree);
-                        displayFamilyMembers(tree);
-                    } else {
-                        // Handle tree not found
-                      //  console.log(`question ${pollData.question} `);
-                        console.log(`Handle tree not found `);
-
-                            getFamilyTree(userID);
-   
-                    }
-                } else {
-                    // Handle missing treeId parameter
-                                            console.log(`Handle missing treeId parameter`);
-                            getFamilyTree(userID);
-	    }
-        } else {
-       // Redirect to login page if the user is not logged in
-                window.location.href = "index.html";
-                console.log(` user is not logged in `);
-
-        }
-    })
-    .catch((error) => {
-        console.error('Error checking user login:', error);
-    });
-
-        }
-*/
+    
         // Function to add a new family member
 // Function to add a family member
 function addFamilyMember() {
