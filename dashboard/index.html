@@ -960,48 +960,44 @@ async function getFamilyTreeData(treeId) {
 
 
         
-   function getFamilyTree(userID) {
-    
-
-    
+async function getFamilyTree(userID) {
     // Ensure userID is defined and not empty
     if (!userID) {
-      ///  console.error('UserID is not defined or empty.');
+        // console.error('UserID is not defined or empty.');
         return;
     }
-    
 
     // Reference to the user document in Firestore
     const userDocRef = firestore.collection('users').doc(userID);
 
-    // Get the user document from Firestore
-    userDocRef.get()
-        .then((doc) => {
-            if (doc.exists) {
-                // Check if the user document has a "userTrees" field (an array of family tree IDs)
-                if (doc.data().userTrees && doc.data().userTrees.length > 0) {
-                    // Get the first family tree ID from the user's array of family tree IDs
-                    const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
-                    console.log('User has a family tree with ID:', familyTreeId);
+    try {
+        const doc = await userDocRef.get();
 
-                   const tree = await getFamilyTreeData(familyTreeId);
-                        displayTreeDetails(tree);
-                        displayFamilyMembers(tree);
-                    return ;
-                } else {
-                     document.getElementById("tree-details").style.display = "none";
-                    console.log('User does not have any family trees.');
-                    openPopup();
-                }
+        if (doc.exists) {
+            // Check if the user document has a "userTrees" field (an array of family tree IDs)
+            if (doc.data().userTrees && doc.data().userTrees.length > 0) {
+                // Get the first family tree ID from the user's array of family tree IDs
+                const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
+                console.log('User has a family tree with ID:', familyTreeId);
+
+                const tree = await getFamilyTreeData(familyTreeId);
+                displayTreeDetails(tree);
+                displayFamilyMembers(tree);
+                return;
             } else {
-                console.log('User document does not exist.');
-                window.location.href = "index.html";
+                document.getElementById("tree-details").style.display = "none";
+                console.log('User does not have any family trees.');
+                openPopup();
             }
-        })
-        .catch((error) => {
-            console.error('Error getting user document:', error);
-        });
+        } else {
+            console.log('User document does not exist.');
+            window.location.href = "index.html";
+        }
+    } catch (error) {
+        console.error('Error getting user document:', error);
+    }
 }
+
 
 async function fetchFamilyTree() {
     try {
