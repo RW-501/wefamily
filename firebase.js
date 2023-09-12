@@ -79,11 +79,11 @@ function checkUserLogin() {
                 if (user) {
                     // User is logged in
  
-                    resolve(user);
+                    
                     // You can also perform actions here when the user is logged in.
                                      userID = user.uid;
                     console.log('User is logged in with UID:', userID);
-			return userID;
+			return resolve(user);
                 } else {
                     // User is logged out
                     console.error('No user is signed in');
