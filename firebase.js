@@ -77,7 +77,7 @@ function checkUserLogin() {
 
                 if (user) {
                     // User is logged in
-                    const userID = user.uid;
+                     userID = user.uid;
                     console.log('User is logged in with UID:', userID);
                     resolve(userID);
                     // You can also perform actions here when the user is logged in.
