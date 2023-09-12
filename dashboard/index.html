@@ -1300,6 +1300,25 @@ if (data.userID === userID) {
 	    function claimMemberFunc(member){
 showMainMessage("claim ",member.memberID);
 
+let memberID = member.memberID;
+            const userDocRef = firestore.collection('familyMembers').doc(memberID);
+
+                        // Update the user document to add the family tree ID to the "userTrees" array field
+                        userDocRef.update({
+                            userTrees: firebase.firestore.FieldValue.arrayUnion(userID)
+                        })
+                            .then(() => {
+                                console.log('Family tree ID added to user document successfully.');
+			newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp} `);
+
+                            })
+                            .catch((error) => {
+                                console.error('Error adding family tree ID to user document:', error);
+                            });
+
+
+
+	    
 	newsPost(`${userID} claimed ${member.first_name} ${member.last_name} `);
 
 	    }	    
