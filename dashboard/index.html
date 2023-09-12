@@ -746,54 +746,60 @@ function createFamilyTree() {
         return;
     }
 
-    // Create an object to represent the family tree data
-    const familyTreeData = {
-        name: treeName,
-        location: treeLocation,
-        description: treeDescription,
-        adminID: userID,
-        public: pubicBool,
-        familyCode: familyCode,
-        treeID:"",
-        photo: "",
-        // Add more fields as needed
-    };
+    // Check if a family tree with the same familyCode already exists
+    firestore.collection('familyTrees').where('familyCode', '==', familyCode)
+        .get()
+        .then((querySnapshot) => {
+            if (!querySnapshot.empty) {
+                alert("A family tree with this family code already exists. Please choose a different code.");
+            } else {
+                // Create an object to represent the family tree data
+                const familyTreeData = {
+                    name: treeName,
+                    location: treeLocation,
+                    description: treeDescription,
+                    adminID: userID,
+                    public: pubicBool,
+                    familyCode: familyCode,
+                    treeID: "",
+                    photo: "",
+                    // Add more fields as needed
+                };
 
-    // Add the family tree to Firestore
-    firestore.collection('familyTrees').add(familyTreeData)
-        .then((docRef) => {
-            console.log('Family tree added with ID:', docRef.id);
-            
-     firestore.collection('familyTrees').doc(docRef.id).update({
-            treeID: docRef.id,
-        });           
-            currentFamilyID = docRef.id;
-            // Close the pop-up after creating the family tree
+                // Add the family tree to Firestore
+                firestore.collection('familyTrees').add(familyTreeData)
+                    .then((docRef) => {
+                        console.log('Family tree added with ID:', docRef.id);
 
-const familyTreeId = currentFamilyID; // Replace with the actual family tree ID
+                        firestore.collection('familyTrees').doc(docRef.id).update({
+                            treeID: docRef.id,
+                        });
+                        currentFamilyID = docRef.id;
 
-// Reference to the user document in Firestore
-const userDocRef = firestore.collection('users').doc(userID);
+                        // Reference to the user document in Firestore
+                        const userDocRef = firestore.collection('users').doc(userID);
 
-// Update the user document to add the family tree ID to the "userTrees" array field
-userDocRef.update({
-    userTrees: firebase.firestore.FieldValue.arrayUnion(familyTreeId)
-})
-.then(() => {
-    console.log('Family tree ID added to user document successfully.');
-})
-.catch((error) => {
-    console.error('Error adding family tree ID to user document:', error);
-});
+                        // Update the user document to add the family tree ID to the "userTrees" array field
+                        userDocRef.update({
+                            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+                        })
+                            .then(() => {
+                                console.log('Family tree ID added to user document successfully.');
+                            })
+                            .catch((error) => {
+                                console.error('Error adding family tree ID to user document:', error);
+                            });
 
-
-            
-            closePopup();
-
-            showAddMemberModal();
+                        closePopup();
+                        showAddMemberModal();
+                    })
+                    .catch((error) => {
+                        console.error('Error adding family tree:', error);
+                    });
+            }
         })
         .catch((error) => {
-            console.error('Error adding family tree:', error);
+            console.error('Error checking family code uniqueness:', error);
         });
 }
 
