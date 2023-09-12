@@ -453,7 +453,33 @@ text-align: end;
     <button id="mainCloseButton">Close</button>
   </div>
 </div>
-    
+
+
+	<div id="add-member-type" class="popup-container">
+    <div class="popup">
+        <span class="close-button" onclick="closeAddMemberTypePopup()">&times;</span>
+        <h2 id="memberType" >Add Family Member</h2>
+        <form id="add-member-form">
+            <p>
+            <label for="member-first_name_type">First Name:</label>
+            <input type="text" id="member-first_name_type" required>
+                </p><p>
+<label for="member-last_name_type">Last Name:</label>
+            <input type="text" id="member-last_name_type" required>
+                </p><p>
+            <label for="member-birthdate_type">Birthdate:</label>
+            <input type="date" id="member-birthdate_type" required>
+                    </p><p>
+            <label for="member-photo_type">Photo URL:</label>
+            <input type="text" id="member-photo_type">
+                        </p><p>
+            <label for="member-note_type">Note:</label>
+            <textarea id="member-note_type"></textarea>
+                                </p>
+            <button type="submit" id="memberTypeBTN">Add Member</button>
+        </form>
+    </div>
+</div>
     <script>
 var currentFamilyID = "";
 var requestFamilyID = "";
@@ -474,11 +500,11 @@ firestore.collection('posts')
                 const post = doc.data();
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-
+    /*   <span>Tree Update</span>*/
+     
 		    if(post.postType === "news"){
        postElement.innerHTML = `
-       <span>Tree Update</span>
-                    <p>${post.content}</p>
+               <p>${post.content}</p>
                     <small>${post.author}</small>
                 `;
 
@@ -537,7 +563,7 @@ function newsPost(xxx) {
         userID: '',
         content: xxx,
         photo: '',
-        author:  'Tree update',
+        author:  'Family Tree Update',
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 	
@@ -1281,43 +1307,251 @@ showMainMessage("claim ",member.memberID);
 showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 
 	    }
-    // Event listener functions for adding family members (customize these functions)
+
 
 	    var addFamily_Type = '';
 	    var addFamily_MemberID = '';
-	    var addFamily_Type = '';
+	    var addFamily_MemberData = '';
+
+	function showAddMemberTypePopup(xxx) {
+	document.getElementById('memberType').innerHTML = "Add Member ",xxx;    
+	document.getElementById('memberTypeBTN').innerHTML = "Add Member ",xxx;
+		
+		const modal = document.getElementById('add-member-type');
+    modal.style.display = 'block';
+}
+
+// Function to close the add member modal
+function closeAddMemberTypePopup() {
+	document.getElementById('memberType').innerHTML = "";    
+	document.getElementById('memberTypeBTN').innerHTML = "";  
+	
+	const modal = document.getElementById('add-member-type');
+    modal.style.display = 'none';
+	addFamily_Type = '';
+	    addFamily_MemberID = '';
+	addFamily_MemberData = '';
+
+}
+
+// Close the modal if the user clicks outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('add-member-type');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+	document.getElementById('memberType').innerHTML = "";    
+	document.getElementById('memberTypeBTN').innerHTML = "";  
+	    addFamily_Type = '';
+	    addFamily_MemberID = '';
+	    addFamily_MemberData = '';
+
+    }
+};
+
+
+//  addChildToParent(newID, addFamily_MemberID);  Parent
+// addSpouse(newID, addFamily_MemberID); Spouse
+// addSiblings(newID, addFamily_MemberID);  Sibling
+// addParentTChild(newID, addFamily_MemberID); Child
+	    
+function addNewFamilyMember() {
+	                    console.log('Added Member.');
+
+    // Get input values
+    const first_name = document.getElementById('member-first_name_type').value;
+    const last_name = document.getElementById('member-last_name_type').value;
+    const birthdate = document.getElementById('member-birthdate_type').value;
+    const photo = document.getElementById('member-photo_type').value;
+    const note = document.getElementById('member-note_type').value;
+
+if(!first_name && !last_name){
+		return;
+	}
+    // You can perform data validation and error handling here
+
+    // Create a new family member document and add it to the database
+    const familyMember = {
+        first_name: first_name,
+        last_name: last_name,
+        location: "",
+        birthdate: birthdate,
+        photo: photo,
+        private: false,
+        addByID: userID,
+        familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
+        userID: "",
+        memberID: "",
+        spouse: [],
+        parents: [],
+        children: [],
+        contact: '',
+        note: note,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
+        // Add other fields as needed
+    };
+
+// Add the family member to the 'familyMembers' collection
+firestore.collection('familyMembers').add(familyMember)
+    .then((docRef) => {
+        // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
+        const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
+
+        // Update the 'familyMembers' collection document with the generated document ID
+        firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
+            .then(() => {
+                console.log('Family member added with ID:', docRef.id);
+
+
+
+	    let newID = docRef.id;
+	if(addFamily_Type === "Parent"){
+addChildToParent(newID, addFamily_MemberID); 
+ newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Parent`);
+}    
+
+	    
+// 	    newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Parent`);
+  // newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Spouse`);
+// newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Child`);
+//    newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Sibling`);
+
+//  addChildToParent(newID, addFamily_MemberID);  Parent
+// addSpouse(newID, addFamily_MemberID); Spouse
+// addSiblings(newID, addFamily_MemberID);  Sibling
+// addParentTChild(newID, addFamily_MemberID); Child
+
+		                .then(() => {
+		    displayFamilyMembers(currentFamilyID);
+  })
+            .catch((error) => {
+                console.error('Error updating family member relationships:', error);
+            });
+		    
+            })
+            .catch((error) => {
+                console.error('Error updating family member:', error);
+            });
+    })
+    .catch((error) => {
+        console.error('Error adding family member:', error);
+    });
+
+
+
+    // Close the modal after adding the member
+    closeAddMemberModal();
+}
+
+document.getElementById('add-member-type').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent form submission
+
+
+	
+	    
+    addNewFamilyMember(); // Call the function to add the family member
+});
+
 	    
     function addParent(member) {
         // Add parent logic here
-
-	    showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Parent`);
+showAddMemberTypePopup("Parent");
+	    addFamily_MemberID = member.memberID;
+	    addFamily_Type = 'Parent';
+addFamily_MemberData = member;
 
     }
 
     function addSpouse(member) {
         // Add spouse logic here
+showAddMemberTypePopup("Spouse");
+	    addFamily_MemberID = member.memberID;
+	    addFamily_Type = 'Spouse';
+addFamily_MemberData = member;
 
-	   showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Spouse`);
- 
     }
 
     function addChild(member) {
         // Add child logic here
-showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their child`);
+showAddMemberTypePopup("Child");
+	    addFamily_MemberID = member.memberID;
+	    addFamily_Type = 'Child';
+addFamily_MemberData = member;
 
     }
 
     function addSibling(member) {
         // Add sibling logic here
-
-	    showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Sibling`);
+showAddMemberTypePopup("Sibling");
+	    addFamily_MemberID = member.memberID;
+	    addFamily_Type = 'Sibling';
+addFamily_MemberData = member;
 
     }
-
-    // Example: Add an initial family member
-    //addFamilyMember();
-
 	    
+// Function to add a parent to a child
+function addParentTChild(newID, addFamily_MemberID) {
+    const childRef = firestore.collection('familyMembers').doc(newID);
+    const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+
+    // Update the child's parents array to include the parent's ID
+    childRef.update({
+        parents: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+    });
+
+    // Update the parent's children array to include the child's ID
+    parentRef.update({
+        children: firebase.firestore.FieldValue.arrayUnion(newID)
+    });
+}
+
+
+// Function to add siblings to each other's sibling arrays
+function addSiblings(newID, addFamily_MemberID) {
+    const memberRef1 = firestore.collection('familyMembers').doc(newID);
+    const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
+
+    // Update the sibling arrays for both members
+    memberRef1.update({
+        siblings: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+    });
+    
+    memberRef2.update({
+        siblings: firebase.firestore.FieldValue.arrayUnion(newID)
+    });
+}
+
+// Function to add parent-child relationship
+function addChildToParent(newID, addFamily_MemberID) {
+    const parentRef = firestore.collection('familyMembers').doc(newID);
+    const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+
+    // Update the parent and child arrays
+    parentRef.update({
+        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+    });
+
+    childRef.update({
+        parents: firebase.firestore.FieldValue.arrayUnion(newID)
+    });
+}
+
+// Function to add spouses to each other's spouse arrays
+function addSpouse(newID, addFamily_MemberID) {
+    const memberRef1 = firestore.collection('familyMembers').doc(newID);
+    const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
+
+    // Update the spouse arrays for both members
+    memberRef1.update({
+        spouses: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+    });
+
+    memberRef2.update({
+        spouses: firebase.firestore.FieldValue.arrayUnion(newID)
+    });
+}
+
+    
  
             
 
