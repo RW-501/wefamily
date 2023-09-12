@@ -848,15 +848,17 @@ async function getFamilyTreeData(treeId) {
 
         
      function getFamilyTree() {
+                        console.log('getFamilyTree no user id');
+     
     // Ensure userID is defined and not empty
     if (!userID) {
       ///  console.error('UserID is not defined or empty.');
         return;
     }
+                    console.log('getFamilyTree');
 
     // Reference to the user document in Firestore
     const userDocRef = firestore.collection('users').doc(userID);
-                    console.log('getFamilyTree');
 
     // Get the user document from Firestore
     userDocRef.get()
