@@ -1140,12 +1140,15 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
             document.getElementById("tree-name").value = tree.name;
             document.getElementById("tree-location").value = tree.location;
             document.getElementById("tree-description").value = tree.description;
-		loadPosts();
 
         }
 
         // Function to display family members
   async function displayFamilyMembers(treeID) {
+	  		loadPosts();
+if(!treeID){
+		return;
+	}
     const familyMembersContainer = document.getElementById("family-members");
     familyMembersContainer.innerHTML = ""; // Clear existing members
 
