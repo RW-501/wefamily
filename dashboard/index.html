@@ -492,6 +492,7 @@ function addPost() {
     }
 
     const post = {
+        postType: "text",
         treeID: currentFamilyID,
         userID: userID,
         content: postContent,
@@ -513,7 +514,31 @@ function addPost() {
         });
 }
 
+function newsPost(xxx) {
 
+    if (!xxx ) {
+        return;
+    }
+
+    const post = {
+        postType: "news",
+        treeID: currentFamilyID,
+        userID: '',
+        content: xxx,
+        photo: '',
+        author:  'update',
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+	
+    firestore.collection('posts').add(post)
+        .then(() => {
+            console.log('Post added successfully');
+		loadPosts();
+        })
+        .catch((error) => {
+            console.error('Error adding post:', error);
+        });
+}
 
 
         
@@ -591,7 +616,8 @@ function acceptJoinRequest(requestID, userID) {
                             .then(() => {
                                 console.log('Join request accepted and deleted.');
                                 loadJoinRequests(); // Reload the list of join requests
-                                       //         showMainMessage("No matching family trees found.");
+				    
+newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family Tree`);
 
                                 // Now you can use 'requestData' to access the field data of the deleted document
                                 console.log('Field data of deleted document:', requestData);
@@ -693,6 +719,8 @@ function joinRequestFunc() {
             console.log('Join request added with ID:', docRef.id);
             // You can perform further actions or provide feedback to the user
             // Clear form fields if needed
+newsPost(`${joinRequestData.firstName} ${joinRequestData.lastName} request to join Family Tree`);
+
             document.getElementById('request_first-name').value = '';
             document.getElementById('request_last-name').value = '';
             document.getElementById('request_location').value = '';
@@ -915,6 +943,8 @@ function createFamilyTree() {
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
+			newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp} `);
+
                             })
                             .catch((error) => {
                                 console.error('Error adding family tree ID to user document:', error);
@@ -1198,24 +1228,24 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
 
         // Add event listeners for each button in the new family member
    const addParentBtn = memberDiv.querySelector('.add-parent');
-addParentBtn.addEventListener('click', () => addParent(data.memberID));
+addParentBtn.addEventListener('click', () => addParent(data));
 
 const addSpouseBtn = memberDiv.querySelector('.add-spouse');
-addSpouseBtn.addEventListener('click', () => addSpouse(data.memberID));
+addSpouseBtn.addEventListener('click', () => addSpouse(data));
 
 const addChildBtn = memberDiv.querySelector('.add-child');
-addChildBtn.addEventListener('click', () => addChild(data.memberID));
+addChildBtn.addEventListener('click', () => addChild(data));
 
 const addSiblingBtn = memberDiv.querySelector('.add-sibling');
-addSiblingBtn.addEventListener('click', () => addSibling(data.memberID));
+addSiblingBtn.addEventListener('click', () => addSibling(data));
 
 if (data.userID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
-    editMemberBTN.addEventListener('click', () => editMemberFunc(data.memberID));
+    editMemberBTN.addEventListener('click', () => editMemberFunc(data));
 } else {
     if (data.userID === "") {
         const claimMemberBTN = memberDiv.querySelector('.claim-member');
-        claimMemberBTN.addEventListener('click', () => claimMemberFunc(data.memberID));
+        claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
     }
 }
 
@@ -1227,30 +1257,42 @@ if (data.userID === userID) {
     }
 }
 
-	    function claimMemberFunc(memberID){
-showMainMessage("claim ",memberID);
+	    function claimMemberFunc(member){
+showMainMessage("claim ",member.memberID);
+
+	newsPost(`${userID} claimed ${member.first_name} ${member.last_name} `);
+
 	    }	    
-	    function editMemberFunc(memberID){
-showMainMessage("edit ",memberID);
+	    function editMemberFunc(member){
+showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 
 	    }
     // Event listener functions for adding family members (customize these functions)
-    function addParent(memberID) {
+    function addParent(member) {
         // Add parent logic here
+
+	    showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Parent`);
+
     }
 
-    function addSpouse(memberID) {
+    function addSpouse(member) {
         // Add spouse logic here
+
+	   showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Spouse`);
+ 
     }
 
-    function addChild(memberID) {
+    function addChild(member) {
         // Add child logic here
-showMainMessage("add child ",memberID);
+showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their child`);
 
     }
 
-    function addSibling(memberID) {
+    function addSibling(member) {
         // Add sibling logic here
+
+	    showMainMessage(`${userID} added ${member.first_name} ${member.last_name} as their Sibling`);
+
     }
 
     // Example: Add an initial family member
