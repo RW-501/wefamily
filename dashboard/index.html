@@ -376,6 +376,7 @@ Loading
     
     <script>
 var currentFamilyID = "";
+var requestFamilyID = "";
 
 function openJoinRequestPopup() {
     document.getElementById('join-request-popup').style.display = 'block';
@@ -466,7 +467,7 @@ function joinRequestFunc() {
         firstName: firstName,
         lastName: lastName,
         location: location,
-        treeID: currentFamilyID,
+        treeID: requestFamilyID,
         userID: userID,
         note: note,
         // Add more fields as needed
@@ -529,6 +530,8 @@ function searchFamilyTrees() {
                     const data = doc.data();
                     console.log("Family Tree Name:", data.name);
                     console.log("Family Tree Location:", data.location);
+
+                    requestFamilyID = data.treeID;
                     // Display more information as needed
     const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
@@ -565,6 +568,7 @@ function getFamilyTreeWithCode() {
                 // Retrieve the family tree (assuming there is only one match)
                 const familyTreeDoc = querySnapshot.docs[0];
                 const familyTreeData = familyTreeDoc.data();
+                    requestFamilyID = familyTreeData.treeID;
 
                 // Use the family tree data as needed (e.g., display tree details)
                 console.log("Family Tree Name:", familyTreeData.name);
@@ -665,6 +669,7 @@ function createFamilyTree() {
         adminID: userID,
         public: pubicBool,
         familyCode: familyCode,
+        treeID:"",
         photo: "",
         // Add more fields as needed
     };
@@ -673,7 +678,10 @@ function createFamilyTree() {
     firestore.collection('familyTrees').add(familyTreeData)
         .then((docRef) => {
             console.log('Family tree added with ID:', docRef.id);
-            // You can perform further actions or navigation after successfully adding the family tree
+            
+     firestore.collection('familyTrees').doc(docRef.id).update({
+            treeID: docRef.id,
+        });           
             currentFamilyID = docRef.id;
             // Close the pop-up after creating the family tree
 
