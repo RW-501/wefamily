@@ -866,8 +866,12 @@ async function getFamilyTreeData(treeId) {
                     // Get the first family tree ID from the user's array of family tree IDs
                     const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
                     console.log('User has a family tree with ID:', familyTreeId);
-                    return familyTreeId;
+
+                        displayTreeDetails(familyTreeId);
+                        displayFamilyMembers(familyTreeId);
+                    return ;
                 } else {
+                     document.getElementById("tree-details").style.display = "none";
                     console.log('User does not have any family trees.');
                     openPopup();
                 }
@@ -888,16 +892,16 @@ async function getFamilyTreeData(treeId) {
             const user = checkUserLogin();
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
-                if (treeId || currentFamilyID) {
-                    const tree = await getFamilyTreeData(treeId || currentFamilyID);
+                if (treeId) {
+                    const tree = await getFamilyTreeData(treeId);
                     if (tree) {
+                          console.log(`894 tree `,tree.name);
                         displayTreeDetails(tree);
                         displayFamilyMembers(tree);
                     } else {
                         // Handle tree not found
                       //  console.log(`question ${pollData.question} `);
                         console.log(`Handle tree not found `);
-                        document.getElementById("tree-details").style.display = "none";
                         getFamilyTree();
 
                         
