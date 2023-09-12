@@ -984,8 +984,9 @@ async function getFamilyTreeData(treeId) {
                     const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
                     console.log('User has a family tree with ID:', familyTreeId);
 
-                        displayTreeDetails(familyTreeId);
-                        displayFamilyMembers(familyTreeId);
+                   const tree = await getFamilyTreeData(familyTreeId);
+                        displayTreeDetails(tree);
+                        displayFamilyMembers(tree);
                     return ;
                 } else {
                      document.getElementById("tree-details").style.display = "none";
