@@ -1158,11 +1158,13 @@ const querySnapshot = await familyMembersCollection.where('familyID', 'array-con
             const data = member.data();
             // Implement dynamic population of family member details here
 let claim_Div = "";		
-if(data.userID === userID){
-claim_Div = "<button class='claim-member'>Claim Member</button>";
-}else{
+if(data.userID === userID ){
 claim_Div = "<button class='edit-member'>Edit Member</button>";
-
+}else{
+if(data.userID === "" ){
+claim_Div = "<button class='claim-member'>Claim Member</button>";
+}
+	
 }
             const memberDiv = document.createElement("div");
         memberDiv.className = 'family-member';
@@ -1196,15 +1198,16 @@ claim_Div = "<button class='edit-member'>Edit Member</button>";
         addSiblingBtn.addEventListener('click', addSibling);
 		
 if(data.userID === userID){
-	        const climMemberBTN = memberDiv.querySelector('.claim-member');
-        climMemberBTN.addEventListener('click', climMemberFunc);
-}else{
 	        const editMemberBTN = memberDiv.querySelector('.edit-member');
         editMemberBTN.addEventListener('click', editMemberFunc);
+}else{
 
+if(data.userID === "" ){
+	 const climMemberBTN = memberDiv.querySelector('.claim-member');
+        climMemberBTN.addEventListener('click', climMemberFunc);
 }
-        // Append the new family member to the family tree
-        document.querySelector('.family-tree').appendChild(memberDiv);
+}
+     
     
             familyMembersContainer.appendChild(memberDiv);
         });
