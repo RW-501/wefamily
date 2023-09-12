@@ -957,7 +957,7 @@ checkUserLogin()
             console.log('UserID:', userID);
   const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
-                    const tree = await getFamilyTreeData(treeId);
+                    const tree =  getFamilyTreeData(treeId);
                     if (tree) {
                           console.log(`894 tree `,tree.name);
                         displayTreeDetails(tree);
