@@ -464,9 +464,10 @@ function loadPosts() {
     familyNewsArea.innerHTML = 'Loading...';
 
     // Listen for changes to the posts collection (Firestore query)
-    firestore.collection('posts')
-        .orderBy('timestamp', 'desc') // Order by timestamp in descending order
-        .onSnapshot((querySnapshot) => {
+firestore.collection('posts')
+    .where('treeID', '==', currentFamilyID) // Filter posts by treeID
+    .orderBy('timestamp', 'desc') // Order by timestamp in descending order
+    .onSnapshot((querySnapshot) => {
             familyNewsArea.innerHTML = ''; // Clear the loading message
 
             querySnapshot.forEach((doc) => {
@@ -491,6 +492,8 @@ function addPost() {
     }
 
     const post = {
+        treeID: currentFamilyID,
+        userID: userID,
         content: postContent,
         author: currentUser.displayName || 'Anonymous',
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -550,6 +553,8 @@ function acceptJoinRequest(requestID, userID) {
                             children: [],
                             contact: "",
                             note: "",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
                             // Add other fields as needed
                         };
                         
@@ -668,6 +673,8 @@ function joinRequestFunc() {
         treeID: requestFamilyID,
         userID: userID,
         note: note,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
         // Add more fields as needed
     };
 
@@ -876,6 +883,7 @@ function createFamilyTree() {
                     familyCode: familyCode,
                     treeID: "",
                     photo: "",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     // Add more fields as needed
                 };
 
@@ -1064,6 +1072,8 @@ function addFamilyMember() {
         children: [],
         contact: contact,
         note: note,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+
         // Add other fields as needed
     };
 
