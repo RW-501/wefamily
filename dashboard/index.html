@@ -495,10 +495,13 @@ function addPost() {
         treeID: currentFamilyID,
         userID: userID,
         content: postContent,
-        author: currentUser.displayName || 'Anonymous',
+        photo: Current_USERPHOTO,
+        author: currentUser.displayName || Current_USERNAME || 'Anonymous',
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
+
+	
     firestore.collection('posts').add(post)
         .then(() => {
             console.log('Post added successfully');
@@ -1134,7 +1137,8 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get("tree");
         }
-
+var Current_USERNAME = '';
+var Current_USERPHOTO = '';
         // Function to display tree details
         function displayTreeDetails(tree) {
             document.getElementById("tree-name").value = tree.name;
@@ -1162,6 +1166,8 @@ const querySnapshot = await familyMembersCollection.where('familyID', 'array-con
             // Implement dynamic population of family member details here
 let claim_Div = "";		
 if(data.userID === userID ){
+ Current_USERNAME = data.first_name;
+ Current_USERPHOTO = data.photo;
 claim_Div = "<button class='edit-member'>Edit Member</button>";
 }else{
 if(data.userID === "" ){
