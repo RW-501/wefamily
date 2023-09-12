@@ -847,9 +847,11 @@ async function getFamilyTreeData(treeId) {
 
 
         
-   function getFamilyTree(userID) {
+   function getFamilyTree(user) {
     
-
+if(user){
+userID = user.uid;
+        }
                         console.log('getFamilyTree no user id  :  ',userID);
     
     // Ensure userID is defined and not empty
@@ -909,7 +911,7 @@ async function getFamilyTreeData(treeId) {
                       //  console.log(`question ${pollData.question} `);
                         console.log(`Handle tree not found `);
 
-                            getFamilyTree(user.uid);
+                            getFamilyTree(user);
 
 
                         
@@ -917,7 +919,7 @@ async function getFamilyTreeData(treeId) {
                 } else {
                     // Handle missing treeId parameter
                                             console.log(`Handle missing treeId parameter`);
-                            getFamilyTree(user.uid);
+                            getFamilyTree(user);
 
 
                 }
