@@ -981,8 +981,9 @@ async function getFamilyTree(userID) {
                 console.log('User has a family tree with ID:', familyTreeId);
 
                 const tree = await getFamilyTreeData(familyTreeId);
-                displayTreeDetails(tree);
-                displayFamilyMembers(tree);
+                    displayTreeDetails(tree);
+			const treeID = tree.treeID;
+                    displayFamilyMembers(treeID);
                 return;
             } else {
                 document.getElementById("tree-details").style.display = "none";
@@ -1009,9 +1010,9 @@ async function fetchFamilyTree() {
             if (treeId) {
                 const tree = await getFamilyTreeData(treeId);
                 if (tree) {
-                    console.log(`Family Tree Name: ${tree.name}`);
                     displayTreeDetails(tree);
-                    displayFamilyMembers(tree);
+			const treeID = tree.treeID;
+                    displayFamilyMembers(treeID);
                 } else {
                     console.log('Family tree not found.');
                     // Handle the case when the family tree is not found.
@@ -1115,16 +1116,34 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
         }
 
         // Function to display family members
-        function displayFamilyMembers(members) {
-            const familyMembersContainer = document.getElementById("family-members");
-            familyMembersContainer.innerHTML = ""; // Clear existing members
+  async function displayFamilyMembers(treeID) {
+    const familyMembersContainer = document.getElementById("family-members");
+    familyMembersContainer.innerHTML = ""; // Clear existing members
 
-            members.forEach((member) => {
-                // Implement dynamic population of family member details here
-                     console.log(` member`,member.first_name);
+    const familyMembersCollection = firestore.collection('familyMembers');
 
-            });
-        }
+    try {
+        const querySnapshot = await familyMembersCollection.where('familyID', '==', treeID).get();
+
+        querySnapshot.forEach((member) => {
+            const data = member.data();
+            // Implement dynamic population of family member details here
+
+            const memberDiv = document.createElement("div");
+            memberDiv.innerHTML = `
+                <p>First Name: ${data.first_name}</p>
+                <p>Last Name: ${data.last_name}</p>
+                <p>Birthdate: ${data.birthdate}</p>
+                <!-- Add other fields as needed -->
+            `;
+
+            familyMembersContainer.appendChild(memberDiv);
+        });
+    } catch (error) {
+        console.error('Error displaying family members:', error);
+    }
+}
+
 
         // Call the fetchFamilyTree function on page load
         window.onload = fetchFamilyTree;
