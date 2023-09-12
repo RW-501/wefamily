@@ -207,6 +207,7 @@ async function loginWithEmailPassword() {
 }
 
 
+const currentDate = new Date();
 
 // Function to log in with phone (Note: Implement Firebase phone login pop-up)
  async function loginWithPhoneAuthentication() {
@@ -240,6 +241,14 @@ async function loginWithEmailPassword() {
         const userId = user.uid;
         await firestore.collection('users').doc(userId).set({
             phoneNumber: user.phoneNumber,
+                userName: "Family Member", 
+                loginCount: 1, // Initialize login count to 1
+                email: "",
+            userTrees: [],
+            signUpType:"Phone",
+            signUpDate: currentDate,
+
+            
             // Add more user-related data here
         });
 
@@ -277,6 +286,12 @@ async function loginAnonymously() {
             await firestore.collection('users').doc(userId).set({
                 userName: "Anonymous", 
                 loginCount: 1, // Initialize login count to 1
+                email: "",
+            userTrees: [],
+            signUpType:"Anonymous",
+            phoneNumber: "",
+            signUpDate: currentDate,
+
                 // Add more user-related data here
             });
         }
@@ -307,7 +322,13 @@ async function register() {
 
         // Create a user document in Firestore with the user's UID
         await firestore.collection('users').doc(userCredential.user.uid).set({
-            email: email,
+                userName: "Family Member", 
+                loginCount: 1, // Initialize login count to 1
+                email: email,
+            userTrees: [],
+            signUpType:"Email",
+            phoneNumber: "",
+            signUpDate: currentDate,
             // Add more user-related data here
         });
 
