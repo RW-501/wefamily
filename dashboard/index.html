@@ -474,10 +474,21 @@ firestore.collection('posts')
                 const post = doc.data();
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-                postElement.innerHTML = `
+
+		    if(post.postType === "news"){
+       postElement.innerHTML = `
+       <span>Tree Update</span>
+                    <p>${post.content}</p>
+                    <small>${post.author}</small>
+                `;
+
+		    }else{
+       postElement.innerHTML = `
                     <p>${post.content}</p>
                     <small>Posted by: ${post.author}</small>
                 `;
+		    }
+		    
                 familyNewsArea.appendChild(postElement);
             });
         });
@@ -526,7 +537,7 @@ function newsPost(xxx) {
         userID: '',
         content: xxx,
         photo: '',
-        author:  'update',
+        author:  'Tree update',
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 	
