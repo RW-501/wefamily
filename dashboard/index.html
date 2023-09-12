@@ -856,6 +856,7 @@ async function getFamilyTreeData(treeId) {
 
     // Reference to the user document in Firestore
     const userDocRef = firestore.collection('users').doc(userID);
+                    console.log('getFamilyTree');
 
     // Get the user document from Firestore
     userDocRef.get()
