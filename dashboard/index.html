@@ -224,7 +224,7 @@ text-align: end;
     <div class="container">
         <h1>Family Tree Management</h1>
         <div id="family-tree-container">
-            <button onclick="openPopup()">Join/ Create Family Tree</button>
+            <button onclick="openPopup()">Join / Create Family Tree</button>
             <div id="tree-details">
                 <h2>Tree Details</h2>
                 <label for="tree-name">Name:</label>
@@ -741,36 +741,40 @@ async function getFamilyTree(treeId) {
 
 
         
-        function getFamilyTree(){
+     function getFamilyTree() {
+    // Ensure userID is defined and not empty
+    if (!userID) {
+        console.error('UserID is not defined or empty.');
+        return;
+    }
 
-// Reference to the user document in Firestore
-const userDocRef = firestore.collection('users').doc(userID);
+    // Reference to the user document in Firestore
+    const userDocRef = firestore.collection('users').doc(userID);
 
-// Get the user document from Firestore
-userDocRef.get()
-    .then((doc) => {
-        if (doc.exists) {
-            // Check if the user document has a "userTrees" field (an array of family tree IDs)
-            if (doc.data().userTrees && doc.data().userTrees.length > 0) {
-                // Get the first family tree ID from the user's array of family tree IDs
-                const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
-                console.log('User has a family tree with ID:', familyTreeId);
-                return familyTreeId;
+    // Get the user document from Firestore
+    userDocRef.get()
+        .then((doc) => {
+            if (doc.exists) {
+                // Check if the user document has a "userTrees" field (an array of family tree IDs)
+                if (doc.data().userTrees && doc.data().userTrees.length > 0) {
+                    // Get the first family tree ID from the user's array of family tree IDs
+                    const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
+                    console.log('User has a family tree with ID:', familyTreeId);
+                    return familyTreeId;
+                } else {
+                    console.log('User does not have any family trees.');
+                    openPopup();
+                }
             } else {
-                console.log('User does not have any family trees.');
-                openPopup();
+                console.log('User document does not exist.');
+                window.location.href = "index.html";
             }
-        } else {
-            console.log('User document does not exist.');
-                            window.location.href = "index.html";
+        })
+        .catch((error) => {
+            console.error('Error getting user document:', error);
+        });
+}
 
-        }
-    })
-    .catch((error) => {
-        console.error('Error getting user document:', error);
-    });
-
-        }
 
         // JavaScript functions for family tree management
         async function fetchFamilyTree() {
@@ -788,6 +792,7 @@ userDocRef.get()
                         // Handle tree not found
                       //  console.log(`question ${pollData.question} `);
                         console.log(`Handle tree not found `);
+                        document.getElementById("tree-details).style.display = "none";
                         getFamilyTree();
 
                         
