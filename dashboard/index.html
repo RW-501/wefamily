@@ -524,6 +524,10 @@ function closeJoinRequestPopup() {
 }
 
 function acceptJoinRequest(requestID, userID) {
+
+	if(!requestID && !userID){
+		return;
+	}
     // Update the user's document to add the currentFamilyID to the userTrees array
     firestore.collection('users').doc(userID)
         .update({
@@ -1051,6 +1055,8 @@ async function fetchFamilyTree() {
         // Function to add a new family member
 // Function to add a family member
 function addFamilyMember() {
+	                    console.log('Added Member.');
+
     // Get input values
     const first_name = document.getElementById('member-first_name').value;
     const last_name = document.getElementById('member-last_name').value;
@@ -1060,6 +1066,9 @@ function addFamilyMember() {
     const contact = document.getElementById('member-contact').value;
     const note = document.getElementById('member-note').value;
 
+if(!first_name && !last_name){
+		return;
+	}
     // You can perform data validation and error handling here
 
     // Create a new family member document and add it to the database
