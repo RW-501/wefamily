@@ -950,9 +950,12 @@ async function getFamilyTreeData(treeId) {
         // JavaScript functions for family tree management
         async function fetchFamilyTree() {
             // Fetch and display the family tree details and members from Firestore
-            const user = checkUserLogin();
-            if (user) {
-                const treeId = getTreeIdFromQueryParams();
+checkUserLogin()
+    .then((userID) => {
+        if (userID) {
+            // You can use userID here after the user is logged in
+            console.log('UserID:', userID);
+  const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
                     const tree = await getFamilyTreeData(treeId);
                     if (tree) {
@@ -964,24 +967,25 @@ async function getFamilyTreeData(treeId) {
                       //  console.log(`question ${pollData.question} `);
                         console.log(`Handle tree not found `);
 
-                            getFamilyTree(user);
-
-
-                        
+                            getFamilyTree(userID);
+   
                     }
                 } else {
                     // Handle missing treeId parameter
                                             console.log(`Handle missing treeId parameter`);
-                            getFamilyTree(user);
-
-
-                }
-            } else {
-                // Redirect to login page if the user is not logged in
+                            getFamilyTree(userID);
+	    }
+        } else {
+       // Redirect to login page if the user is not logged in
                 window.location.href = "index.html";
-                                        console.log(` user is not logged in `);
+                console.log(` user is not logged in `);
 
-            }
+        }
+    })
+    .catch((error) => {
+        console.error('Error checking user login:', error);
+    });
+
         }
 
         // Function to add a new family member
