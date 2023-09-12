@@ -533,7 +533,7 @@ function searchFamilyTrees() {
     const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
  join_tree_name.innerHTML = data.name;                   
-join_tree_location.innerHTL = data.location;
+join_tree_location.innerHTML = data.location;
 
                 });
                                     toggleJoinTree();
@@ -573,8 +573,8 @@ function getFamilyTreeWithCode() {
 
    const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
- join_tree_name.innerHTML = data.name;                   
-join_tree_location.innerHTL = data.location; 
+ join_tree_name.innerHTML = familyTreeData.name;                   
+join_tree_location.innerHTML = familyTreeData.location; 
                     toggleJoinTree();
 
     
