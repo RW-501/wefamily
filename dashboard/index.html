@@ -860,9 +860,9 @@ function createFamilyTree() {
     const treeDescription = document.getElementById("tree_description").value;
     const pubicBool = document.getElementById("tree_public").value;
     const familyCode = document.getElementById("tree_code").value;
-
+checkUserLogin();
     // Perform data validation
-    if (!treeName || !treeLocation || !familyCode) {
+    if (!treeName || !treeLocation || !familyCode || !userID) {
         showMainMessage("Please fill in all required fields.");
         return;
     }
