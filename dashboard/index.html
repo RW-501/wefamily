@@ -14,6 +14,61 @@
     <script src="familytree.js"></script>
     <title>Family Tree Management</title>
 <style>
+    <div class="mainMessage-box" id="mainMessageBox">
+  <div class="mainMessage-content">
+    <p id="mainMessageText">Your message here</p>
+    <button id="mainCloseButton">Close</button>
+  </div>
+</div>
+
+
+<style>
+/* Styling for the message box */
+.mainMessage-box {
+  position: fixed;
+  top: -100px; /* Initially hidden above the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+    color: #fff;
+    font-weight: 800;
+	width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transition: top 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+.mainMessage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+text-align: center;
+}
+
+#mainMessageText {
+  margin: 10px 0;
+    color: #fff;
+}
+
+/* Styling for the close button */
+#mainCloseButton {
+    background-color: #fd7e14;
+	color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+    font-weight: 00;
+
+}
+
+#mainCloseButton:hover {
+  background-color: #d84315;
+}
+
+
     /* Global styles */
     body {
         font-family: Arial, sans-serif;
@@ -608,7 +663,7 @@ function searchFamilyTrees() {
         .then((querySnapshot) => {
             if (querySnapshot.empty) {
                 // No matching family trees found
-                alert("No matching family trees found.");
+                showMainMessage("No matching family trees found.");
             } else {
                 // Display the matching family trees (you can decide how to display them)
                 querySnapshot.forEach((doc) => {
@@ -648,7 +703,7 @@ function getFamilyTreeWithCode() {
         .then((querySnapshot) => {
             if (querySnapshot.empty) {
                 // No family tree found with the specified code
-                alert("No family tree found with the entered code.");
+                showMainMessage("No family tree found with the entered code.");
             } else {
                 // Retrieve the family tree (assuming there is only one match)
                 const familyTreeDoc = querySnapshot.docs[0];
@@ -742,7 +797,7 @@ function createFamilyTree() {
 
     // Perform data validation
     if (!treeName || !treeLocation || !familyCode) {
-        alert("Please fill in all required fields.");
+        showMainMessage("Please fill in all required fields.");
         return;
     }
 
@@ -751,7 +806,7 @@ function createFamilyTree() {
         .get()
         .then((querySnapshot) => {
             if (!querySnapshot.empty) {
-                alert("A family tree with this family code already exists. Please choose a different code.");
+                showMainMessage("A family tree with this family code already exists. ");
             } else {
                 // Create an object to represent the family tree data
                 const familyTreeData = {
