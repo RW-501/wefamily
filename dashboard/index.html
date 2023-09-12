@@ -548,8 +548,9 @@ function acceptJoinRequest(requestID, userID) {
                             private: "NO", // Corrected
                             addByID: userID,
                             familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
-                            userID: "",
-                            spouse: [],
+        userID: "",
+        memberID: "",
+				spouse: [],
                             parents: [],
                             children: [],
                             contact: "",
@@ -563,7 +564,7 @@ function acceptJoinRequest(requestID, userID) {
                         firestore.collection('familyMembers').add(familyMember)
                             .then((docRef) => {
                                 // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
-                                const updatedFamilyMember = { ...familyMember, userID: docRef.id };
+                                const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
                                 
                                 // Update the 'familyMembers' collection document with the generated document ID
                                 firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
@@ -1013,7 +1014,6 @@ async function getFamilyTree(userID) {
 async function fetchFamilyTree() {
     try {
         const userID = await checkUserLogin();
-		    		loadPosts();
 
         if (userID) {
             const treeId = getTreeIdFromQueryParams();
@@ -1024,7 +1024,7 @@ async function fetchFamilyTree() {
                 if (tree) {
                     displayTreeDetails(tree);
 			const treeID = tree.treeID;
-			currentFamilyID =treeID;
+			currentFamilyID = treeID;
                     displayFamilyMembers(treeID);
 
                 } else {
@@ -1073,6 +1073,7 @@ function addFamilyMember() {
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
         userID: "",
+        memberID: "",
         spouse: [],
         parents: [],
         children: [],
@@ -1087,7 +1088,7 @@ function addFamilyMember() {
 firestore.collection('familyMembers').add(familyMember)
     .then((docRef) => {
         // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
-        const updatedFamilyMember = { ...familyMember, userID: docRef.id };
+        const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
 
         // Update the 'familyMembers' collection document with the generated document ID
         firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
@@ -1130,6 +1131,8 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
             document.getElementById("tree-name").value = tree.name;
             document.getElementById("tree-location").value = tree.location;
             document.getElementById("tree-description").value = tree.description;
+		loadPosts();
+
         }
 
         // Function to display family members
@@ -1140,12 +1143,18 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
     const familyMembersCollection = firestore.collection('familyMembers');
 
     try {
-        const querySnapshot = await familyMembersCollection.where('familyID', '==', treeID).get();
+const querySnapshot = await familyMembersCollection.where('familyID', 'array-contains', treeID).get();
 
         querySnapshot.forEach((member) => {
             const data = member.data();
             // Implement dynamic population of family member details here
+let claim_Div = "";		
+if(data.userID === userID){
+claim_Div = "<button class='claim-member'>Claim Member</button>";
+}else{
+claim_Div = "<button class='edit-member'>Edit Member</button>";
 
+}
             const memberDiv = document.createElement("div");
         memberDiv.className = 'family-member';
             memberDiv.innerHTML = `
@@ -1155,6 +1164,7 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
                <p>First Name: ${data.first_name}</p>
                 <p>Last Name: ${data.last_name}</p>
                 <p>Birthdate: ${data.birthdate}</p>
+            ${claim_Div}
                 <!-- Add other fields as needed -->
   
             </div>
@@ -1175,7 +1185,15 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
 
         const addSiblingBtn = memberDiv.querySelector('.add-sibling');
         addSiblingBtn.addEventListener('click', addSibling);
+		
+if(data.userID === userID){
+	        const climMemberBTN = memberDiv.querySelector('.claim-member');
+        climMemberBTN.addEventListener('click', climMemberFunc);
+}else{
+	        const editMemberBTN = memberDiv.querySelector('.edit-member');
+        editMemberBTN.addEventListener('click', editMemberFunc);
 
+}
         // Append the new family member to the family tree
         document.querySelector('.family-tree').appendChild(memberDiv);
     
@@ -1186,6 +1204,13 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
     }
 }
 
+	    function climMemberFunc(){
+showMainMessage("claim");
+	    }	    
+	    function editMemberFunc(){
+showMainMessage("edit");
+
+	    }
     // Event listener functions for adding family members (customize these functions)
     function addParent() {
         // Add parent logic here
@@ -1197,6 +1222,8 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
 
     function addChild() {
         // Add child logic here
+showMainMessage("add child");
+
     }
 
     function addSibling() {
