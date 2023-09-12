@@ -574,7 +574,7 @@ function acceptJoinRequest(requestID, userID) {
             userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
         })
         .then(() => {
-		/*
+		
             // Get the document reference
             const requestRef = firestore.collection('memberRequest').doc(requestID);
             
@@ -584,7 +584,7 @@ function acceptJoinRequest(requestID, userID) {
                     if (doc.exists) {
                         const requestData = doc.data();
                         
-                        const familyMember = {
+                      /*  const familyMember = {
                             first_name: requestData.first_name,
                             last_name: requestData.last_name,
                             location: requestData.location,
@@ -624,6 +624,7 @@ function acceptJoinRequest(requestID, userID) {
                                 console.error('Error adding family member:', error);
                             });
                         */
+			    
                         // Delete the document
                         requestRef.delete()
                             .then(() => {
@@ -1281,6 +1282,11 @@ showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 
 	    }
     // Event listener functions for adding family members (customize these functions)
+
+	    var addFamily_Type = '';
+	    var addFamily_MemberID = '';
+	    var addFamily_Type = '';
+	    
     function addParent(member) {
         // Add parent logic here
 
