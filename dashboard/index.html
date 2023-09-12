@@ -1185,29 +1185,28 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
         `;
 
         // Add event listeners for each button in the new family member
-        const addParentBtn = memberDiv.querySelector('.add-parent');
-        addParentBtn.addEventListener('click', addParent);
+   const addParentBtn = memberDiv.querySelector('.add-parent');
+addParentBtn.addEventListener('click', () => addParent(data.memberID));
 
-        const addSpouseBtn = memberDiv.querySelector('.add-spouse');
-        addSpouseBtn.addEventListener('click', addSpouse);
+const addSpouseBtn = memberDiv.querySelector('.add-spouse');
+addSpouseBtn.addEventListener('click', () => addSpouse(data.memberID));
 
-        const addChildBtn = memberDiv.querySelector('.add-child');
-        addChildBtn.addEventListener('click', addChild);
+const addChildBtn = memberDiv.querySelector('.add-child');
+addChildBtn.addEventListener('click', () => addChild(data.memberID));
 
-        const addSiblingBtn = memberDiv.querySelector('.add-sibling');
-        addSiblingBtn.addEventListener('click', addSibling);
-		
-if(data.userID === userID){
-	        const editMemberBTN = memberDiv.querySelector('.edit-member');
-        editMemberBTN.addEventListener('click', editMemberFunc);
-}else{
+const addSiblingBtn = memberDiv.querySelector('.add-sibling');
+addSiblingBtn.addEventListener('click', () => addSibling(data.memberID));
 
-if(data.userID === "" ){
-	 const climMemberBTN = memberDiv.querySelector('.claim-member');
-        climMemberBTN.addEventListener('click', climMemberFunc);
+if (data.userID === userID) {
+    const editMemberBTN = memberDiv.querySelector('.edit-member');
+    editMemberBTN.addEventListener('click', () => editMemberFunc(data.memberID));
+} else {
+    if (data.userID === "") {
+        const claimMemberBTN = memberDiv.querySelector('.claim-member');
+        claimMemberBTN.addEventListener('click', () => claimMemberFunc(data.memberID));
+    }
 }
-}
-     
+
     
             familyMembersContainer.appendChild(memberDiv);
         });
@@ -1216,34 +1215,34 @@ if(data.userID === "" ){
     }
 }
 
-	    function climMemberFunc(){
-showMainMessage("claim");
+	    function climMemberFunc(memberID){
+showMainMessage("claim ",memberID);
 	    }	    
-	    function editMemberFunc(){
-showMainMessage("edit");
+	    function editMemberFunc(memberID){
+showMainMessage("edit ",memberID);
 
 	    }
     // Event listener functions for adding family members (customize these functions)
-    function addParent() {
+    function addParent(memberID) {
         // Add parent logic here
     }
 
-    function addSpouse() {
+    function addSpouse(memberID) {
         // Add spouse logic here
     }
 
-    function addChild() {
+    function addChild(memberID) {
         // Add child logic here
-showMainMessage("add child");
+showMainMessage("add child ",memberID);
 
     }
 
-    function addSibling() {
+    function addSibling(memberID) {
         // Add sibling logic here
     }
 
     // Example: Add an initial family member
-    addFamilyMember();
+    //addFamilyMember();
 
 	    
  
