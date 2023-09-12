@@ -744,7 +744,7 @@ async function getFamilyTree(treeId) {
      function getFamilyTree() {
     // Ensure userID is defined and not empty
     if (!userID) {
-        console.error('UserID is not defined or empty.');
+      ///  console.error('UserID is not defined or empty.');
         return;
     }
 
@@ -780,7 +780,6 @@ async function getFamilyTree(treeId) {
         async function fetchFamilyTree() {
             // Fetch and display the family tree details and members from Firestore
             const user = checkUserLogin();
-             console.log(`768 dash user: ${user} `);
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
