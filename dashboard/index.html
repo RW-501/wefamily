@@ -251,7 +251,21 @@ text-align: end;
             </div>
         </div>
     </div>
+ <div id="family_News">
+                <h2>Family News</h2>
+ <div id="family_News_Area">
+Loading
+ </div>
+     
+ </div>
+ <div id="member_Request">
+                <h2>Family Member Request</h2>
+                    <button class="memberRequest" onclick="openJoinRequestPopup()">View Member Request</button>
 
+ </div>
+
+
+    
    <!-- Pop-up for creating a family tree -->
     <div class="popup-container" id="popup-container">
         <div class="popup">
@@ -769,10 +783,10 @@ userDocRef.get()
             if (user) {
                 const treeId = getTreeIdFromQueryParams();
                 if (treeId) {
-                   // const tree = await getFamilyTree(treeId);
+                    const tree = await getFamilyTree(treeId);
                     if (tree) {
-                        displayTreeDetails(tree);
-                        displayFamilyMembers(tree);
+                      //  displayTreeDetails(tree);
+                      //  displayFamilyMembers(tree);
                     } else {
                         // Handle tree not found
                       //  console.log(`question ${pollData.question} `);
