@@ -503,6 +503,7 @@ function addPost() {
         .then(() => {
             console.log('Post added successfully');
             document.getElementById('post-content').value = ''; // Clear the input field after adding
+		loadPosts();
         })
         .catch((error) => {
             console.error('Error adding post:', error);
@@ -1017,6 +1018,8 @@ async function fetchFamilyTree() {
             
             if (treeId) {
                 const tree = await getFamilyTreeData(treeId);
+		    		loadPosts();
+
                 if (tree) {
                     displayTreeDetails(tree);
 			const treeID = tree.treeID;
