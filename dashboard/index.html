@@ -946,8 +946,40 @@ async function getFamilyTreeData(treeId) {
         });
 }
 
+async function fetchFamilyTree() {
+    try {
+        const userID = await checkUserLogin();
 
-        // JavaScript functions for family tree management
+        if (userID) {
+            const treeId = getTreeIdFromQueryParams();
+            
+            if (treeId) {
+                const tree = await getFamilyTreeData(treeId);
+                if (tree) {
+                    console.log(`Family Tree Name: ${tree.name}`);
+                    displayTreeDetails(tree);
+                    displayFamilyMembers(tree);
+                } else {
+                    console.log('Family tree not found.');
+                    // Handle the case when the family tree is not found.
+                            getFamilyTree(userID);
+                }
+            } else {
+                console.log('Missing treeId parameter.');
+                // Handle the case when the treeId query parameter is missing.
+                            getFamilyTree(userID);
+            }
+        } else {
+            // Redirect to the login page if the user is not logged in.
+            window.location.href = 'index.html';
+        }
+    } catch (error) {
+        console.error('Error checking user login:', error);
+        // Handle errors here, e.g., display an error message to the user.
+    }
+}
+
+     /*   // JavaScript functions for family tree management
         async function fetchFamilyTree() {
             // Fetch and display the family tree details and members from Firestore
 checkUserLogin()
@@ -987,7 +1019,7 @@ checkUserLogin()
     });
 
         }
-
+*/
         // Function to add a new family member
 // Function to add a family member
 function addFamilyMember() {
