@@ -64,13 +64,12 @@ if (typeof firebase !== 'undefined' && typeof firebase.firestore === 'function')
     // before initializing Firebase to ensure they are fully loaded.
 }
 var userID = "";
-
 function checkUserLogin() {
-    const userLoggedIn = localStorage.getItem('userLoggedIn');
-    console.log('userLoggedIn', userLoggedIn);
+    return new Promise((resolve, reject) => {
+        const userLoggedIn = localStorage.getItem('userLoggedIn');
+        console.log('userLoggedIn', userLoggedIn);
 
-    if (userLoggedIn === 'true') {
-        return new Promise((resolve, reject) => {
+        if (userLoggedIn === 'true') {
             const auth = firebase.auth();
 
             const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -78,13 +77,10 @@ function checkUserLogin() {
 
                 if (user) {
                     // User is logged in
- 
-                    resolve(user);
-                    // You can also perform actions here when the user is logged in.
-                                     userID = user.uid;
+                    const userID = user.uid;
                     console.log('User is logged in with UID:', userID);
-			
-			return userID;
+                    resolve(userID);
+                    // You can also perform actions here when the user is logged in.
                 } else {
                     // User is logged out
                     console.error('No user is signed in');
@@ -92,10 +88,10 @@ function checkUserLogin() {
                     // You can also perform actions here when the user is logged out.
                 }
             });
-        });
-    } else {
-        return Promise.resolve(null);
-    }
+        } else {
+            resolve(null);
+        }
+    });
 }
 
 
