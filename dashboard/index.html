@@ -1147,19 +1147,69 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
             // Implement dynamic population of family member details here
 
             const memberDiv = document.createElement("div");
+        memberDiv.className = 'family-member';
             memberDiv.innerHTML = `
-                <p>First Name: ${data.first_name}</p>
+ <button class="add-parent">Add Parent</button>
+            <div class="member-details">
+                <!-- Member details go here -->
+               <p>First Name: ${data.first_name}</p>
                 <p>Last Name: ${data.last_name}</p>
                 <p>Birthdate: ${data.birthdate}</p>
                 <!-- Add other fields as needed -->
-            `;
+  
+            </div>
+            <button class="add-spouse">Add Spouse</button>
+            <button class="add-child">Add Child</button>
+            <button class="add-sibling">Add Sibling</button>
+        `;
 
+        // Add event listeners for each button in the new family member
+        const addParentBtn = memberDiv.querySelector('.add-parent');
+        addParentBtn.addEventListener('click', addParent);
+
+        const addSpouseBtn = memberDiv.querySelector('.add-spouse');
+        addSpouseBtn.addEventListener('click', addSpouse);
+
+        const addChildBtn = memberDiv.querySelector('.add-child');
+        addChildBtn.addEventListener('click', addChild);
+
+        const addSiblingBtn = memberDiv.querySelector('.add-sibling');
+        addSiblingBtn.addEventListener('click', addSibling);
+
+        // Append the new family member to the family tree
+        document.querySelector('.family-tree').appendChild(memberDiv);
+    
             familyMembersContainer.appendChild(memberDiv);
         });
     } catch (error) {
         console.error('Error displaying family members:', error);
     }
 }
+
+    // Event listener functions for adding family members (customize these functions)
+    function addParent() {
+        // Add parent logic here
+    }
+
+    function addSpouse() {
+        // Add spouse logic here
+    }
+
+    function addChild() {
+        // Add child logic here
+    }
+
+    function addSibling() {
+        // Add sibling logic here
+    }
+
+    // Example: Add an initial family member
+    addFamilyMember();
+
+	    
+ 
+            
+
 
 
         // Call the fetchFamilyTree function on page load
