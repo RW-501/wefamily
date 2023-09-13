@@ -3,6 +3,7 @@
 
 
 
+            console.log("familyData   " + jsonString);
 
 
 
@@ -71,17 +72,25 @@ const svg = d3.select("#family-tree-area")
 
 
 
-
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
-        const jsonData = {};
-const db = firebase.firestore();
+        const db = firebase.firestore();
 
         // Fetch data from Firestore
         db.collection(collectionName)
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
+                // Create an empty root node
+                const root = {
+                    id: 'root', // A unique identifier for the root node
+                    name: 'Family Tree', // The name of the root node
+                    children: [], // An array to store child nodes
+                };
+
+                // Create a map to store member data by ID
+                const memberDataMap = {};
+
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
@@ -101,14 +110,27 @@ const db = firebase.firestore();
                         spouse: spouse,
                         parents: parents,
                         siblings: siblings,
+                        // You can add more properties here if needed
                     };
 
-                    // Add the member data to jsonData using the member's ID as the key
-                    jsonData[id] = memberData;
+                    // Store member data in the map
+                    memberDataMap[id] = memberData;
                 });
 
-                // Resolve the promise with the formatted JSON data
-                resolve(jsonData);
+                // Create the hierarchical tree structure
+                function buildTree(node) {
+                    node.children = node.children.map((childID) => {
+                        const childNode = memberDataMap[childID];
+                        return buildTree(childNode);
+                    });
+                    return node;
+                }
+
+                // Build the tree starting from the root
+                const hierarchicalTree = buildTree(root);
+
+                // Resolve the promise with the hierarchical tree structure
+                resolve(hierarchicalTree);
             })
             .catch((error) => {
                 reject(error);
@@ -116,28 +138,23 @@ const db = firebase.firestore();
     });
 }
 
-
 function loadFamilyTreeChart() {
     console.log("currentFamilyID   " + currentFamilyID);
     fetchFamilyMemberData('familyMembers', currentFamilyID)
-        .then((jsonData) => {
-            // Now 'jsonData' contains your Firestore data in the desired format
-            // Each member object includes the relationships
-
-            // Optionally, you can convert it to a JSON string
-            const jsonString = JSON.stringify(jsonData, null, 2);
-            console.log("familyData   " + jsonString);
-            // Sample family data
-            const familyData = jsonString;
+        .then((hierarchicalTree) => {
+            // Now 'hierarchicalTree' contains your Firestore data in a hierarchical structure
+            // Each member object includes the relationships and children as nodes
 
             // Call the function to generate the family tree chart with your family data
-            generateFamilyTreeChart(familyData);
-            // You can use the JSON data for further processing or export it as needed
+            generateFamilyTreeChart(hierarchicalTree);
+            // You can use the hierarchical tree structure for rendering the chart
         })
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
 }
+
+
 
 
 
