@@ -565,6 +565,9 @@ function initializeFamilyTreeChart() {
     <div id="family-news-area">
         <!-- Posts will be added here dynamically -->
     </div>
+<div id="pinnedFamily-news-area"></div>
+
+	
     <textarea id="post-content" placeholder="Write your post..."></textarea>
     <button onclick="addPost()">Add Post</button>
 	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
@@ -884,8 +887,9 @@ isPinned = false;
                         </div>
                     `;
                 }
-
-                familyNewsArea.appendChild(postElement);
+		    pinBTN = isPinned
+		    ? document.getElementById('pinnedFamily-news-area').appendChild(postElement)
+		    : familyNewsArea.appendChild(postElement);
                 familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
             });
         });
