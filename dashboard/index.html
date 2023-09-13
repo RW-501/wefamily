@@ -827,9 +827,9 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
 let pinBTN ='';
 if (post.pinned === '' && post.pinned != null ) {
                 postElement.classList.add('pin-post');
-	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>pin Post</button>`;
+	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus(${post.postID}, true)'>pin Post</button>`;
 }else{
-	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', false)'>Unpin Post</button>`;
+	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus(${post.postID}, false)'>Unpin Post</button>`;
 }
 		    
 	 if (post.postType === 'news') {
