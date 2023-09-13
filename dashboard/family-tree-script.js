@@ -116,23 +116,28 @@ const db = firebase.firestore();
     });
 }
 
-        console.log("currentFamilyID   "+currentFamilyID);
-fetchFamilyMemberData('familyMembers', currentFamilyID)
-    .then((jsonData) => {
-        // Now 'jsonData' contains your Firestore data in the desired format
-        // Each member object includes the relationships
 
-        // Optionally, you can convert it to a JSON string
-        const jsonString = JSON.stringify(jsonData, null, 2);
-        console.log("familyData   "+jsonString);
-   // Sample family data
-const familyData = jsonString;
+function loadFamilyTreeChart() {
+    console.log("currentFamilyID   " + currentFamilyID);
+    fetchFamilyMemberData('familyMembers', currentFamilyID)
+        .then((jsonData) => {
+            // Now 'jsonData' contains your Firestore data in the desired format
+            // Each member object includes the relationships
 
-        // Call the function to generate the family tree chart with your family data
-generateFamilyTreeChart(familyData);
-        // You can use the JSON data for further processing or export it as needed
-    })
-    .catch((error) => {
-        console.error('Error fetching family member data:', error);
-    });
+            // Optionally, you can convert it to a JSON string
+            const jsonString = JSON.stringify(jsonData, null, 2);
+            console.log("familyData   " + jsonString);
+            // Sample family data
+            const familyData = jsonString;
+
+            // Call the function to generate the family tree chart with your family data
+            generateFamilyTreeChart(familyData);
+            // You can use the JSON data for further processing or export it as needed
+        })
+        .catch((error) => {
+            console.error('Error fetching family member data:', error);
+        });
+}
+
+
 
