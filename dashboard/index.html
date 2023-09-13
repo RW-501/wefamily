@@ -321,6 +321,90 @@ display: flex;
 /* Adjust styling as needed */
 
 
+	
+/* Navigation Bar styles */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-right: 10px;
+}
+
+.navbar .logout {
+    background-color: #fff;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navbar .logout:hover {
+    background-color: #555;
+    color: #fff;
+    transition: 0.3s;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive styles (adjust as needed) */
+@media screen and (max-width: 768px) {
+    .navbar .nav-links {
+        display: none;
+    }
+
+    .navbar .user-actions {
+        margin-left: auto;
+    }
+
+    .navbar .nav-links.active {
+        display: block;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        background-color: #333;
+    }
+
+    .navbar .nav-links.active li {
+        text-align: center;
+        padding: 10px 0;
+    }
+}
+
 </style>
 <script>
 function initializeFamilyTreeChart() {
@@ -344,6 +428,28 @@ function initializeFamilyTreeChart() {
 </script>
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="/dashboard">WeFamily</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#tree-details">Tree Details</a></li>
+                <li><a href="#tree-content">Tree Content</a></li>
+                <li><a href="#family-tree">Family Tree</a></li>
+                <li><a href="#family-news">Family News</a></li>
+                <li><a href="#member-request">Member Request</a></li>
+            </ul>
+            <div class="user-actions">
+<button id="logout-button" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+
+
+	
     <div class="container">
         <h1>Family Tree Management</h1>
         <div id="family-tree-container">
@@ -540,6 +646,15 @@ function initializeFamilyTreeChart() {
         </form>
     </div>
 </div>
+
+  <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 WeFamily. All rights reserved.</p>
+        </div>
+    </footer>
+
+	
     <script>
 var currentFamilyID = "";
 var requestFamilyID = "";
