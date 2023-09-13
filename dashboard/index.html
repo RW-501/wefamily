@@ -916,8 +916,9 @@ isPinned = false;
 function addPost() {
     const postContent = document.getElementById('post-content').value;
     const currentUser = auth.currentUser;
-
-    if (!postContent || !currentUser) {
+	
+	
+	if (!postContent || !currentUser) {
         return;
     }
 
@@ -944,6 +945,8 @@ function addPost() {
             // Update the postID field with the generated document ID
             const update = { postID: docRef.id };
             firestore.collection("posts").doc(docRef.id).update(update);
+		document.getElementById('post-content').value = '';
+
         })
         .catch((error) => {
             console.error("Error adding news post:", error);
