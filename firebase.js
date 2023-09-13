@@ -100,7 +100,7 @@ function logout() {
     localStorage.setItem('userLoggedIn', 'false');
     // Optionally, sign the user out from Firebase if needed
     firebase.auth().signOut().then(() => {
-	        window.location.href = '/'; // Replace 'login.html' with your login page URL
+	        window.location.href = '/wefamily/'; // Replace 'login.html' with your login page URL
 
         console.log('User logged out successfully.');
     }).catch((error) => {
