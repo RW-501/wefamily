@@ -705,12 +705,16 @@ function loadFamilyPosts() {
     familyNewsArea.innerHTML = 'Loading...';
 
     // Listen for changes to the posts collection (Firestore query)
-    firestore.collection('posts')
-        .where('treeID', '==', currentFamilyID) // Filter posts by treeID
-        .where('postType', '!=', 'news') // Filter posts where postType is not equal to "news"
-        .orderBy('timestamp', 'desc') // Order by timestamp in descending order
-        .onSnapshot((querySnapshot) => {
-            familyNewsArea.innerHTML = '';
+firestore.collection('posts')
+    .where('treeID', '==', currentFamilyID)
+    .where('postType', '!=', 'news')
+    .orderBy('postType') // Use 'postType' as your first orderBy field
+    .orderBy('timestamp', 'desc') // Then order by 'timestamp' in descending order
+    .onSnapshot((querySnapshot) => {
+        familyNewsArea.innerHTML = '';
+        // Your code to handle the query results
+    
+
 
 
             querySnapshot.forEach((doc) => {
