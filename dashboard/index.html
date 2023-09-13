@@ -1902,13 +1902,12 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
 
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // This code will run when the DOM is ready, but it may run before all external resources (like images) are loaded
+  window.onload = function() {
+    // This code will run after the entire page, including all resources, is fully loaded
     const script = document.createElement('script');
     script.src = 'family-tree-script.js';
     document.body.appendChild(script);
-  });
-
+  };
     
 
 
