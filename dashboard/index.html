@@ -755,7 +755,7 @@ firestore.collection('posts')
     .where('treeID', '==', currentFamilyID)
     .where('postType', '!=', 'news')
     .orderBy('postType') // Use 'postType' as your first orderBy field
-    .orderBy('timestamp', 'desc') // Then order by 'timestamp' in descending order
+    .orderBy('timestamp', 'asc') // Then order by 'timestamp' in descending order
     .onSnapshot((querySnapshot) => {
         familyNewsArea.innerHTML = '';
         // Your code to handle the query results
@@ -797,6 +797,8 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                 familyNewsArea.appendChild(postElement);
             });
         });
+	            familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
+
 }
 
 
@@ -809,7 +811,7 @@ function loadPosts() {
     // Listen for changes to the posts collection (Firestore query)
     firestore.collection('posts')
         .where('treeID', '==', currentFamilyID) // Filter posts by treeID
-        .orderBy('timestamp', 'desc') // Order by timestamp in descending order
+        .orderBy('timestamp', 'asc') // Order by timestamp in descending order
         .onSnapshot((querySnapshot) => {
             familyNewsArea.innerHTML = ''; // Clear the loading message
 
@@ -852,6 +854,8 @@ if (post.pinned === 'true' && post.pinned != null ) {
                 familyNewsArea.appendChild(postElement);
             });
         });
+	            familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
+
 }
 
 
