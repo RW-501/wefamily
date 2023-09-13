@@ -826,20 +826,19 @@ if (post.pinned === 'true') {
 }else{
 	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', false)'>Unpin Post</button>`;
 }
-	    
+		    
+	 if (post.postType === 'news') {
                 const postContent = `
-		<div class='pin_area'>${pinBTN}</div>
                     <p>${post.content}</p>
                     <div class="space_J">
                         <small>Posted by: ${post.author}</small>
                         <small>Posted on: ${formattedDate}</small>
                     </div>
                 `;
-
-                if (post.postType === 'news') {
                     postElement.innerHTML = postContent;
                 } else {
                     postElement.innerHTML = `
+		<div class='pin_area'>${pinBTN}</div>
                         <p>${post.content}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
