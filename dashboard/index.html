@@ -285,17 +285,22 @@ text-align: end;
 /* CSS for pinned posts */
 
 #mainFamily-news-area {
-    max-height: 700px; /* Define a max height for the container */
+    max-height: 700px;
     resize: vertical;
     position: relative;
     display: block;
+    overflow: hidden;
+    border-radius: 5px;
 }
 	
 #pinnedFamily-news-area {
-    max-height: 700px; /* Define a max height for the container */
+    max-height: 700px;
     resize: vertical;
-    position: relative;
+    position: absolute;
     display: block;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }
 
 	
@@ -571,10 +576,10 @@ function initializeFamilyTreeChart() {
     <h2>Family News</h2>
 	
     <div id="mainFamily-news-area">
+<div id="pinnedFamily-news-area"></div>
     <div id="family-news-area">
         <!-- Posts will be added here dynamically -->
     </div>
-<div id="pinnedFamily-news-area"></div>
     </div>
 	
     <textarea id="post-content" placeholder="Write your post..."></textarea>
