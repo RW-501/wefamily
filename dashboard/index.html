@@ -517,7 +517,6 @@ function initializeFamilyTreeChart() {
                 <svg id="family-tree-area">
                     <!-- Family tree details will be added here dynamically -->
                 </svg>
-    <script defer src="family-tree-script.js"></script>
 		    
             </div>
 
@@ -1899,6 +1898,20 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
         // Call the fetchFamilyTree function on page load
         window.onload = fetchFamilyTree;
+
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // This code will run when the DOM is ready, but it may run before all external resources (like images) are loaded
+    const script = document.createElement('script');
+    script.src = 'family-tree-script.js';
+    document.body.appendChild(script);
+  });
+
+    
+
+
+	
     </script>
 	</body>
   <!-- Footer -->
