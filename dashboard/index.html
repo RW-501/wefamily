@@ -822,10 +822,10 @@ function loadPosts() {
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
 let isPinned = "";
-if (post.pinned === '' || post.pinned != null ) {
-	isPinned = false;
+if (post.pinned === 'true') {
+	isPinned = true;
 }else{
-isPinned = true;
+isPinned = false;
 }
 
                 const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
