@@ -380,30 +380,44 @@ display: flex;
     width: 100%;
 }
 
-/* Responsive styles (adjust as needed) */
+/* Add this CSS in your stylesheet */
+.navbar .dropdown-menu {
+    display: none;
+    background-color: #333;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navbar .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar .dropdown-menu ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar .dropdown-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+/* Media query to show/hide the dropdown menu */
 @media screen and (max-width: 768px) {
     .navbar .nav-links {
         display: none;
     }
 
-    .navbar .user-actions {
-        margin-left: auto;
-    }
-
-    .navbar .nav-links.active {
+    .navbar .dropdown-menu {
         display: block;
-        position: absolute;
-        top: 50px;
-        left: 0;
-        width: 100%;
-        background-color: #333;
-    }
-
-    .navbar .nav-links.active li {
-        text-align: center;
-        padding: 10px 0;
     }
 }
+
 
 </style>
 <script>
@@ -429,23 +443,40 @@ function initializeFamilyTreeChart() {
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <a href="/dashboard">WeFamily</a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#tree-details">Tree Details</a></li>
-                <li><a href="#tree-content">Tree Content</a></li>
-                <li><a href="#family-tree">Family Tree</a></li>
-                <li><a href="#family-news">Family News</a></li>
-                <li><a href="#member-request">Member Request</a></li>
-            </ul>
-            <div class="user-actions">
-<button id="logout-button" onclick="logout()">Logout</button>
+   <nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a href="/wefamily/dashboard/">WeFamily</a>
+        </div>
+        <div class="navbar-toggler">
+            <div class="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
-    </nav>
+        <ul class="nav-links">
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Tree Content</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family News</a></li>
+            <li><a href="#member-request">Member Request</a></li>
+        </ul>
+        <div class="user-actions">
+            <button id="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="dropdown-menu">
+        <ul>
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Tree Content</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family News</a></li>
+            <li><a href="#member-request">Member Request</a></li>
+        </ul>
+    </div>
+</nav>
+
 
 
 
@@ -658,6 +689,13 @@ function initializeFamilyTreeChart() {
     <script>
 var currentFamilyID = "";
 var requestFamilyID = "";
+// Add this JavaScript code in your script section
+const menuIcon = document.querySelector('.menu-icon');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+menuIcon.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('active');
+});
 
 
 function loadPosts() {
@@ -1432,8 +1470,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
  <button class="add-parent">Add Parent</button>
             <div class="member-details">
                 <!-- Member details go here -->
-               <p>First Name: ${data.first_name}</p>
-                <p>Last Name: ${data.last_name}</p>
+               <p>Name: ${data.first_name} ${data.last_name}</p>
                 <p>Birthdate: ${data.birthdate}</p>
             ${claim_Div}
                 <!-- Add other fields as needed -->
