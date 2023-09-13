@@ -509,11 +509,13 @@ function initializeFamilyTreeChart() {
 		
 <div id="family-news">
     <h2>Family News</h2>
+	
     <div id="family-news-area">
         <!-- Posts will be added here dynamically -->
     </div>
     <textarea id="post-content" placeholder="Write your post..."></textarea>
-    <button onclick="addPost()">Add Post</button>
+    <button onclick="addPost()">Add Post</button><button id="load-family-posts-button" onclick="loadFamilyPosts()">Load Family Posts</button>
+
 </div>
 
 
@@ -696,44 +698,101 @@ menuIcon.addEventListener('click', () => {
     dropdownMenu.classList.toggle('active');
 });
 
+function loadFamilyPosts() {
+    const familyNewsArea = document.getElementById('family-news-area');
+    familyNewsArea.innerHTML = 'Loading...';
+
+    // Listen for changes to the posts collection (Firestore query)
+    firestore.collection('posts')
+        .where('treeID', '==', currentFamilyID) // Filter posts by treeID
+        .where('postType', '!=', 'news') // Filter posts where postType is not equal to "news"
+        .orderBy('timestamp', 'desc') // Order by timestamp in descending order
+        .onSnapshot((querySnapshot) => {
+            familyNewsArea.innerHTML = '';
+
+
+            querySnapshot.forEach((doc) => {
+                const post = doc.data();
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+
+                const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
+                const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                const formattedDate = jsDate.toLocaleString('en-US', options);
+
+                const postContent = `
+                    <p>${post.content}</p>
+                    <div class="space_J">
+                        <small>Posted by: ${post.author}</small>
+                        <small>Posted on: ${formattedDate}</small>
+                    </div>
+                `;
+
+                if (post.postType === 'news') {
+                    postElement.innerHTML = postContent;
+                } else {
+                    postElement.innerHTML = `
+                        <p>${post.content}</p>
+                        <div class="space_J">
+                            <small>Posted by: ${post.author}</small>
+                            <small>Posted on: ${formattedDate}</small>
+                        </div>
+                    `;
+                }
+
+                familyNewsArea.appendChild(postElement);
+            });
+        });
+}
+
+
+	    
 
 function loadPosts() {
     const familyNewsArea = document.getElementById('family-news-area');
     familyNewsArea.innerHTML = 'Loading...';
 
     // Listen for changes to the posts collection (Firestore query)
-firestore.collection('posts')
-    .where('treeID', '==', currentFamilyID) // Filter posts by treeID
-    .orderBy('timestamp', 'desc') // Order by timestamp in descending order
-    .onSnapshot((querySnapshot) => {
+    firestore.collection('posts')
+        .where('treeID', '==', currentFamilyID) // Filter posts by treeID
+        .orderBy('timestamp', 'desc') // Order by timestamp in descending order
+        .onSnapshot((querySnapshot) => {
             familyNewsArea.innerHTML = ''; // Clear the loading message
 
             querySnapshot.forEach((doc) => {
                 const post = doc.data();
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-    /*   <span>Tree Update</span>*/
-		    
-     const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
-const formattedDate = `${jsDate.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}, ${jsDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
 
-		    if(post.postType === "news"){
-       postElement.innerHTML = `
-               <p>${post.content}</p>
-                   <div class="space_J"> <small>${post.author}</small><small>Posted by: ${formattedDate}</small></div>
-                `;
+                const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
+                const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                const formattedDate = jsDate.toLocaleString('en-US', options);
 
-		    }else{
-       postElement.innerHTML = `
+                const postContent = `
                     <p>${post.content}</p>
-                   <div class="space_J">   <small>Posted by: ${post.author}</small><small>Posted by: ${formattedDate}</small></div>
+                    <div class="space_J">
+                        <small>Posted by: ${post.author}</small>
+                        <small>Posted on: ${formattedDate}</small>
+                    </div>
                 `;
-		    }
-		    
+
+                if (post.postType === 'news') {
+                    postElement.innerHTML = postContent;
+                } else {
+                    postElement.innerHTML = `
+                        <p>${post.content}</p>
+                        <div class="space_J">
+                            <small>Posted by: ${post.author}</small>
+                            <small>Posted on: ${formattedDate}</small>
+                        </div>
+                    `;
+                }
+
                 familyNewsArea.appendChild(postElement);
             });
         });
 }
+
 
 function addPost() {
     const postContent = document.getElementById('post-content').value;
