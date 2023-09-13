@@ -266,7 +266,10 @@ text-align: end;
     display: none;
 }
 
-
+.space_J{
+display: flex;
+    justify-content: space-between;
+}
 
 .post {
     background: white;
@@ -562,13 +565,13 @@ firestore.collection('posts')
 		    if(post.postType === "news"){
        postElement.innerHTML = `
                <p>${post.content}</p>
-                    <small>${post.author}</small>
+                   <div class="space_J"> <small>${post.author}</small><small>Posted by: ${post.timestamp}</small></div>
                 `;
 
 		    }else{
        postElement.innerHTML = `
                     <p>${post.content}</p>
-                    <small>Posted by: ${post.author}</small>
+                   <div class="space_J">   <small>Posted by: ${post.author}</small><small>Posted by: ${post.timestamp}</small></div>
                 `;
 		    }
 		    
