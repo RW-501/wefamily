@@ -2,14 +2,12 @@
 
 
 
-
-
 function generateFamilyTreeChart(familyData) {
     const width = 800; // Width of the chart
     const height = 400; // Height of the chart
 
     // Create an SVG element to contain the chart
-const svg = d3.select("#family-tree-area")
+    const svg = d3.select("#family-tree-area")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
@@ -61,13 +59,8 @@ const svg = d3.select("#family-tree-area")
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
-    // You can further style and customize the chart as needed
+    console.log("Family Tree Chart generated successfully.");
 }
-
-
-
-
-
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
@@ -124,13 +117,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 }
 
                 // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root);
-
-                // Resolve the promise with the hierarchical tree structure
-                resolve(hierarchicalTree);
+     resolve(hierarchicalTree);
+                console.log("Family member data fetched successfully.");
             })
             .catch((error) => {
                 reject(error);
+                console.error('Error fetching family member data:', error);
             });
     });
 }
