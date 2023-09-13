@@ -1486,16 +1486,16 @@ function addNewFamilyMember() {
                     let newID = docRef.id;
                     if (addFamily_Type === "Parent") {
                         addChildToParent(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Parent`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
                     } else if (addFamily_Type === "Spouse") {
                         addSpouseToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Spouse`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Spouse`);
                     } else if (addFamily_Type === "Child") {
                         addParentToChild(addFamily_MemberID, newID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Child`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
                     } else if (addFamily_Type === "Sibling") {
                         addSiblingToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Sibling`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name}} Sibling`);
                     }
 
                     // Display updated family members
