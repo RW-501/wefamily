@@ -1323,6 +1323,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
             <button class="add-child">Add Child</button>
             <button class="add-sibling">Add Sibling</button>
         `;
+showMainMessage("data "+ data);
 
         // Add event listeners for each button in the new family member
    const addParentBtn = memberDiv.querySelector('.add-parent');
@@ -1358,7 +1359,7 @@ if (data.userID === userID) {
 }
 
 	    function claimMemberFunc(member){
-showMainMessage("claim ",member.memberID);
+showMainMessage("claim "+member.memberID);
 
 let memberID = member.memberID;
             const userDocRef = firestore.collection('familyMembers').doc(memberID);
@@ -1545,6 +1546,8 @@ addFamily_MemberData = member;
     }
 
     function addSpouse(member) {
+                    console.log('member:'+ member);
+
 	   // showMainMessage("?????");
         // Add spouse logic here
 showAddMemberTypePopup("Spouse");
@@ -1555,6 +1558,8 @@ addFamily_MemberData = member;
     }
 
     function addChild(member) {
+                    console.log('member:'+ member);
+
         // Add child logic here
 showAddMemberTypePopup("Child");
 	    addFamily_MemberID = member.memberID;
@@ -1564,6 +1569,8 @@ addFamily_MemberData = member;
     }
 
     function addSibling(member) {
+                    console.log('member:'+ member);
+
         // Add sibling logic here
 showAddMemberTypePopup("Sibling");
 	    addFamily_MemberID = member.memberID;
