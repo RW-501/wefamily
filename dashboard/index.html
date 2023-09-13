@@ -270,11 +270,6 @@ text-align: end;
     display: none;
 }
 
-.space_J{
-display: flex;
-    justify-content: space-between;
-}
-
 .post {
     background: white;
     border: 1px solid #ccc;
@@ -284,13 +279,33 @@ display: flex;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-#post-content {
-    width: 100%;
-    max-width: 100%;
+.post .post-content {
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
 }
+
+.post .image-container {
+    margin-top: 10px; /* Add space below text content for image */
+}
+
+.post .pin-post {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    outline: none;
+}
+.pin_area{
+	display:block;
+	width: 400px;
+}
+	
+.space_J {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 #family-tree {
   display: flex;
@@ -706,6 +721,20 @@ var requestFamilyID = "";
 
 
 
+function updatePostPinnedStatus(postID, isPinned) {
+    const postRef = firestore.collection('posts').doc(postID);
+
+    // Update the 'pinned' field of the post document
+    return postRef.update({
+        pinned: isPinned ? 'YES' : '', // Use 'YES' for pinned, '' for unpinned
+    })
+    .then(() => {
+        console.log(`Post ${postID} ${isPinned ? 'pinned' : 'unpinned'} successfully.`);
+    })
+    .catch((error) => {
+        console.error(`Error updating post ${postID} pinned status:`, error);
+    });
+}
 
 
 
@@ -790,8 +819,16 @@ function loadPosts() {
                 const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
-
+let pinBTN ='';
+if (post.pinned === 'YES') {
+                postElement.classList.add('pin-post');
+	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>Unpin Post</button>`;
+}else{
+	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', false)'>Unpin Post</button>`;
+}
+	    
                 const postContent = `
+		<div class='pin_area'>${formattedDate}</div>
                     <p>${post.content}</p>
                     <div class="space_J">
                         <small>Posted by: ${post.author}</small>
@@ -826,7 +863,9 @@ function addPost() {
     }
 
     const post = {
+	postID: "",
         postType: "text",
+        pinned: "",
         treeID: currentFamilyID,
         userID: userID,
         content: postContent,
@@ -837,42 +876,53 @@ function addPost() {
 
 
 	
-    firestore.collection('posts').add(post)
-        .then(() => {
-            console.log('Post added successfully');
-            document.getElementById('post-content').value = ''; // Clear the input field after adding
-		loadPosts();
+    firestore
+        .collection("posts")
+        .add(post)
+        .then((docRef) => {
+            console.log("News post added successfully with ID:", docRef.id);
+
+            // Update the postID field with the generated document ID
+            const update = { postID: docRef.id };
+            firestore.collection("posts").doc(docRef.id).update(update);
         })
         .catch((error) => {
-            console.error('Error adding post:', error);
+            console.error("Error adding news post:", error);
         });
 }
 
 function newsPost(xxx) {
-
-    if (!xxx ) {
+    if (!xxx) {
         return;
     }
 
     const post = {
+        postID: "", // Leave it empty for now
         postType: "news",
+        pinned: "",
         treeID: currentFamilyID,
-        userID: '',
+        userID: "",
         content: xxx,
-        photo: '',
-        author:  'Family Tree Update',
+        photo: "",
+        author: "Family Tree Update",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
-	
-    firestore.collection('posts').add(post)
-        .then(() => {
-            console.log('Post added successfully');
-		loadPosts();
+
+    firestore
+        .collection("posts")
+        .add(post)
+        .then((docRef) => {
+            console.log("News post added successfully with ID:", docRef.id);
+
+            // Update the postID field with the generated document ID
+            const update = { postID: docRef.id };
+            firestore.collection("posts").doc(docRef.id).update(update);
         })
         .catch((error) => {
-            console.error('Error adding post:', error);
+            console.error("Error adding news post:", error);
         });
 }
+
 
 
         
