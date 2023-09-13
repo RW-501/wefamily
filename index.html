@@ -344,6 +344,30 @@ async function register() {
     }
 }
 
+function checkLoggedInAndRedirect() {
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+    
+    if (userLoggedIn === 'true') {
+        const auth = firebase.auth();
+
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            unsubscribe(); // Unsubscribe to avoid memory leaks
+
+            if (user) {
+                // User is logged in
+                const userId = user.uid;
+                console.log('User is logged in with UID:', userId);
+                window.location.href = `dashboard/?user=${userId}`;
+            } else {
+                // User is logged out
+                console.error('No user is signed in');
+            }
+        });
+    }
+}
+
+// Call the function to check and redirect
+checkLoggedInAndRedirect();
 
 
     </script>
