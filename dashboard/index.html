@@ -820,11 +820,9 @@ function loadPosts() {
             querySnapshot.forEach((doc) => {
                 const post = doc.data();
                 const postElement = document.createElement('div');
+		    postElement = "";
                 postElement.classList.add('post');
 
-const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
-                const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-                const formattedDate = jsDate.toLocaleString('en-US', options);
 let pinBTN ='';
 if (post.pinned === '' && post.pinned != null ) {
                 postElement.classList.add('pin-post');
@@ -832,6 +830,10 @@ if (post.pinned === '' && post.pinned != null ) {
 }else{
 	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus("${post.postID}", false)'>Unpin Post</button>`;
 }
+
+const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
+                const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+                const formattedDate = jsDate.toLocaleString('en-US', options);
 		    
 	 if (post.postType === 'news') {
                 const postContent = `
@@ -852,7 +854,7 @@ if (post.pinned === '' && post.pinned != null ) {
                         </div>
                     `;
                 }
-
+pinBTN ='';
                 familyNewsArea.appendChild(postElement);
 	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
             });
