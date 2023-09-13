@@ -1323,7 +1323,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
             <button class="add-child">Add Child</button>
             <button class="add-sibling">Add Sibling</button>
         `;
-showMainMessage("data "+ data);
+//showMainMessage("data "+ data);
 
         // Add event listeners for each button in the new family member
    const addParentBtn = memberDiv.querySelector('.add-parent');
@@ -1522,7 +1522,7 @@ function addNewFamilyMember() {
         });
 
     // Close the modal after adding the member
-    closeAddMemberModal();
+    closeAddMemberTypePopup();
 }
 
 // Add an event listener to the form submission
@@ -1535,7 +1535,7 @@ document.getElementById('add-member-type').addEventListener('submit', function (
 
 
 	    
-    function addParent(member) {
+    function ad//dParent(member) {
                     console.log('member:'+ member);
         // Add parent logic here
 showAddMemberTypePopup("Parent");
@@ -1546,7 +1546,7 @@ addFamily_MemberData = member;
     }
 
     function addSpouse(member) {
-                    console.log('member:'+ member);
+                   // console.log('member:'+ member);
 
 	   // showMainMessage("?????");
         // Add spouse logic here
@@ -1558,7 +1558,7 @@ addFamily_MemberData = member;
     }
 
     function addChild(member) {
-                    console.log('member:'+ member);
+             //       console.log('member:'+ member);
 
         // Add child logic here
 showAddMemberTypePopup("Child");
@@ -1569,7 +1569,7 @@ addFamily_MemberData = member;
     }
 
     function addSibling(member) {
-                    console.log('member:'+ member);
+                 //   console.log('member:'+ member);
 
         // Add sibling logic here
 showAddMemberTypePopup("Sibling");
@@ -1581,8 +1581,7 @@ addFamily_MemberData = member;
 	    
 // Function to add a parent to a child
 function addParentToChild(newID, addFamily_MemberID) {
-	                    console.log('newID:'+ newID);
-                    console.log('addFamily_MemberID:'+ addFamily_MemberID);
+	     
 
     const childRef = firestore.collection('familyMembers').doc(newID);
     const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
