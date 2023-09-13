@@ -417,7 +417,13 @@ display: flex;
 
 
 }
+
+	      .node {
+            cursor: pointer;
+        }
 </style>
+	    <script src="https://d3js.org/d3.v7.min.js"></script>
+
 <script>
 function initializeFamilyTreeChart() {
   const familyMembers = document.querySelectorAll('.family-member');
@@ -499,11 +505,16 @@ function initializeFamilyTreeChart() {
                 </div>
                 <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
             </div>
+
+
+		
             <div id="family-tree">
                 <h2>Family Tree</h2>
-                <div id="family-tree-area">
+                <svg id="family-tree-area">
                     <!-- Family tree details will be added here dynamically -->
-                </div>
+                </svg>
+    <script src="family-tree-script.js"></script>
+		    
             </div>
 
 		
