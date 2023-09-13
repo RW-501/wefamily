@@ -96,7 +96,7 @@ function checkUserLogin() {
 
 
 
-function logout() {
+function logoutUser() {
     localStorage.setItem('userLoggedIn', 'false');
     // Optionally, sign the user out from Firebase if needed
     firebase.auth().signOut().then(() => {
