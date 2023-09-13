@@ -1385,8 +1385,8 @@ showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 	    var addFamily_MemberData = '';
 
 	function showAddMemberTypePopup(xxx) {
-	document.getElementById('memberType').innerHTML = "Add Member ",xxx;    
-	document.getElementById('memberTypeBTN').innerHTML = "Add Member ",xxx;
+	document.getElementById('memberType').innerHTML = "Add Member " + xxx;    
+	document.getElementById('memberTypeBTN').innerHTML = "Add Member "+ xxx;
 		
 		const modal = document.getElementById('add-member-type');
     modal.style.display = 'block';
@@ -1520,6 +1520,7 @@ addFamily_MemberData = member;
     }
 
     function addSpouse(member) {
+	    showMainMessage("?????");
         // Add spouse logic here
 showAddMemberTypePopup("Spouse");
 	    addFamily_MemberID = member.memberID;
