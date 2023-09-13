@@ -361,7 +361,14 @@ function initializeFamilyTreeChart() {
                 </div>
                 <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
             </div>
-        
+            <div id="family-tree">
+                <h2>Family Members</h2>
+                <div id="family-tree">
+                    <!-- Family tree details will be added here dynamically -->
+                </div>
+            </div>
+
+		
 <div id="family-news">
     <h2>Family News</h2>
     <div id="family-news-area">
@@ -1208,7 +1215,8 @@ if(!first_name && !last_name){
         memberID: "",
         spouse: [],
         parents: [],
-        children: [],
+        sibling: [],
+	    children: [],
         contact: contact,
         note: note,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -1451,6 +1459,7 @@ function addNewFamilyMember() {
         memberID: "",
         spouse: [],
         parents: [],
+        sibling: [],
         children: [],
         contact: '',
         note: note,
@@ -1468,7 +1477,7 @@ function addNewFamilyMember() {
             // Update the 'familyMembers' collection document with the generated document ID
             firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
                 .then(() => {
-                    console.log('Family member added with ID:', docRef.id);
+                    console.log('Family member added with ID:'+ docRef.id);
 
                     let newID = docRef.id;
                     if (addFamily_Type === "Parent") {
@@ -1487,6 +1496,21 @@ function addNewFamilyMember() {
 
                     // Display updated family members
                     displayFamilyMembers(currentFamilyID);
+
+
+
+
+/*
+            <div id="family-tree">
+                <h2>Family Members</h2>
+                <div id="family-tree">
+                    <!-- Family tree details will be added here dynamically -->
+                </div>
+            </div>
+*/
+
+
+	
                 })
                 .catch((error) => {
                     console.error('Error updating family member:', error);
@@ -1511,6 +1535,7 @@ document.getElementById('add-member-type').addEventListener('submit', function (
 
 	    
     function addParent(member) {
+                    console.log('member:'+ member);
         // Add parent logic here
 showAddMemberTypePopup("Parent");
 	    addFamily_MemberID = member.memberID;
@@ -1520,7 +1545,7 @@ addFamily_MemberData = member;
     }
 
     function addSpouse(member) {
-	    showMainMessage("?????");
+	   // showMainMessage("?????");
         // Add spouse logic here
 showAddMemberTypePopup("Spouse");
 	    addFamily_MemberID = member.memberID;
@@ -1549,6 +1574,9 @@ addFamily_MemberData = member;
 	    
 // Function to add a parent to a child
 function addParentTChild(newID, addFamily_MemberID) {
+	                    console.log('newID:'+ newID);
+                    console.log('addFamily_MemberID:'+ addFamily_MemberID);
+
     const childRef = firestore.collection('familyMembers').doc(newID);
     const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
@@ -1571,11 +1599,11 @@ function addSiblingToMember(newID, addFamily_MemberID) {
 
     // Update the sibling arrays for both members
     memberRef1.update({
-        siblings: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+        sibling: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });
     
     memberRef2.update({
-        siblings: firebase.firestore.FieldValue.arrayUnion(newID)
+        sibling: firebase.firestore.FieldValue.arrayUnion(newID)
     });
 }
 
