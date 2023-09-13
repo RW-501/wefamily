@@ -726,7 +726,7 @@ function updatePostPinnedStatus(postID, isPinned) {
 
     // Update the 'pinned' field of the post document
     return postRef.update({
-        pinned: isPinned ? 'YES' : '', // Use 'YES' for pinned, '' for unpinned
+        pinned: isPinned ? 'true' : '', // Use 'YES' for pinned, '' for unpinned
     })
     .then(() => {
         console.log(`Post ${postID} ${isPinned ? 'pinned' : 'unpinned'} successfully.`);
@@ -820,7 +820,7 @@ function loadPosts() {
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 let pinBTN ='';
-if (post.pinned === 'YES') {
+if (post.pinned === 'true') {
                 postElement.classList.add('pin-post');
 	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>Unpin Post</button>`;
 }else{
