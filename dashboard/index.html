@@ -676,17 +676,19 @@ firestore.collection('posts')
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
     /*   <span>Tree Update</span>*/
-     
+		    
+     const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
+
 		    if(post.postType === "news"){
        postElement.innerHTML = `
                <p>${post.content}</p>
-                   <div class="space_J"> <small>${post.author}</small><small>Posted by: ${post.timestamp}</small></div>
+                   <div class="space_J"> <small>${post.author}</small><small>Posted by: ${jsDate}</small></div>
                 `;
 
 		    }else{
        postElement.innerHTML = `
                     <p>${post.content}</p>
-                   <div class="space_J">   <small>Posted by: ${post.author}</small><small>Posted by: ${post.timestamp}</small></div>
+                   <div class="space_J">   <small>Posted by: ${post.author}</small><small>Posted by: ${jsDate}</small></div>
                 `;
 		    }
 		    
