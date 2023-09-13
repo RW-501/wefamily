@@ -117,7 +117,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 }
 
 // Usage example:
-fetchFamilyMemberData('familyMembers', treeID)
+fetchFamilyMemberData('familyMembers', currentFamilyID)
     .then((jsonData) => {
         // Now 'jsonData' contains your Firestore data in the desired format
         // Each member object includes the relationships
