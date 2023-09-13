@@ -1636,11 +1636,11 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
     // Update the spouse arrays for both members
     memberRef1.update({
-        spouses: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+        spouse: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });
 
     memberRef2.update({
-        spouses: firebase.firestore.FieldValue.arrayUnion(newID)
+        spouse: firebase.firestore.FieldValue.arrayUnion(newID)
     });
 }
 
