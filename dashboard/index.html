@@ -1307,6 +1307,12 @@ async function fetchFamilyTree() {
         const userID = await checkUserLogin();
 
         if (userID) {
+// Get the logo link element by its ID
+const logoLink = document.getElementById('logo-link');
+// Set the href attribute dynamically with the userId
+logoLink.href = `/wefamily/dashboard/?user=${userID}`;
+
+		
             const treeId = getTreeIdFromQueryParams();
             
             if (treeId) {
