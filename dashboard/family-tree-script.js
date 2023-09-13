@@ -116,7 +116,7 @@ const db = firebase.firestore();
     });
 }
 
-// Usage example:
+        console.log("currentFamilyID   "+currentFamilyID);
 fetchFamilyMemberData('familyMembers', currentFamilyID)
     .then((jsonData) => {
         // Now 'jsonData' contains your Firestore data in the desired format
