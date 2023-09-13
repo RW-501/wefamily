@@ -813,7 +813,7 @@ function loadPosts() {
     // Listen for changes to the posts collection (Firestore query)
     firestore.collection('posts')
         .where('treeID', '==', currentFamilyID) // Filter posts by treeID
-        .orderBy('timestamp', 'asc') // Order by timestamp in descending order
+        .orderBy('timestamp', 'asc') // Order by timestamp in ascending order
         .onSnapshot((querySnapshot) => {
             familyNewsArea.innerHTML = ''; // Clear the loading message
 
@@ -822,30 +822,34 @@ function loadPosts() {
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
 
-let pinBTN ='';
-if (post.pinned === '' && post.pinned != null ) {
-                postElement.classList.add('pin-post');
-	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus("${post.postID}", true)'>Pin Post</button>`;
-}else{
-	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus("${post.postID}", false)'>Unpin Post</button>`;
-}
+                // Check if the post is pinned
+                const isPinned = post.pinned === true;
 
-const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
+                const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-                const formattedDate = jsDate.toLocaleString('en-US', options);
-		    
-	 if (post.postType === 'news') {
-                const postContent = `
-                    <p>${post.content}</p>
-                    <div class="space_J">
-                        <small>Posted by: ${post.author}</small>
-                        <small>Posted on: ${formattedDate}</small>
-                    </div>
-                `;
+                const formattedDate = jsDate ? jsDate.toLocaleString('en-US', options) : '';
+
+                if (post.postType === 'news') {
+                    const postContent = `
+                        <p>${post.content}</p>
+                        <div class="space_J">
+                            <small>Posted by: ${post.author}</small>
+                            <small>Posted on: ${formattedDate}</small>
+                        </div>
+                    `;
                     postElement.innerHTML = postContent;
                 } else {
+                    // Add the "pin-post" class to pinned posts
+                    if (isPinned) {
+                        postElement.classList.add('pin-post');
+                    }
+
+                    const pinBTN = isPinned
+                        ? `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", false)'>Unpin Post</button>`
+                        : `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", true)'>Pin Post</button>`;
+
                     postElement.innerHTML = `
-		<div class='pin_area'>${pinBTN}</div>
+                        <div class='pin_area'>${pinBTN}</div>
                         <p>${post.content}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
@@ -853,15 +857,13 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                         </div>
                     `;
                 }
-if (post.pinned === '' && post.pinned != null ) {
-                postElement.classList.add('pin-post');
-}
-	familyNewsArea.appendChild(postElement);
-	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
+
+                familyNewsArea.appendChild(postElement);
+                familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
             });
         });
-
 }
+
 
 
 function addPost() {
