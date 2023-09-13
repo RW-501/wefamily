@@ -1,73 +1,72 @@
 
 
 
-// Sample family data
-const familyData = [];
 
-// Create a tree layout
-const tree = d3.tree().size([400, 200]);
 
-// Create an SVG container
+
+
+
+function generateFamilyTreeChart(familyData) {
+    const width = 800; // Width of the chart
+    const height = 400; // Height of the chart
+
+    // Create an SVG element to contain the chart
 const svg = d3.select("#family-tree-area");
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
 
-// Create a hierarchy from the family data
-const root = d3.hierarchy({ id: "root", children: familyData });
+    // Create a hierarchical tree layout
+    const treeLayout = d3.tree().size([width, height]);
 
-// Assign coordinates to each node
-tree(root);
+    // Create a root node for the tree
+    const root = d3.hierarchy(familyData);
 
-// Create links between nodes
-const links = root.links();
+    // Assign coordinates to each node in the tree
+    treeLayout(root);
 
-// Create a group for links
-const linkGroup = svg
-    .append("g")
-    .selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    .attr("d", (d) => {
-        return `
-            M${d.source.x},${d.source.y}
-            L${d.target.x},${d.target.y}
-        `;
-    })
-    .attr("stroke", "black");
+    // Create links between parent and child nodes
+    const links = root.links();
 
-// Create a group for nodes
-const nodeGroup = svg
-    .append("g")
-    .selectAll("g")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("transform", (d) => `translate(${d.x},${d.y})`)
-    .on("click", (d) => {
-        // Handle node click event (e.g., display member details)
-        console.log("Clicked node: ", d.data.id);
-    });
+    // Create a group element to hold the links
+    const linkGroup = svg.append("g");
 
-// Add circles for each node
-nodeGroup
-    .append("circle")
-    .attr("r", 20)
-    .attr("fill", "lightblue");
+    // Create a group element to hold the nodes
+    const nodeGroup = svg.append("g");
 
-// Add member names
-nodeGroup
-    .append("text")
-    .attr("y", 30)
-    .attr("text-anchor", "middle")
-    .text((d) => d.data.name);
+    // Draw links
+    linkGroup.selectAll("path")
+        .data(links)
+        .enter()
+        .append("path")
+        .attr("d", d => {
+            return `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`;
+        });
 
-// Add member photos (you should replace the image paths with actual URLs)
-nodeGroup
-    .append("image")
-    .attr("xlink:href", (d) => d.data.photo)
-    .attr("width", 40)
-    .attr("height", 40)
-    .attr("x", -20)
-    .attr("y", -20);
+    // Draw nodes (circles for now)
+    nodeGroup.selectAll("circle")
+        .data(root.descendants())
+        .enter()
+        .append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 20); // Radius of circles
+
+    // Add text labels to nodes
+    nodeGroup.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", -25) // Adjust the vertical position of labels
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name); // Display member names
+
+    // You can further style and customize the chart as needed
+}
+
+
 
 
 
@@ -125,8 +124,11 @@ fetchFamilyMemberData('familyMembers', currentFamilyID)
         // Optionally, you can convert it to a JSON string
         const jsonString = JSON.stringify(jsonData, null, 2);
         console.log("familyData   "+jsonString);
-      
-familyData = jsonString;
+   // Sample family data
+const familyData = jsonString;
+
+        // Call the function to generate the family tree chart with your family data
+generateFamilyTreeChart(familyData);
         // You can use the JSON data for further processing or export it as needed
     })
     .catch((error) => {
