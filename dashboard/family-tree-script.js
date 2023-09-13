@@ -3,9 +3,6 @@
 
 
 
-            console.log("familyData   " + jsonString);
-
-
 
 function generateFamilyTreeChart(familyData) {
     const width = 800; // Width of the chart
