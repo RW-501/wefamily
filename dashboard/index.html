@@ -723,6 +723,7 @@ var requestFamilyID = "";
 
 function updatePostPinnedStatus(postID, isPinned) {
     const postRef = firestore.collection('posts').doc(postID);
+            console.log("postID   " + postID);
 
     // Update the 'pinned' field of the post document
     return postRef.update({
