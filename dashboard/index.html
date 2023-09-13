@@ -651,7 +651,6 @@ function initializeFamilyTreeChart() {
   </div>
 </div>
 
-
 	<div id="add-member-type" class="popup-container">
     <div class="popup">
         <span class="close-button" onclick="closeAddMemberTypePopup()">&times;</span>
@@ -666,6 +665,9 @@ function initializeFamilyTreeChart() {
                 </p><p>
             <label for="member-birthdate_type">Birthdate:</label>
             <input type="date" id="member-birthdate_type" required>
+                    </p><p>           
+	<label for="member-deceaseddate_type">Deceased Date:</label>
+            <input type="date" id="member-deceaseddate_type" >
                     </p><p>
             <label for="member-photo_type">Photo URL:</label>
             <input type="text" id="member-photo_type">
@@ -1430,6 +1432,7 @@ if(!first_name && !last_name){
         last_name: last_name,
         location: "",
         birthdate: birthdate,
+        deceaseddate: "",
         photo: photo,
         private: isPrivate,
         addByID: userID,
@@ -1661,6 +1664,7 @@ function addNewFamilyMember() {
     const first_name = document.getElementById('member-first_name_type').value;
     const last_name = document.getElementById('member-last_name_type').value;
     const birthdate = document.getElementById('member-birthdate_type').value;
+    const deceaseddate = document.getElementById('member-deceaseddate_type').value;
     const photo = document.getElementById('member-photo_type').value;
     const note = document.getElementById('member-note_type').value;
 
@@ -1674,7 +1678,8 @@ function addNewFamilyMember() {
         last_name: last_name,
         location: "",
         birthdate: birthdate,
-        photo: photo,
+        deceaseddate: deceaseddate,
+	    photo: photo,
         private: false,
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
