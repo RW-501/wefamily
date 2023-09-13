@@ -795,9 +795,10 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                 }
 
                 familyNewsArea.appendChild(postElement);
+	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
+
             });
         });
-	            familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
 
 }
 
@@ -852,9 +853,9 @@ if (post.pinned === '' && post.pinned != null ) {
                 }
 
                 familyNewsArea.appendChild(postElement);
+	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
             });
         });
-	            familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
 
 }
 
