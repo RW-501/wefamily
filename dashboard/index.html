@@ -821,9 +821,12 @@ function loadPosts() {
                 const post = doc.data();
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-
-                // Check if the post is pinned
-                const isPinned = post.pinned === true;
+let isPinned = "";
+if (post.pinned === '' || post.pinned != null ) {
+	isPinned = false;
+}else{
+isPinned = true;
+}
 
                 const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
@@ -848,6 +851,8 @@ function loadPosts() {
                         ? `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", false)'>Unpin Post</button>`
                         : `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", true)'>Pin Post</button>`;
 
+
+	    
                     postElement.innerHTML = `
                         <div class='pin_area'>${pinBTN}</div>
                         <p>${post.content}</p>
