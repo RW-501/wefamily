@@ -1363,7 +1363,9 @@ async function getFamilyTree(userID) {
                 // Get the first family tree ID from the user's array of family tree IDs
                 const familyTreeId = doc.data().userTrees[0]; // You can modify this to get the desired family tree ID
                 console.log('User has a family tree with ID:', familyTreeId);
+		    
 currentFamilyID = familyTreeId;
+		    loadFamilyTreeChart();
                 const tree = await getFamilyTreeData(familyTreeId);
                      displayTreeDetails(tree);
 			const treeID = tree.treeID;
