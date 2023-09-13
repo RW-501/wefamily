@@ -11,7 +11,7 @@ function generateFamilyTreeChart(familyData) {
     const height = 400; // Height of the chart
 
     // Create an SVG element to contain the chart
-const svg = d3.select("#family-tree-area");
+const svg = d3.select("#family-tree-area")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
