@@ -768,7 +768,7 @@ firestore.collection('posts')
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
 
-                const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
+const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 
@@ -818,7 +818,7 @@ function loadPosts() {
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
 
-                const jsDate = new Date(post.timestamp.seconds * 1000 + post.timestamp.nanoseconds / 1000000);
+const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.timestamp.nanoseconds || 0) / 1000000) : null;
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 let pinBTN ='';
