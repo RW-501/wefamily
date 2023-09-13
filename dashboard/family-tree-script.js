@@ -75,6 +75,7 @@ const svg = d3.select("#family-tree-area");
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const jsonData = {};
+const db = firebase.firestore();
 
         // Fetch data from Firestore
         db.collection(collectionName)
