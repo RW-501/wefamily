@@ -824,7 +824,7 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 let pinBTN ='';
-if (post.pinned === 'true' && post.pinned != null ) {
+if (post.pinned === '' && post.pinned != null ) {
                 postElement.classList.add('pin-post');
 	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>pin Post</button>`;
 }else{
