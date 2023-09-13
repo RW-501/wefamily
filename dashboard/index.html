@@ -772,6 +772,9 @@ firestore.collection('posts')
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 
+
+                if (post.postType === 'news') {
+
                 const postContent = `
                     <p>${post.content}</p>
                     <div class="space_J">
@@ -780,7 +783,6 @@ firestore.collection('posts')
                     </div>
                 `;
 
-                if (post.postType === 'news') {
                     postElement.innerHTML = postContent;
                 } else {
                     postElement.innerHTML = `
@@ -820,9 +822,9 @@ function loadPosts() {
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 let pinBTN ='';
-if (post.pinned === 'true') {
+if (post.pinned === 'true' && post.pinned != null ) {
                 postElement.classList.add('pin-post');
-	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>Unpin Post</button>`;
+	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', true)'>pin Post</button>`;
 }else{
 	pinBTN = `<button class='pin-button'onclick='updatePostPinnedStatus('${post.postID}', false)'>Unpin Post</button>`;
 }
