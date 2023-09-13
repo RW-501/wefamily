@@ -1311,7 +1311,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
                 <!-- Add other fields as needed -->
   
             </div>
-            <button class="add_spouse">Add Spouse</button>
+            <button class="add-spouse">Add Spouse</button>
             <button class="add-child">Add Child</button>
             <button class="add-sibling">Add Sibling</button>
         `;
@@ -1320,7 +1320,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
    const addParentBtn = memberDiv.querySelector('.add-parent');
 addParentBtn.addEventListener('click', () => addParent(data));
 
-const addSpouseBtn = memberDiv.querySelector('.add_spouse');
+const addSpouseBtn = memberDiv.querySelector('.add-spouse');
 addSpouseBtn.addEventListener('click', () => addSpouse(data));
 
 const addChildBtn = memberDiv.querySelector('.add-child');
@@ -1475,13 +1475,13 @@ function addNewFamilyMember() {
                         addChildToParent(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Parent`);
                     } else if (addFamily_Type === "Spouse") {
-                        addSpouse(newID, addFamily_MemberID);
+                        addSpouseToMember(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Spouse`);
                     } else if (addFamily_Type === "Child") {
                         addParentToChild(addFamily_MemberID, newID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Child`);
                     } else if (addFamily_Type === "Sibling") {
-                        addSibling(newID, addFamily_MemberID);
+                        addSiblingToMember(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as their Sibling`);
                     }
 
@@ -1565,7 +1565,7 @@ function addParentTChild(newID, addFamily_MemberID) {
 
 
 // Function to add siblings to each other's sibling arrays
-function addSiblings(newID, addFamily_MemberID) {
+function addSiblingToMember(newID, addFamily_MemberID) {
     const memberRef1 = firestore.collection('familyMembers').doc(newID);
     const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
@@ -1595,7 +1595,7 @@ function addChildToParent(newID, addFamily_MemberID) {
 }
 
 // Function to add spouses to each other's spouse arrays
-function addSpouse(newID, addFamily_MemberID) {
+function addSpouseToMember(newID, addFamily_MemberID) {
     const memberRef1 = firestore.collection('familyMembers').doc(newID);
     const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
