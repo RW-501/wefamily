@@ -853,8 +853,10 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                         </div>
                     `;
                 }
-pinBTN ='';
-                familyNewsArea.appendChild(postElement);
+if (post.pinned === '' && post.pinned != null ) {
+                postElement.classList.add('pin-post');
+}
+	familyNewsArea.appendChild(postElement);
 	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
             });
         });
