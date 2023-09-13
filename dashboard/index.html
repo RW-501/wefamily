@@ -762,6 +762,8 @@ var requestFamilyID = "";
 
 
 function updatePostPinnedStatus(postID, isPinned) {
+    document.getElementById('pinnedFamily-news-area').innerHTML = "";
+
     const postRef = firestore.collection('posts').doc(postID);
             console.log("postID   " + postID);
 
@@ -849,7 +851,6 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
 function loadPosts() {
     const familyNewsArea = document.getElementById('family-news-area');
     familyNewsArea.innerHTML = 'Loading...';
-		    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
     // Listen for changes to the posts collection (Firestore query)
     firestore.collection('posts')
