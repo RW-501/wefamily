@@ -1,7 +1,5 @@
 
 
-
-
 function generateFamilyTreeChart(familyData) {
     const width = 800; // Width of the chart
     const height = 400; // Height of the chart
@@ -59,7 +57,7 @@ function generateFamilyTreeChart(familyData) {
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
-    console.log("Family Tree Chart generated successfully.");
+    // You can further style and customize the chart as needed
 }
 
 function fetchFamilyMemberData(collectionName, treeID) {
@@ -105,16 +103,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
                     // Store member data in the map
                     memberDataMap[id] = memberData;
-                  // Build the tree starting from the root
-     resolve(hierarchicalTree);
-                console.log("Family member data fetched successfully.");
-            })
-            .catch((error) => {
-                reject(error);
-                console.error('Error fetching family member data:', error);
-            });
-    });
-}
+                });
 
                 // Create the hierarchical tree structure
                 function buildTree(node) {
@@ -125,25 +114,33 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     return node;
                 }
 
-   
+                // Build the tree starting from the root
+                const hierarchicalTree = buildTree(root);
+
+                // Resolve the promise with the hierarchical tree structure
+                resolve(hierarchicalTree);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
 
 function loadFamilyTreeChart() {
     console.log("currentFamilyID   " + currentFamilyID);
     fetchFamilyMemberData('familyMembers', currentFamilyID)
         .then((hierarchicalTree) => {
+            console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
             // Now 'hierarchicalTree' contains your Firestore data in a hierarchical structure
-            // Each member object includes the relationships and children as nodes
 
             // Call the function to generate the family tree chart with your family data
             generateFamilyTreeChart(hierarchicalTree);
+            console.log("Family tree chart generated."); // Log when the chart is generated
             // You can use the hierarchical tree structure for rendering the chart
         })
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
 }
-
-
-
 
 
