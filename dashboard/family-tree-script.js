@@ -94,13 +94,13 @@ familyData = {
     const links = root.links();
 
     // Create a group element to hold the links
-    const linkGroup = svg.append("g");
+    const chartGroup  = svg.append("g");
 
     // Create a group element to hold the nodes
     const nodeGroup = svg.append("g");
 
     // Draw links
-    linkGroup.selectAll("path")
+    chartGroup .selectAll("path")
         .data(links)
         .enter()
         .append("path")
@@ -144,7 +144,7 @@ function zoomed(event) {
     chartGroup.attr("transform", event.transform);
 
     // Apply the same zoom transformation to the link lines
-    linkGroup.selectAll("path")
+    chartGroup .selectAll("path")
         .attr("d", d => {
             // Generate the updated path data using the link generator
             const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
