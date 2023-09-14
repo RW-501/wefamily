@@ -109,7 +109,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 
     console.log("treeData   " + treeData.name);
 let childID = treeData.adminID;
-    console.log("childID   " + childID);
+   // console.log("childID   " + childID);
 
           // Initialize the root object with the correct child ID
 const root = {
@@ -117,7 +117,7 @@ const root = {
     name: treeData.name, // The name of the root node
     children: [], // Include childID in the children array
 };
-             root.children.push(childID);
+         //    root.children.push(childID);
                 // Create a map to store member data by ID
                 const memberDataMap = {};
 let countChild = 0;
@@ -164,7 +164,10 @@ function buildTree(node) {
 
                     countChild++;
                     if(countChild === 1){
-//
+root.children.push(memberData.id);
+console.log("childID   " + memberData.id);
+console.log("childID   " + childID);
+                    
                     }
                             // Store member data in the map
                     memberDataMap[id] = memberData;
