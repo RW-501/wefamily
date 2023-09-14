@@ -25,7 +25,7 @@ const linkGenerator = d3.linkHorizontal()
     .y(d => d.x);
 
     // Create a group element to hold the links
-    const chartGroup  = svg.append("g");
+    var chartGroup; 
 
 function generateFamilyTreeChart(familyData) {
     const width = 1000; // Width of the chart
@@ -40,7 +40,8 @@ function generateFamilyTreeChart(familyData) {
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height]);
-
+    
+chartGroup  = svg.append("g");
 
 // Fake family tree data with siblings
 familyData = {
