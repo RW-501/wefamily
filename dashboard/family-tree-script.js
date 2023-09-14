@@ -341,10 +341,10 @@ root.children.push("85AoEIm6sppejYT6MA2b");
                             // Update childNode's parent
                             parentsNode.parents.push(id);
                             // Update current member's child
-                            memberData.parents.push(parentsID);
+                            memberData.children.push(parentsID);
                         }
                     });
-                 
+                 /*
                     children.forEach((childID) => {
                         const childNode = memberDataMap[childID];
                         if (childNode) {
@@ -374,7 +374,7 @@ root.children.push("85AoEIm6sppejYT6MA2b");
                             memberData.spouse.push(spouseID);
                         }
                     });
-
+*/
                     
                 });
 
