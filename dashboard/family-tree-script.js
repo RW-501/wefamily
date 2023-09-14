@@ -227,159 +227,105 @@ exportButton.addEventListener('click', () => {
 
 
 
+
+
+
+
+                
+
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
+
+        // Initialize the root object with the correct child ID
+        const root = {
+            id: treeID, // A unique identifier for the root node
+            name: '', // Initialize with an empty name
+            children: [], // Include childID in the children array
+        };
+
+        // Create a map to store member data by ID
+        const memberDataMap = {};
+        let countChild = 0;
 
         // Fetch data from Firestore
         db.collection(collectionName)
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
-     
-                
-    console.log("treeData   " + treeData.name);
-let childID = treeData.adminID;
-   // console.log("childID   " + childID);
+                querySnapshot.forEach((doc) => {
+                    const docData = doc.data();
+                    const id = doc.id;
+                    const name = `${docData.first_name} ${docData.last_name}`;
+                    const photo = docData.photo || '';
+                    const children = docData.children || [];
+                    const spouse = docData.spouse || [];
+                    const parents = docData.parents || [];
+                    const siblings = docData.sibling || [];
 
-          // Initialize the root object with the correct child ID
-const root = {
-    id: treeID, // A unique identifier for the root node
-    name: treeData.name, // The name of the root node
-    children: [], // Include childID in the children array
-};
-         //    root.children.push(childID);
-                // Create a map to store member data by ID
-                const memberDataMap = {};
-let countChild = 0;
+                    // Check if the member is not already in memberDataMap and map them
+                    if (!memberDataMap[id]) {
+                        const memberData = {
+                            id: id,
+                            name: name,
+                            photo: photo,
+                            children: children,
+                            spouse: spouse,
+                            parents: parents,
+                            siblings: siblings,
+                            // You can add more properties here if needed
+                        };
 
-                // Build the tree starting from the root
-function buildTree(node, depth, processedNodes, parentNodeIds) {
-    // Check if depth exceeds a certain limit (e.g., 10) or if the node has already been processed
-    if (depth >= 10 || processedNodes.has(node.id)) {
-        return node; // Stop recursion
-    }
-
-    // Mark the current node as processed
-    processedNodes.add(node.id);
-
-    node.children = (node.children || []).map((childID) => {
-        const childNode = memberDataMap[childID];
-
-        // Check if childNode is already in the parent hierarchy
-        if (parentNodeIds.has(childID)) {
-            return null; // Avoid circular reference, skip this child
-        }
-
-        if (childNode) {
-            // Create a new Set containing the parent hierarchy up to this node
-            const updatedParentNodeIds = new Set(parentNodeIds);
-            updatedParentNodeIds.add(node.id);
-
-            return buildTree(childNode, depth + 1, processedNodes, updatedParentNodeIds); // Increase depth
-        }
-
-        return null; // Handle the case where childNode is undefined or missing
-    });
-
-    // Filter out any null values (nodes without valid children)
-    node.children = node.children.filter(Boolean);
-
-    return node;
-}
-
-// Usage of buildTree function
-const processedNodes = new Set(); // To keep track of processed nodes
-const parentNodeIds = new Set(); // To keep track of parent nodes in the hierarchy
-const hierarchicalTree = buildTree(root, 0, processedNodes, parentNodeIds);
-
-// Resolve the promise with the hierarchical tree structure
-resolve(hierarchicalTree);
-
-
-
-
-             querySnapshot.forEach((doc) => {
-    const docData = doc.data();
-    const id = doc.id;
-    const name = `${docData.first_name} ${docData.last_name}`;
-    const photo = docData.photo || '';
-    const children = docData.children || [];
-    const spouse = docData.spouse || [];
-    const parents = docData.parents || [];
-    const siblings = docData.sibling || [];
-
-    // Check if the member is not already in memberDataMap and map them
-        const memberData = {
-            id: id,
-            name: name,
-            photo: photo,
-            children: children,
-            spouse: spouse,
-            parents: parents,
-            siblings: siblings,
-            // You can add more properties here if needed
-        };
-
-        // Store member data in the map
-        memberDataMap[id] = memberData;
-    
+                        // Store member data in the map
+                        memberDataMap[id] = memberData;
+                    }
 
                     countChild++;
-                    if(countChild === 1){
-root.children.push("85AoEIm6sppejYT6MA2b");
-//console.log("childID   " + memberData.id);
-//console.log("childID   " + childID);
-                    
+                    if (countChild === 1) {
+                        root.name = name; // Set the root node's name
+                        root.children.push("85AoEIm6sppejYT6MA2b");
                     }
-                       
+     
                     // Check and update parent and sibling relationships
-
                     parents.forEach((parentsID) => {
-                        const parentsNode = memberDataMap[parentsID];
-                        if (parentsNode) {
+                        if (memberDataMap[parentsID]) {
                             // Update childNode's parent
-                            parentsNode.parents.push(id);
+                            memberDataMap[parentsID].children.push(id);
                             // Update current member's child
-                            memberData.children.push(parentsID);
+                            memberDataMap[id].parents.push(parentsID);
                         }
                     });
-                 /*
+
                     children.forEach((childID) => {
-                        const childNode = memberDataMap[childID];
-                        if (childNode) {
+                        if (memberDataMap[childID]) {
                             // Update childNode's parent
-                            childNode.children.push(id);
+                            memberDataMap[childID].parents.push(id);
                             // Update current member's child
-                            memberData.children.push(childID);
+                            memberDataMap[id].children.push(childID);
                         }
                     });
 
                     siblings.forEach((siblingID) => {
-                        const siblingNode = memberDataMap[siblingID];
-                        if (siblingNode) {
+                        if (memberDataMap[siblingID]) {
                             // Update siblingNode's sibling
-                            siblingNode.siblings.push(id);
+                            memberDataMap[siblingID].siblings.push(id);
                             // Update current member's sibling
-                            memberData.siblings.push(siblingID);
+                            memberDataMap[id].siblings.push(siblingID);
                         }
                     });
 
                     spouse.forEach((spouseID) => {
-                        const spouseNode = memberDataMap[spouseID];
-                        if (spouseNode) {
+                        if (memberDataMap[spouseID]) {
                             // Update spouseNode's spouse
-                            spouseNode.spouse.push(id);
+                            memberDataMap[spouseID].spouse.push(id);
                             // Update current member's spouse
-                            memberData.spouse.push(spouseID);
+                            memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-*/
-                    
                 });
 
                 // Build the tree starting from the root
-                 hierarchicalTree = buildTree(root);
+                const hierarchicalTree = buildTree(root, 0, new Set());
 
                 // Resolve the promise with the hierarchical tree structure
                 resolve(hierarchicalTree);
@@ -390,8 +336,25 @@ root.children.push("85AoEIm6sppejYT6MA2b");
     });
 }
 
+function buildTree(node, depth, processedNodes) {
+    if (depth >= 10 || processedNodes.has(node.id)) {
+        return node;
+    }
 
+    processedNodes.add(node.id);
 
+    node.children = (node.children || []).map((childID) => {
+        const childNode = memberDataMap[childID];
+        if (childNode) {
+            return buildTree(childNode, depth + 1, processedNodes);
+        }
+        return null;
+    });
+
+    node.children = node.children.filter(Boolean);
+
+    return node;
+}
 
 
 
