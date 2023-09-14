@@ -115,7 +115,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 chartGroup.selectAll("circle")
     .data(root.descendants())
     .enter()
-    .append("circle")
+    .append("div")
     .attr("class", "circle")
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
