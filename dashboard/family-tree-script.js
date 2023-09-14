@@ -304,7 +304,6 @@ function buildTree(node, depth) {
     const siblings = docData.sibling || [];
 
     // Check if the member is not already in memberDataMap and map them
-    if (isMemberNotMapped(id)) {
         const memberData = {
             id: id,
             name: name,
@@ -318,7 +317,7 @@ function buildTree(node, depth) {
 
         // Store member data in the map
         memberDataMap[id] = memberData;
-    }
+    
 
                     countChild++;
                     if(countChild === 1){
@@ -330,11 +329,20 @@ console.log("childID   " + childID);
                        
                     // Check and update parent and sibling relationships
 
+                    parents.forEach((parentsID) => {
+                        const parentsNode = memberDataMap[parentsID];
+                        if (parentsNode) {
+                            // Update childNode's parent
+                            parentsNode.parents.push(id);
+                            // Update current member's child
+                            memberData.parents.push(parentsID);
+                        }
+                    });
                     children.forEach((childID) => {
                         const childNode = memberDataMap[childID];
                         if (childNode) {
                             // Update childNode's parent
-                            childNode.parents.push(id);
+                            childNode.children.push(id);
                             // Update current member's child
                             memberData.children.push(childID);
                         }
