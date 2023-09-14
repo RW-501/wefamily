@@ -102,6 +102,9 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     // Create links between parent and child nodes
     const links = root.links();
 
+    const imageWidth = 100;
+
+    const imageHeight = 100;
 
 // Append images to nodes
 chartGroup.selectAll("image")
