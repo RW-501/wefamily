@@ -35,7 +35,7 @@ function generateFamilyTreeChart(familyData) {
         .attr("height", height);
 
     // Create a hierarchical tree layout
-    const treeLayout = d3.tree().size([width, height]);
+    const treeLayout = d3.tree().size([width, height -500]);
     
 chartGroup  = svg.append("g");
 
@@ -76,7 +76,10 @@ familyData = {
 
     
     // Create a root node for the tree
-    const root = d3.hierarchy(familyData);
+// Create a root node for the tree with an initial y-coordinate of 50
+const root = d3.hierarchy(familyData).eachBefore(d => {
+    d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
+});
 
     // Assign coordinates to each node in the tree
     treeLayout(root);
