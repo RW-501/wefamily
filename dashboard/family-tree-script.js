@@ -253,6 +253,10 @@ const root = {
                 const memberDataMap = {};
 let countChild = 0;
 
+
+
+
+                
                 // Build the tree starting from the root
 function buildTree(node, depth) {
     // Check if depth exceeds a certain limit (e.g., 10)
@@ -313,9 +317,35 @@ console.log("childID   " + memberData.id);
 console.log("childID   " + childID);
                     
                     }
-                       
-                    // Check and update parent and sibling relationships
 
+
+
+                    // Check and update parent relationships
+                    parents.forEach((parentID) => {
+                        const parentNode = memberDataMap[parentID];
+                        if (parentNode) {
+                            parentNode.children.push(id);
+                        }
+                    });
+                });
+
+                // Use a queue for breadth-first traversal
+                const queue = [root];
+
+                while (queue.length > 0) {
+                    const currentNode = queue.shift();
+                    currentNode.children = currentNode.children.map((childID) => {
+                        return {
+                            ...memberDataMap[childID],
+                            children: [], // Initialize children array
+                        };
+                    });
+                    queue.push(...currentNode.children);
+                }
+
+                        
+                    // Check and update parent and sibling relationships
+/*
                     parents.forEach((parentsID) => {
                         const parentsNode = memberDataMap[parentsID];
                         if (parentsNode) {
@@ -354,7 +384,10 @@ console.log("childID   " + childID);
                             memberData.spouse.push(spouseID);
                         }
                     });
-                });
+
+
+                    
+                });*/
 
                 // Build the tree starting from the root
                 const hierarchicalTree = buildTree(root);
