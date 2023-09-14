@@ -18,7 +18,7 @@ function generateFamilyTreeChart(familyData) {
 // Fake family tree data with siblings
 familyData = {
     id: 'root',
-    name: 'Family Tree',
+    name: 'Family Tree 333',
     children: [
         {
             id: 'child1',
@@ -27,7 +27,12 @@ familyData = {
                 {
                     id: 'sibling1',
                     name: 'Jane Doe',
-                    children: [],
+                    children: [                {
+                                                id: 'child',
+                                                name: 'grand Doe',
+                                                children: [],
+                                                    },
+                              ],
                 },
                 {
                     id: 'sibling2',
