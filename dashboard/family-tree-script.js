@@ -84,6 +84,25 @@ let countChild = 0;
                 // Create a map to store member data by ID
                 const memberDataMap = {};
 
+            // Build the tree starting from the root
+function buildTree(node) {
+    node.children = (node.children || []).map((childID) => {
+        const childNode = memberDataMap[childID];
+        if (childNode) {
+            return buildTree(childNode);
+        }
+        return null; // Handle the case where childNode is undefined or missing
+    });
+
+    // Filter out any null values (nodes without valid children)
+    node.children = node.children.filter(Boolean);
+
+    return node;
+}
+
+
+
+                
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
@@ -128,22 +147,6 @@ root.children.push(memberData.id);
     });
 }
 
-                // Create the hierarchical tree structure
-            // Build the tree starting from the root
-function buildTree(node) {
-    node.children = (node.children || []).map((childID) => {
-        const childNode = memberDataMap[childID];
-        if (childNode) {
-            return buildTree(childNode);
-        }
-        return null; // Handle the case where childNode is undefined or missing
-    });
-
-    // Filter out any null values (nodes without valid children)
-    node.children = node.children.filter(Boolean);
-
-    return node;
-}
 
 function loadFamilyTreeChart() {
     console.log("currentFamilyID   " + currentFamilyID);
