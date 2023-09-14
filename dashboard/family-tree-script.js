@@ -45,8 +45,10 @@ const scale = 1;
     const treeLayout = d3.tree().size([width, height]);
     
 chartGroup  = svg.append("g");
+
+    
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+treeLayout.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
     
 // Fake family tree data with siblings
 familyData = {
