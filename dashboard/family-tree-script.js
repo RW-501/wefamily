@@ -3,6 +3,7 @@
 function generateFamilyTreeChart(familyData) {
     const width = 800; // Width of the chart
     const height = 400; // Height of the chart
+    console.log("generateFamilyTreeChart   " + familyData);
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
@@ -125,7 +126,7 @@ function buildTree(node) {
                         // You can add more properties here if needed
                     };
                     
-    console.log("memberData   " + memberData.name);
+ //   console.log("memberData   " + memberData.name);
 countChild++;
                     if(countChild === 1){
 root.children.push(memberData.id);
