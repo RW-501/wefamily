@@ -71,17 +71,16 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .then((querySnapshot) => {
                 // Create an empty root node
     console.log("treeData   " + treeData.name);
-let childID = treeData.adminID;
-    console.log("childID   " + childID);
+//let childID = treeData.adminID;
 
           // Initialize the root object with the correct child ID
 const root = {
     id: treeID, // A unique identifier for the root node
     name: treeData.name, // The name of the root node
-    children: [childID], // Include childID in the children array
+    children: [], // Include childID in the children array
 };
 
-
+let countChild = 0;
                 // Create a map to store member data by ID
                 const memberDataMap = {};
 
@@ -108,10 +107,26 @@ const root = {
                     };
                     
     console.log("memberData   " + memberData);
+countChild++;
+                    if(countChild === 1){
+root.children.push(memberData.id);
+                    }
 
                     // Store member data in the map
                     memberDataMap[id] = memberData;
                 });
+
+                // Build the tree starting from the root
+                const hierarchicalTree = buildTree(root);
+
+                // Resolve the promise with the hierarchical tree structure
+                resolve(hierarchicalTree);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
 
                 // Create the hierarchical tree structure
             // Build the tree starting from the root
@@ -128,19 +143,6 @@ function buildTree(node) {
     node.children = node.children.filter(Boolean);
 
     return node;
-}
-
-
-                // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root);
-
-                // Resolve the promise with the hierarchical tree structure
-                resolve(hierarchicalTree);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
 }
 
 function loadFamilyTreeChart() {
