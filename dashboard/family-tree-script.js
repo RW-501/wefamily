@@ -285,7 +285,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     countChild++;
                     if (countChild === 1) {
                      //   root.name = name; // Set the root node's name
-                        root.children.push("85AoEIm6sppejYT6MA2b");
+                        root.children.push("xUadk9QFsW7hXLygAzp0");
                     }
      
                     // Check and update parent and sibling relationships
@@ -327,7 +327,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 });
 
                 // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root,querySnapshotCount, 0, new Set());
+                const hierarchicalTree = buildTree(root,querySnapshotCount, new Set());
 
                 // Resolve the promise with the hierarchical tree structure
                 resolve(hierarchicalTree);
@@ -338,8 +338,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
     });
 }
 
-function buildTree(node, querySnapshotCount, depth, processedNodes) {
-    if (depth >= querySnapshotCount || processedNodes.has(node.id)) {
+function buildTree(node, depthLimit, processedNodes) {
+    if (depthLimit <= 0 || processedNodes.has(node.id)) {
         return node;
     }
 
@@ -348,7 +348,7 @@ function buildTree(node, querySnapshotCount, depth, processedNodes) {
     node.children = (node.children || []).map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
-            return buildTree(childNode, depth + 1, processedNodes);
+            return buildTree(childNode, depthLimit - 1, processedNodes);
         }
         return null;
     });
@@ -357,6 +357,7 @@ function buildTree(node, querySnapshotCount, depth, processedNodes) {
 
     return node;
 }
+
 
 
 
