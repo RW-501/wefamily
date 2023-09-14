@@ -228,6 +228,7 @@ exportButton.addEventListener('click', () => {
 
 
 
+        const memberDataMap = {};
 
 
 
@@ -245,7 +246,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
         };
 
         // Create a map to store member data by ID
-        const memberDataMap = {};
         let countChild = 0;
 
         // Fetch data from Firestore
