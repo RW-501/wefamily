@@ -106,6 +106,8 @@ const root = {
                         siblings: siblings,
                         // You can add more properties here if needed
                     };
+                    
+    console.log("memberData   " + memberData);
 
                     // Store member data in the map
                     memberDataMap[id] = memberData;
