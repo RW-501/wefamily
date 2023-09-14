@@ -102,20 +102,34 @@ familyData = {
     const nodeGroup = svg.append("g");
 
    // Draw links
-    chartGroup.selectAll("path")
-        .data(links)
-        .enter()
-        .append("path")
-        .attr("d", linkGenerator); // Set the path attribute using the link generator
+// Inside your generateFamilyTreeChart function:
 
-    // Draw nodes (circles for now)
-    nodeGroup.selectAll("circle")
-        .data(root.descendants())
-        .enter()
-        .append("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", 20); // Radius of circles
+// Add click event listener to nodes
+nodeGroup.selectAll("circle")
+    .data(root.descendants())
+    .enter()
+    .append("circle")
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
+    .attr("r", 20) // Radius of circles
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked circle Data:", d.data);
+        // You can now use d.data to access member information
+    });
+
+// Add click event listener to links
+chartGroup.selectAll("path")
+    .data(links)
+    .enter()
+    .append("path")
+    .attr("d", linkGenerator) // Set the path attribute using the link generator
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked Link Data:", d.data);
+        // You can now use d.data to access relationship information
+    });
+
 
     // Add text labels to nodes
     nodeGroup.selectAll("text")
@@ -127,7 +141,11 @@ familyData = {
         .attr("dy", -25) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
-
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked text Data:", d.data);
+        // You can now use d.data to access relationship information
+    });
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
