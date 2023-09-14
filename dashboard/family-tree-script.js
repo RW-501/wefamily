@@ -125,7 +125,7 @@ function buildTree(node) {
                         // You can add more properties here if needed
                     };
                     
-    console.log("memberData   " + memberData);
+    console.log("memberData   " + memberData.name);
 countChild++;
                     if(countChild === 1){
 root.children.push(memberData.id);
