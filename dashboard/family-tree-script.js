@@ -71,7 +71,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .then((querySnapshot) => {
                 // Create an empty root node
                 const root = {
-                    id: 'root', // A unique identifier for the root node
+                    id: treeID, // A unique identifier for the root node
                     name: 'Family Tree', // The name of the root node
                     children: [], // An array to store child nodes
                 };
@@ -128,6 +128,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 function loadFamilyTreeChart() {
     console.log("currentFamilyID   " + currentFamilyID);
+    
     fetchFamilyMemberData('familyMembers', currentFamilyID)
         .then((hierarchicalTree) => {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
