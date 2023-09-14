@@ -82,7 +82,7 @@ familyData = {
         .append("circle")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
-        .attr("r", 5); // Radius of circles
+        .attr("r", 10); // Radius of circles
 
     // Add text labels to nodes
     nodeGroup.selectAll("text")
@@ -91,7 +91,7 @@ familyData = {
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", -25) // Adjust the vertical position of labels
+        .attr("dy", -10) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
