@@ -92,7 +92,6 @@ const zoom = d3.zoom()
 
 
 
-
     
     // Create links between parent and child nodes
     const links = root.links();
@@ -130,10 +129,7 @@ const zoom = d3.zoom()
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
-      // Create a zoom behavior
-    const zoom = d3.zoom()
-        .scaleExtent([0.5, 5]) // Define the zoom scale limits
-        .on("zoom", zoomed);
+   
 
     
 // Apply the zoom behavior to the SVG
