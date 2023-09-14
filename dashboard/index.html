@@ -2071,14 +2071,16 @@ function addParentToChild(newID, addFamily_MemberID) {
     const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
     // Update the child's parents array to include the parent's ID
-    childRef.update({
+   /* childRef.update({
         parents: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });
-
+*/
     // Update the parent's children array to include the child's ID
     parentRef.update({
         children: firebase.firestore.FieldValue.arrayUnion(newID)
     });
+				setRootValue(newID);
+			loadFamilyTreeChart();
 }
 
 
@@ -2106,10 +2108,10 @@ function addChildToParent(newID, addFamily_MemberID) {
     parentRef.update({
         children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });
-
-    childRef.update({
+			loadFamilyTreeChart();
+   /* childRef.update({
         parents: firebase.firestore.FieldValue.arrayUnion(newID)
-    });
+    });*/
 }
 
 // Function to add spouses to each other's spouse arrays
