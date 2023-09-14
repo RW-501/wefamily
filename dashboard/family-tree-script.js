@@ -254,16 +254,19 @@ const root = {
 let countChild = 0;
 
                 // Build the tree starting from the root
-function buildTree(node, depth) {
-    // Check if depth exceeds a certain limit (e.g., 3)
-    if (depth >= 10) {
+function buildTree(node, depth, processedNodes) {
+    // Check if depth exceeds a certain limit (e.g., 10)
+    if (depth >= 10 || processedNodes.has(node.id)) {
         return node; // Stop recursion
     }
+
+    // Mark the current node as processed
+    processedNodes.add(node.id);
 
     node.children = (node.children || []).map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
-            return buildTree(childNode, depth + 1); // Increase depth
+            return buildTree(childNode, depth + 1, processedNodes); // Increase depth
         }
         return null; // Handle the case where childNode is undefined or missing
     });
@@ -274,8 +277,12 @@ function buildTree(node, depth) {
     return node;
 }
 
-// In your fetchFamilyMemberData function, start with depth 0
-//fetchFamilyMemberData('familyMembers', currentFamilyID, 0)
+// Usage of buildTree function
+const processedNodes = new Set(); // To keep track of processed nodes
+const hierarchicalTree = buildTree(root, 0, processedNodes);
+
+// Resolve the promise with the hierarchical tree structure
+resolve(hierarchicalTree);
 
 
 
