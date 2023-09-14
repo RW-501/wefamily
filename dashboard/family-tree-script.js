@@ -227,20 +227,6 @@ exportButton.addEventListener('click', () => {
 
 
 
-
-function isMemberNotMapped(memberID) {
-    return !memberDataMap.hasOwnProperty(memberID);
-}
-
-// Function to map a member's data
-function mapMemberData(memberID, memberData) {
-    // Check if the member is not mapped
-    if (isMemberNotMapped(memberID)) {
-        // Map the member's data
-        memberDataMap[memberID] = memberData;
-    }
-}
-
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
