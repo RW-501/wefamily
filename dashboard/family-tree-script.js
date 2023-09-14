@@ -70,13 +70,14 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .get()
             .then((querySnapshot) => {
                 // Create an empty root node
-    console.log("treeData   " + treeData);
+    console.log("treeData   " + treeData.name);
+let childID = treeData.adminID;
+    console.log("childID   " + childID);
 
-                
                 const root = {
                     id: treeID, // A unique identifier for the root node
                     name: treeData.name, // The name of the root node
-                    children: [treeData.adminID], // An array to store child nodes
+                    children: [childID], // An array to store child nodes
                 };
 
                 // Create a map to store member data by ID
