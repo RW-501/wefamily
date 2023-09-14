@@ -374,8 +374,10 @@ root.children.push("85AoEIm6sppejYT6MA2b");
                             memberData.spouse.push(spouseID);
                         }
                     });
+
+                    */
                 });
-*/
+
                 // Build the tree starting from the root
                  hierarchicalTree = buildTree(root);
 
