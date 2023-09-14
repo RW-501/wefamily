@@ -6,63 +6,90 @@
     <link rel="stylesheet" href="styles.css">
     <title>Your Family Website</title>
 </head>
-  <style>
+<style>
     /* Reset some default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-/* Apply basic styles to the header and navigation */
-header {
-    background-color: #222;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
+    /* Apply basic styles to the header and navigation */
+    header {
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
 
-.logo h1 {
-    font-size: 2rem;
-}
+    .logo h1 {
+        font-size: 2rem;
+    }
 
-nav ul {
-    list-style: none;
-    text-align: center;
-}
+    nav ul {
+        list-style: none;
+        text-align: center;
+    }
 
-nav ul li {
-    display: inline;
-    margin: 0 1rem;
-}
+    nav ul li {
+        display: inline;
+        margin: 0 1rem;
+    }
 
-nav ul li a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-}
+    nav ul li a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+    }
 
-/* Style the main content area */
-main {
-    padding: 2rem;
-}
+    /* Style the main content area */
+    main {
+        padding: 2rem;
+    }
 
-.about {
-    max-width: 800px;
-    margin: 0 auto;
-}
+    .about {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
 
-/* Apply styles to the footer */
-footer {
-    background-color: #222;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-}
+    /* Apply styles to the footer */
+    footer {
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+    }
 
-  </style>
+    /* Style the text in the main section */
+    main p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+        color: #007bff; /* Blue color for headings */
+    }
+
+    /* Add a background color to even-numbered list items */
+    main ol li:nth-child(even) {
+        background-color: #f5f5f5;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+
+    /* Style the "Discover, Connect, and Celebrate Your Family Today!" section */
+    main p:last-child {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #007bff; /* Blue color for emphasis */
+    }
+</style>
 <body>
     <header>
         <div class="logo">
@@ -77,16 +104,16 @@ footer {
         </nav>
     </header>
 
-  <main>
-        <section id="about-us">
+    <main>
+        <section id="about-us" class="about">
             <h1>About Us</h1>
-            
+
             <p>Welcome to WeFamily!</p>
-            
+
             <p>
                 At WeFamily, we're dedicated to helping you explore and celebrate your family's rich history and connections. Our website offers a range of features and tools designed to make it easy for you to connect with relatives, discover your family tree, and share cherished memories. Here's what our website features:
             </p>
-            
+
             <ol>
                 <li>
                     <h2>Family Tree Visualization</h2>
@@ -117,13 +144,12 @@ footer {
                     <p>We've designed our website to be user-friendly, making it accessible to family members of all ages. Whether you're tech-savvy or new to online family platforms, you'll find our site easy to navigate.</p>
                 </li>
             </ol>
-            
+
             <p>Join us on this journey of discovery, connection, and celebration of family bonds. We invite you to explore your family history, share stories, and strengthen your family ties with WeFamily.</p>
-            
+
             <p>Discover, Connect, and Celebrate Your Family Today!</p>
         </section>
     </main>
-    
 
     <footer>
         <p>&copy; 2023 WeFamily. All rights reserved.</p>
