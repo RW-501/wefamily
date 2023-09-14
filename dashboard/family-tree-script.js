@@ -131,7 +131,7 @@ chartGroup.selectAll("circle")
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
     });
-
+/*
 // Add click event listener to links
 chartGroup.selectAll("path")
     .data(links)
@@ -142,7 +142,7 @@ chartGroup.selectAll("path")
         // 'd' contains the data associated with the clicked link
         console.log("Clicked Link Data:", d.data);
         // You can now use d.data to access relationship information
-    });
+    });*/
 
 // Draw custom links between nodes
 chartGroup.selectAll(".link")
