@@ -35,7 +35,7 @@ function generateFamilyTreeChart(familyData) {
         .attr("height", height);
 
     // Create a hierarchical tree layout
-    const treeLayout = d3.tree().size([width, height -500]);
+    const treeLayout = d3.tree().size([width, 1000]);
     
 chartGroup  = svg.append("g");
 
