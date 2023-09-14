@@ -762,7 +762,7 @@ var requestFamilyID = "";
 
 function deletePost(postID) {
     const postRef = firestore.collection('posts').doc(postID);
-
+    document.getElementById('pinnedFamily-news-area').innerHTML = "";
     // Delete the post document
     return postRef
         .delete()
@@ -776,7 +776,6 @@ function deletePost(postID) {
 function updatePostPinnedStatus(postID, isPinned) {
 
     const postRef = firestore.collection('posts').doc(postID);
-            console.log("postID   " + postID);
     document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
     // Update the 'pinned' field of the post document
