@@ -34,10 +34,6 @@ function generateFamilyTreeChart(familyData) {
         .attr("width", width)
         .attr("height", height);
 
-// Define the translation and scale values
-const translateX = 0;
-const translateY = 100;
-const scale = 1;
 
 
     
@@ -47,9 +43,7 @@ const scale = 1;
 chartGroup  = svg.append("g");
 
     
-// Set the transform attribute
-treeLayout.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
-    
+
 // Fake family tree data with siblings
 familyData = {
     id: 'root',
@@ -197,7 +191,17 @@ chartGroup.selectAll("path")
 // Create the zoom function
 function applyZoom(scale) {
     currentScale = scale;
-    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
+ //   chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
+   
+  // Define the translation and scale values
+const translateX = 0;
+const translateY = 100;
+//const scale = 1;
+  
+    
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+    
 }
 
 
