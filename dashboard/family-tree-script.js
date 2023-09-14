@@ -128,8 +128,39 @@ function buildTree(node) {
                     if(countChild === 1){
 root.children.push(memberData.id);
                     }
-                    // Store member data in the map
+                            // Store member data in the map
                     memberDataMap[id] = memberData;
+
+                    // Check and update parent and sibling relationships
+                    children.forEach((childID) => {
+                        const childNode = memberDataMap[childID];
+                        if (childNode) {
+                            // Update childNode's parent
+                            childNode.parents.push(id);
+                            // Update current member's child
+                            memberData.children.push(childID);
+                        }
+                    });
+
+                    siblings.forEach((siblingID) => {
+                        const siblingNode = memberDataMap[siblingID];
+                        if (siblingNode) {
+                            // Update siblingNode's sibling
+                            siblingNode.siblings.push(id);
+                            // Update current member's sibling
+                            memberData.siblings.push(siblingID);
+                        }
+                    });
+
+                    spouse.forEach((spouseID) => {
+                        const spouseNode = memberDataMap[spouseID];
+                        if (spouseNode) {
+                            // Update spouseNode's spouse
+                            spouseNode.spouse.push(id);
+                            // Update current member's spouse
+                            memberData.spouse.push(spouseID);
+                        }
+                    });
                 });
 
                 // Build the tree starting from the root
@@ -143,7 +174,6 @@ root.children.push(memberData.id);
             });
     });
 }
-
 
 
 
