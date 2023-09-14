@@ -83,8 +83,8 @@ familyData = {
 
 // Create a link generator with zoom transformation
     const linkGenerator = d3.linkHorizontal()
-        .x(d => d.y) // Swap x and y due to vertical tree layout
-        .y(d => d.x);
+        .x(d => d.x) // Swap x and y due to vertical tree layout
+        .y(d => d.y);
 
     // Initialize zoom with the initial scale
     const zoom = d3.zoom()
