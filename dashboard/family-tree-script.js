@@ -344,7 +344,7 @@ root.children.push("85AoEIm6sppejYT6MA2b");
                             memberData.parents.push(parentsID);
                         }
                     });
-                 /*
+                 
                     children.forEach((childID) => {
                         const childNode = memberDataMap[childID];
                         if (childNode) {
@@ -375,7 +375,7 @@ root.children.push("85AoEIm6sppejYT6MA2b");
                         }
                     });
 
-                    */
+                    
                 });
 
                 // Build the tree starting from the root
