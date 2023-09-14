@@ -39,14 +39,15 @@ const translateX = 0;
 const translateY = 100;
 const scale = 1;
 
-// Set the transform attribute
-svg.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+
     
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height]);
     
 chartGroup  = svg.append("g");
-
+// Set the transform attribute
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+    
 // Fake family tree data with siblings
 familyData = {
     id: 'root',
