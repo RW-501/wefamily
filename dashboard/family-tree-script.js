@@ -282,7 +282,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
                     countChild++;
                     if (countChild === 1) {
-                        root.name = name; // Set the root node's name
+                     //   root.name = name; // Set the root node's name
                         root.children.push("85AoEIm6sppejYT6MA2b");
                     }
      
