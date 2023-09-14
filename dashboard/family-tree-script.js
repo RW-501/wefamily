@@ -70,6 +70,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .get()
             .then((querySnapshot) => {
                 // Create an empty root node
+    console.log("treeData   " + treeData);
+
+                
                 const root = {
                     id: treeID, // A unique identifier for the root node
                     name: 'Family Tree', // The name of the root node
