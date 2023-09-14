@@ -760,7 +760,19 @@ var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
 
+function deletePost(postID) {
+    const postRef = firestore.collection('posts').doc(postID);
 
+    // Delete the post document
+    return postRef
+        .delete()
+        .then(() => {
+            console.log(`Post ${postID} deleted successfully.`);
+        })
+        .catch((error) => {
+            console.error(`Error deleting post ${postID}:`, error);
+        });
+}
 function updatePostPinnedStatus(postID, isPinned) {
 
     const postRef = firestore.collection('posts').doc(postID);
