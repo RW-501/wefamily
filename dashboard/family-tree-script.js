@@ -16,7 +16,7 @@ function generateFamilyTreeChart(familyData) {
 
 
 // Fake family tree data with siblings
-let  xxxfamilyData = {
+familyData = {
     id: 'root',
     name: 'Family Tree',
     children: [
