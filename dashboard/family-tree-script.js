@@ -74,11 +74,13 @@ function fetchFamilyMemberData(collectionName, treeID) {
 let childID = treeData.adminID;
     console.log("childID   " + childID);
 
-                const root = {
-                    id: treeID, // A unique identifier for the root node
-                    name: treeData.name, // The name of the root node
-                    children: [childID], // An array to store child nodes
-                };
+          // Initialize the root object with the correct child ID
+const root = {
+    id: treeID, // A unique identifier for the root node
+    name: treeData.name, // The name of the root node
+    children: [childID], // Include childID in the children array
+};
+
 
                 // Create a map to store member data by ID
                 const memberDataMap = {};
