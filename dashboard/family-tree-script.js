@@ -82,7 +82,7 @@ familyData = {
         .append("circle")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
-        .attr("r", 20); // Radius of circles
+        .attr("r", 5); // Radius of circles
 
     // Add text labels to nodes
     nodeGroup.selectAll("text")
