@@ -85,30 +85,28 @@ familyData = {
     // Assign coordinates to each node in the tree
     treeLayout(root);
 
-// Initialize zoom with the initial scale
-const zoom = d3.zoom()
-    .scaleExtent([0.5, 5]) // Define the zoom scale limits
-    .on("zoom", zoomed);
+// Create a link generator with zoom transformation
+    const linkGenerator = d3.linkHorizontal()
+        .x(d => d.y) // Swap x and y due to vertical tree layout
+        .y(d => d.x);
 
+    // Initialize zoom with the initial scale
+    const zoom = d3.zoom()
+        .scaleExtent([0.5, 5]) // Define the zoom scale limits
+        .on("zoom", zoomed);
 
-
-
-    
     // Create links between parent and child nodes
     const links = root.links();
-
 
     // Create a group element to hold the nodes
     const nodeGroup = svg.append("g");
 
-    // Draw links
+   // Draw links
     chartGroup.selectAll("path")
         .data(links)
         .enter()
         .append("path")
-        .attr("d", d => {
-            return `M${d.source.x},${d.source.y} L${d.target.x},${d.target.y}`;
-        });
+        .attr("d", linkGenerator); // Set the path attribute using the link generator
 
     // Draw nodes (circles for now)
     nodeGroup.selectAll("circle")
@@ -130,12 +128,9 @@ const zoom = d3.zoom()
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
-   
-
-    
-// Apply the zoom behavior to the SVG
-svg.call(zoom)
-    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+    // Apply the zoom behavior to the SVG
+    svg.call(zoom)
+        .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 
 // Define the zoom function
 function zoomed(event) {
