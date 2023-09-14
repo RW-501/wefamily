@@ -14,6 +14,37 @@ function generateFamilyTreeChart(familyData) {
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height]);
 
+
+
+const familyData = {
+    id: 'root',
+    name: 'Family Tree',
+    children: [
+        {
+            id: 'child1',
+            name: 'John Doe',
+            children: [
+                {
+                    id: 'grandchild1',
+                    name: 'Alice Doe',
+                    children: [],
+                },
+                {
+                    id: 'grandchild2',
+                    name: 'Bob Doe',
+                    children: [],
+                },
+            ],
+        },
+        {
+            id: 'child2',
+            name: 'Jane Doe',
+            children: [],
+        },
+    ],
+};
+
+    
     // Create a root node for the tree
     const root = d3.hierarchy(familyData);
 
