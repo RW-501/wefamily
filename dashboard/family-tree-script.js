@@ -1,3 +1,42 @@
+// Add a zoom control UI
+const zoomControls = document.getElementById('zoom-controls');
+const zoomInButton = document.getElementById('zoom-in');
+const zoomOutButton = document.getElementById('zoom-out');
+
+// Define zoom behavior and initial scale
+const initialScale = 1;
+let currentScale = initialScale;
+
+// Create the zoom function
+function applyZoom(scale) {
+    currentScale = scale;
+    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
+}
+
+// Add click event listeners for zoom controls
+zoomInButton.addEventListener('click', () => {
+    const newScale = currentScale * 1.2; // Increase scale by 20%
+    applyZoom(newScale);
+});
+
+zoomOutButton.addEventListener('click', () => {
+    const newScale = currentScale / 1.2; // Decrease scale by 20%
+    applyZoom(newScale);
+});
+
+// Initialize zoom with the initial scale
+const zoom = d3.zoom()
+    .scaleExtent([0.5, 5]) // Define the zoom scale limits
+    .on("zoom", zoomed);
+
+// Apply the zoom behavior to the SVG
+svg.call(zoom)
+    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+
+// Define the zoom function
+function zoomed(event) {
+    chartGroup.attr("transform", event.transform); // Apply the zoom transformation to the chartGroup
+}
 
 
 function generateFamilyTreeChart(familyData) {
