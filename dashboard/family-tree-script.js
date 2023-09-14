@@ -33,9 +33,28 @@ const zoom = d3.zoom()
 svg.call(zoom)
     .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 
+
+
+// Create a link generator with zoom transformation
+const linkGenerator = d3.linkHorizontal()
+    .x(d => d.y) // Swap x and y due to vertical tree layout
+    .y(d => d.x);
+
+
+
 // Define the zoom function
 function zoomed(event) {
-    chartGroup.attr("transform", event.transform); // Apply the zoom transformation to the chartGroup
+    // Apply the zoom transformation to the chartGroup
+    chartGroup.attr("transform", event.transform);
+
+    // Apply the same zoom transformation to the link lines
+    linkGroup.selectAll("path")
+        .attr("d", d => {
+            // Generate the updated path data using the link generator
+            const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+            const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+            return linkGenerator({ source, target });
+        });
 }
 
 
@@ -142,10 +161,7 @@ familyData = {
     // Apply the zoom behavior to the SVG
     svg.call(zoom);
 
-    // Define the zoom function
-    function zoomed(event) {
-        chartGroup.attr("transform", event.transform); // Apply the zoom transformation to the chartGroup
-    }
+
 }
 
 
