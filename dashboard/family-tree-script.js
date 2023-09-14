@@ -228,8 +228,18 @@ exportButton.addEventListener('click', () => {
 
 
 
+function isMemberNotMapped(memberID) {
+    return !memberDataMap.hasOwnProperty(memberID);
+}
 
-
+// Function to map a member's data
+function mapMemberData(memberID, memberData) {
+    // Check if the member is not mapped
+    if (isMemberNotMapped(memberID)) {
+        // Map the member's data
+        memberDataMap[memberID] = memberData;
+    }
+}
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
@@ -260,7 +270,7 @@ let countChild = 0;
                 // Build the tree starting from the root
 function buildTree(node, depth) {
     // Check if depth exceeds a certain limit (e.g., 3)
-    if (depth >= 3) {
+    if (depth >= 10) {
         return node; // Stop recursion
     }
 
@@ -283,28 +293,32 @@ function buildTree(node, depth) {
 
 
 
-                querySnapshot.forEach((doc) => {
-                    const docData = doc.data();
-                    const id = doc.id;
-                    const name = `${docData.first_name} ${docData.last_name}`;
-                    const photo = docData.photo || '';
-                    const children = docData.children || [];
-                    const spouse = docData.spouse || [];
-                    const parents = docData.parents || [];
-                    const siblings = docData.sibling || [];
+             querySnapshot.forEach((doc) => {
+    const docData = doc.data();
+    const id = doc.id;
+    const name = `${docData.first_name} ${docData.last_name}`;
+    const photo = docData.photo || '';
+    const children = docData.children || [];
+    const spouse = docData.spouse || [];
+    const parents = docData.parents || [];
+    const siblings = docData.sibling || [];
 
-                    // Create an object for the current member
-                    const memberData = {
-                        id: id,
-                        name: name,
-                        photo: photo,
-                        children: children,
-                        spouse: spouse,
-                        parents: parents,
-                        siblings: siblings,
-                        // You can add more properties here if needed
-                    };
- //   console.log("memberData   " + memberData.name);
+    // Check if the member is not already in memberDataMap and map them
+    if (isMemberNotMapped(id)) {
+        const memberData = {
+            id: id,
+            name: name,
+            photo: photo,
+            children: children,
+            spouse: spouse,
+            parents: parents,
+            siblings: siblings,
+            // You can add more properties here if needed
+        };
+
+        // Store member data in the map
+        memberDataMap[id] = memberData;
+    }
 
                     countChild++;
                     if(countChild === 1){
@@ -313,10 +327,9 @@ console.log("childID   " + memberData.id);
 console.log("childID   " + childID);
                     
                     }
-                            // Store member data in the map
-                    memberDataMap[id] = memberData;
-
+                       
                     // Check and update parent and sibling relationships
+
                     children.forEach((childID) => {
                         const childNode = memberDataMap[childID];
                         if (childNode) {
