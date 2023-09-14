@@ -43,7 +43,6 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* Style the main content area */
 main {
     padding: 2rem;
 }
@@ -51,25 +50,29 @@ main {
 .contact-form {
     max-width: 800px;
     margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .contact-form h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #333; /* Choose an appropriate text color */
+    color: #333;
 }
 
 .contact-form p {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    color: #555; /* Choose an appropriate text color */
+    color: #555;
 }
 
 .contact-form label {
     display: block;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #333; /* Choose an appropriate text color */
+    color: #333;
 }
 
 .contact-form input[type="text"],
@@ -79,7 +82,7 @@ main {
     padding: 0.5rem;
     font-size: 1.2rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc; /* Choose an appropriate border color */
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
@@ -100,8 +103,9 @@ main {
 }
 
 .contact-form button:hover {
-    background-color: #333; /* Choose a slightly darker shade for hover effect */
+    background-color: #333;
 }
+
 
 /* Apply styles to the footer */
 footer {
@@ -111,7 +115,18 @@ footer {
     padding: 1rem 0;
 }
 
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+    .contact-form {
+        padding: 10px;
+    }
 
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        font-size: 1rem;
+    }
+}
   </style>
       <!-- Firebase SDK -->
   <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
