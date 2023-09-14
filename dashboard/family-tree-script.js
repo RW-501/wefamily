@@ -102,7 +102,7 @@ const zoom = d3.zoom()
     const nodeGroup = svg.append("g");
 
     // Draw links
-    chartGroup .selectAll("path")
+    chartGroup.selectAll("path")
         .data(links)
         .enter()
         .append("path")
