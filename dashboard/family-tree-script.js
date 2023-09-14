@@ -19,23 +19,12 @@ zoomOutButton.addEventListener('click', () => {
     applyZoom(newScale);
 });
 
-// Initialize zoom with the initial scale
-const zoom = d3.zoom()
-    .scaleExtent([0.5, 5]) // Define the zoom scale limits
-    .on("zoom", zoomed);
-
-
-// Create a link generator with zoom transformation
-const linkGenerator = d3.linkHorizontal()
-    .x(d => d.y) // Swap x and y due to vertical tree layout
-    .y(d => d.x);
-
 
 
 
 function generateFamilyTreeChart(familyData) {
     const width = 1000; // Width of the chart
-    const height = 800; // Height of the chart
+    const height = 1500; // Height of the chart
     console.log("generateFamilyTreeChart   " + familyData);
 
     // Create an SVG element to contain the chart
@@ -90,6 +79,19 @@ familyData = {
     // Assign coordinates to each node in the tree
     treeLayout(root);
 
+// Initialize zoom with the initial scale
+const zoom = d3.zoom()
+    .scaleExtent([0.5, 5]) // Define the zoom scale limits
+    .on("zoom", zoomed);
+
+
+// Create a link generator with zoom transformation
+const linkGenerator = d3.linkHorizontal()
+    .x(d => d.y) // Swap x and y due to vertical tree layout
+    .y(d => d.x);
+
+
+    
     // Create links between parent and child nodes
     const links = root.links();
 
