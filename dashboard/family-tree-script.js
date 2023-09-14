@@ -113,6 +113,7 @@ chartGroup.selectAll("circle")
     .data(root.descendants())
     .enter()
     .append("circle")
+    .attr("class", "circle")
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
     .attr("r", 20) // Radius of circles
