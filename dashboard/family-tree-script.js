@@ -255,11 +255,12 @@ let countChild = 0;
 
                 // Build the tree starting from the root
 function buildTree(node, depth) {
-    // Check if depth exceeds a certain limit (e.g., 3)
+    // Check if depth exceeds a certain limit (e.g., 10)
     if (depth >= 10) {
         return node; // Stop recursion
     }
 
+    // Map and build child nodes
     node.children = (node.children || []).map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
