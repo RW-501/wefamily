@@ -253,6 +253,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
+                                const querySnapshotCount = querySnapshot.size;
+
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
@@ -325,7 +327,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 });
 
                 // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root, 0, new Set());
+                const hierarchicalTree = buildTree(root,querySnapshotCount, 0, new Set());
 
                 // Resolve the promise with the hierarchical tree structure
                 resolve(hierarchicalTree);
@@ -336,8 +338,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
     });
 }
 
-function buildTree(node, depth, processedNodes) {
-    if (depth >= 10 || processedNodes.has(node.id)) {
+function buildTree(node, querySnapshotCount, depth, processedNodes) {
+    if (depth >= querySnapshotCount || processedNodes.has(node.id)) {
         return node;
     }
 
