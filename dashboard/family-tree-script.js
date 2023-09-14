@@ -226,16 +226,16 @@ exportButton.addEventListener('click', () => {
 });
 
 
-function setRootValue(collectionName, documentID, rootValue) {
+function setRootValue(rootValue) {
     const db = firebase.firestore();
 
     // Reference to the document in the collection
-    const docRef = db.collection(collectionName).doc(documentID);
+    const docRef = db.collection("familyTrees").doc(treeData.name);
 
     // Update the document with the new root value
     return docRef.update({ root: rootValue })
         .then(() => {
-            console.log(`Root value updated successfully for document with ID: ${documentID}`);
+            console.log(`Root value updated successfully for document with ID:`);
         })
         .catch((error) => {
             console.error(`Error updating root value: ${error}`);
