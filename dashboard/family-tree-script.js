@@ -115,7 +115,7 @@ chartGroup.selectAll("image")
     .attr("height", imageHeight)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
-        console.log("Clicked circle Data:", d.data);
+        console.log("Clicked image Data:", d.data);
         // You can now use d.data to access member information
     });
 
