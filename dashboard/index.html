@@ -606,10 +606,19 @@ function initializeFamilyTreeChart() {
     </div>
 	
     <textarea id="post-content" placeholder="Write your post..."></textarea>
-    <button onclick="addPost()">Add Post</button>
-	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
-	<button class="posts-buttons" onclick="loadPosts()">All Posts</button>
 
+			    <div class="space_J">
+
+   <div></div></di> <button onclick="addPost()">Add Post</button></div>
+
+
+
+	  <!-- Add a button to enable/disable the newsPost function -->
+  <div>  <button id="toggleNewsButton">News Posting</button>
+
+	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
+	<button class="posts-buttons" onclick="loadPosts()">All Posts</button></div>
+</div>
 </div>
 
 
@@ -991,12 +1000,30 @@ function addPost() {
             console.error("Error adding news post:", error);
         });
 }
+    let newsPostingEnabled = true;
+
+        // Function to toggle the boolean flag
+        function toggleNewsPosting() {
+            newsPostingEnabled = !newsPostingEnabled;
+            const buttonText = newsPostingEnabled ? 'Disable News Posting' : 'Enable News Posting';
+            document.getElementById('toggleNewsButton').textContent = buttonText;
+        }
+
+        // Attach a click event listener to the button
+        document.getElementById('toggleNewsButton').addEventListener('click', toggleNewsPosting);
+
+
+	    
 
 function newsPost(xxx) {
     if (!xxx) {
         return;
     }
-
+        if (!newsPostingEnabled) {
+                console.log("News posting is currently disabled.");
+                return;
+            }
+	
     const post = {
         postID: "", // Leave it empty for now
         postType: "news",
