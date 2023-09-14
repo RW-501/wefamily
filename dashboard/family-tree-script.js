@@ -103,6 +103,16 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     const links = root.links();
 
 
+// Append images to nodes
+nodeGroup.selectAll("image")
+    .data(root.descendants())
+    .enter()
+    .append("image")
+    .attr("xlink:href", d => d.data.image) // Set the image URL
+    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
+    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
+    .attr("width", imageWidth)
+    .attr("height", imageHeight);
 
 
 // Add click event listener to nodes
@@ -207,6 +217,21 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${sca
 
 
 
+const exportButton = document.getElementById('export-button');
+exportButton.addEventListener('click', () => {
+    // Select the SVG element containing your family tree
+    const svgElement = document.querySelector('#family-tree-area svg');
+
+    // Use html2canvas to capture the SVG as an image
+    html2canvas(svgElement).then(canvas => {
+        // Create a download link for the image
+        const image = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = 'family-tree.png'; // Set the desired filename
+        link.click();
+    });
+});
 
 
 
