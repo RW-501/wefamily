@@ -98,14 +98,13 @@ familyData = {
     // Create links between parent and child nodes
     const links = root.links();
 
-    // Create a group element to hold the nodes
-    const nodeGroup = svg.append("g");
+
 
    // Draw links
 // Inside your generateFamilyTreeChart function:
 
 // Add click event listener to nodes
-nodeGroup.selectAll("circle")
+chartGroup.selectAll("circle")
     .data(root.descendants())
     .enter()
     .append("circle")
@@ -132,7 +131,7 @@ chartGroup.selectAll("path")
 
 
     // Add text labels to nodes
-    nodeGroup.selectAll("text")
+    chartGroup.selectAll("text")
         .data(root.descendants())
         .enter()
         .append("text")
