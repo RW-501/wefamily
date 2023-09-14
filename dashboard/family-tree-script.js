@@ -123,20 +123,29 @@ const root = {
 let countChild = 0;
 
                 // Build the tree starting from the root
-function buildTree(node) {
-                    node.children = (node.children || []).map((childID) => {
-                        const childNode = memberDataMap[childID];
-                        if (childNode) {
-                            return buildTree(childNode);
-                        }
-                        return null; // Handle the case where childNode is undefined or missing
-                    });
+function buildTree(node, depth) {
+    // Check if depth exceeds a certain limit (e.g., 3)
+    if (depth >= 3) {
+        return node; // Stop recursion
+    }
 
-                    // Filter out any null values (nodes without valid children)
-                    node.children = node.children.filter(Boolean);
+    node.children = (node.children || []).map((childID) => {
+        const childNode = memberDataMap[childID];
+        if (childNode) {
+            return buildTree(childNode, depth + 1); // Increase depth
+        }
+        return null; // Handle the case where childNode is undefined or missing
+    });
 
-                    return node;
-                }
+    // Filter out any null values (nodes without valid children)
+    node.children = node.children.filter(Boolean);
+
+    return node;
+}
+
+// In your fetchFamilyMemberData function, start with depth 0
+//fetchFamilyMemberData('familyMembers', currentFamilyID, 0)
+
 
 
                 querySnapshot.forEach((doc) => {
