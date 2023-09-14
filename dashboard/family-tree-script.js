@@ -139,7 +139,7 @@ chartGroup.selectAll("path")
         .attr("y", d => d.y)
         .attr("dy", -25) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
-        .text(d => d.data.name); // Display member names
+        .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked link
         console.log("Clicked text Data:", d.data);
