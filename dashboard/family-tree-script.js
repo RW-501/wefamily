@@ -226,6 +226,23 @@ exportButton.addEventListener('click', () => {
 });
 
 
+function setRootValue(collectionName, documentID, rootValue) {
+    const db = firebase.firestore();
+
+    // Reference to the document in the collection
+    const docRef = db.collection(collectionName).doc(documentID);
+
+    // Update the document with the new root value
+    return docRef.update({ root: rootValue })
+        .then(() => {
+            console.log(`Root value updated successfully for document with ID: ${documentID}`);
+        })
+        .catch((error) => {
+            console.error(`Error updating root value: ${error}`);
+        });
+}
+
+
 
 
         const memberDataMap = {};
@@ -241,12 +258,13 @@ function fetchFamilyMemberData(collectionName, treeID) {
         // Initialize the root object with the correct child ID
         const root = {
             id: treeID, // A unique identifier for the root node
-            name: '', // Initialize with an empty name
+    name: treeData.name, // The name of the root node
             children: [], // Include childID in the children array
         };
-
-        // Create a map to store member data by ID
-        let countChild = 0;
+             
+                        root.children.push(treeData.name);
+                    
+   
 
         // Fetch data from Firestore
         db.collection(collectionName)
@@ -282,11 +300,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         memberDataMap[id] = memberData;
                     }
 
-                    countChild++;
-                    if (countChild === 1) {
-                     //   root.name = name; // Set the root node's name
-                        root.children.push("xUadk9QFsW7hXLygAzp0");
-                    }
+                  
      
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
