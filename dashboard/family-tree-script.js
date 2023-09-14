@@ -345,10 +345,15 @@ function buildTree(node, depthLimit, processedNodes) {
 
     processedNodes.add(node.id);
 
+    const uniqueChildren = {};
+    
     node.children = (node.children || []).map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
-            return buildTree(childNode, depthLimit - 1, processedNodes);
+            if (!uniqueChildren[childID]) {
+                uniqueChildren[childID] = true;
+                return buildTree(childNode, depthLimit - 1, processedNodes);
+            }
         }
         return null;
     });
@@ -357,6 +362,7 @@ function buildTree(node, depthLimit, processedNodes) {
 
     return node;
 }
+
 
 
 
