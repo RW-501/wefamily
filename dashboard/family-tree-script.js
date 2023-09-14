@@ -126,7 +126,7 @@ chartGroup.selectAll("image")
 chartGroup.selectAll("circle")
     .data(root.descendants())
     .enter()
-    .append("div")
+    .append("circle")
     .attr("class", "circle")
     .attr("cx", d => d.x)
     .attr("cy", d => d.y)
@@ -176,7 +176,12 @@ chartGroup.selectAll("path")
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-
+const translateX = 0;
+const translateY = 100;
+const scale = 1;    
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+    
 // Define the zoom function
  function zoomed(event) {
         // Apply the zoom transformation to the chartGroup
