@@ -95,10 +95,19 @@ familyData = {
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
-    // You can further style and customize the chart as needed
+      // Create a zoom behavior
+    const zoom = d3.zoom()
+        .scaleExtent([0.5, 5]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+
+    // Apply the zoom behavior to the SVG
+    svg.call(zoom);
+
+    // Define the zoom function
+    function zoomed(event) {
+        chartGroup.attr("transform", event.transform); // Apply the zoom transformation to the chartGroup
+    }
 }
-
-
 
 
 function fetchFamilyMemberData(collectionName, treeID) {
