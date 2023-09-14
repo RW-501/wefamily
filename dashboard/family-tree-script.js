@@ -15,7 +15,7 @@ function generateFamilyTreeChart(familyData) {
     const treeLayout = d3.tree().size([width, height]);
 
 
-
+// Fake family tree data with siblings
 const familyData = {
     id: 'root',
     name: 'Family Tree',
@@ -25,12 +25,12 @@ const familyData = {
             name: 'John Doe',
             children: [
                 {
-                    id: 'grandchild1',
-                    name: 'Alice Doe',
+                    id: 'sibling1',
+                    name: 'Jane Doe',
                     children: [],
                 },
                 {
-                    id: 'grandchild2',
+                    id: 'sibling2',
                     name: 'Bob Doe',
                     children: [],
                 },
@@ -38,11 +38,12 @@ const familyData = {
         },
         {
             id: 'child2',
-            name: 'Jane Doe',
+            name: 'Alice Doe',
             children: [],
         },
     ],
 };
+
 
     
     // Create a root node for the tree
