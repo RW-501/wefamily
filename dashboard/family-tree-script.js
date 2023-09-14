@@ -75,8 +75,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 
                 const root = {
                     id: treeID, // A unique identifier for the root node
-                    name: 'Family Tree', // The name of the root node
-                    children: [], // An array to store child nodes
+                    name: treeData.name, // The name of the root node
+                    children: [treeData.adminID], // An array to store child nodes
                 };
 
                 // Create a map to store member data by ID
