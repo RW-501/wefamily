@@ -19,7 +19,10 @@ zoomOutButton.addEventListener('click', () => {
     applyZoom(newScale);
 });
 
-
+// Create a link generator with zoom transformation
+const linkGenerator = d3.linkHorizontal()
+    .x(d => d.y) // Swap x and y due to vertical tree layout
+    .y(d => d.x);
 
     // Create a group element to hold the links
     const chartGroup  = svg.append("g");
@@ -87,10 +90,7 @@ const zoom = d3.zoom()
     .on("zoom", zoomed);
 
 
-// Create a link generator with zoom transformation
-const linkGenerator = d3.linkHorizontal()
-    .x(d => d.y) // Swap x and y due to vertical tree layout
-    .y(d => d.x);
+
 
 
     
