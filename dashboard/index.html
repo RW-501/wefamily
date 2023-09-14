@@ -1495,7 +1495,11 @@ async function getFamilyTree(userID) {
                 console.log('User has a family tree with ID:', familyTreeId);
 		    
 currentFamilyID = familyTreeId;
-		    loadFamilyTreeChart();
+
+            setTimeout(() => {
+                loadFamilyTreeChart();
+            }, 300); // Adj
+		    
                 const tree = await getFamilyTreeData(familyTreeId);
                      displayTreeDetails(tree);
 		    treeData = tree;
