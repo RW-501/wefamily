@@ -105,7 +105,16 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
                     // Store member data in the map
                     memberDataMap[id] = memberData;
-                });
+                  // Build the tree starting from the root
+     resolve(hierarchicalTree);
+                console.log("Family member data fetched successfully.");
+            })
+            .catch((error) => {
+                reject(error);
+                console.error('Error fetching family member data:', error);
+            });
+    });
+}
 
                 // Create the hierarchical tree structure
                 function buildTree(node) {
@@ -116,16 +125,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     return node;
                 }
 
-                // Build the tree starting from the root
-     resolve(hierarchicalTree);
-                console.log("Family member data fetched successfully.");
-            })
-            .catch((error) => {
-                reject(error);
-                console.error('Error fetching family member data:', error);
-            });
-    });
-}
+   
 
 function loadFamilyTreeChart() {
     console.log("currentFamilyID   " + currentFamilyID);
