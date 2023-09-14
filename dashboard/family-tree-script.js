@@ -45,7 +45,7 @@ chartGroup  = svg.append("g");
     
 
 // Fake family tree data with siblings
-familyData = {
+let mmfamilyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
