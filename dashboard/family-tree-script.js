@@ -110,13 +110,22 @@ let childID = treeData.adminID;
                 });
 
                 // Create the hierarchical tree structure
-                function buildTree(node) {
-                    node.children = node.children.map((childID) => {
-                        const childNode = memberDataMap[childID];
-                        return buildTree(childNode);
-                    });
-                    return node;
-                }
+            // Build the tree starting from the root
+function buildTree(node) {
+    node.children = (node.children || []).map((childID) => {
+        const childNode = memberDataMap[childID];
+        if (childNode) {
+            return buildTree(childNode);
+        }
+        return null; // Handle the case where childNode is undefined or missing
+    });
+
+    // Filter out any null values (nodes without valid children)
+    node.children = node.children.filter(Boolean);
+
+    return node;
+}
+
 
                 // Build the tree starting from the root
                 const hierarchicalTree = buildTree(root);
