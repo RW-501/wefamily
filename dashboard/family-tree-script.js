@@ -94,6 +94,22 @@ familyData = {
     // Create links between parent and child nodes
     const links = root.links();
 
+// Draw custom links between nodes
+chartGroup.selectAll(".link")
+    .data(links)
+    .enter()
+    .append("path")
+    .attr("class", "link")
+    .attr("d", d => {
+        const sourceX = d.source.x;
+        const sourceY = d.source.y;
+        const targetX = d.target.x;
+        const targetY = d.target.y;
+        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
+    })
+    .style("fill", "none")
+    .style("stroke", "gray")
+    .style("stroke-width", 2);
 
 
    // Draw links
@@ -118,7 +134,7 @@ chartGroup.selectAll("path")
     .data(links)
     .enter()
     .append("path")
-    .attr("d", linkGenerator) // Set the path attribute using the link generator
+    //.attr("d", linkGenerator) // Set the path attribute using the link generator
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked link
         console.log("Clicked Link Data:", d.data);
