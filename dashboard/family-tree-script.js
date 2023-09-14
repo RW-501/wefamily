@@ -21,6 +21,8 @@ zoomOutButton.addEventListener('click', () => {
 
 
 
+    // Create a group element to hold the links
+    const chartGroup  = svg.append("g");
 
 function generateFamilyTreeChart(familyData) {
     const width = 1000; // Width of the chart
@@ -95,8 +97,6 @@ const linkGenerator = d3.linkHorizontal()
     // Create links between parent and child nodes
     const links = root.links();
 
-    // Create a group element to hold the links
-    const chartGroup  = svg.append("g");
 
     // Create a group element to hold the nodes
     const nodeGroup = svg.append("g");
@@ -155,6 +155,10 @@ function zoomed(event) {
         });
 }
 
+
+}
+
+
 // Create the zoom function
 function applyZoom(scale) {
     currentScale = scale;
@@ -163,7 +167,6 @@ function applyZoom(scale) {
 
 
 
-}
 
 
 function fetchFamilyMemberData(collectionName, treeID) {
