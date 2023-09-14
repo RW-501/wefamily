@@ -104,7 +104,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 
 
 // Append images to nodes
-nodeGroup.selectAll("image")
+chartGroup.selectAll("image")
     .data(root.descendants())
     .enter()
     .append("image")
@@ -112,8 +112,12 @@ nodeGroup.selectAll("image")
     .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
     .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
     .attr("width", imageWidth)
-    .attr("height", imageHeight);
-
+    .attr("height", imageHeight)
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked circle Data:", d.data);
+        // You can now use d.data to access member information
+    });
 
 // Add click event listener to nodes
 chartGroup.selectAll("circle")
@@ -129,19 +133,7 @@ chartGroup.selectAll("circle")
         console.log("Clicked circle Data:", d.data);
         // You can now use d.data to access member information
     });
-/*
-// Add click event listener to links
-chartGroup.selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    //.attr("d", linkGenerator) // Set the path attribute using the link generator
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked link
-        console.log("Clicked Link Data:", d.data);
-        // You can now use d.data to access relationship information
-    });
-*/
+
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
