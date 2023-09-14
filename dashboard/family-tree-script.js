@@ -254,8 +254,8 @@ const root = {
 let countChild = 0;
 
                 // Build the tree starting from the root
-function buildTree(node, depth, processedNodes) {
-    // Check if depth exceeds a certain limit (e.g., 10)
+function buildTree(node, depth, processedNodes, parentNodeIds) {
+    // Check if depth exceeds a certain limit (e.g., 10) or if the node has already been processed
     if (depth >= 10 || processedNodes.has(node.id)) {
         return node; // Stop recursion
     }
@@ -265,9 +265,20 @@ function buildTree(node, depth, processedNodes) {
 
     node.children = (node.children || []).map((childID) => {
         const childNode = memberDataMap[childID];
-        if (childNode) {
-            return buildTree(childNode, depth + 1, processedNodes); // Increase depth
+
+        // Check if childNode is already in the parent hierarchy
+        if (parentNodeIds.has(childID)) {
+            return null; // Avoid circular reference, skip this child
         }
+
+        if (childNode) {
+            // Create a new Set containing the parent hierarchy up to this node
+            const updatedParentNodeIds = new Set(parentNodeIds);
+            updatedParentNodeIds.add(node.id);
+
+            return buildTree(childNode, depth + 1, processedNodes, updatedParentNodeIds); // Increase depth
+        }
+
         return null; // Handle the case where childNode is undefined or missing
     });
 
@@ -279,10 +290,12 @@ function buildTree(node, depth, processedNodes) {
 
 // Usage of buildTree function
 const processedNodes = new Set(); // To keep track of processed nodes
-const hierarchicalTree = buildTree(root, 0, processedNodes);
+const parentNodeIds = new Set(); // To keep track of parent nodes in the hierarchy
+const hierarchicalTree = buildTree(root, 0, processedNodes, parentNodeIds);
 
 // Resolve the promise with the hierarchical tree structure
 resolve(hierarchicalTree);
+
 
 
 
@@ -315,8 +328,8 @@ resolve(hierarchicalTree);
                     countChild++;
                     if(countChild === 1){
 root.children.push("85AoEIm6sppejYT6MA2b");
-console.log("childID   " + memberData.id);
-console.log("childID   " + childID);
+//console.log("childID   " + memberData.id);
+//console.log("childID   " + childID);
                     
                     }
                        
