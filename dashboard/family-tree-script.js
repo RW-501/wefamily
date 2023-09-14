@@ -98,17 +98,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     const links = root.links();
 
 
-// Add click event listener to links
-chartGroup.selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    //.attr("d", linkGenerator) // Set the path attribute using the link generator
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked link
-        console.log("Clicked Link Data:", d.data);
-        // You can now use d.data to access relationship information
-    });
+
 
 // Add click event listener to nodes
 chartGroup.selectAll("circle")
@@ -124,7 +114,17 @@ chartGroup.selectAll("circle")
         // You can now use d.data to access member information
     });
 
-
+// Add click event listener to links
+chartGroup.selectAll("path")
+    .data(links)
+    .enter()
+    .append("path")
+    //.attr("d", linkGenerator) // Set the path attribute using the link generator
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked Link Data:", d.data);
+        // You can now use d.data to access relationship information
+    });
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
