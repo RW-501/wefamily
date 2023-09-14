@@ -86,34 +86,19 @@ let countChild = 0;
 
                 // Build the tree starting from the root
 function buildTree(node) {
-    // Create an array to store all related members (children, parents, siblings, spouses)
-    const relatedMembers = [];
+                    node.children = (node.children || []).map((childID) => {
+                        const childNode = memberDataMap[childID];
+                        if (childNode) {
+                            return buildTree(childNode);
+                        }
+                        return null; // Handle the case where childNode is undefined or missing
+                    });
 
-    // Add children to the array
-    relatedMembers.push(...(node.children || []));
+                    // Filter out any null values (nodes without valid children)
+                    node.children = node.children.filter(Boolean);
 
-    // Add parents to the array
-    relatedMembers.push(...(node.parents || []));
-
-    // Add siblings to the array
-    relatedMembers.push(...(node.siblings || []));
-
-    // Add spouses to the array
-    relatedMembers.push(...(node.spouse || []));
-
-    // Recursively build the tree for each related member
-    node.children = relatedMembers
-        .map((relatedMemberID) => {
-            const relatedMemberNode = memberDataMap[relatedMemberID];
-            if (relatedMemberNode) {
-                return buildTree(relatedMemberNode);
-            }
-            return null; // Handle the case where relatedMemberNode is undefined or missing
-        })
-        .filter(Boolean); // Filter out null values
-
-    return node;
-}
+                    return node;
+                }
 
 
                 querySnapshot.forEach((doc) => {
