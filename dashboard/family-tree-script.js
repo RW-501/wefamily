@@ -145,7 +145,7 @@ chartGroup.selectAll("path")
     });*/
 
 // Draw custom links between nodes
-chartGroup.selectAll("circle")
+chartGroup.selectAll(".circle")
     .data(links)
     .enter()
     .append("path")
