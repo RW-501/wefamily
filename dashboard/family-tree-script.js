@@ -261,9 +261,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
     name: treeData.name, // The name of the root node
             children: [], // Include childID in the children array
         };
-             
-                        root.children.push(treeData.name);
-                    
+      
    
 
         // Fetch data from Firestore
@@ -282,7 +280,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
-
+       if(treeData.root === null){
+                 
+                        root.children.push(id);
+             }else{
+                        root.children.push(treeData.root);
+             } 
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
