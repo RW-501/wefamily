@@ -1434,6 +1434,7 @@ function createFamilyTree() {
                     public: pubicBool,
                     familyCode: familyCode,
                     treeID: "",
+                    root: "",
                     photo: "",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     // Add more fields as needed
@@ -1612,7 +1613,12 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
     }
 }
 
-    
+    /*                    
+const collectionName = "familyTrees"; // Replace with your collection name
+const documentID = treeData.treeID; // Replace with the ID of the document you want to update
+const rootValue = "new-root-value"; // Replace with the new root value
+setRootValue(collectionName, documentID, rootValue);
+*/
         // Function to add a new family member
 // Function to add a family member
 function addFamilyMember() {
@@ -1667,6 +1673,10 @@ firestore.collection('familyMembers').add(familyMember)
             .then(() => {
                 console.log('Family member added with ID:', docRef.id);
 		    displayFamilyMembers(currentFamilyID);
+
+checkFirstMember(currentFamilyID,docRef.id);
+
+		    
             })
             .catch((error) => {
                 console.error('Error updating family member:', error);
@@ -1687,7 +1697,48 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
     addFamilyMember(); // Call the function to add the family member
 });
 
+function isFirstChild(currentFamilyID) {
+    const db = firebase.firestore();
 
+    // Query Firestore to count the documents
+    return db.collection("familyMembers")
+        .where('familyID', 'array-contains', currentFamilyID)
+        .get()
+        .then((querySnapshot) => {
+            const count = querySnapshot.size; // Get the count of documents
+
+            // Check if it's the first family member (count is 0)
+            if (count === 0) {
+
+
+                return true;
+            } else {
+                return false;
+            }
+        })
+        .catch((error) => {
+            console.error(`Error counting family members: ${error}`);
+            throw error; // You can handle the error as needed
+        });
+}
+
+	    function checkFirstMember(currentFamilyID, memberID){
+isFirstChild(currentFamilyID)
+    .then((isFirst) => {
+        if (isFirst) {
+            console.log("This is the first family member.");
+            // Perform actions for the first family member here
+setRootValue(memberID);
+	    
+        } else {
+            console.log("This is not the first family member.");
+            // Perform actions for non-first family members here
+        }
+    })
+    .catch((error) => {
+        console.error(`Error checking if it's the first family member: ${error}`);
+    });
+	    }
 
 
         
