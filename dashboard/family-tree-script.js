@@ -1,8 +1,8 @@
 
 
 function generateFamilyTreeChart(familyData) {
-    const width = 800; // Width of the chart
-    const height = 400; // Height of the chart
+    const width = 100%; // Width of the chart
+    const height = 2000; // Height of the chart
     console.log("generateFamilyTreeChart   " + familyData);
 
     // Create an SVG element to contain the chart
