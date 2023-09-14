@@ -331,6 +331,7 @@ console.log("childID   " + childID);
                             memberData.parents.push(parentsID);
                         }
                     });
+                 /*
                     children.forEach((childID) => {
                         const childNode = memberDataMap[childID];
                         if (childNode) {
@@ -361,7 +362,7 @@ console.log("childID   " + childID);
                         }
                     });
                 });
-
+*/
                 // Build the tree starting from the root
                  hierarchicalTree = buildTree(root);
 
