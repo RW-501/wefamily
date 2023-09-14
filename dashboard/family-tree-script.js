@@ -7,11 +7,6 @@ const zoomOutButton = document.getElementById('zoom-out');
 const initialScale = 1;
 let currentScale = initialScale;
 
-// Create the zoom function
-function applyZoom(scale) {
-    currentScale = scale;
-    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
-}
 
 // Add click event listeners for zoom controls
 zoomInButton.addEventListener('click', () => {
@@ -29,11 +24,6 @@ const zoom = d3.zoom()
     .scaleExtent([0.5, 5]) // Define the zoom scale limits
     .on("zoom", zoomed);
 
-// Apply the zoom behavior to the SVG
-svg.call(zoom)
-    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-
-
 
 // Create a link generator with zoom transformation
 const linkGenerator = d3.linkHorizontal()
@@ -41,21 +31,6 @@ const linkGenerator = d3.linkHorizontal()
     .y(d => d.x);
 
 
-
-// Define the zoom function
-function zoomed(event) {
-    // Apply the zoom transformation to the chartGroup
-    chartGroup.attr("transform", event.transform);
-
-    // Apply the same zoom transformation to the link lines
-    linkGroup.selectAll("path")
-        .attr("d", d => {
-            // Generate the updated path data using the link generator
-            const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-            const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-            return linkGenerator({ source, target });
-        });
-}
 
 
 function generateFamilyTreeChart(familyData) {
@@ -158,8 +133,32 @@ familyData = {
         .scaleExtent([0.5, 5]) // Define the zoom scale limits
         .on("zoom", zoomed);
 
-    // Apply the zoom behavior to the SVG
-    svg.call(zoom);
+    
+// Apply the zoom behavior to the SVG
+svg.call(zoom)
+    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+
+// Define the zoom function
+function zoomed(event) {
+    // Apply the zoom transformation to the chartGroup
+    chartGroup.attr("transform", event.transform);
+
+    // Apply the same zoom transformation to the link lines
+    linkGroup.selectAll("path")
+        .attr("d", d => {
+            // Generate the updated path data using the link generator
+            const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+            const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+            return linkGenerator({ source, target });
+        });
+}
+
+// Create the zoom function
+function applyZoom(scale) {
+    currentScale = scale;
+    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
+}
+
 
 
 }
