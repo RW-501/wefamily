@@ -609,7 +609,9 @@ function initializeFamilyTreeChart() {
 
 			    <div class="space_J">
 
-  <div> <button onclick="addPost()">Add Post</button></div>
+  <div> <button onclick="addPost()">Add Post</button>
+ <input type="file" name="image" accept="image/*" id="members_post_images" >
+  </div>
 
 
 
@@ -640,6 +642,10 @@ function initializeFamilyTreeChart() {
             
 <div id="create-tree-section" class="tree-section">
             <h2>Create a Family Tree</h2>
+<p>
+        <input type="file" name="image" accept="image/*" id="family_Tree_Image" >
+
+</p>
                 <p>
                 <label for="tree_name">Name:</label>
                 <input type="text" id="tree_name" placeholder="Family Tree Name" required>
@@ -711,6 +717,9 @@ function initializeFamilyTreeChart() {
         <h2>Add Family Member</h2>
         <form id="add-member-form">
             <p>
+	<input type="file" name="image" accept="image/*" id="member_main_Image" >
+	    </p>
+		<p>
             <label for="member-first_name">First Name:</label>
             <input type="text" id="member-first_name" required>
                 </p><p>
@@ -720,9 +729,6 @@ function initializeFamilyTreeChart() {
             <label for="member-birthdate">Birthdate:</label>
             <input type="date" id="member-birthdate" required>
                     </p><p>
-            <label for="member-photo">Photo URL:</label>
-            <input type="text" id="member-photo">
-                        </p><p>
             <label for="member-private">Private:</label>
             <input type="checkbox" id="member-private">
                             </p><p>
@@ -759,6 +765,9 @@ function initializeFamilyTreeChart() {
         <span class="close-button" onclick="closeAddMemberTypePopup()">&times;</span>
         <h2 id="memberType" >Add Family Member</h2>
         <form id="add-member-form">
+<p>
+	<input type="file" name="image" accept="image/*" id="newMember_main_Image" >
+	</p>	
             <p>
             <label for="member-first_name_type">First Name:</label>
             <input type="text" id="member-first_name_type" required>
@@ -772,9 +781,6 @@ function initializeFamilyTreeChart() {
 	<label for="member-deceaseddate_type">Deceased Date:</label>
             <input type="date" id="member-deceaseddate_type" >
                     </p><p>
-            <label for="member-photo_type">Photo URL:</label>
-            <input type="text" id="member-photo_type">
-                        </p><p>
             <label for="member-note_type">Note:</label>
             <textarea id="member-note_type"></textarea>
                                 </p>
@@ -790,7 +796,84 @@ var currentFamilyID = "";
 var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
+//showMainMessage("message");
 
+	    
+// Reusable function to upload an image to Firebase Storage
+function uploadImageToStorage(file, storagePath, successCallback, errorCallback) {
+  // Check if a file was selected
+  if (!file) {
+    if (errorCallback) errorCallback('Please select an image file.');
+    return;
+  }
+
+  // Check file type (allow only images)
+  if (!file.type.startsWith('image/')) {
+    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    return;
+  }
+
+  // Check file size (limit to 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    if (errorCallback) errorCallback('Image size must be less than 5MB.');
+    return;
+  }
+
+  // Create a reference to Firebase Storage
+  const storageRef = firebase.storage().ref();
+
+  // Generate a unique filename for the image
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
+
+  // Create a reference to the storage location
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
+
+  // Resize the image to 500x500 pixels (using a library like HTMLCanvasElement)
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  img.onload = () => {
+    canvas.width = 500;
+    canvas.height = 500;
+    ctx.drawImage(img, 0, 0, 500, 500);
+
+    // Convert the resized image to a Blob
+    canvas.toBlob((blob) => {
+      // Upload the Blob to Firebase Storage
+      const uploadTask = imageRef.put(blob);
+
+      // Monitor the upload progress
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload progress: ${progress}%`);
+        },
+        (error) => {
+          console.error('Upload error:', error);
+          if (errorCallback) errorCallback('Image upload failed.');
+        },
+        () => {
+          // Upload completed successfully, get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Image URL:', downloadURL);
+            if (successCallback) successCallback(downloadURL);
+          });
+        }
+      );
+    }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
+  };
+
+  // Load the selected image
+  img.src = URL.createObjectURL(file);
+}
+
+
+
+
+	    
 function deletePost(postID) {
     const postRef = firestore.collection('posts').doc(postID);
     document.getElementById('pinnedFamily-news-area').innerHTML = "";
@@ -1085,47 +1168,7 @@ function acceptJoinRequest(requestID, userID) {
                     if (doc.exists) {
                         const requestData = doc.data();
                         
-                      /*  const familyMember = {
-                            first_name: requestData.first_name,
-                            last_name: requestData.last_name,
-                            location: requestData.location,
-                            birthdate: "", // Corrected
-                            photo: '',
-                            private: "NO", // Corrected
-                            addByID: userID,
-                            familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
-        userID: "",
-        memberID: "",
-				spouse: [],
-                            parents: [],
-                            children: [],
-                            contact: "",
-                            note: "",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-
-                            // Add other fields as needed
-                        };
-                        
-                        // Add the family member to the 'familyMembers' collection
-                        firestore.collection('familyMembers').add(familyMember)
-                            .then((docRef) => {
-                                // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
-                                const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
-                                
-                                // Update the 'familyMembers' collection document with the generated document ID
-                                firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
-                                    .then(() => {
-                                        console.log('Family member added with ID:', docRef.id);
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error updating family member:', error);
-                                    });
-                            })
-                            .catch((error) => {
-                                console.error('Error adding family member:', error);
-                            });
-                        */
-			    
+                   
                         // Delete the document
                         requestRef.delete()
                             .then(() => {
@@ -1404,7 +1447,8 @@ window.onclick = function(event) {
         function closePopup() {
             document.getElementById("popup-container").style.display = "none";
         }
-        
+
+			  
 function createFamilyTree() {
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
@@ -1412,7 +1456,7 @@ function createFamilyTree() {
     const pubicBool = document.getElementById("tree_public").value;
     const familyCode = document.getElementById("tree_code").value;
 
-	    // Perform data validation
+    // Perform data validation
     if (!treeName || !treeLocation || !familyCode || !userID) {
         showMainMessage("Please fill in all required fields.");
         return;
@@ -1423,7 +1467,7 @@ function createFamilyTree() {
         .get()
         .then((querySnapshot) => {
             if (!querySnapshot.empty) {
-                showMainMessage("A family tree with this family code already exists. ");
+                showMainMessage("A family tree with this family code already exists.");
             } else {
                 // Create an object to represent the family tree data
                 const familyTreeData = {
@@ -1436,7 +1480,7 @@ function createFamilyTree() {
                     treeID: "",
                     root: "",
                     photo: "",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     // Add more fields as needed
                 };
 
@@ -1444,10 +1488,6 @@ function createFamilyTree() {
                 firestore.collection('familyTrees').add(familyTreeData)
                     .then((docRef) => {
                         console.log('Family tree added with ID:', docRef.id);
-
-                        firestore.collection('familyTrees').doc(docRef.id).update({
-                            treeID: docRef.id,
-                        });
                         currentFamilyID = docRef.id;
 
                         // Reference to the user document in Firestore
@@ -1455,19 +1495,47 @@ function createFamilyTree() {
 
                         // Update the user document to add the family tree ID to the "userTrees" array field
                         userDocRef.update({
-                            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+                            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID),
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
-			newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp} `);
-
+                                newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp}`);
                             })
                             .catch((error) => {
                                 console.error('Error adding family tree ID to user document:', error);
                             });
 
-                        closePopup();
-                        showAddMemberModal();
+
+			    // Get the file input element
+const selectedFile = document.getElementById('family_Tree_Image').files[0]; // Get the selected file
+                        const storagePath = 'family_Tree_Image'; // Change the storage path as needed
+                        uploadImageToStorage(
+                            selectedFile,
+                            storagePath,
+                            (downloadURL) => {
+                                console.log('Image uploaded successfully:', downloadURL);
+                                // Handle success, e.g., save the downloadURL to your database
+                                familyTreeData.photo = downloadURL; // Update the family tree data with the photo URL
+
+                                // Update the family tree document with the photo URL
+                                firestore.collection('familyTrees').doc(currentFamilyID).update({
+                                    photo: downloadURL,
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+
+                                closePopup();
+                                showAddMemberModal();
+                            },
+                            (error) => {
+                                console.error('Image upload error:', error);
+                                // Handle error, e.g., display an error message to the user
+                            }
+                        );
                     })
                     .catch((error) => {
                         console.error('Error adding family tree:', error);
@@ -1613,12 +1681,10 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
     }
 }
 
-    /*                    
-const collectionName = "familyTrees"; // Replace with your collection name
-const documentID = treeData.treeID; // Replace with the ID of the document you want to update
-const rootValue = "new-root-value"; // Replace with the new root value
-setRootValue(collectionName, documentID, rootValue);
-*/
+
+// JavaScript:
+
+
         // Function to add a new family member
 // Function to add a family member
 function addFamilyMember() {
@@ -1628,7 +1694,6 @@ function addFamilyMember() {
     const first_name = document.getElementById('member-first_name').value;
     const last_name = document.getElementById('member-last_name').value;
     const birthdate = document.getElementById('member-birthdate').value;
-    const photo = document.getElementById('member-photo').value;
     const isPrivate = document.getElementById('member-private').checked;
     const contact = document.getElementById('member-contact').value;
     const note = document.getElementById('member-note').value;
@@ -1645,7 +1710,7 @@ if(!first_name && !last_name){
         location: "",
         birthdate: birthdate,
         deceaseddate: "",
-        photo: photo,
+        photo: '',
         private: isPrivate,
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
@@ -1667,7 +1732,37 @@ firestore.collection('familyMembers').add(familyMember)
     .then((docRef) => {
         // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
         const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
+	    
+const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
+// Example usage:
+// Upload an image to gs://wefamily-44c0b.appspot.com/member_main_Image
+uploadImageToStorage(
+  selectedFile,
+  'member_main_Image',
+  (downloadURL) => {
+    console.log('Image uploaded successfully to member_main_Image:', downloadURL);
+    // Handle success, e.g., save the downloadURL to your database
+   // Update the family tree document with the photo URL
+                                firestore.collection('familyMembers').doc(docRef.id).update({
+                                    photo: downloadURL,
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+	  
+  },
+  (error) => {
+    console.error('Image upload error:', error);
+    // Handle error, e.g., display an error message to the user
+  }
+);
 
+
+
+	    
         // Update the 'familyMembers' collection document with the generated document ID
         firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
             .then(() => {
@@ -1922,7 +2017,6 @@ function addNewFamilyMember() {
     const last_name = document.getElementById('member-last_name_type').value;
     const birthdate = document.getElementById('member-birthdate_type').value;
     const deceaseddate = document.getElementById('member-deceaseddate_type').value;
-    const photo = document.getElementById('member-photo_type').value;
     const note = document.getElementById('member-note_type').value;
 
     if (!first_name && !last_name) {
@@ -1936,7 +2030,7 @@ function addNewFamilyMember() {
         location: "",
         birthdate: birthdate,
         deceaseddate: deceaseddate,
-	    photo: photo,
+	    photo: '',
         private: false,
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
@@ -1978,6 +2072,34 @@ function addNewFamilyMember() {
                         addSiblingToMember(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name}} Sibling`);
                     }
+			
+const selectedFile = document.getElementById('newMember_main_Image').files[0]; // Get the selected file
+
+
+// Upload an image to gs://wefamily-44c0b.appspot.com/member_main_Image
+uploadImageToStorage(
+  selectedFile,
+  'newMember_main_Image',
+  (downloadURL) => {
+    console.log('Image uploaded successfully to member_main_Image:', downloadURL);
+    // Handle success, e.g., save the downloadURL to your database
+   // Update the family tree document with the photo URL
+                                firestore.collection('familyMembers').doc(docRef.id).update({
+                                    photo: downloadURL,
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+	  
+  },
+  (error) => {
+    console.error('Image upload error:', error);
+    // Handle error, e.g., display an error message to the user
+  }
+);
 
                     // Display updated family members
                     displayFamilyMembers(currentFamilyID);
