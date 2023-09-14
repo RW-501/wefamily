@@ -124,7 +124,7 @@ familyData = {
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", -15) // Adjust the vertical position of labels
+        .attr("dy", -25) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name); // Display member names
 
