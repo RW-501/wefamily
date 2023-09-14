@@ -16,7 +16,7 @@ function generateFamilyTreeChart(familyData) {
 
 
 // Fake family tree data with siblings
-const familyData = {
+ familyData = {
     id: 'root',
     name: 'Family Tree',
     children: [
