@@ -95,10 +95,17 @@ familyData = {
     const links = root.links();
 
 
-
-
-   // Draw links
-// Inside your generateFamilyTreeChart function:
+// Add click event listener to links
+chartGroup.selectAll("path")
+    .data(links)
+    .enter()
+    .append("path")
+    //.attr("d", linkGenerator) // Set the path attribute using the link generator
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked Link Data:", d.data);
+        // You can now use d.data to access relationship information
+    });
 
 // Add click event listener to nodes
 chartGroup.selectAll("circle")
@@ -131,19 +138,9 @@ chartGroup.selectAll("circle")
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
     });
-/*
-// Add click event listener to links
-chartGroup.selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    //.attr("d", linkGenerator) // Set the path attribute using the link generator
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked link
-        console.log("Clicked Link Data:", d.data);
-        // You can now use d.data to access relationship information
-    });*/
 
+
+/*
 // Draw custom links between nodes
 chartGroup.selectAll("path")
     .data(links)
@@ -161,7 +158,7 @@ chartGroup.selectAll("path")
     .style("stroke", "gray")
     .style("stroke-width", 2);
 
-    
+    */
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
