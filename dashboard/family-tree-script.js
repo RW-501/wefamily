@@ -363,7 +363,7 @@ console.log("childID   " + childID);
                 });
 
                 // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root);
+                 hierarchicalTree = buildTree(root);
 
                 // Resolve the promise with the hierarchical tree structure
                 resolve(hierarchicalTree);
