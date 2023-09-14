@@ -94,22 +94,7 @@ familyData = {
     // Create links between parent and child nodes
     const links = root.links();
 
-// Draw custom links between nodes
-chartGroup.selectAll(".link")
-    .data(links)
-    .enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("d", d => {
-        const sourceX = d.source.x;
-        const sourceY = d.source.y;
-        const targetX = d.target.x;
-        const targetY = d.target.y;
-        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
-    })
-    .style("fill", "none")
-    .style("stroke", "gray")
-    .style("stroke-width", 2);
+
 
 
    // Draw links
@@ -157,6 +142,26 @@ chartGroup.selectAll("path")
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
     });
+
+
+// Draw custom links between nodes
+chartGroup.selectAll(".link")
+    .data(links)
+    .enter()
+    .append("path")
+    .attr("class", "link")
+    .attr("d", d => {
+        const sourceX = d.source.x;
+        const sourceY = d.source.y;
+        const targetX = d.target.x;
+        const targetY = d.target.y;
+        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
+    })
+    .style("fill", "none")
+    .style("stroke", "gray")
+    .style("stroke-width", 2);
+
+    
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
