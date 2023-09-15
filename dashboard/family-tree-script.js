@@ -311,8 +311,8 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
 
 
 
-/*
-                    // Check and update parent and sibling relationships
+
+             /*       // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
                             // Update childNode's parent
@@ -350,12 +350,38 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
                     });
 
 
-*/
+                });*/
 
+			         children.forEach((childID) => {
+                        const childNode = memberDataMap[childID];
+                        if (childNode) {
+                            // Update childNode's parent
+                            childNode.parents.push(id);
+                            // Update current member's child
+                            memberData.children.push(childID);
+                        }
+                    });
 
+                    siblings.forEach((siblingID) => {
+                        const siblingNode = memberDataMap[siblingID];
+                        if (siblingNode) {
+                            // Update siblingNode's sibling
+                            siblingNode.siblings.push(id);
+                            // Update current member's sibling
+                            memberData.siblings.push(siblingID);
+                        }
+                    });
 
+                    spouse.forEach((spouseID) => {
+                        const spouseNode = memberDataMap[spouseID];
+                        if (spouseNode) {
+                            // Update spouseNode's spouse
+                            spouseNode.spouse.push(id);
+                            // Update current member's spouse
+                            memberData.spouse.push(spouseID);
+                        }
+                    });
                 });
-
 
 
           const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
