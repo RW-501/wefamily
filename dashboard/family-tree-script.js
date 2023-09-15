@@ -45,7 +45,7 @@ const width = window.screen.width;
 chartGroup  = svg.append("g");
 
 	
-familyData = {
+let lllfamilyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
