@@ -1206,10 +1206,16 @@ isPinned = false;
                         : `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", true)'>Pin Post</button>`;
 
 
+  // Replace URLs with clickable links
+    const contentWithLinks = post.content.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank">$1</a>'
+    );
+
 		    
                 if (post.postType === 'news') {
                     const postContent = `
-            <p class="post_content">${post.content}</p>
+            <p class="post_content">${contentWithLinks}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
                             <small>Posted on: ${formattedDate}</small>
@@ -1231,7 +1237,7 @@ isPinned = false;
             <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
 	    </div>
            <div class="post_img_Box"><img class="post_img" src="${post.photo}" alt="Posted photo" /></div>
-            <p class="post_content">${post.content}</p>
+            <p class="post_content">${contentWithLinks}</p>
             <div class="space_J">
                 <small>Posted by: ${post.author}</small>
                 <small>Posted on: ${formattedDate}</small>
@@ -1254,7 +1260,7 @@ isPinned = false;
             <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
 	    </div>
 
-            <p class="post_content">${post.content}</p>
+            <p class="post_content">${contentWithLinks}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
                             <small>Posted on: ${formattedDate}</small>
@@ -2578,37 +2584,22 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
  
   
-function formatPostContent(content) {
+function limitPostContent(content) {
     // Limit the post to 500 characters
     const truncatedContent = content.slice(0, 500);
+ const textarea = document.getElementById('post-content');
+    const truncatedContent = textarea.value;
 
-    // Replace URLs with clickable links
-    const contentWithLinks = truncatedContent.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-    );
-
-    return contentWithLinks;
+	
+  
 }
 
-function updatePostContent() {
-    const textarea = document.getElementById('post-content');
-    const postContent = textarea.value;
 
-    // Format the post content
-    const formattedContent = formatPostContent(postContent);
-
-    // Update the post content in the UI
-    const postElement = document.getElementById('post-element');
-    postElement.innerHTML = formattedContent;
-}
 document.addEventListener('DOMContentLoaded', function() {
 
 const textarea = document.getElementById('post-content');
-textarea.addEventListener('input', updatePostContent);
+textarea.addEventListener('input', limitPostContent);
 });
-
-
 
 
 
