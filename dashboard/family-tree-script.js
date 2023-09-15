@@ -324,16 +324,16 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 
-	/*		
-                  const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
-                    maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
-				        console.log("hierarchicalTree   " + hierarchicalTree);
-	*/	    
-		    
-
                 });
 
-               const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
+
+
+          const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
+                    maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
+				        console.log("hierarchicalTree   " + hierarchicalTree);
+
+		    
+              // const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
                   resolve({ hierarchicalTree, maxHierarchyDepth });
 
             })
