@@ -224,7 +224,7 @@ function setRootValue(rootValue) {
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
 
-function fetchFamilyMemberData(collectionName, treeID) {
+function fetchFamilyMemberData(collectionName, treeID,treeData) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 	    
@@ -374,9 +374,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 
-function loadFamilyTreeChart() {
+function loadFamilyTreeChart(treeData) {
     
-    fetchFamilyMemberData('familyMembers', currentFamilyID)
+    fetchFamilyMemberData('familyMembers', currentFamilyID,treeData)
         .then((hierarchicalTree) => {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
           
