@@ -8,7 +8,16 @@ const initialScale = 1;
 let currentScale = initialScale;
 
 
+	// Add click event listeners for zoom controls
+zoomInButton.addEventListener('click', () => {
+    const newScale = currentScale * 1.2; // Increase scale by 20%
+    applyZoom(newScale);
+});
 
+zoomOutButton.addEventListener('click', () => {
+    const newScale = currentScale / 1.2; // Decrease scale by 20%
+    applyZoom(newScale);
+});
 
     // Create a group element to hold the links
        var chartGroup; 
@@ -36,16 +45,7 @@ chartGroup  = svg.append("g");
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("chartGroup   " + chartGroup);
 
-	// Add click event listeners for zoom controls
-zoomInButton.addEventListener('click', () => {
-    const newScale = currentScale * 1.2; // Increase scale by 20%
-    applyZoom(newScale);
-});
 
-zoomOutButton.addEventListener('click', () => {
-    const newScale = currentScale / 1.2; // Decrease scale by 20%
-    applyZoom(newScale);
-});
 
 let  kkkfamilyData = {
     id: 'root',
