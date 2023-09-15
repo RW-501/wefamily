@@ -206,7 +206,7 @@ exportButton.addEventListener('click', () => {
 
 function setRootValue(rootValue) {
     const db = firebase.firestore();
-			                    console.log(' rootValue.',rootValue);
+			                    console.log(' rootValue.'+rootValue);
     // Reference to the document in the collection
     const docRef = db.collection("familyTrees").doc(treeData.name);
 
@@ -278,7 +278,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 
-
+/*
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -317,7 +317,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     });
 
 
-
+*/
 
 
 
