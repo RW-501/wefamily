@@ -279,6 +279,51 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         root.children.push(id);
                     }
 
+
+
+                    // Check and update parent and sibling relationships
+                    parents.forEach((parentsID) => {
+                        if (memberDataMap[parentsID]) {
+                            // Update childNode's parent
+                            memberDataMap[parentsID].children.push(id);
+                            // Update current member's child
+                            memberDataMap[id].parents.push(parentsID);
+                        }
+                    });
+
+                    children.forEach((childID) => {
+                        if (memberDataMap[childID]) {
+                            // Update childNode's parent
+                            memberDataMap[childID].parents.push(id);
+                            // Update current member's child
+                            memberDataMap[id].children.push(childID);
+                        }
+                    });
+
+                    siblings.forEach((siblingID) => {
+                        if (memberDataMap[siblingID]) {
+                            // Update siblingNode's sibling
+                            memberDataMap[siblingID].siblings.push(id);
+                            // Update current member's sibling
+                            memberDataMap[id].siblings.push(siblingID);
+                        }
+                    });
+
+                    spouse.forEach((spouseID) => {
+                        if (memberDataMap[spouseID]) {
+                            // Update spouseNode's spouse
+                            memberDataMap[spouseID].spouse.push(id);
+                            // Update current member's spouse
+                            memberDataMap[id].spouse.push(spouseID);
+                        }
+                    });
+
+
+
+
+
+
+			
                     const result = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, result.maxDepth);
                 });
