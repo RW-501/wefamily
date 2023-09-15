@@ -419,26 +419,30 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
 
 
 
-
-function buildTree(node, depthLimit, processedNodes, currentDepth) {
-    if (depthLimit <= 0 || !node || !Array.isArray(node.children) || processedNodes.has(node.id)) {
+function buildTree(node, depthLimit, currentDepth) {
+    if (depthLimit <= 0 || !node) {
         return { node, maxDepth: currentDepth };
     }
 
-    processedNodes.add(node.id);
-
-    const childResults = (node.children || []).map((child) => {
-        return buildTree(child, depthLimit - 1, processedNodes, currentDepth + 1);
+    const children = (node.children || []).map((child, index) => {
+        const childId = `child${index + 1}`;
+        return buildTree(
+            {
+                id: childId,
+                name: child.name,
+                children: child.children || [],
+            },
+            depthLimit - 1,
+            currentDepth + 1
+        );
     });
 
-    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
+    const maxChildDepth = Math.max(...children.map((result) => result.maxDepth));
 
-    node.children = childResults.map((result) => result.node);
+    node.children = children.map((result) => result.node);
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
-
-
 
 
 function loadFamilyTreeChart(treeData) {
