@@ -226,7 +226,7 @@ function setRootValue(rootValue) {
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
 
-function fetchFamilyMemberData(collectionName, treeID, treeData) {
+function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 
