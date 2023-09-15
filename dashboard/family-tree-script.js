@@ -257,25 +257,19 @@ function setRootValue(rootValue) {
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
 
-function fetchFamilyMemberData(collectionName, treeID,treeData) {
+
+function fetchFamilyMemberData(collectionName, treeID, treeData) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
-	    
-    console.log("currentFamilyID   " + currentFamilyID);
 
         const root = {
-            id: treeID,
+            id: 'root',  // Change the root id to a fixed value 'root'
             name: treeData.name,
             children: [],
         };
-    console.log("treeID   " + treeID);
-    console.log("treeData.name   " + treeData.name);
- if (treeData.root) {
-                      
 
+    
 
-	    
-      // Fetch data from Firestore
         db.collection(collectionName)
             .where('familyID', 'array-contains', treeID)
             .get()
@@ -351,18 +345,11 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-                });
+                   });
 
-
-	 
-          const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
-                    maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
-				        console.log("hierarchicalTree   " + hierarchicalTree);
-
-		    
-              // const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
-                  resolve({ hierarchicalTree, maxHierarchyDepth });
-
+                const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
+                maxHierarchyDepth = hierarchicalTree.maxDepth;
+                resolve({ hierarchicalTree, maxHierarchyDepth });
             })
             .catch((error) => {
                 reject(error);
@@ -370,54 +357,33 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
     });
 }
 
-
-
-    const uniqueChildren = {};
-
-  function buildTree(node, depthLimit, processedNodes, currentDepth) {
+function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
         return { node, maxDepth: currentDepth };
     }
-        console.log("depthLimit " + depthLimit);
 
     processedNodes.add(node.id);
 
-    const uniqueChildren = {};
-
-    const childResults = node.children.map((childID) => {
-        const childNode = memberDataMap[childID];
-        if (childNode) {
-            if (!uniqueChildren[childID]) {
-                uniqueChildren[childID] = true;
-                return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
-            }
-        }
-        return null;
+    const childResults = node.children.map((child) => {
+        return buildTree(child, depthLimit - 1, processedNodes, currentDepth + 1);
     });
 
     const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
-    node.children = childResults.map((result) => result.node).filter(Boolean);
+    node.children = childResults.map((result) => result.node);
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
 
-
-
 function loadFamilyTreeChart(treeData) {
-    
-    fetchFamilyMemberData('familyMembers', currentFamilyID,treeData)
-        .then((hierarchicalTree) => {
-            console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
-          
-		
-            generateFamilyTreeChart(hierarchicalTree);
-            console.log("Family tree chart generated."); // Log when the chart is generated
-            // You can use the hierarchical tree structure for rendering the chart
+    fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
+        .then((result) => {
+            console.log("Hierarchical tree data:", result.hierarchicalTree);
+            console.log("Max hierarchy depth:", result.maxHierarchyDepth);
+            // Call your chart generation function here with the hierarchical tree
         })
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
 }
-
 
