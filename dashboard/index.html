@@ -1207,6 +1207,7 @@ isPinned = false;
                     `;
                 }
                     if (isPinned) {
+    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 document.getElementById('pinnedFamily-news-area').appendChild(postElement);
 		    }else{
 familyNewsArea.appendChild(postElement);
