@@ -636,9 +636,15 @@ function initializeFamilyTreeChart() {
     <textarea id="post-content" placeholder="Write your post..."></textarea>
 
 			    <div class="space_J">
-
-  <div> <button onclick="addPost()">Add Post</button>
- <input type="file" name="image" accept="image/*" id="members_post_images" >
+				     <div>
+		 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+				    <button onclick="addPost()">Add Post</button>
   </div>
 
 
@@ -1004,26 +1010,39 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
                 const formattedDate = jsDate.toLocaleString('en-US', options);
 
 
-                if (post.postType === 'news') {
+               if (post.postType === 'news') {
+    const postContent = `
+        <p>${post.content}</p>
+        <div class="space_J">
+            <small>Posted by: ${post.author}</small>
+            <small>Posted on: ${formattedDate}</small>
+        </div>
+    `;
 
-                const postContent = `
-                    <p>${post.content}</p>
-                    <div class="space_J">
-                        <small>Posted by: ${post.author}</small>
-                        <small>Posted on: ${formattedDate}</small>
-                    </div>
-                `;
+    postElement.innerHTML = postContent;
+} else if (post.postType === 'photo') {
+    // Handle photo posts here
+    const photoContent = `
+        <div class="photo-post">
+            <img src="${post.photoURL}" alt="Posted photo" />
+            <p>${post.content}</p>
+            <div class="space_J">
+                <small>Posted by: ${post.author}</small>
+                <small>Posted on: ${formattedDate}</small>
+            </div>
+        </div>
+    `;
 
-                    postElement.innerHTML = postContent;
-                } else {
-                    postElement.innerHTML = `
-                        <p>${post.content}</p>
-                        <div class="space_J">
-                            <small>Posted by: ${post.author}</small>
-                            <small>Posted on: ${formattedDate}</small>
-                        </div>
-                    `;
-                }
+    postElement.innerHTML = photoContent;
+} else {
+    postElement.innerHTML = `
+        <p>${post.content}</p>
+        <div class="space_J">
+            <small>Posted by: ${post.author}</small>
+            <small>Posted on: ${formattedDate}</small>
+        </div>
+    `;
+}
 
                 familyNewsArea.appendChild(postElement);
 	familyNewsArea.scrollTop = familyNewsArea.scrollHeight;
@@ -1063,6 +1082,12 @@ isPinned = false;
                 const options = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
                 const formattedDate = jsDate ? jsDate.toLocaleString('en-US', options) : '';
 
+   const pinBTN = isPinned
+                        ? `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", false)'>Unpin Post</button>`
+                        : `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", true)'>Pin Post</button>`;
+
+
+		    
                 if (post.postType === 'news') {
                     const postContent = `
                         <p>${post.content}</p>
@@ -1072,17 +1097,37 @@ isPinned = false;
                         </div>
                     `;
                     postElement.innerHTML = postContent;
-                } else {
+                } else else if (post.postType === 'photo') {
+
+			 // Add the "pin-post" class to pinned posts
+                    if (isPinned) {
+                        postElement.classList.add('pin-post');
+                    }
+    // Handle photo posts here
+    const photoContent = `
+    
+        <div class="photo-post">
+	                <div class="space_J">
+                        <div class='pin_area'>${pinBTN}</div>
+            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
+	    </div>
+            <img src="${post.photoURL}" alt="Posted photo" />
+            <p>${post.content}</p>
+            <div class="space_J">
+                <small>Posted by: ${post.author}</small>
+                <small>Posted on: ${formattedDate}</small>
+            </div>
+        </div>
+    `;
+
+    postElement.innerHTML = photoContent;
+}else{		
                     // Add the "pin-post" class to pinned posts
                     if (isPinned) {
                         postElement.classList.add('pin-post');
                     }
 
-                    const pinBTN = isPinned
-                        ? `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", false)'>Unpin Post</button>`
-                        : `<button class='pin-button' onclick='updatePostPinnedStatus("${doc.id}", true)'>Pin Post</button>`;
-
-
+                 
 	    
                     postElement.innerHTML = `
 		                            <div class="space_J">
