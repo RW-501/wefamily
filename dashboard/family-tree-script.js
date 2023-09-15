@@ -26,8 +26,10 @@ zoomOutButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
     console.log("generateFamilyTreeChart   " + familyData);
+	    console.log("maxChildDepth   " + maxChildDepth);
+
 const width = window.screen.width;
-    const height = 200 * maxChildDepth; // Height of the chart
+    const height = 1500; // Height of the chart
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
