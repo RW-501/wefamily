@@ -47,7 +47,7 @@ zoomOutButton.addEventListener('click', () => {
     applyZoom(newScale);
 });
 
-let lllfamilyData = {
+let familyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
