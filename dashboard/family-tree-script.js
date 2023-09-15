@@ -325,15 +325,15 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 			
-              
-
-                });
-      const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
+                  const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
 				        console.log("hierarchicalTree   " + hierarchicalTree);
 		    
                 resolve({ hierarchicalTree, maxHierarchyDepth });
 		    
+
+                });
+  
              //   const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
             })
