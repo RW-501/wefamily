@@ -1120,7 +1120,6 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
 	    
 
 function loadPosts() {
-    document.getElementById('pinnedFamily-news-area').innerHTML = "";
     const familyNewsArea = document.getElementById('family-news-area');
     familyNewsArea.innerHTML = 'Loading...';
 
@@ -1228,7 +1227,6 @@ function addPost() {
 	if (!postContent || !currentUser) {
         return;
     }
-    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
     const post = {
 	postID: "",
@@ -1293,7 +1291,6 @@ if(!selectedFile){
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
     document.getElementById('postPic_img').src = "/wefamily/images/imgPlacehoder2.png";
-    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
                                 })
                                 .catch((error) => {
