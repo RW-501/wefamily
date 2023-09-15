@@ -26,10 +26,10 @@ zoomOutButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
     console.log("generateFamilyTreeChart   " + familyData);
-	    console.log("maxChildDepth   " + maxChildDepth);
+	    console.log("maxHierarchyDepth   " + maxChildDepth);
 
 const width = window.screen.width;
-    const height = 1500; // Height of the chart
+    const height = 200 *  maxChildDepth; // Height of the chart
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
@@ -224,19 +224,21 @@ function setRootValue(rootValue) {
 }
 
 
-
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
+	    
+    console.log("currentFamilyID   " + currentFamilyID);
 
         const root = {
             id: treeID,
             name: treeData.name,
             children: [],
         };
+    console.log("root   " + root);
 
         const query = db.collection(collectionName).where('familyID', 'array-contains', treeID);
 
@@ -289,7 +291,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             });
     });
 }
-var maxChildDepth = 0;
+
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
         return { node, maxDepth: currentDepth };
@@ -310,13 +312,12 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
         return null;
     });
 
-     maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
+    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
     node.children = childResults.map((result) => result.node).filter(Boolean);
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
-
 
 
 function loadFamilyTreeChart() {
