@@ -358,14 +358,18 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
     });
 }
 
+
+
+
+
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
-    if (depthLimit <= 0 || processedNodes.has(node.id)) {
+    if (depthLimit <= 0 || !node || !Array.isArray(node.children) || processedNodes.has(node.id)) {
         return { node, maxDepth: currentDepth };
     }
 
     processedNodes.add(node.id);
 
-    const childResults = node.children.map((child) => {
+    const childResults = (node.children || []).map((child) => {
         return buildTree(child, depthLimit - 1, processedNodes, currentDepth + 1);
     });
 
@@ -375,6 +379,9 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
+
+
+
 
 function loadFamilyTreeChart(treeData) {
     fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
