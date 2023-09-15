@@ -284,6 +284,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
 
+ if (treeData.root) {
 
 			  root.children.push(treeData.root);
                     } else {
