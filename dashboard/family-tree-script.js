@@ -354,6 +354,16 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
     const uniqueChildren = {};
 
+  function buildTree(node, depthLimit, processedNodes, currentDepth) {
+    if (depthLimit <= 0 || processedNodes.has(node.id)) {
+        console.log("depthLimit " + depthLimit);
+        return { node, maxDepth: currentDepth };
+    }
+
+    processedNodes.add(node.id);
+
+    const uniqueChildren = {};
+
     const childResults = node.children.map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
@@ -371,6 +381,7 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
+
 
 
 function loadFamilyTreeChart() {
