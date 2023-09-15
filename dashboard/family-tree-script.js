@@ -45,14 +45,11 @@ const width = window.screen.width;
 chartGroup  = svg.append("g");
 
     
-
-
-    
-    // Create a root node for the tree
 // Create a root node for the tree with an initial y-coordinate of 50
-const root = d3.hierarchy(familyData)
-    .sum(d => 1) // Assign each node a unit value (assuming each node contributes equally to the size)
-    .sort((a, b) => b.value - a.value); // Sort the nodes by value
+const root = d3.hierarchy(familyData).eachBefore(d => {
+    d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
+});
+
 
 
     // Assign coordinates to each node in the tree
