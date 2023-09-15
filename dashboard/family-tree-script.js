@@ -44,40 +44,6 @@ chartGroup  = svg.append("g");
 
     
 
-// Fake family tree data with siblings
-let mmfamilyData = {
-    id: 'root',
-    name: 'Family Tree 333',
-    children: [
-        {
-            id: 'child1',
-            name: 'John Doe',
-            children: [
-                {
-                    id: 'sibling1',
-                    name: 'Jane Doe',
-                    children: [                {
-                                                id: 'child',
-                                                name: 'grand Doe',
-                                                children: [],
-                                                    },
-                              ],
-                },
-                {
-                    id: 'sibling2',
-                    name: 'Bob Doe',
-                    children: [],
-                },
-            ],
-        },
-        {
-            id: 'child2',
-            name: 'Alice Doe',
-            children: [],
-        },
-    ],
-};
-
 
     
     // Create a root node for the tree
@@ -102,16 +68,16 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     // Create links between parent and child nodes
     const links = root.links();
 
-    const imageWidth = 100;
+    const imageWidth = 200;
 
-    const imageHeight = 100;
+    const imageHeight = 200;
 
 // Append images to nodes
 chartGroup.selectAll("image")
     .data(root.descendants())
     .enter()
     .append("image")
-    .attr("xlink:href", d => d.data.image) // Set the image URL
+    .attr("xlink:href", d => d.data.photo) // Set the image URL
     .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
     .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
     .attr("width", imageWidth)
@@ -228,7 +194,7 @@ exportButton.addEventListener('click', () => {
 
 function setRootValue(rootValue) {
     const db = firebase.firestore();
-
+			                    console.log(' rootValue.',rootValue);
     // Reference to the document in the collection
     const docRef = db.collection("familyTrees").doc(treeData.name);
 
@@ -280,11 +246,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
-       if(treeData.root === null){
-                 
-                        root.children.push(id);
+       if(treeData.root){
+                                         root.children.push(treeData.root);
+
              }else{
-                        root.children.push(treeData.root);
+                                   root.children.push(id);
+
              } 
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
