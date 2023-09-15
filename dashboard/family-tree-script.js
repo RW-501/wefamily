@@ -21,15 +21,14 @@ zoomOutButton.addEventListener('click', () => {
 
 
     // Create a group element to hold the links
-    var chartGroup; 
+       var chartGroup; 
 
 function generateFamilyTreeChart(familyData) {
 	
-    console.log("generateFamilyTreeChart   " + familyData);
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 
 const width = window.screen.width;
-    const height = 1500 *  maxHierarchyDepth; // Height of the chart
+    const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
@@ -51,9 +50,10 @@ chartGroup  = svg.append("g");
     
     // Create a root node for the tree
 // Create a root node for the tree with an initial y-coordinate of 50
-const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * 500; // Adjust the '100' for your desired vertical spacing
-});
+const root = d3.hierarchy(familyData)
+    .sum(d => 1) // Assign each node a unit value (assuming each node contributes equally to the size)
+    .sort((a, b) => b.value - a.value); // Sort the nodes by value
+
 
     // Assign coordinates to each node in the tree
     treeLayout(root);
@@ -382,9 +382,8 @@ function loadFamilyTreeChart() {
     fetchFamilyMemberData('familyMembers', currentFamilyID)
         .then((hierarchicalTree) => {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
-            // Now 'hierarchicalTree' contains your Firestore data in a hierarchical structure
-
-            // Call the function to generate the family tree chart with your family data
+          
+		
             generateFamilyTreeChart(hierarchicalTree);
             console.log("Family tree chart generated."); // Log when the chart is generated
             // You can use the hierarchical tree structure for rendering the chart
