@@ -418,6 +418,11 @@ function loadFamilyTreeChart(treeData) {
             console.log("Hierarchical tree data:", result.hierarchicalTree);
             console.log("Max hierarchy depth:", result.maxHierarchyDepth);
             // Call your chart generation function here with the hierarchical tree
+
+generateFamilyTreeChart( result.maxHierarchyDepth);
+		 console.log(' rootValue.'+rootValue);
+
+						   
         })
         .catch((error) => {
             console.error('Error fetching family member data:', error);
