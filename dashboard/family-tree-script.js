@@ -420,7 +420,6 @@ function loadFamilyTreeChart(treeData) {
             // Call your chart generation function here with the hierarchical tree
 
 generateFamilyTreeChart( result.maxHierarchyDepth);
-		 console.log(' rootValue.'+rootValue);
 
 						   
         })
