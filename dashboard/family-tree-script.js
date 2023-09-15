@@ -168,7 +168,9 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${sca
 function applyZoom(scale) {
     currentScale = scale;
    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
-
+const translateY = 100;
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(${translateX},) scale(${scale})`);
     
 }
 
