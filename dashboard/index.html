@@ -664,11 +664,11 @@ function initializeFamilyTreeChart() {
     <textarea id="post-content" placeholder="Write your post..."></textarea>
 
 			    <div class="space_J">
-				     <div>
+			    <div class="space_J">
 		 <!-- Image container with onclick event -->
     <div class="post-image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+        <img class="uploaded-image" src="/wefamily/images/imgPlaceholder.png" alt="Uploaded Image">
         <!-- File input element -->
         <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -1255,7 +1255,7 @@ if(!selectedFile){
                                     console.error('Error adding photo URL to family tree document:', error);
                                 });
 
-			    }
+			    
 			    
 				}
 		
