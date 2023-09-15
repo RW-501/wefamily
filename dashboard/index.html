@@ -1931,13 +1931,14 @@ async function getFamilyTree(userID) {
 		    
 currentFamilyID = familyTreeId;
 
-            setTimeout(() => {
-                loadFamilyTreeChart();
-            }, 300); // Adj
+    
 		    
                 const tree = await getFamilyTreeData(familyTreeId);
                      displayTreeDetails(tree);
 		    treeData = tree;
+		            setTimeout(() => {
+                loadFamilyTreeChart(treeData);
+            }, 300); // Adj
 			const treeID = tree.treeID;
 			//currentFamilyID =treeID;
                     displayFamilyMembers(treeID);
