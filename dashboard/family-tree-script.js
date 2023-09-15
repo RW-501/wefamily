@@ -270,13 +270,16 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
         };
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
+ if (treeData.root) {
+                      
 
-        const query = db.collection(collectionName).where('familyID', 'array-contains', treeID);
 
-        query.get()
+	    
+      // Fetch data from Firestore
+        db.collection(collectionName)
+            .where('familyID', 'array-contains', treeID)
+            .get()
             .then((querySnapshot) => {
-                const querySnapshotCount = querySnapshot.size;
-
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
@@ -286,13 +289,13 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
-			
-                    if (treeData.root) {
-                        root.children.push(treeData.root);
+
+
+			  root.children.push(treeData.root);
                     } else {
                         root.children.push(id);
                     }
-			
+		    
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
@@ -303,16 +306,16 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
                             spouse: spouse,
                             parents: parents,
                             siblings: siblings,
+                            // You can add more properties here if needed
                         };
 
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
 
+              
 
-
-
-             /*       // Check and update parent and sibling relationships
+   // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
                             // Update childNode's parent
@@ -348,42 +351,10 @@ function fetchFamilyMemberData(collectionName, treeID,treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-
-
-                });*/
-
-			         children.forEach((childID) => {
-                        const childNode = memberDataMap[childID];
-                        if (childNode) {
-                            // Update childNode's parent
-                            childNode.parents.push(id);
-                            // Update current member's child
-                            memberData.children.push(childID);
-                        }
-                    });
-
-                    siblings.forEach((siblingID) => {
-                        const siblingNode = memberDataMap[siblingID];
-                        if (siblingNode) {
-                            // Update siblingNode's sibling
-                            siblingNode.siblings.push(id);
-                            // Update current member's sibling
-                            memberData.siblings.push(siblingID);
-                        }
-                    });
-
-                    spouse.forEach((spouseID) => {
-                        const spouseNode = memberDataMap[spouseID];
-                        if (spouseNode) {
-                            // Update spouseNode's spouse
-                            spouseNode.spouse.push(id);
-                            // Update current member's spouse
-                            memberData.spouse.push(spouseID);
-                        }
-                    });
                 });
 
 
+	 
           const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0);
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
 				        console.log("hierarchicalTree   " + hierarchicalTree);
