@@ -238,7 +238,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
             name: treeData.name,
             children: [],
         };
-    console.log("root   " + root);
+    console.log("treeID   " + treeID);
+    console.log("treeData.name   " + treeData.name);
 
         const query = db.collection(collectionName).where('familyID', 'array-contains', treeID);
 
