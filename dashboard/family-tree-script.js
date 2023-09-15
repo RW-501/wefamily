@@ -329,11 +329,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
 				        console.log("hierarchicalTree   " + hierarchicalTree);
 	*/	    
-                resolve({ hierarchicalTree, maxHierarchyDepth });
 		    
 
                 });
-  
+                  resolve({ hierarchicalTree, maxHierarchyDepth });
+
                const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
             })
