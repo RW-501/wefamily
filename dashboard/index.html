@@ -1865,7 +1865,8 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
 
 
-          
+          var treeData = '';
+
         
 
 async function getFamilyTreeData(treeId) {
@@ -1891,7 +1892,8 @@ async function getFamilyTreeData(treeId) {
 
         // Retrieve the data from the first matching document (assuming treeId is unique)
         const familyTreeData = querySnapshot.docs[0].data();
-	    
+	    		    treeData = familyTreeData;
+
                         console.log('new Family tree familyTreeData:', familyTreeData);
 
         return familyTreeData;
@@ -1905,7 +1907,6 @@ async function getFamilyTreeData(treeId) {
 
 
 
-var treeData = '';
 
         
 async function getFamilyTree(userID) {
