@@ -346,9 +346,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
   function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
-        console.log("depthLimit " + depthLimit);
         return { node, maxDepth: currentDepth };
     }
+        console.log("depthLimit " + depthLimit);
 
     processedNodes.add(node.id);
 
