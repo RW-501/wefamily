@@ -949,35 +949,6 @@ var currentFamilyID = "";
 var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
-function formatPostContent(content) {
-    // Limit the post to 500 characters
-    const truncatedContent = content.slice(0, 500);
-
-    // Replace URLs with clickable links
-    const contentWithLinks = truncatedContent.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-    );
-
-    return contentWithLinks;
-}
-
-function updatePostContent() {
-    const textarea = document.getElementById('post-content');
-    const postContent = textarea.value;
-
-    // Format the post content
-    const formattedContent = formatPostContent(postContent);
-
-    // Update the post content in the UI
-    const postElement = document.getElementById('post-element');
-    postElement.innerHTML = formattedContent;
-}
-
-const textarea = document.getElementById('post-content');
-textarea.addEventListener('input', updatePostContent);
-
-
 
 
 	    
@@ -2590,6 +2561,38 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
  
   
+function formatPostContent(content) {
+    // Limit the post to 500 characters
+    const truncatedContent = content.slice(0, 500);
+
+    // Replace URLs with clickable links
+    const contentWithLinks = truncatedContent.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank">$1</a>'
+    );
+
+    return contentWithLinks;
+}
+
+function updatePostContent() {
+    const textarea = document.getElementById('post-content');
+    const postContent = textarea.value;
+
+    // Format the post content
+    const formattedContent = formatPostContent(postContent);
+
+    // Update the post content in the UI
+    const postElement = document.getElementById('post-element');
+    postElement.innerHTML = formattedContent;
+}
+document.addEventListener('DOMContentLoaded', function() {
+
+const textarea = document.getElementById('post-content');
+textarea.addEventListener('input', updatePostContent);
+});
+
+
+
 
 
 	
