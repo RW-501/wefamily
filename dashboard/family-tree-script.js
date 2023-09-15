@@ -24,14 +24,16 @@ zoomOutButton.addEventListener('click', () => {
     var chartGroup; 
 
 function generateFamilyTreeChart(familyData) {
-    const width = 1000; // Width of the chart
+   // const width = 1000; // Width of the chart
     const height = 1500; // Height of the chart
+	
     console.log("generateFamilyTreeChart   " + familyData);
+const screenWidth = window.screen.width;
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
         .append("svg")
-        .attr("width", width)
+        .attr("width", screenWidth)
         .attr("height", height);
 
 
@@ -170,7 +172,7 @@ function applyZoom(scale) {
    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
 const translateY = 100;
     // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},) scale(${scale})`);
+chartGroup.attr("transform", `translate(${translateX},0) scale(${scale})`);
     
 }
 
