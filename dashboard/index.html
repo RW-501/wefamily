@@ -1286,11 +1286,12 @@ if(!selectedFile){
                                     postID: docRef.id,
                                     photo: downloadURL,
 				        postType: "photo",
-    document.getElementById('postPic_img').src = "/wefamily/images/imgPlacehoder2.png";
 
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+    document.getElementById('postPic_img').src = "/wefamily/images/imgPlacehoder2.png";
+
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
