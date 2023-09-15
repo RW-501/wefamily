@@ -256,7 +256,13 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
-
+			
+                    if (treeData.root) {
+                        root.children.push(treeData.root);
+                    } else {
+                        root.children.push(id);
+                    }
+			
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
@@ -273,11 +279,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         memberDataMap[id] = memberData;
                     }
 
-                    if (treeData.root) {
-                        root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
 
 
 
@@ -340,6 +341,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
+	        console.log("maxDepth   " + maxDepth);
+
         return { node, maxDepth: currentDepth };
     }
 
@@ -367,7 +370,6 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
 
 function loadFamilyTreeChart() {
-    console.log("currentFamilyID   " + currentFamilyID);
     
     fetchFamilyMemberData('familyMembers', currentFamilyID)
         .then((hierarchicalTree) => {
