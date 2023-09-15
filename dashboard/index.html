@@ -399,6 +399,11 @@ padding-top: 15px;
 	    width: 100%;
 
 }
+.flex {
+    display: flex;
+
+
+}
 
 
 #family-tree {
@@ -664,7 +669,7 @@ function initializeFamilyTreeChart() {
     <textarea id="post-content" placeholder="Write your post..."></textarea>
 
 			    <div class="space_J">
-			    <div class="space_J">
+			    <div class="flex">
 		 <!-- Image container with onclick event -->
     <div class="post-image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
@@ -672,13 +677,13 @@ function initializeFamilyTreeChart() {
         <!-- File input element -->
         <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
-				    <button onclick="addPost()">Add Post</button>
+				   <div> <button onclick="addPost()">Add Post</button></div>
   </div>
 
 
 
 	  <!-- Add a button to enable/disable the newsPost function -->
-  <div>  <button id="toggleNewsButton">System Posting</button>
+  <div clas="flex">  <button id="toggleNewsButton">System Posting</button>
 
 	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
 	<button class="posts-buttons" onclick="loadPosts()">All Posts</button></div>
