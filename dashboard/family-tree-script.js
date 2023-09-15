@@ -347,7 +347,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
-
+/*
                     children.forEach((childID) => {
                         if (memberDataMap[childID]) {
                             // Update childNode's parent
@@ -374,6 +374,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
+		    */
                    });
 
                 const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
