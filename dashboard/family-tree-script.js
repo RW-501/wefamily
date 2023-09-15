@@ -29,7 +29,7 @@ function generateFamilyTreeChart(familyData) {
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 
 const width = window.screen.width;
-    const height = 200 *  maxHierarchyDepth; // Height of the chart
+    const height = 1500 *  maxHierarchyDepth; // Height of the chart
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
@@ -52,7 +52,7 @@ chartGroup  = svg.append("g");
     // Create a root node for the tree
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * 5; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth * 500; // Adjust the '100' for your desired vertical spacing
 });
 
     // Assign coordinates to each node in the tree
