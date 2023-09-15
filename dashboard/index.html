@@ -2583,22 +2583,20 @@ function addSpouseToMember(newID, addFamily_MemberID) {
         window.onload = fetchFamilyTree;
 
  
-  
-function limitPostContent(content) {
+function limitPostContent() {
+    const textarea = document.getElementById('post-content');
+    const content = textarea.value;
+
     // Limit the post to 500 characters
     const truncatedContent = content.slice(0, 500);
-  document.getElementById('post-content').textarea.value = truncatedContent;
-
-	
-  
+    textarea.value = truncatedContent;
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
-
-const textarea = document.getElementById('post-content');
-textarea.addEventListener('input', limitPostContent);
+document.addEventListener('DOMContentLoaded', function () {
+    const textarea = document.getElementById('post-content');
+    textarea.addEventListener('input', limitPostContent);
 });
+
 
 
 
