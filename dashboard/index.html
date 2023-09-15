@@ -1097,7 +1097,7 @@ isPinned = false;
                         </div>
                     `;
                     postElement.innerHTML = postContent;
-                } else else if (post.postType === 'photo') {
+                } else if (post.postType === 'photo') {
 
 			 // Add the "pin-post" class to pinned posts
                     if (isPinned) {
@@ -1168,7 +1168,8 @@ function addPost() {
         treeID: currentFamilyID,
         userID: userID,
         content: postContent,
-        photo: Current_USERPHOTO,
+        photo: "",
+        memberPhoto: Current_USERPHOTO,
         author: currentUser.displayName || Current_USERNAME || 'Anonymous',
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
@@ -1185,12 +1186,61 @@ function addPost() {
             const update = { postID: docRef.id };
             firestore.collection("posts").doc(docRef.id).update(update);
 		document.getElementById('post-content').value = '';
+	    // Get the file input element
+const selectedFile = document.getElementById('members_post_images).files[0]; // Get the selected file
 
+if(!selectedFile){
+         // Update the family tree document with the photo URL
+                                firestore.collection('posts').doc(docRef.id).update({
+                                    postID: docRef.id,
+                                  
+
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+}else{
+					     
+                        const storagePath = 'members_post_images'; // Change the storage path as needed
+                        uploadImageToStorage(
+                            selectedFile,
+                            storagePath,
+                            (downloadURL) => {
+                                console.log('Image uploaded successfully:', downloadURL);
+                                // Handle success, e.g., save the downloadURL to your database
+
+                                // Update the family tree document with the photo URL
+                                firestore.collection('posts').doc(docRef.id).update({
+                                    postID: docRef.id,
+                                    photo: downloadURL,
+				        postType: "photo",
+
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+
+			    }
+			    
+				}
+		
         })
         .catch((error) => {
             console.error("Error adding news post:", error);
         });
-}
+	    }
+
+
+	      
+
+
+	    
     let newsPostingEnabled = true;
 
         // Function to toggle the boolean flag
@@ -1223,6 +1273,7 @@ function newsPost(xxx) {
         userID: "",
         content: xxx,
         photo: "",
+        memberPhoto: "",
         author: "Family Tree Update",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
@@ -1616,6 +1667,20 @@ function createFamilyTree() {
 
 			    // Get the file input element
 const selectedFile = document.getElementById('family_Tree_Image').files[0]; // Get the selected file
+		if(!selectedFile){
+          firestore.collection('familyTrees').doc(currentFamilyID).update({
+                                    treeID: currentFamilyID,
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+
+                                closePopup();
+                                showAddMemberModal();
+		}else{
                         const storagePath = 'family_Tree_Image'; // Change the storage path as needed
                         uploadImageToStorage(
                             selectedFile,
@@ -1645,10 +1710,12 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
                                 // Handle error, e.g., display an error message to the user
                             }
                         );
+		}
                     })
                     .catch((error) => {
                         console.error('Error adding family tree:', error);
                     });
+	    
             }
         })
         .catch((error) => {
