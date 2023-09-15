@@ -68,25 +68,24 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     // Create links between parent and child nodes
     const links = root.links();
 
-    const imageWidth = 100;
-
-    const imageHeight = 100;
-
-// Append images to nodes
-chartGroup.selectAll("image")
-    .data(root.descendants())
+// Draw custom links between nodes
+chartGroup.selectAll("path")
+    .data(links)
     .enter()
-    .append("image")
-    .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
-    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked image Data:", d.data);
-        // You can now use d.data to access member information
-    });
+    .append("path")
+    .attr("class", "link")
+    .attr("d", d => {
+        const sourceX = d.source.x;
+        const sourceY = d.source.y;
+        const targetX = d.target.x;
+        const targetY = d.target.y;
+        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
+    })
+    .style("fill", "none")
+    .style("stroke", "gray")
+    .style("stroke-width", 2);
+
+    
 
 // Add click event listener to nodes
 chartGroup.selectAll("circle")
@@ -118,27 +117,28 @@ chartGroup.selectAll("circle")
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
     });
+    const imageWidth = 100;
 
+    const imageHeight = 100;
 
-
-// Draw custom links between nodes
-chartGroup.selectAll("path")
-    .data(links)
+// Append images to nodes
+chartGroup.selectAll("image")
+    .data(root.descendants())
     .enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("d", d => {
-        const sourceX = d.source.x;
-        const sourceY = d.source.y;
-        const targetX = d.target.x;
-        const targetY = d.target.y;
-        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
-    })
-    .style("fill", "none")
-    .style("stroke", "gray")
-    .style("stroke-width", 2);
+    .append("image")
+    .attr("xlink:href", d => d.data.photo) // Set the image URL
+    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
+    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
+    .attr("width", imageWidth)
+    .attr("height", imageHeight)
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked image Data:", d.data);
+        // You can now use d.data to access member information
+    });
 
-    
+
+
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
