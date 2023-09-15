@@ -25,8 +25,8 @@ zoomOutButton.addEventListener('click', () => {
 
 function generateFamilyTreeChart(familyData) {
 	
-    console.log("generateFamilyTreeChart   " + familyData);
-	    console.log("maxHierarchyDepth   " + maxChildDepth);
+    //console.log("generateFamilyTreeChart   " + familyData);
+	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 
 const width = window.screen.width;
     const height = 200 *  maxChildDepth; // Height of the chart
