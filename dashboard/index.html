@@ -1007,9 +1007,26 @@ function uploadImageToStorage(file, storagePath, successCallback, errorCallback)
   const ctx = canvas.getContext('2d');
 
   img.onload = () => {
-    canvas.width = 500;
-    canvas.height = 500;
-    ctx.drawImage(img, 0, 0, 500, 500);
+
+	  
+// Max width or height for the image
+const maxSize = 500;
+
+// Calculate new dimensions while maintaining aspect ratio
+let newWidth, newHeight;
+if (file.width > file.height) {
+  newWidth = maxSize;
+  newHeight = (file.height / file.width) * maxSize;
+} else {
+  newHeight = maxSize;
+  newWidth = (file.width / file.height) * maxSize;
+}
+
+// Resize the image using canvas
+canvas.width = newWidth;
+canvas.height = newHeight;
+ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
 
     // Convert the resized image to a Blob
     canvas.toBlob((blob) => {
