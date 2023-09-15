@@ -49,7 +49,7 @@ chartGroup  = svg.append("g");
     // Create a root node for the tree
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * 10 + 50; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth * 5; // Adjust the '100' for your desired vertical spacing
 });
 
     // Assign coordinates to each node in the tree
@@ -109,7 +109,7 @@ chartGroup.selectAll("circle")
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", -25) // Adjust the vertical position of labels
+        .attr("dy", -35) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
