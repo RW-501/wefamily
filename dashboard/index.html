@@ -2045,7 +2045,7 @@ firestore.collection('familyMembers').add(familyMember)
 const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 		if(!selectedFile){
   firestore.collection('familyMembers').doc(docRef.id).update({
-                                    memberID: memberID,
+                                    memberID: docRef.id,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
@@ -2116,6 +2116,7 @@ document.getElementById('add-member-form').addEventListener('submit', function(e
 
 function isFirstChild(currentFamilyID) {
     const db = firebase.firestore();
+	                    console.log(' currentFamilyID.',currentFamilyID);
 
     // Query Firestore to count the documents
     return db.collection("familyMembers")
@@ -2127,6 +2128,7 @@ function isFirstChild(currentFamilyID) {
             // Check if it's the first family member (count is 0)
             if (count === 0) {
 
+	                    console.log(' first family member.');
 
                 return true;
             } else {
@@ -2145,6 +2147,8 @@ isFirstChild(currentFamilyID)
         if (isFirst) {
             console.log("This is the first family member.");
             // Perform actions for the first family member here
+			                    console.log(' memberID.',memberID);
+
 setRootValue(memberID);
 	    
         } else {
