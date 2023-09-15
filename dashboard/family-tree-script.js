@@ -45,6 +45,35 @@ chartGroup  = svg.append("g");
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("chartGroup   " + chartGroup);
 
+// Usage example to generate the desired structure
+const treeData = {
+    id: 'root',
+    name: 'Family Tree 333',
+    children: [
+        {
+            name: 'John Doe',
+            children: [
+                {
+                    name: 'Jane Doe',
+                    children: [
+                        {
+                            name: 'grand Doe',
+                            children: [],
+                        },
+                    ],
+                },
+                {
+                    name: 'Bob Doe',
+                    children: [],
+                },
+            ],
+        },
+        {
+            name: 'Alice Doe',
+            children: [],
+        },
+    ],
+};
 
 
 let  kkkfamilyData = {
