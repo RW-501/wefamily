@@ -548,6 +548,37 @@ html, body{
 	      .node {
             cursor: pointer;
         }
+#postPic_img{
+    border-radius: 10px;
+    overflow: hidden;
+ cursor: pointer;
+
+}
+.post_img{
+width: 90% !important;
+    object-fit: cover;
+    margin: auto;
+
+}
+.post_img_Box{
+width: 90% !important;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    height: 90%;
+    padding: 2%;
+    box-sizing: border-box;
+
+}
+#post_content{
+    font-size: 2em;
+    font-weight: 400;
+	}
+	.post_content{
+    font-size: 2em;
+    font-weight: 400;
+	}
+	
 </style>
 	    <script src="https://d3js.org/d3.v7.min.js"></script>
 
@@ -673,7 +704,7 @@ function initializeFamilyTreeChart() {
 		 <!-- Image container with onclick event -->
     <div class="post-image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder2.png" alt="Uploaded Image">
+        <img id="postPic_img" class="uploaded-image" src="/wefamily/images/imgPlacehoder2.png" alt="Uploaded Image">
         <!-- File input element -->
         <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -1123,7 +1154,7 @@ isPinned = false;
 		    
                 if (post.postType === 'news') {
                     const postContent = `
-                        <p>${post.content}</p>
+            <p class="post_content">${post.content}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
                             <small>Posted on: ${formattedDate}</small>
@@ -1144,8 +1175,8 @@ isPinned = false;
                         <div class='pin_area'>${pinBTN}</div>
             <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
 	    </div>
-            <img src="${post.photoURL}" alt="Posted photo" />
-            <p>${post.content}</p>
+           <div class="post_img_Box"><img class="post_img" src="${post.photo}" alt="Posted photo" /></div>
+            <p class="post_content">${post.content}</p>
             <div class="space_J">
                 <small>Posted by: ${post.author}</small>
                 <small>Posted on: ${formattedDate}</small>
@@ -1168,7 +1199,7 @@ isPinned = false;
             <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
 	    </div>
 
-                        <p>${post.content}</p>
+            <p class="post_content">${post.content}</p>
                         <div class="space_J">
                             <small>Posted by: ${post.author}</small>
                             <small>Posted on: ${formattedDate}</small>
@@ -1255,6 +1286,7 @@ if(!selectedFile){
                                     postID: docRef.id,
                                     photo: downloadURL,
 				        postType: "photo",
+    document.getElementById('postPic_img').src = "/wefamily/images/imgPlacehoder2.png";
 
                                 })
                                 .then(() => {
