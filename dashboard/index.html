@@ -25,6 +25,30 @@
 
 
 <style>
+	      /* Add CSS styles for the round image */
+        .image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .uploaded-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-input {
+            display: none; /* Hide the file input */
+        }
+
+	
 /* Styling for the message box */
 .mainMessage-box {
   position: fixed;
@@ -647,7 +671,13 @@ function initializeFamilyTreeChart() {
 <div id="create-tree-section" class="tree-section">
             <h2>Create a Family Tree</h2>
 <p>
-        <input type="file" name="image" accept="image/*" id="family_Tree_Image" >
+		 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="family_Tree_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
 
 </p>
                 <p>
@@ -721,8 +751,14 @@ function initializeFamilyTreeChart() {
         <h2>Add Family Member</h2>
         <form id="add-member-form">
             <p>
-	<input type="file" name="image" accept="image/*" id="member_main_Image" >
-	    </p>
+	 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="member_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+		    	    </p>
 		<p>
             <label for="member-first_name">First Name:</label>
             <input type="text" id="member-first_name" required>
@@ -770,7 +806,14 @@ function initializeFamilyTreeChart() {
         <h2 id="memberType" >Add Family Member</h2>
         <form id="add-member-form">
 <p>
-	<input type="file" name="image" accept="image/*" id="newMember_main_Image" >
+	 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="newMember_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+		
 	</p>	
             <p>
             <label for="member-first_name_type">First Name:</label>
@@ -801,6 +844,22 @@ var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
 //showMainMessage("message");
+// Function to open the file input dialog when the image container is clicked
+function openFileInput(container) {
+    container.querySelector('.file-input').click();
+}
+
+// Function to handle file upload and display the selected image
+function handleFileUpload(input) {
+    const file = input.files[0];
+
+    if (file) {
+        // Check file type and size here (you can use the uploadImageToStorage function from earlier)
+        // For simplicity, we'll just display the selected image
+        const uploadedImage = input.previousElementSibling;
+        uploadedImage.src = URL.createObjectURL(file);
+    }
+}
 
 	    
 // Reusable function to upload an image to Firebase Storage
@@ -1523,6 +1582,7 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
                                 // Update the family tree document with the photo URL
                                 firestore.collection('familyTrees').doc(currentFamilyID).update({
+                                    treeID: currentFamilyID,
                                     photo: downloadURL,
                                 })
                                 .then(() => {
@@ -1734,8 +1794,7 @@ if(!first_name && !last_name){
 // Add the family member to the 'familyMembers' collection
 firestore.collection('familyMembers').add(familyMember)
     .then((docRef) => {
-        // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
-        const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
+     
 	    
 const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 // Example usage:
@@ -1749,9 +1808,13 @@ uploadImageToStorage(
    // Update the family tree document with the photo URL
                                 firestore.collection('familyMembers').doc(docRef.id).update({
                                     photo: downloadURL,
+                                    memberID: memberID,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+					   displayFamilyMembers(currentFamilyID);
+					checkFirstMember(currentFamilyID,docRef.id);
+
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
@@ -1767,23 +1830,6 @@ uploadImageToStorage(
 
 
 	    
-        // Update the 'familyMembers' collection document with the generated document ID
-        firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
-            .then(() => {
-                console.log('Family member added with ID:', docRef.id);
-		    displayFamilyMembers(currentFamilyID);
-
-checkFirstMember(currentFamilyID,docRef.id);
-
-		    
-            })
-            .catch((error) => {
-                console.error('Error updating family member:', error);
-            });
-    })
-    .catch((error) => {
-        console.error('Error adding family member:', error);
-    });
 
 
 
@@ -2054,28 +2100,11 @@ function addNewFamilyMember() {
     // Add the family member to the 'familyMembers' collection
     firestore.collection('familyMembers').add(familyMember)
         .then((docRef) => {
-            // Once the family member is added successfully, you can update the 'userID' property with the generated document ID
-            const updatedFamilyMember = { ...familyMember, memberID: docRef.id };
+       
+               let newID = docRef.id;
 
-            // Update the 'familyMembers' collection document with the generated document ID
-            firestore.collection('familyMembers').doc(docRef.id).update(updatedFamilyMember)
-                .then(() => {
-                    console.log('Family member added with ID:'+ docRef.id);
 
-                    let newID = docRef.id;
-                    if (addFamily_Type === "Parent") {
-                        addChildToParent(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
-                    } else if (addFamily_Type === "Spouse") {
-                        addSpouseToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Spouse`);
-                    } else if (addFamily_Type === "Child") {
-                        addParentToChild(addFamily_MemberID, newID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
-                    } else if (addFamily_Type === "Sibling") {
-                        addSiblingToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name}} Sibling`);
-                    }
+           
 			
 const selectedFile = document.getElementById('newMember_main_Image').files[0]; // Get the selected file
 
@@ -2089,10 +2118,35 @@ uploadImageToStorage(
     // Handle success, e.g., save the downloadURL to your database
    // Update the family tree document with the photo URL
                                 firestore.collection('familyMembers').doc(docRef.id).update({
+                                    memberID: newID,
                                     photo: downloadURL,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+
+
+                    if (addFamily_Type === "Parent") {
+                        addChildToParent(newID, addFamily_MemberID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
+                    } else if (addFamily_Type === "Spouse") {
+                        addSpouseToMember(newID, addFamily_MemberID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Spouse`);
+                    } else if (addFamily_Type === "Child") {
+                        addParentToChild(addFamily_MemberID, newID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
+                    } else if (addFamily_Type === "Sibling") {
+                        addSiblingToMember(newID, addFamily_MemberID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name}} Sibling`);
+                    }
+
+					
+                    // Display updated family members
+                    displayFamilyMembers(currentFamilyID);
+
+    // Close the modal after adding the member
+    closeAddMemberTypePopup();
+
+	
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
@@ -2105,34 +2159,13 @@ uploadImageToStorage(
   }
 );
 
-                    // Display updated family members
-                    displayFamilyMembers(currentFamilyID);
-
-
-
-
-/*
-            <div id="family-tree">
-                <h2>Family Members</h2>
-                <div id="family-tree">
-                    <!-- Family tree details will be added here dynamically -->
-                </div>
-            </div>
-*/
-
-
 	
                 })
                 .catch((error) => {
                     console.error('Error updating family member:', error);
                 });
-        })
-        .catch((error) => {
-            console.error('Error adding family member:', error);
-        });
+      
 
-    // Close the modal after adding the member
-    closeAddMemberTypePopup();
 }
 
 // Add an event listener to the form submission
