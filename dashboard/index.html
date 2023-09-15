@@ -651,7 +651,7 @@ function initializeFamilyTreeChart() {
 		 <!-- Image container with onclick event -->
     <div class="post-image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -691,7 +691,7 @@ function initializeFamilyTreeChart() {
 		 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
         <!-- File input element -->
         <input id="family_Tree_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -771,7 +771,7 @@ function initializeFamilyTreeChart() {
 	 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="member_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -826,7 +826,7 @@ function initializeFamilyTreeChart() {
 	 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="" alt="Uploaded Image">
+        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="newMember_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -1198,7 +1198,8 @@ function addPost() {
             firestore.collection("posts").doc(docRef.id).update(update);
 		document.getElementById('post-content').value = '';
 	    // Get the file input element
-const selectedFile = document.getElementById('members_post_images).files[0]; // Get the selected file
+const selectedFile = document.getElementById('members_post_images').files[0]; 
+					     // Get the selected file
 
 if(!selectedFile){
          // Update the family tree document with the photo URL
