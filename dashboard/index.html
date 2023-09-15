@@ -1196,6 +1196,7 @@ function addPost() {
 	if (!postContent || !currentUser) {
         return;
     }
+    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
     const post = {
 	postID: "",
