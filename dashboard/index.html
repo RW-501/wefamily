@@ -2587,8 +2587,7 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 function limitPostContent(content) {
     // Limit the post to 500 characters
     const truncatedContent = content.slice(0, 500);
- const textarea = document.getElementById('post-content');
-    const truncatedContent = textarea.value;
+  document.getElementById('post-content').textarea.value = truncatedContent;
 
 	
   
