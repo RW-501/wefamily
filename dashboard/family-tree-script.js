@@ -183,7 +183,7 @@ function applyZoom(scale) {
    chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
 const translateY = 100;
     // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},0) scale(${scale})`);
+chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
     
 }
 
