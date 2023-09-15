@@ -1267,6 +1267,8 @@ if(!selectedFile){
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+					    document.getElementById('pinnedFamily-news-area').innerHTML = "";
+
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
@@ -1291,6 +1293,7 @@ if(!selectedFile){
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
     document.getElementById('postPic_img').src = "/wefamily/images/imgPlacehoder2.png";
+    document.getElementById('pinnedFamily-news-area').innerHTML = "";
 
                                 })
                                 .catch((error) => {
