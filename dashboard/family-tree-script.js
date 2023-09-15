@@ -25,7 +25,6 @@ zoomOutButton.addEventListener('click', () => {
 
 function generateFamilyTreeChart(familyData) {
 	
-	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 
 const width = window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
@@ -43,6 +42,9 @@ const width = window.screen.width;
     const treeLayout = d3.tree().size([width, height_Layout]);
     
 chartGroup  = svg.append("g");
+	
+	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
+	    console.log("chartGroup   " + chartGroup);
 
 	
 let lllfamilyData = {
