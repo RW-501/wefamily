@@ -287,7 +287,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             });
     });
 }
-
+var maxChildDepth = 0;
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
         return { node, maxDepth: currentDepth };
@@ -308,7 +308,7 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
         return null;
     });
 
-    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
+     maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
     node.children = childResults.map((result) => result.node).filter(Boolean);
 
