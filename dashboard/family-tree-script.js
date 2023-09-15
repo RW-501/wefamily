@@ -207,14 +207,40 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${sca
     }
 }
 
+
+
 // Create the zoom function
 function applyZoom(scale) {
     currentScale = scale;
-   chartGroup.attr("transform", `scale(${scale})`); // Apply the zoom transformation to the chartGroup
+
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
+
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / scale);
+
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / scale);
+
+    chartGroup.selectAll("image")
+        .attr("width", 100 / scale)
+        .attr("height", 100 / scale);
+
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / scale);
+	/*
 const translateY = 100;
     // Set the transform attribute
 chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
-    
+	*/
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+            const source = { x: d.source.x * scale, y: d.source.y };
+            const target = { x: d.target.x * scale, y: d.target.y };
+            return linkGenerator({ source, target });
+        });
 }
 
 
