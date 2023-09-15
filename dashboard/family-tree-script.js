@@ -44,6 +44,39 @@ const width = window.screen.width;
     
 chartGroup  = svg.append("g");
 
+	
+familyData = {
+    id: 'root',
+    name: 'Family Tree 333',
+    children: [
+        {
+            id: 'child1',
+            name: 'John Doe',
+            children: [
+                {
+                    id: 'sibling1',
+                    name: 'Jane Doe',
+                    children: [                {
+                                                id: 'child',
+                                                name: 'grand Doe',
+                                                children: [],
+                                                    },
+                              ],
+                },
+                {
+                    id: 'sibling2',
+                    name: 'Bob Doe',
+                    children: [],
+                },
+            ],
+        },
+        {
+            id: 'child2',
+            name: 'Alice Doe',
+            children: [],
+        },
+    ],
+};
     
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
