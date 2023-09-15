@@ -332,9 +332,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
 		    
 
                 });
-                  resolve({ hierarchicalTree, maxHierarchyDepth });
 
                const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
+                  resolve({ hierarchicalTree, maxHierarchyDepth });
 
             })
             .catch((error) => {
