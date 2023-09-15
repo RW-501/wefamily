@@ -24,11 +24,10 @@ zoomOutButton.addEventListener('click', () => {
     var chartGroup; 
 
 function generateFamilyTreeChart(familyData) {
-   // const width = 1000; // Width of the chart
-    const height = 1500; // Height of the chart
 	
     console.log("generateFamilyTreeChart   " + familyData);
 const screenWidth = window.screen.width;
+    const height = 200 * maxChildDepth; // Height of the chart
 
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
@@ -71,21 +70,31 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     const links = root.links();
 
 // Draw custom links between nodes
+// Define a function to generate curved paths
+const curvedPath = (d) => {
+    const sourceX = d.source.x;
+    const sourceY = d.source.y;
+    const targetX = d.target.x;
+    const targetY = d.target.y;
+
+    // Calculate control point coordinates for a curved link
+    const controlX = (sourceX + targetX) / 2;
+    const controlY = (sourceY + targetY) / 2;
+
+    return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
+};
+
+// Append curved links
 chartGroup.selectAll("path")
     .data(links)
     .enter()
     .append("path")
     .attr("class", "link")
-    .attr("d", d => {
-        const sourceX = d.source.x;
-        const sourceY = d.source.y;
-        const targetX = d.target.x;
-        const targetY = d.target.y;
-        return `M${sourceX},${sourceY} L${targetX},${targetY}`;
-    })
+    .attr("d", curvedPath) // Use the curvedPath function
     .style("fill", "none")
     .style("stroke", "gray")
     .style("stroke-width", 2);
+
 
     
 
@@ -220,7 +229,6 @@ function setRootValue(rootValue) {
 
 
                 
-
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
@@ -228,18 +236,19 @@ function fetchFamilyMemberData(collectionName, treeID) {
         // Initialize the root object with the correct child ID
         const root = {
             id: treeID, // A unique identifier for the root node
-    name: treeData.name, // The name of the root node
+            name: treeData.name, // The name of the root node
             children: [], // Include childID in the children array
         };
       
    
-
-        // Fetch data from Firestore
-        db.collection(collectionName)
+      return db
+            .collection(collectionName)
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
-                                const querySnapshotCount = querySnapshot.size;
+                const querySnapshotCount = querySnapshot.size;
+
+                let maxHierarchyDepth = 0;
 
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
@@ -312,13 +321,17 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
+
+
+ const result = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
+                    maxHierarchyDepth = Math.max(maxHierarchyDepth, result.maxDepth);
                 });
 
                 // Build the tree starting from the root
-                const hierarchicalTree = buildTree(root,querySnapshotCount, new Set());
+                const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
-                // Resolve the promise with the hierarchical tree structure
-                resolve(hierarchicalTree);
+                // Resolve the promise with the hierarchical tree structure and max hierarchy depth
+                resolve({ hierarchicalTree, maxHierarchyDepth });
             })
             .catch((error) => {
                 reject(error);
@@ -326,31 +339,38 @@ function fetchFamilyMemberData(collectionName, treeID) {
     });
 }
 
-function buildTree(node, depthLimit, processedNodes) {
+
+ var maxChildDepth = 0;
+
+
+
+function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
-        return node;
+        return { node, maxDepth: currentDepth };
     }
 
     processedNodes.add(node.id);
 
     const uniqueChildren = {};
-    
-    node.children = (node.children || []).map((childID) => {
+
+    const childResults = node.children.map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
             if (!uniqueChildren[childID]) {
                 uniqueChildren[childID] = true;
-                return buildTree(childNode, depthLimit - 1, processedNodes);
+                return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
             }
         }
         return null;
     });
 
-    node.children = node.children.filter(Boolean);
+    // Find the maximum depth among the children
+     maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
-    return node;
+    node.children = childResults.map((result) => result.node).filter(Boolean);
+
+    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
-
 
 
 
