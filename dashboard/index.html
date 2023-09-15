@@ -1991,12 +1991,24 @@ uploadImageToStorage(
 		}
 	    
 
-
+  })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+	  
 
     // Close the modal after adding the member
     closeAddMemberModal();
 }
 
+
+
+
+
+
+
+
+	  
 document.getElementById('add-member-form').addEventListener('submit', function(e) {
     e.preventDefault(); // Prevent form submission
     addFamilyMember(); // Call the function to add the family member
