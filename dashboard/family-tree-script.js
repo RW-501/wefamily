@@ -10,7 +10,7 @@ let currentScale = initialScale;
 
 	// Add click event listeners for zoom controls
 zoomInButton.addEventListener('click', () => {
-	if( currentScale > "2"){
+	if( currentScale > 2){
 			return ;
 	}
 	const newScale = currentScale * 1.2; // Increase scale by 20%
@@ -86,38 +86,7 @@ let oofamilyData = {
 };
 
 
-let jjfamilyData = {
-    id: 'root',
-    name: 'Family Tree 333',
-    children: [
-        {
-            id: 'child1',
-            name: 'John Doe',
-            children: [
-                {
-                    id: 'sibling1',
-                    name: 'Jane Doe',
-                    children: [                {
-                                                id: 'child',
-                                                name: 'grand Doe',
-                                                children: [],
-                                                    },
-                              ],
-                },
-                {
-                    id: 'sibling2',
-                    name: 'Bob Doe',
-                    children: [],
-                },
-            ],
-        },
-        {
-            id: 'child2',
-            name: 'Alice Doe',
-            children: [],
-        },
-    ],
-};
+
     
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
@@ -187,6 +156,10 @@ chartGroup.selectAll("circle")
         // You can now use d.data to access member information
     });
 
+        console.log(d.data.children+" Data:  "+ d.data+"   mmmm  "+data.children);
+
+	  if (d.data.children){
+
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
@@ -202,6 +175,26 @@ chartGroup.selectAll("circle")
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
     });
+                    }else{
+    // Add text labels to nodes
+    chartGroup.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", -35) // Adjust the vertical position of labels
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name) // Display member names
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked text Data:", d.data);
+        // You can now use d.data to access relationship information
+    });
+
+	  }
+
+	      
     const imageWidth = 100;
 
     const imageHeight = 100;
