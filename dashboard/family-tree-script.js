@@ -29,7 +29,7 @@ zoomOutButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
 
-const width = window.screen.width;
+const width = 800;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 
     // Create an SVG element to contain the chart
