@@ -153,11 +153,17 @@ chartGroup.selectAll("circle")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
-        // You can now use d.data to access member information
+const exampleMember = {
+    imageUrl: `${d.data.photo}`,
+    info: `${d.data.note}`,
+    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
+};
+
+showPopup(showMemberPopup);
     });
 
 
-	  if (!root.descendants().children){
+	  if (root.descendants().children === []){
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
@@ -166,7 +172,7 @@ chartGroup.selectAll("circle")
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", 35) // Adjust the vertical position of labels
+        .attr("dy", 45) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
@@ -197,7 +203,13 @@ showPopup(showMemberPopup);
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked link
         console.log("Clicked text Data:", d.data);
-        // You can now use d.data to access relationship information
+const exampleMember = {
+    imageUrl: `${d.data.photo}`,
+    info: `${d.data.note}`,
+    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
+};
+
+showPopup(showMemberPopup);
     });
 
 	  }
@@ -224,7 +236,13 @@ chartGroup.selectAll("image")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
-        // You can now use d.data to access member information
+const exampleMember = {
+    imageUrl: `${d.data.photo}`,
+    info: `${d.data.note}`,
+    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
+};
+
+showPopup(showMemberPopup);
     });
 
 
@@ -374,6 +392,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             id: treeID,
             name: treeData.name,
             children: [],
+            data: treeData,
         };
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
@@ -389,6 +408,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
+                    const memberID = doc.memberID;
                     const private = doc.private;
                     const location = doc.location;
                     const birthdate = doc.birthdate;
@@ -406,6 +426,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     if (!memberDataMap[id]) {
                         const memberData = {
                             id: id,
+                            memberID: memberID,
                             name: name,
                             private: private,
                             location: location,
