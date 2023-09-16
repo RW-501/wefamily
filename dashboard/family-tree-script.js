@@ -157,7 +157,7 @@ chartGroup.selectAll("circle")
     });
 
 
-	  if (root.descendants().children){
+	  if (!root.descendants().children){
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
