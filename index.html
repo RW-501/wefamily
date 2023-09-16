@@ -80,7 +80,50 @@ nav ul li a {
     box-sizing: border-box;
 }
 
-	  
+	  .mainMessage-box {
+  position: fixed;
+  top: -100px; /* Initially hidden above the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+    color: #fff;
+    font-weight: 800;
+	width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transition: top 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+.mainMessage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+text-align: center;
+}
+
+#mainMessageText {
+  margin: 10px 0;
+    color: #fff;
+}
+
+/* Styling for the close button */
+#mainCloseButton {
+    background-color: #7b7978;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 600;
+
+}
+
+#mainCloseButton:hover {
+  background-color: #575453;
+}
+
 
 
 main {
@@ -223,6 +266,8 @@ main {
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
                 <button onclick="loginWithEmailPassword()">Login</button>
+                <button id="googleLogin" onclick="loginWithGoogle()">Login With Google</button>
+		    
                 <button onclick="loginAnonymously()">Login Anonymously</button>
             </div>
 
@@ -237,14 +282,19 @@ main {
                 <h3>Register</h3>
                 <input type="email" id="register-email" placeholder="Email" required>
                 <input type="password" id="register-password" placeholder="Password" required>
-                <button onclick="register()">Register</button>
-                <button onclick="loginAnonymously()">Register Anonymously</button>
+                <button onclick="register()">Register</button> 
 
             </div>
         </div>
     </div>
     </div>
-
+    
+    <div class="mainMessage-box" id="mainMessageBox">
+  <div class="mainMessage-content">
+    <p id="mainMessageText">Your message here</p>
+    <button id="mainCloseButton">Close</button>
+  </div>
+</div>
     <script>
         // JavaScript functions for login and registration
 function toggleTab(tabName) {
@@ -287,7 +337,7 @@ async function loginWithEmailPassword() {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
         }else{
- alert('No User');
+ showMainMessage('No User, Please Register);
         }
 
         // Update the login count in Firestore
@@ -300,7 +350,7 @@ async function loginWithEmailPassword() {
 
         return true;
     } catch (error) {
-        console.error('Login failed:', error.message);
+        showMainMessage.error('Login failed:', error.message);
         return false;
     }
 }
@@ -316,7 +366,7 @@ const currentDate = new Date();
 
         // Validate the phone number (you can add more validation if needed)
         if (!phoneNumber || !/^\+\d{10,}$/g.test(phoneNumber)) {
-            alert('Please enter a valid phone number in the format: +1234567890');
+            showMainMessage('Please enter a valid phone number in the format: +1234567890');
             return;
         }
 
@@ -354,7 +404,7 @@ const currentDate = new Date();
         // Redirect to the dashboard with user ID as a query parameter
         window.location.href = `dashboard/?user=${userId}`;
     } catch (error) {
-        console.error('Phone login failed:', error.message);
+        showMainMessage.error('Phone login failed:', error.message);
     }
 }
 
@@ -463,10 +513,55 @@ function checkLoggedInAndRedirect() {
     }
 }
 
+	    async function loginWithGoogle() {
+    try {
+        // Use Firebase Google Sign-In provider
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        // Sign in with Google
+        const userCredential = await firebase.auth().signInWithPopup(provider);
+
+        // Save login status to local storage
+        localStorage.setItem('userLoggedIn', 'true');
+
+        // Get the user's ID
+        const userId = userCredential.user.uid;
+
+        // Reference to the user document in Firestore
+        const userDocRef = firestore.collection('users').doc(userId);
+
+        // Get the current login count
+        let loginCount = 0;
+
+        // Fetch the user document to get the current login count
+        const userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+            const userData = userDoc.data();
+            loginCount = userData.loginCount || 0;
+        } else {
+ showMainMessage('No User, Please Register);
+        }
+
+        // Update the login count in Firestore
+        await userDocRef.update({
+            loginCount: loginCount + 1,
+        });
+
+        // Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `dashboard/?user=${userId}`;
+
+        return true;
+    } catch (error) {
+        showMainMessage.error('Login with Google failed:', error.message);
+        return false;
+    }
+}
+
+
 // Call the function to check and redirect
 checkLoggedInAndRedirect();
 
-toggleTab('register');
+toggleTab('login-email');
 	    
     </script>
 </body>
