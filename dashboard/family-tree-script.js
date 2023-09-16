@@ -159,7 +159,7 @@ const exampleMember = {
     details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
 };
 
-showPopup(showMemberPopup);
+showMemberPopup(exampleMember);
     });
 
 
@@ -186,7 +186,7 @@ const exampleMember = {
     details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
 };
 
-showPopup(showMemberPopup);
+showMemberPopup(exampleMember);
 
     });
                     }else{
@@ -209,7 +209,7 @@ const exampleMember = {
     details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
 };
 
-showPopup(showMemberPopup);
+showMemberPopup(exampleMember);
     });
 
 	  }
@@ -242,7 +242,7 @@ const exampleMember = {
     details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
 };
 
-showPopup(showMemberPopup);
+showMemberPopup(exampleMember);
     });
 
 
