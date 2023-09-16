@@ -367,14 +367,12 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                         memberDataMap[id] = memberData;
                     }
 
-                    id.forEach((childID) => {
-                        if (memberDataMap[childID]) {
+                        if (memberDataMap[id]) {
                             // Update childNode's parent
                             memberDataMap[childID].parents.push(id);
                             // Update current member's child
                             memberDataMap[id].children.push(childID);
                         }
-                    });
 
 
    // Check and update parent and sibling relationships
