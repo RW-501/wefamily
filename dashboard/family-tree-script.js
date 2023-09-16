@@ -342,8 +342,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     const siblings = docData.sibling || [];
 
  if (treeData.root) {
-
-			  root.children.push(treeData.root);
+	 root.children.push(treeData.root);
                     } else {
                         root.children.push(id);
                     }
@@ -405,8 +404,13 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     });
 		    */
                    });
+const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
-                const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
+const hierarchicalTree = buildTree(treeData, maxDepthLimit, 0);
+
+console.log(JSON.stringify(hierarchicalTree.node, null, 4));
+		    
+//                const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
                 maxHierarchyDepth = hierarchicalTree.maxDepth;
                 resolve({ hierarchicalTree, maxHierarchyDepth });
             })
