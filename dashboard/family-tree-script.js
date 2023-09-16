@@ -163,7 +163,7 @@ showMemberPopup(exampleMember);
     });
 
 
-	  if (root.descendants().children.lenght === 0){
+if (root.descendants().children.length === 0) {
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
