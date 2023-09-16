@@ -271,6 +271,7 @@ min-height: 500px;
     width: fit-content;
             display: block;
             height: fit-content;
+	        max-height: 90%;
     }
 
     .close-button {
@@ -278,6 +279,7 @@ text-align: end;
         font-size: 20px;
         cursor: pointer;
             display: block;
+	        font-weight: 900;
     }
 
     /* Tree sections */
@@ -302,7 +304,11 @@ text-align: end;
     #join-create-button:hover {
         background-color: #0056b3;
     }
+#search-family-tree input[type="text"], input[type="date"], textarea {  
+    font-size: 1.5em;
+}
 
+	
     /* Search input and button styles */
     #family-tree-search,
     #family-tree-code {
@@ -315,14 +321,14 @@ text-align: end;
 
     #search-button,
     #enter-code-button {
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
+  background-color: #007BFF; */
+    color: #fff;
+    /* border: none; */
+    padding: 10px 20px;
+    font-size: 16px;
+    /* cursor: pointer; */
+    /* border-radius: 4px; */
+    transition: background-color 0.3s ease;
     }
 
     #search-button:hover,
@@ -356,14 +362,14 @@ text-align: end;
     }
 
     #add-member-form button {
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
+         /* background-color: #007BFF; */
+    color: #fff;
+    /* border: none; */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    /* border-radius: 4px; */
+    transition: background-color 0.3s ease;
     }
 
     #add-member-form button:hover {
@@ -852,7 +858,7 @@ function initializeFamilyTreeChart() {
                 <button onclick="createFamilyTree()">Create</button>
             </div>
 <div id="join-tree-section" class="tree-section hidden">
-            <h2>Join a Family Tree</h2>
+            <h2>Join a Family Tree</h2><hr>
 <div id="search-family-tree">
     <h2>Search for a Family Tree</h2>
     <input type="text" id="family-tree-search" placeholder="Enter Family Tree Name">
