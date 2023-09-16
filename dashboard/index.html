@@ -1446,7 +1446,8 @@ if(!selectedFile){
         document.getElementById('toggleNewsButton').addEventListener('click', toggleNewsPosting);
 
 
-	    
+	                    console.log("???????????    1.");
+
 
 function newsPost(xxx) {
     if (!xxx) {
@@ -1917,6 +1918,7 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
 
 
+	                    console.log("???????????    2");
 
           var treeData = '';
 
@@ -2225,6 +2227,7 @@ setRootValue(memberID);
     });
 	    }
 
+	                    console.log("???????????    3");
 
         
     
@@ -2532,6 +2535,7 @@ document.getElementById('add-member-type').addEventListener('submit', function (
     // Call the function to add the family member
     addNewFamilyMember();
 });
+	                    console.log("???????????    4");
 
 
 	    
@@ -2649,10 +2653,11 @@ function addSpouseToMember(newID, addFamily_MemberID) {
  
             
 
+	                    console.log("???????????    5");
 
 
         // Call the fetchFamilyTree function on page load
-        window.onload = fetchFamilyTree;
+   //     window.onload = fetchFamilyTree;
 
  
 function limitPostContent() {
