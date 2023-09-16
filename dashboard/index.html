@@ -2022,9 +2022,9 @@ const logoLink = document.getElementById('logo-link');
 // Set the href attribute dynamically with the userId
 logoLink.href = `/wefamily/dashboard/?user=${userID}`;
 
-		
+	            	                    console.log("???????????    999");
+	
             const treeId = getTreeIdFromQueryParams();
-            	                    console.log("???????????    999");
 
             if (treeId) {
                 const tree = await getFamilyTreeData(treeId);
@@ -2048,7 +2048,9 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
             }
         } else {
             // Redirect to the login page if the user is not logged in.
-            window.location.href = 'index.html';
+        //   window.location.href = 'index.html';
+		            	                    console.log("???????????    999");
+
         }
     } catch (error) {
         console.error('Error checking user login:', error);
