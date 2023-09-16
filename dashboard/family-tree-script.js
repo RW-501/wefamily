@@ -115,7 +115,8 @@ let jjfamilyData = {
     
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * 10 + 50; // Adjust the '100' for your desired vertical spacing
+ //   d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth *  50; // Adjust the '100' for your desired vertical spacing
 });
 
 
@@ -271,9 +272,12 @@ const translateY = 100;
 chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
 	*/
     chartGroup.selectAll("path.link")
-        .attr("d", d => {
+        .attr("d", d => {/*
             const source = { x: d.source.x * scale, y: d.source.y };
             const target = { x: d.target.x * scale, y: d.target.y };
+		*/
+		const source = { x: d.source.x, y: d.source.y * scale };
+            const target = { x: d.target.x, y: d.target.y * scale };
             return linkGenerator({ source, target });
         });
 }
