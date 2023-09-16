@@ -411,7 +411,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-
+    });
 
 
 
@@ -420,7 +420,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 			
                     const hierarchicalTree = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
-                });
+            
 
            //     const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
@@ -460,15 +460,14 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 }
 
 
-function loadFamilyTreeChart() {
-    console.log("currentFamilyID   " + currentFamilyID);
-    
-    fetchFamilyMemberData('familyMembers', currentFamilyID)
+
+function loadFamilyTreeChart(treeData) {
+
+    fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
         .then((hierarchicalTree) => {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
-            // Now 'hierarchicalTree' contains your Firestore data in a hierarchical structure
 
-            // Call the function to generate the family tree chart with your family data
+		
             generateFamilyTreeChart(hierarchicalTree);
             console.log("Family tree chart generated."); // Log when the chart is generated
             // You can use the hierarchical tree structure for rendering the chart
