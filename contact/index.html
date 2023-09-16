@@ -262,6 +262,8 @@ function sendContactInfo(name, email, message) {
         // Contact information successfully stored in Firestore
         console.log('Contact information sent successfully.');
         // You can add any further actions or feedback to the user here
+	    showMainMessage("Thank You!);
+
     })
     .catch((error) => {
         console.error('Error sending contact information:', error);
@@ -282,7 +284,6 @@ document.getElementById('contact-submit').addEventListener('submit', function (e
     sendContactInfo(name, email, message);
 
 	
-showMainMessage("Thank You!);
 
 });
 
