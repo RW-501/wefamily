@@ -466,7 +466,7 @@ function loadFamilyTreeChart(treeData) {
 		let data = hierarchicalTree.node;
 
 		
-		 console.log("Hierarchical data:", data); /
+		 console.log("Hierarchical data:", data); 
             generateFamilyTreeChart(data);
             console.log("Family tree chart generated."); // Log when the chart is generated
 
