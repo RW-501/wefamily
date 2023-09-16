@@ -335,6 +335,8 @@ function populateMemberInfo(member) {
 }
 
 function showMemberPopup(member) {
+		    console.log("member   " + member);
+
     populateMemberInfo(member);
     const popup = document.getElementById('popup');
     popup.style.display = 'block';
