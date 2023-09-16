@@ -86,13 +86,13 @@ function checkUserLogin() {
             });
         } else {
 
-            if (user){
 		    localStorage.setItem('userLoggedIn', 'false');
                     // User is logged out
                     console.error('No user is signed in');
                     resolve(null);
                     // You can also perform actions here when the user is logged out.
-                }
+           window.location.href = '/wefamily';
+                
 
         }
     });
