@@ -623,6 +623,39 @@ font-size: 2em;
     padding: 2%;
     overflow-wrap: break-word;
 	}
+#meberDetailpopup{
+
+
+.popup {
+    display: flex;
+}
+
+.popup-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-image img {
+    width: 100%; /* Ensure the image fills the container */
+}
+
+.popup-right {
+    margin-left: 10px; /* Adjust spacing between the columns */
+}
+
+/* Media query for mobile view */
+@media (max-width: 767px) {
+    .popup {
+        flex-direction: column; /* Switch to a single column layout for mobile */
+    }
+}
+	
+}
+#meberDetailpopup{
+
+}
+
+
 	
 </style>
 	    <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -642,7 +675,6 @@ function initializeFamilyTreeChart() {
     });
   });
 }
-
 
 
 
@@ -951,6 +983,23 @@ function initializeFamilyTreeChart() {
     </div>
 </div>
 
+<div id="meberDetailpopup" class="popup-container">
+    <div class="popup">
+        <div class="popup-left">
+            <div class="popup-image">
+                <img id="member-image" src="path/to/image.jpg" alt="Member Image">
+            </div>
+            <div class="popup-text">
+                <textarea id="member-info" placeholder="Member Info"></textarea>
+            </div>
+        </div>
+        <div class="popup-right">
+            <ul id="member-details">
+                <!-- Member details will be populated here -->
+            </ul>
+        </div>
+    </div>
+</div>
 
 	
     <script>
