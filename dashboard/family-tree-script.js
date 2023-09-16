@@ -156,7 +156,6 @@ chartGroup.selectAll("circle")
         // You can now use d.data to access member information
     });
 
-        console.log(root.descendants().children+" Data:  "+ root.descendants()+"   mmmm  ");
 
 	  if (root.descendants().children){
 
@@ -167,7 +166,7 @@ chartGroup.selectAll("circle")
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", -35) // Adjust the vertical position of labels
+        .attr("dy", 35) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
