@@ -207,8 +207,8 @@ chartGroup.selectAll("image")
     .append("image")
 .attr("text-anchor", "middle")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
-    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .on("click", function (event, d) {
