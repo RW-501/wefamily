@@ -163,7 +163,7 @@ showMemberPopup(exampleMember);
     });
 
 let memberData = root.descendants().children;
-if (memberData && memberData.length === 0) {
+if (!memberData === undefied && memberData.length === 0) {
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
