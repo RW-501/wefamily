@@ -10,15 +10,21 @@ let currentScale = initialScale;
 
 	// Add click event listeners for zoom controls
 zoomInButton.addEventListener('click', () => {
-    const newScale = currentScale * 1.2; // Increase scale by 20%
-		    console.log("+ newScale   " + newScale);
+	if( currentScale > "2"){
+			return ;
+	}
+	const newScale = currentScale * 1.2; // Increase scale by 20%
+		    console.log("+ newScale   " + currentScale);
 
     applyZoom(newScale);
 });
 
 zoomOutButton.addEventListener('click', () => {
+	if( currentScale < .50){
+			return ;
+	}
     const newScale = currentScale / 1.2; // Decrease scale by 20%
-		    console.log("- newScale   " + newScale);
+		    console.log("- newScale   " + currentScale);
 
     applyZoom(newScale);
 });
