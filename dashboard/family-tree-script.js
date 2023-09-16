@@ -40,7 +40,7 @@ const width = 800;// window.screen.width;
 
 
 
-     const height_Layout = 100;
+     const height_Layout = 150;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
     
@@ -205,6 +205,7 @@ chartGroup.selectAll("image")
     .data(root.descendants())
     .enter()
     .append("image")
+.attr("text-anchor", "middle")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
     .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
     .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
@@ -272,10 +273,8 @@ const translateY = 100;
 chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
 	*/
     chartGroup.selectAll("path.link")
-        .attr("d", d => {/*
-            const source = { x: d.source.x * scale, y: d.source.y };
-            const target = { x: d.target.x * scale, y: d.target.y };
-		*/
+        .attr("d", d => {
+   
 		const source = { x: d.source.x, y: d.source.y * scale };
             const target = { x: d.target.x, y: d.target.y * scale };
             return linkGenerator({ source, target });
