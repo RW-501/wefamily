@@ -11,11 +11,15 @@ let currentScale = initialScale;
 	// Add click event listeners for zoom controls
 zoomInButton.addEventListener('click', () => {
     const newScale = currentScale * 1.2; // Increase scale by 20%
+		    console.log("+ newScale   " + newScale);
+
     applyZoom(newScale);
 });
 
 zoomOutButton.addEventListener('click', () => {
     const newScale = currentScale / 1.2; // Decrease scale by 20%
+		    console.log("- newScale   " + newScale);
+
     applyZoom(newScale);
 });
 
@@ -367,8 +371,10 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         root.children.push(id);
                     }
 
-
-
+           /*       if (children.length === 0) {
+                        root.children.push({ name, children: [] });
+                    }
+*/
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -412,11 +418,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 			
-                    const result = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
-                    maxHierarchyDepth = Math.max(maxHierarchyDepth, result.maxDepth);
+                    const hierarchicalTree = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
+                    maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
                 });
 
-                const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
+           //     const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
                 resolve({ hierarchicalTree, maxHierarchyDepth });
             })
