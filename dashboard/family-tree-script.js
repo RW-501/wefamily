@@ -345,13 +345,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
 
-			        // Initialize the root object with the correct child ID
    
-     if (treeData.root) {
-	 root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
+ 
 			   
    
                     // Check if the member is not already in memberDataMap and map them
@@ -366,7 +361,13 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             siblings: siblings,
                             // You can add more properties here if needed
                         };
+    if (treeData.root) {
+	 root.children.push(treeData.root);
+                    } else {
+                        root.children.push(memberData);
+                    }
 
+			    
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
