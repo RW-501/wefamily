@@ -322,7 +322,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
       
-   
+        const root = {
+            id: treeID, // A unique identifier for the root node
+    name: treeData.name, // The name of the root node
+            children: [], // Include childID in the children array
+        };
 
         // Fetch data from Firestore
         db.collection(collectionName)
@@ -342,11 +346,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const siblings = docData.sibling || [];
 
 			        // Initialize the root object with the correct child ID
-        const root = {
-            id: treeID, // A unique identifier for the root node
-    name: treeData.name, // The name of the root node
-            children: [], // Include childID in the children array
-        };
+   
 			
    
                     // Check if the member is not already in memberDataMap and map them
