@@ -395,8 +395,12 @@ const currentDate = new Date();
                 email: "",
             userTrees: [],
             signUpType:"Phone",
-            signUpDate: currentDate,
-
+            signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
+		birthday: '',
+		photo: photoURL,
+		state:'',
+		city:'',
+		country:"USA",
             
             // Add more user-related data here
         });
@@ -477,8 +481,13 @@ async function register() {
             userTrees: [],
             signUpType:"Email",
             phoneNumber: "",
-            signUpDate: currentDate,
-            // Add more user-related data here
+                 signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
+		birthday: '',
+		photo: photoURL,
+		state:'',
+		city:'',
+		country:"USA",
+			// Add more user-related data here
         });
 
         // Redirect to the dashboard page with user ID as a query parameter
@@ -526,6 +535,11 @@ function checkLoggedInAndRedirect() {
 
         // Get the user's ID
         const userId = userCredential.user.uid;
+        const user = userCredential.user;
+        const userId = user.uid;
+        const displayName = user.displayName;
+        const photoURL = user.photoURL;
+        const email = user.email;
 
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
@@ -539,8 +553,27 @@ function checkLoggedInAndRedirect() {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
         } else {
- showMainMessage('No User, Please Register);
-        }
+
+
+        // Create a user document in Firestore with the user's UID
+        await firestore.collection('users').doc(userCredential.user.uid).set({
+                userName: displayName, 
+                loginCount: 1, // Initialize login count to 1
+                email: email,
+            userTrees: [],
+            signUpType:"Google",
+            phoneNumber: "",
+            signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
+		birthday: '',
+		photo: photoURL,
+		state:'',
+		city:'',
+		country:"USA",
+            // Add more user-related data here
+        });
+		
+	
+	}
 
         // Update the login count in Firestore
         await userDocRef.update({
