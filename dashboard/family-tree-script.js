@@ -173,6 +173,15 @@ chartGroup.selectAll("circle")
         // 'd' contains the data associated with the clicked link
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
+	    // Example usage
+const exampleMember = {
+    imageUrl: `${d.data.photo}`,
+    info: `${d.data.note}`,
+    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
+};
+
+showPopup(showMemberPopup);
+
     });
                     }else{
     // Add text labels to nodes
@@ -288,6 +297,36 @@ chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
 
 
 
+
+
+function populateMemberInfo(member) {
+    // Populate image and text
+    document.getElementById('member-image').src = member.imageUrl;
+    document.getElementById('member-info').value = member.info;
+
+    // Populate member details
+    const memberDetails = member.details;
+    const detailsList = document.getElementById('member-details');
+    detailsList.innerHTML = ''; // Clear previous content
+
+    memberDetails.forEach(detail => {
+        const listItem = document.createElement('li');
+        listItem.textContent = detail;
+        detailsList.appendChild(listItem);
+    });
+}
+
+function showMemberPopup(member) {
+    populateMemberInfo(member);
+    const popup = document.getElementById('popup');
+    popup.style.display = 'block';
+}
+
+
+
+
+
+
 const exportButton = document.getElementById('export-button');
 exportButton.addEventListener('click', () => {
     // Select the SVG element containing your family tree
@@ -345,9 +384,17 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .then((querySnapshot) => {
                 const querySnapshotCount = querySnapshot.size;
 
+
+
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
+                    const private = doc.private;
+                    const location = doc.location;
+                    const birthdate = doc.birthdate;
+                    const deceaseddate = doc.deceaseddate;
+                    const contact = doc.contact;
+                    const note = doc.note;
                     const name = `${docData.first_name} ${docData.last_name}`;
                     const photo = docData.photo || '';
                     const children = docData.children || [];
@@ -360,6 +407,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         const memberData = {
                             id: id,
                             name: name,
+                            private: private,
+                            location: location,
+                            birthdate: birthdate,
+                            deceaseddate: deceaseddate,
+                            contact: contact,
+                            note: note,
                             photo: photo,
                             children: children,
                             spouse: spouse,
