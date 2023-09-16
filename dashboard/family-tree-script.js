@@ -40,7 +40,7 @@ const width = 800;// window.screen.width;
 
 
 
-     const height_Layout = 800;
+     const height_Layout = 100;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
     
