@@ -213,9 +213,12 @@ chartGroup.selectAll("image")
     .append("image")
 .attr("text-anchor", "middle")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
-    .attr("width", imageWidth)
+   // .attr("cx", d => d.x)
+    //.attr("cy", d => d.y)
+  .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
+    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
+
+	.attr("width", imageWidth)
     .attr("height", imageHeight)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
@@ -268,6 +271,8 @@ function applyZoom(scale) {
         .attr("font-size", 14 / scale);
 
     chartGroup.selectAll("image")
+  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
+    .attr("y", d => d.y - 100 / 2) // Adjust the positioning
         .attr("width", 100 / scale)
         .attr("height", 100 / scale);
 
