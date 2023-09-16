@@ -222,7 +222,7 @@ footer {
         <section id="contact-us">
             <h1>Contact Us</h1>
             
-            <form class="contact-form">
+            <div class="contact-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 
@@ -233,7 +233,7 @@ footer {
                 <textarea id="message" name="message" rows="4" required></textarea>
                 
                 <button id="contact-submit" type="submit">Submit</button>
-            </form>
+            </div>
         </section>
     </main>
     
@@ -273,7 +273,7 @@ function sendContactInfo(name, email, message) {
 
 // Handle form submission
 document.getElementById('contact-submit').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent the default form submission
+ //   e.preventDefault(); // Prevent the default form submission
 
     // Get user input
     const name = document.getElementById('name').value;
