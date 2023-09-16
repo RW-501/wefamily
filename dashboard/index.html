@@ -2002,7 +2002,7 @@ currentFamilyID = familyTreeId;
             }
         } else {
             console.log('User document does not exist.');
-            window.location.href = "index";
+           window.location.href = '/wefamily';
         }
     } catch (error) {
         console.error('Error getting user document:', error);
@@ -2044,7 +2044,9 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
             }
         } else {
             // Redirect to the login page if the user is not logged in.
-           window.location.href = 'index.html';
+            console.log('checking user login:');
+
+           window.location.href = '/wefamily';
 
         }
     } catch (error) {
