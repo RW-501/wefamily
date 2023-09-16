@@ -18,7 +18,7 @@
 	
     <script src="../auth.js"></script>
     <script src="../firebase.js"></script>
-    <title>Family Tree Management</title>
+    <title>Our Family</title>
 
 	
 
@@ -1445,7 +1445,6 @@ if(!selectedFile){
         document.getElementById('toggleNewsButton').addEventListener('click', toggleNewsPosting);
 
 
-	                    console.log("???????????    1.");
 
 
 function newsPost(xxx) {
@@ -1924,7 +1923,6 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
 async function getFamilyTreeData(treeId) {
     try {
-	                    console.log("getFamilyTreeData");
 
             // Ensure userID is defined and not empty
     if (!treeId) {
@@ -2022,13 +2020,12 @@ const logoLink = document.getElementById('logo-link');
 // Set the href attribute dynamically with the userId
 logoLink.href = `/wefamily/dashboard/?user=${userID}`;
 
-	            	                    console.log("???????????    999");
 	
             const treeId = getTreeIdFromQueryParams();
 
             if (treeId) {
                 const tree = await getFamilyTreeData(treeId);
-	                    console.log("???????????    8888");
+	                    console.loggetFamilyTreeData    ");
 
                 if (tree) {
                    displayTreeDetails(tree);
@@ -2048,8 +2045,7 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
             }
         } else {
             // Redirect to the login page if the user is not logged in.
-        //   window.location.href = 'index.html';
-		            	                    console.log("???????????    999");
+           window.location.href = 'index.html';
 
         }
     } catch (error) {
@@ -2216,7 +2212,7 @@ isFirstChild(currentFamilyID)
         if (isFirst) {
             console.log("This is the first family member.");
             // Perform actions for the first family member here
-			                    console.log(' memberID.',memberID);
+			                    console.log('setRootValue memberID.',memberID);
 
 setRootValue(memberID);
 	    
@@ -2230,7 +2226,6 @@ setRootValue(memberID);
     });
 	    }
 
-	                    console.log("???????????    3");
 
         
     
@@ -2538,7 +2533,6 @@ document.getElementById('add-member-type').addEventListener('submit', function (
     // Call the function to add the family member
     addNewFamilyMember();
 });
-	                    console.log("???????????    4");
 
 
 	    
@@ -2656,7 +2650,6 @@ function addSpouseToMember(newID, addFamily_MemberID) {
  
             
 
-	                    console.log("???????????    5");
 
 
         // Call the fetchFamilyTree function on page load
