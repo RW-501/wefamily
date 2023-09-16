@@ -333,7 +333,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
-                                const querySnapshotCount = querySnapshot.size;
+                                let querySnapshotCount = querySnapshot.size;
 
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
