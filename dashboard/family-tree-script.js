@@ -369,7 +369,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
 
                         if (memberDataMap[id]) {
                             // Update childNode's parent
-                            memberDataMap[id].children.push(id);
+                            memberDataMap[id].id.push(id);
 
                         }
 
