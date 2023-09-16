@@ -421,8 +421,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
             
 
-resolve(hierarchicalTree);
-               // resolve({ hierarchicalTree, maxHierarchyDepth });
+  resolve(hierarchicalTree);
+         //      resolve({ hierarchicalTree, maxHierarchyDepth });
             })
             .catch((error) => {
                 reject(error);
@@ -454,8 +454,7 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
     node.children = childResults.map((result) => result.node).filter(Boolean);
 
-   // return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
-	return node;
+    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
 
 
@@ -466,11 +465,14 @@ function loadFamilyTreeChart(treeData) {
         .then((hierarchicalTree) => {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
 
+		let data = hierarchicalTree.node;
+
 		
-            generateFamilyTreeChart({hierarchicalTree});
+		 console.log("Hierarchical data:", data); /
+            generateFamilyTreeChart(data);
             console.log("Family tree chart generated."); // Log when the chart is generated
-            // You can use the hierarchical tree structure for rendering the chart
-        })
+
+		        })
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
