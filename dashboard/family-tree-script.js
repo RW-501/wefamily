@@ -320,12 +320,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 
-        // Initialize the root object with the correct child ID
-        const root = {
-            id: treeID, // A unique identifier for the root node
-    name: treeData.name, // The name of the root node
-            children: [], // Include childID in the children array
-        };
+
       
    
 
@@ -345,13 +340,15 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
-       if(treeData.root){
-                                         root.children.push(treeData.root);
 
-             }else{
-                                   root.children.push(id);
-
-             } 
+			        // Initialize the root object with the correct child ID
+        const root = {
+            id: treeID, // A unique identifier for the root node
+    name: treeData.name, // The name of the root node
+            children: [], // Include childID in the children array
+        };
+			
+   
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
