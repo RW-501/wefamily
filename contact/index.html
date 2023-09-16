@@ -258,7 +258,9 @@ const contactsCollection = db.collection('contacts');
 function sendContactInfo(name, email, message) {
     // Add a new document to the "contacts" collection
 
-	
+	if(!name || !message){
+return;
+	}
     contactsCollection.add({
         userID: userID ,
         name: name,
