@@ -347,7 +347,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 			        // Initialize the root object with the correct child ID
    
-			
+     if (treeData.root) {
+	 root.children.push(treeData.root);
+                    } else {
+                        root.children.push(id);
+                    }
+			   
    
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
@@ -366,13 +371,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         memberDataMap[id] = memberData;
                     }
 
-               if (treeData.root) {
-	 root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
-			    			              
-			    console.log(' root.children   '+root.children);
+           			              
     
      
                     // Check and update parent and sibling relationships
@@ -414,12 +413,14 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 });
 
 
+			    console.log(' root.children   '+root);
 
 const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
+		    querySnapshotCount = querySnapshotCount +1;
+
                 const hierarchicalTree = buildTree(root,querySnapshotCount, new Set());
 
-console.log("????????????????????????????????????????     "+JSON.stringify(hierarchicalTree.node, new Set(), 4));
 		    
                 maxHierarchyDepth = hierarchicalTree.maxDepth;
           //      resolve({ hierarchicalTree, maxHierarchyDepth });
