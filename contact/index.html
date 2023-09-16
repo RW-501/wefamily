@@ -176,7 +176,7 @@ footer {
                 <label for="message">Message:</label>
                 <textarea id="message" name="message" rows="4" required></textarea>
                 
-                <button type="submit">Submit</button>
+                <button id="contact-submit" type="submit">Submit</button>
             </form>
         </section>
     </main>
@@ -217,7 +217,7 @@ function sendContactInfo(name, email, message) {
 }
 
 // Handle form submission
-document.getElementById('contact-form').addEventListener('submit', function (e) {
+document.getElementById('contact-submit').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent the default form submission
 
     // Get user input
