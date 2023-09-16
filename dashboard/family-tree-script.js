@@ -25,7 +25,7 @@ zoomOutButton.addEventListener('click', () => {
 
     // Create a group element to hold the links
        var chartGroup; 
-
+ var linkGenerator;
 function generateFamilyTreeChart(familyData) {
 	
 
@@ -80,7 +80,7 @@ let oofamilyData = {
 };
 
 
-familyData = {
+let jjfamilyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
@@ -124,7 +124,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     treeLayout(root);
 
 // Create a link generator with zoom transformation
-    const linkGenerator = d3.linkHorizontal()
+     linkGenerator = d3.linkHorizontal()
         .x(d => d.x) // Swap x and y due to vertical tree layout
         .y(d => d.y);
 
