@@ -43,7 +43,7 @@ const width = window.screen.width;
 chartGroup  = svg.append("g");
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
-	    console.log("chartGroup   " + chartGroup);
+	    console.log("familyData   " + familyData);
 
 // Usage example to generate the desired structure
 let oofamilyData = {
