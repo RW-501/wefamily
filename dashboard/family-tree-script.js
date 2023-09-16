@@ -271,8 +271,9 @@ function applyZoom(scale) {
         .attr("font-size", 14 / scale);
 
     chartGroup.selectAll("image")
-  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
-    .attr("y", d => d.y - 100 / 2) // Adjust the positioning
+//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
+   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
+    .attr("y", d => d.y) // Adjust the positioning
         .attr("width", 100 / scale)
         .attr("height", 100 / scale);
 
