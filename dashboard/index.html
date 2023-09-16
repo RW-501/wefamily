@@ -1918,7 +1918,6 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
 
 
-	                    console.log("???????????    2");
 
           var treeData = '';
 
@@ -1926,6 +1925,7 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
 
 async function getFamilyTreeData(treeId) {
     try {
+	                    console.log("getFamilyTreeData");
 
             // Ensure userID is defined and not empty
     if (!treeId) {
@@ -2032,7 +2032,7 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
 	                    console.log("???????????    8888");
 
                 if (tree) {
-                 //  displayTreeDetails(tree);
+                   displayTreeDetails(tree);
 			const treeID = tree.treeID;
 			currentFamilyID = treeID;
                     displayFamilyMembers(treeID);
