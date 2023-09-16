@@ -444,42 +444,41 @@ console.log("????????????????????????????????????????     "+JSON.stringify(hiera
 }
 
 
+function buildFamilyTree(rootMember) {
+    const root = {
+        id: 'root',
+        name: 'Family Tree 333',
+        children: [],
+    };
 
-function buildTree(node, depthLimit, processedNodes, currentDepth) {
-    if (depthLimit <= 0 || !node || !Array.isArray(node.children) || processedNodes.has(node.id)) {
-        return { node, maxDepth: currentDepth };
+    function buildNode(memberID) {
+        const memberData = memberDataMap[memberID];
+        const children = memberData.children.map(childID => buildNode(childID));
+
+        return {
+            name: memberData.name,
+            children: children,
+        };
     }
 
-    processedNodes.add(node.id);
-
-    const childResults = (node.children || []).map((child) => {
-        return buildTree(child, depthLimit - 1, processedNodes, currentDepth + 1);
-    });
-
-    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
-
-    node.children = childResults.map((result) => result.node);
-
-    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
+    root.children.push(buildNode(rootMember));
+    return root;
 }
 
 
 
 
-
 function loadFamilyTreeChart(treeData) {
+
     fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
-        .then((result) => {
-            console.log("Hierarchical tree data:", result.hierarchicalTree);
-            console.log("Max hierarchy depth:", result.maxHierarchyDepth);
-            // Call your chart generation function here with the hierarchical tree
+    .then(({ hierarchicalTree }) => {
+        const familyTree = buildFamilyTree(hierarchicalTree.node.id);
+        console.log(JSON.stringify(familyTree, null, 4));
 
-generateFamilyTreeChart( result.maxHierarchyDepth);
+generateFamilyTreeChart(familyTree);
 
-						   
-        })
-        .catch((error) => {
-            console.error('Error fetching family member data:', error);
-        });
+    })
+    .catch(error => console.error('Error fetching family member data:', error));
+
 }
 
