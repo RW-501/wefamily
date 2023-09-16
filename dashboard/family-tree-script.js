@@ -80,7 +80,7 @@ let oofamilyData = {
 };
 
 
-let  kkkfamilyData = {
+familyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
@@ -323,7 +323,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 	    
-    console.log("currentFamilyID   " + currentFamilyID);
 
         const root = {
             id: treeID,
@@ -384,7 +383,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
-
+/*
                     children.forEach((childID) => {
                         if (memberDataMap[childID]) {
                             // Update childNode's parent
@@ -410,7 +409,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             // Update current member's spouse
                             memberDataMap[id].spouse.push(spouseID);
                         }
-                    });
+                    });*/
     });
 
 
@@ -468,7 +467,7 @@ function loadFamilyTreeChart(treeData) {
             console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
 
 		
-            generateFamilyTreeChart(hierarchicalTree);
+            generateFamilyTreeChart({hierarchicalTree});
             console.log("Family tree chart generated."); // Log when the chart is generated
             // You can use the hierarchical tree structure for rendering the chart
         })
