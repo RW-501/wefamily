@@ -156,9 +156,9 @@ chartGroup.selectAll("circle")
         // You can now use d.data to access member information
     });
 
-        console.log(data.children+" Data:  "+ data+"   mmmm  "+data.children);
+        console.log(root.descendants().children+" Data:  "+ root.descendants()+"   mmmm  ");
 
-	  if (data.children){
+	  if (root.descendants().children){
 
     // Add text labels to nodes
     chartGroup.selectAll("text")
