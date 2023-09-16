@@ -361,7 +361,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                         root.children.push(id);
                     }
 			    			              
-			    console.log(' root.children'+root.children);
+			    console.log(' root.children   '+root.children);
 
                         // Store member data in the map
                         memberDataMap[id] = memberData;
@@ -411,7 +411,7 @@ const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
 const hierarchicalTree = buildTree(treeData, maxDepthLimit, 0);
 
-console.log(JSON.stringify(hierarchicalTree.node, null, 4));
+console.log(JSON.stringify(hierarchicalTree.node, new Set(), 4));
 		    
 //                const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
                 maxHierarchyDepth = hierarchicalTree.maxDepth;
