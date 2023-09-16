@@ -2064,6 +2064,7 @@ const selectedFile = document.getElementById('member_main_Image').files[0]; // G
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,docRef.id);
+                loadFamilyTreeChart(treeData);
 
                                 })
                                 .catch((error) => {
@@ -2087,6 +2088,7 @@ uploadImageToStorage(
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,docRef.id);
+                loadFamilyTreeChart(treeData);
 
                                 })
                                 .catch((error) => {
@@ -2287,6 +2289,7 @@ let memberID = member.memberID;
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
 			newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp} `);
+                loadFamilyTreeChart(treeData);
 
                             })
                             .catch((error) => {
@@ -2404,6 +2407,7 @@ const selectedFile = document.getElementById('newMember_main_Image').files[0]; /
                                 .then(() => {
 					      // Display updated family members
                     displayFamilyMembers(currentFamilyID);
+                loadFamilyTreeChart(treeData);
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();	
@@ -2445,6 +2449,7 @@ uploadImageToStorage(
 					
                     // Display updated family members
                     displayFamilyMembers(currentFamilyID);
+                loadFamilyTreeChart(treeData);
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();
