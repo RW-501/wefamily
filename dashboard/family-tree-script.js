@@ -415,6 +415,8 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     });
 		  */  
                    });
+
+		    
 const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
 const hierarchicalTree = buildTree(treeData, maxDepthLimit, 0);
@@ -433,31 +435,26 @@ console.log(JSON.stringify(hierarchicalTree.node, new Set(), 4));
 
 
 
-
-function buildTree(node, depthLimit, currentDepth) {
-    if (depthLimit <= 0 || !node) {
+function buildTree(node, depthLimit, processedNodes, currentDepth) {
+    if (depthLimit <= 0 || !node || !Array.isArray(node.children) || processedNodes.has(node.id)) {
         return { node, maxDepth: currentDepth };
     }
 
-    const children = (node.children || []).map((child, index) => {
-        const childId = `child${index + 1}`;
-        return buildTree(
-            {
-                id: childId,
-                name: child.name,
-                children: child.children || [],
-            },
-            depthLimit - 1,
-            currentDepth + 1
-        );
+    processedNodes.add(node.id);
+
+    const childResults = (node.children || []).map((child) => {
+        return buildTree(child, depthLimit - 1, processedNodes, currentDepth + 1);
     });
 
-    const maxChildDepth = Math.max(...children.map((result) => result.maxDepth));
+    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
-    node.children = children.map((result) => result.node);
+    node.children = childResults.map((result) => result.node);
 
     return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
+
+
+
 
 
 function loadFamilyTreeChart(treeData) {
