@@ -314,18 +314,28 @@ function setRootValue(rootValue) {
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
 
+               
 
-function fetchFamilyMemberData(collectionName, treeID, treeData) {
+function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 
+        // Initialize the root object with the correct child ID
+        const root = {
+            id: treeID, // A unique identifier for the root node
+    name: treeData.name, // The name of the root node
+            children: [], // Include childID in the children array
+        };
       
-    
+   
 
+        // Fetch data from Firestore
         db.collection(collectionName)
             .where('familyID', 'array-contains', treeID)
             .get()
             .then((querySnapshot) => {
+                                const querySnapshotCount = querySnapshot.size;
+
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
@@ -335,14 +345,13 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
+       if(treeData.root){
+                                         root.children.push(treeData.root);
 
-  const root = {
-            id: treeID,  // Change the root id to a fixed value 'root'
-            name: treeData.name,
-            children: [],
-        };
+             }else{
+                                   root.children.push(id);
 
-		    
+             } 
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
@@ -355,48 +364,30 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             siblings: siblings,
                             // You can add more properties here if needed
                         };
- if (treeData.root) {
+
+                        // Store member data in the map
+                        memberDataMap[id] = memberData;
+                    }
+
+               if (treeData.root) {
 	 root.children.push(treeData.root);
                     } else {
                         root.children.push(id);
                     }
 			    			              
 			    console.log(' root.children   '+root.children);
-
-                        // Store member data in the map
-                        memberDataMap[id] = memberData;
-                    }
-/*
-                        if (memberDataMap[id]) {
-                            // Update childNode's parent
-                            memberDataMap[id].id.push(id);
-
-                        }
-			    */
-			    console.log(' memberDataMap[id]   '+JSON.stringify(memberDataMap[id]));
-
-
-
-				                
-			
-   // Check and update parent and sibling relationships
+    
+     
+                    // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
                             // Update childNode's parent
                             memberDataMap[parentsID].children.push(id);
                             // Update current member's child
                             memberDataMap[id].parents.push(parentsID);
-                        }else{
-                        root.children.push(memberDataMap[id]);
-			    console.log(' ??????   ');
-
-			}
+                        }
                     });
-			    console.log(' parents   '+parents);
-			    console.log(' children   '+children);
 
-			
-/*
                     children.forEach((childID) => {
                         if (memberDataMap[childID]) {
                             // Update childNode's parent
@@ -423,21 +414,20 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-		  */  
-                   });
+                });
 
-	/*	    
+
+
 const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
-const hierarchicalTree = buildTree(treeData, maxDepthLimit, 0);
+                const hierarchicalTree = buildTree(root,querySnapshotCount, new Set());
 
 console.log("????????????????????????????????????????     "+JSON.stringify(hierarchicalTree.node, new Set(), 4));
 		    
-//                const hierarchicalTree = buildTree(root, 1000, new Set(), 0);
                 maxHierarchyDepth = hierarchicalTree.maxDepth;
-                resolve({ hierarchicalTree, maxHierarchyDepth });
-*/
-  resolve();
+          //      resolve({ hierarchicalTree, maxHierarchyDepth });
+
+                resolve(hierarchicalTree);
             })
             .catch((error) => {
                 reject(error);
@@ -446,26 +436,39 @@ console.log("????????????????????????????????????????     "+JSON.stringify(hiera
 }
 
 
-function buildFamilyTree(rootMember,treeData) {
-    const root = {
-        id: treeID,
-            name: treeData.name,
-        children: [],
-    };
 
-    function buildNode(memberID) {
-        const memberData = memberDataMap[memberID];
-        const children = memberData.children.map(childID => buildNode(childID));
 
-        return {
-            name: memberData.name,
-            children: children,
-        };
+
+function buildTree(node, depthLimit, processedNodes) {
+    if (depthLimit <= 0 || processedNodes.has(node.id)) {
+        return node;
     }
 
-    root.children.push(buildNode(rootMember));
-    return root;
+    processedNodes.add(node.id);
+
+    const uniqueChildren = {};
+    
+    node.children = (node.children || []).map((childID) => {
+        const childNode = memberDataMap[childID];
+        if (childNode) {
+            if (!uniqueChildren[childID]) {
+                uniqueChildren[childID] = true;
+                return buildTree(childNode, depthLimit - 1, processedNodes);
+            }
+        }
+        return null;
+    });
+
+    node.children = node.children.filter(Boolean);
+
+    return node;
 }
+
+
+
+
+
+
 
 
 
