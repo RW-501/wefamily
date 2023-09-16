@@ -162,9 +162,9 @@ const exampleMember = {
 showMemberPopup(exampleMember);
     });
 
-let memberData = root.descendants().children;
-if (!memberData === undefied && memberData.length === 0) {
-
+//let memberData = root.descendants().children;
+//if (!memberData === undefied && memberData.length === 0) {
+if(ok == ok){
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
