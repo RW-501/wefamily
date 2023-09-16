@@ -17,7 +17,6 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 
-     console.log(` auth `,auth);
 
 
 
