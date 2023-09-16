@@ -319,12 +319,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 
-        const root = {
-            id: 'root',  // Change the root id to a fixed value 'root'
-            name: treeData.name,
-            children: [],
-        };
-
+      
     
 
         db.collection(collectionName)
@@ -341,6 +336,11 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
 
+  const root = {
+            id: 'root',  // Change the root id to a fixed value 'root'
+            name: treeData.name,
+            children: [],
+        };
 
 		    
                     // Check if the member is not already in memberDataMap and map them
