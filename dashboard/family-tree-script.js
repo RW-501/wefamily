@@ -367,7 +367,15 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                         memberDataMap[id] = memberData;
                     }
 
-              
+                    id.forEach((childID) => {
+                        if (memberDataMap[childID]) {
+                            // Update childNode's parent
+                            memberDataMap[childID].parents.push(id);
+                            // Update current member's child
+                            memberDataMap[id].children.push(childID);
+                        }
+                    });
+
 
    // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
@@ -378,7 +386,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
-
+/*
                     children.forEach((childID) => {
                         if (memberDataMap[childID]) {
                             // Update childNode's parent
@@ -405,7 +413,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-		    
+		  */  
                    });
 const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
