@@ -46,7 +46,7 @@ chartGroup  = svg.append("g");
 	    console.log("chartGroup   " + chartGroup);
 
 // Usage example to generate the desired structure
- familyData = {
+let oofamilyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
@@ -375,7 +375,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
-/*
+
                     children.forEach((childID) => {
                         if (memberDataMap[childID]) {
                             // Update childNode's parent
@@ -402,7 +402,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
-		    */
+		    
                    });
 const maxDepthLimit = 1000; // Adjust the depth limit as needed
 
