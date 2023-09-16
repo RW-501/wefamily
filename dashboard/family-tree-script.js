@@ -373,7 +373,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
 
                         }
 			    */
-			    console.log(' memberDataMap[id]   '+memberDataMap[id]);
+			    console.log(' memberDataMap[id]   '+JSON.stringify(memberDataMap[id]));
 
 
    // Check and update parent and sibling relationships
@@ -386,6 +386,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                         }
                     });
 			    console.log(' parents   '+parents);
+			    console.log(' children   '+children);
 
 			
 /*
