@@ -376,6 +376,9 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
 			    console.log(' memberDataMap[id]   '+JSON.stringify(memberDataMap[id]));
 
 
+
+				                
+			
    // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -383,7 +386,11 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                             memberDataMap[parentsID].children.push(id);
                             // Update current member's child
                             memberDataMap[id].parents.push(parentsID);
-                        }
+                        }else{
+                        root.children.push(memberDataMap[id]);
+			    console.log(' ??????   ');
+
+			}
                     });
 			    console.log(' parents   '+parents);
 			    console.log(' children   '+children);
