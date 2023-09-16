@@ -76,12 +76,14 @@ function checkUserLogin() {
                 unsubscribe(); // Unsubscribe to avoid memory leaks
 
                 if (user) {
+    localStorage.setItem('userLoggedIn', 'true');
                     // User is logged in
                      userID = user.uid;
                     console.log('User is logged in with UID:', userID);
                     resolve(userID);
                     // You can also perform actions here when the user is logged in.
                 } else {
+    localStorage.setItem('userLoggedIn', 'false');
                     // User is logged out
                     console.error('No user is signed in');
                     resolve(null);
