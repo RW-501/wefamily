@@ -454,7 +454,8 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 
     node.children = childResults.map((result) => result.node).filter(Boolean);
 
-    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
+   // return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
+	return node.children;
 }
 
 
