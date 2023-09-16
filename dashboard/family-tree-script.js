@@ -418,11 +418,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 			
                     const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
-                    maxHierarchyDepth = Math.max(maxHierarchyDepth, hierarchicalTree.maxDepth);
             
 
   resolve(hierarchicalTree);
-         //      resolve({ hierarchicalTree, maxHierarchyDepth });
             })
             .catch((error) => {
                 reject(error);
@@ -450,11 +448,11 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
         return null;
     });
 
-    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
+     maxHierarchyDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
     node.children = childResults.map((result) => result.node).filter(Boolean);
 
-    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
+    return { node, maxDepth: Math.max(currentDepth, maxHierarchyDepth) };
 }
 
 
