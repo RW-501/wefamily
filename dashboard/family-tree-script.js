@@ -9,7 +9,7 @@ let currentScale = initialScale;
 
 
 	// Add click event listeners for zoom controls
-zoomInButton.addEventListener('click', () => {
+zoomOutButton.addEventListener('click', () => {
 	if( currentScale > 2){
 			return ;
 	}
@@ -19,7 +19,7 @@ zoomInButton.addEventListener('click', () => {
     applyZoom(newScale);
 });
 
-zoomOutButton.addEventListener('click', () => {
+zoomInButton.addEventListener('click', () => {
 	if( currentScale < .50){
 			return ;
 	}
