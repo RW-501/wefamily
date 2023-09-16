@@ -311,29 +311,29 @@ function setRootValue(rootValue) {
 }
 
 
+
 const memberDataMap = {};
 let maxHierarchyDepth = 0; // Move this outside the function
-
-               
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
+	    
+    console.log("currentFamilyID   " + currentFamilyID);
 
-
-      
         const root = {
-            id: treeID, // A unique identifier for the root node
-    name: treeData.name, // The name of the root node
-            children: [], // Include childID in the children array
+            id: treeID,
+            name: treeData.name,
+            children: [],
         };
+    console.log("treeID   " + treeID);
+    console.log("treeData.name   " + treeData.name);
 
-        // Fetch data from Firestore
-        db.collection(collectionName)
-            .where('familyID', 'array-contains', treeID)
-            .get()
+        const query = db.collection(collectionName).where('familyID', 'array-contains', treeID);
+
+        query.get()
             .then((querySnapshot) => {
-                                let querySnapshotCount = querySnapshot.size;
+                const querySnapshotCount = querySnapshot.size;
 
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
@@ -345,14 +345,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const parents = docData.parents || [];
                     const siblings = docData.sibling || [];
 
-    if (treeData.root) {
-	 root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
- 
-			   
-   
                     // Check if the member is not already in memberDataMap and map them
                     if (!memberDataMap[id]) {
                         const memberData = {
@@ -363,20 +355,20 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             spouse: spouse,
                             parents: parents,
                             siblings: siblings,
-                            // You can add more properties here if needed
                         };
 
-
-			    
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
 
-    if (parents === [] && children === []) {
-                        root.children.push(memberData);
+                    if (treeData.root) {
+                        root.children.push(treeData.root);
+                    } else {
+                        root.children.push(id);
                     }
-    
-     
+
+
+
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -413,22 +405,20 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             memberDataMap[id].spouse.push(spouseID);
                         }
                     });
+
+
+
+
+
+
+			
+                    const result = buildTree(doc.data(), querySnapshotCount, new Set(), 0, 0);
+                    maxHierarchyDepth = Math.max(maxHierarchyDepth, result.maxDepth);
                 });
 
+                const hierarchicalTree = buildTree(root, querySnapshotCount, new Set());
 
-			    console.log(' root.children   '+root);
-
-const maxDepthLimit = 1000; // Adjust the depth limit as needed
-
-		    querySnapshotCount = querySnapshotCount +1;
-
-                const hierarchicalTree = buildTree(root,querySnapshotCount, new Set());
-
-		    
-                maxHierarchyDepth = hierarchicalTree.maxDepth;
-          //      resolve({ hierarchicalTree, maxHierarchyDepth });
-
-                resolve(hierarchicalTree);
+                resolve({ hierarchicalTree, maxHierarchyDepth });
             })
             .catch((error) => {
                 reject(error);
@@ -436,55 +426,48 @@ const maxDepthLimit = 1000; // Adjust the depth limit as needed
     });
 }
 
-
-
-
-
-function buildTree(node, depthLimit, processedNodes) {
+function buildTree(node, depthLimit, processedNodes, currentDepth) {
     if (depthLimit <= 0 || processedNodes.has(node.id)) {
-        return node;
+        return { node, maxDepth: currentDepth };
     }
 
     processedNodes.add(node.id);
 
     const uniqueChildren = {};
-    
-    node.children = (node.children || []).map((childID) => {
+
+    const childResults = node.children.map((childID) => {
         const childNode = memberDataMap[childID];
         if (childNode) {
             if (!uniqueChildren[childID]) {
                 uniqueChildren[childID] = true;
-                return buildTree(childNode, depthLimit - 1, processedNodes);
+                return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
             }
         }
         return null;
     });
 
-    node.children = node.children.filter(Boolean);
+    const maxChildDepth = Math.max(...childResults.map((result) => result.maxDepth));
 
-    return node;
+    node.children = childResults.map((result) => result.node).filter(Boolean);
+
+    return { node, maxDepth: Math.max(currentDepth, maxChildDepth) };
 }
 
 
+function loadFamilyTreeChart() {
+    console.log("currentFamilyID   " + currentFamilyID);
+    
+    fetchFamilyMemberData('familyMembers', currentFamilyID)
+        .then((hierarchicalTree) => {
+            console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
+            // Now 'hierarchicalTree' contains your Firestore data in a hierarchical structure
 
-
-
-
-
-
-
-
-function loadFamilyTreeChart(treeData) {
-
-    fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
-    .then(({ hierarchicalTree }) => {
-          console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
-
+            // Call the function to generate the family tree chart with your family data
             generateFamilyTreeChart(hierarchicalTree);
             console.log("Family tree chart generated."); // Log when the chart is generated
-
-    })
-    .catch(error => console.error('Error fetching family member data:', error));
-
+            // You can use the hierarchical tree structure for rendering the chart
+        })
+        .catch((error) => {
+            console.error('Error fetching family member data:', error);
+        });
 }
-
