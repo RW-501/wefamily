@@ -2005,7 +2005,7 @@ currentFamilyID = familyTreeId;
             }
         } else {
             console.log('User document does not exist.');
-            window.location.href = "index.html";
+            window.location.href = "index";
         }
     } catch (error) {
         console.error('Error getting user document:', error);
@@ -2657,7 +2657,7 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 
 
         // Call the fetchFamilyTree function on page load
-   //     window.onload = fetchFamilyTree;
+        window.onload = fetchFamilyTree;
 
  
 function limitPostContent() {
