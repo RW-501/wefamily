@@ -337,7 +337,7 @@ function fetchFamilyMemberData(collectionName, treeID, treeData) {
                     const siblings = docData.sibling || [];
 
   const root = {
-            id: 'root',  // Change the root id to a fixed value 'root'
+            id: treeID,  // Change the root id to a fixed value 'root'
             name: treeData.name,
             children: [],
         };
@@ -444,10 +444,10 @@ console.log("????????????????????????????????????????     "+JSON.stringify(hiera
 }
 
 
-function buildFamilyTree(rootMember) {
+function buildFamilyTree(rootMember,treeData) {
     const root = {
-        id: 'root',
-        name: 'Family Tree 333',
+        id: treeID,
+            name: treeData.name,
         children: [],
     };
 
@@ -472,7 +472,7 @@ function loadFamilyTreeChart(treeData) {
 
     fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
     .then(({ hierarchicalTree }) => {
-        const familyTree = buildFamilyTree(hierarchicalTree.node.id);
+        const familyTree = buildFamilyTree(hierarchicalTree.node.id,treeData);
         console.log(JSON.stringify(familyTree, null, 4));
 
 generateFamilyTreeChart(familyTree);
