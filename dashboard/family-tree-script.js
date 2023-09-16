@@ -46,7 +46,7 @@ chartGroup  = svg.append("g");
 	    console.log("chartGroup   " + chartGroup);
 
 // Usage example to generate the desired structure
-const familyData = {
+ familyData = {
     id: 'root',
     name: 'Family Tree 333',
     children: [
