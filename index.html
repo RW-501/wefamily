@@ -1172,7 +1172,7 @@ async function checkLoggedInAndRedirect() {
     if (userDoc.exists) {
         const userData = userDoc.data();
 
-        if (userData.userName) {
+        if (userData.state) {
             let loginCount = userData.loginCount || 0;
 
             // Update the login count in Firestore
