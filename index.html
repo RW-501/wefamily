@@ -234,7 +234,9 @@ main {
     text-align: center;
     padding: 1rem 0;
 }
-      
+      .grid{
+display:grid;
+      }
     </style>
 </head>
 <body>
@@ -265,10 +267,12 @@ main {
           <h3>Login</h3>
                 <input type="email" id="login-email" placeholder="Email" required>
                 <input type="password" id="login-password" placeholder="Password" required>
+		    <div class="grid">
                 <button onclick="loginWithEmailPassword()">Login</button>
                 <button id="googleLogin" onclick="loginWithGoogle()">Login With Google</button>
 		    
                 <button onclick="loginAnonymously()">Login Anonymously</button>
+		    </div>
             </div>
 
 <!-- Create a new form for phone authentication -->
@@ -593,7 +597,7 @@ function checkLoggedInAndRedirect() {
 // Call the function to check and redirect
 checkLoggedInAndRedirect();
 
-toggleTab('login-email');
+toggleTab('login');
 	    
     </script>
 </body>
