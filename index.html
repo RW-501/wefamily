@@ -1111,31 +1111,34 @@ nextView();
 
 async function checkLoggedInAndRedirect() {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
-            const auth = firebase.auth();
+    const auth = firebase.auth();
+    
+    // Check if a user is currently signed in
+    if (userLoggedIn === 'true' && auth.currentUser) {
+        const userId = auth.currentUser.uid; // Get the user's ID
 
-    if (userLoggedIn === 'true' && auth) {
         const userDocRef = firestore.collection('users').doc(userId);
 
-      const userDoc = await userDocRef.get();
+        const userDoc = await userDocRef.get();
         if (userDoc.exists) {
-		            const userData = userDoc.data();
+            const userData = userDoc.data();
 
-  if (userData.data().userName && !userData.data().userName === "") {
-	               loginCount = userData.loginCount || 0;
-   // Update the login count in Firestore
-        await userDocRef.update({
-            loginCount: loginCount + 1,
-        });
-		window.location.href = `dashboard/?user=${userId}`;
-	    }else{
- currentView = 0;
+            if (userData.userName && userData.userName !== "") {
+                loginCount = userData.loginCount || 0;
+                
+                // Update the login count in Firestore
+                await userDocRef.update({
+                    loginCount: loginCount + 1,
+                });
 
- nextView(); 
-	    }
-       
+                window.location.href = `dashboard/?user=${userId}`;
+            } else {
+                currentView = 0;
+                nextView();
+            }
+        }
     }
 }
-	    }
 
 	    
 	    async function loginWithGoogle() {
