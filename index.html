@@ -1133,7 +1133,7 @@ async function checkLoggedInAndRedirect() {
 
                 window.location.href = `dashboard/?user=${userId}`;
             } else {
-                currentView = 0;
+                currentView = -1
                 nextView();
             }
         }
@@ -1177,7 +1177,7 @@ if(userCredential){
         });
 		window.location.href = `dashboard/?user=${userId}`;
 	    }else{
- currentView = 0;
+ currentView = -1;
 
  nextView(); 
 	    }
