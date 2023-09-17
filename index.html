@@ -44,12 +44,12 @@ body{
 #tab-container button{
     background-color: transparent;
 }
-.progress-container {
+#progress-container {
   width: 50%;
   background-color: #f3f3f3; /* Background color of the progress bar container */
 }
 
-.progress-bar {
+#progress-bar {
   width: 0; /* Initial width of the progress bar */
   height: 20px; /* Height of the progress bar */
   background-color: #a9a9a9; /* Color of the progress bar */
@@ -393,8 +393,8 @@ display:grid;
   <div id="welcomeDiv" class="container">
     <div id="progressBar">
    <div class="w20p">   <button id="previewbtn" onclick="prevView()">Previous</button></div>
-<div class="progress-container">
-  <div class="progress-bar" style="width: 0%;"></div>
+<div id="progress-container">
+  <div id="progress-bar" style="width: 0%;"></div>
 </div>
 	    
 	    <div class="w20p"><button id="nextviewbtn" onclick="nextView()">Next</button></div>
@@ -621,13 +621,14 @@ function skip() {
 	
 }
      document.getElementById('previewbtn').style.display = 'none';
+     document.getElementById('progress-container').style.display = 'none';
 
 
-	    
 function updateView() {
   const views = document.querySelectorAll('.view');
   views.forEach(view => view.style.display = 'none');
   document.getElementById(`view${currentView}`).style.display = 'grid';
+     document.getElementById('progress-container').style.display = 'block';
 
   // Update progress bar
   const progressBar = document.getElementById('progress-bar');
