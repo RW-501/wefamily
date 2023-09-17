@@ -456,7 +456,7 @@ display:grid;
 	      		 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+        <img class="uploaded-image" id="photoURL"  src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="profilePicInput" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
