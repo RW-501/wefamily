@@ -907,6 +907,7 @@ async function loginWithEmailPassword() {
 
         // Get the user's ID
         const userId = userCredential.user.uid;
+const userId = userId;
 
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
@@ -1129,7 +1130,7 @@ function checkLoggedInAndRedirect() {
         const displayName = user.displayName;
         const photoURL = user.photoURL;
         const email = user.email;
-
+const userId = userId;
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
 
@@ -1141,8 +1142,11 @@ function checkLoggedInAndRedirect() {
         if (userDoc.exists) {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
-		// Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `dashboard/?user=${userId}`;
+   // Update the login count in Firestore
+        await userDocRef.update({
+            loginCount: loginCount + 1,
+        });
+		window.location.href = `dashboard/?user=${userId}`;
         } else {
 
 
