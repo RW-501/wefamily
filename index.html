@@ -108,7 +108,8 @@ display:none;
 
 	 
 	 #view1 .image-container{
-border-radius: 0;
+overflow: hidden;
+    border: black solid;
 	 }
 #view1{
 
@@ -622,20 +623,17 @@ function updateView() {
 		  if (currentView === 1) {
      document.getElementById('mainContainer').style.display = 'none';
      document.getElementById('previewbtn').style.display = 'none';
-     document.getElementById('skipviewbtn').style.display = 'none';
      document.getElementById('nextviewbtn').style.display = 'block';
 
   }
 
 	  if (currentView === 2) {
      document.getElementById('previewbtn').style.display = 'block';
-     document.getElementById('skipviewbtn').style.display = 'block';
      document.getElementById('nextviewbtn').style.display = 'block';
 
   }
 	  if (currentView === 3) {
      document.getElementById('previewbtn').style.display = 'block';
-     document.getElementById('skipviewbtn').style.display = 'none';
      document.getElementById('nextviewbtn').style.display = 'none';
 
   }
