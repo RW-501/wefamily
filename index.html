@@ -1109,7 +1109,7 @@ nextView();
     }
 }
 
-function checkLoggedInAndRedirect() {
+async function checkLoggedInAndRedirect() {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
             const auth = firebase.auth();
 
