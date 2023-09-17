@@ -619,14 +619,15 @@ function updateView() {
      document.getElementById('skipviewbtn').style.display = 'block';
 
   }
-	  if (currentView === 2) {
+	  if (currentView === 3) {
      document.getElementById('previewbtn').style.display = 'block';
      document.getElementById('skipviewbtn').style.display = 'none';
+     document.getElementById('nextviewbtn').style.display = 'none';
 
   }
 
 
-  const countryDropdown = document.getElementById('country-dropdown');
+  const countryDropdown = document.getElementById('countryDropdown');
   const selectedCountry = countryDropdown.value;
 	
   const stateDropdown = document.getElementById('stateDropdown');
@@ -635,13 +636,18 @@ function updateView() {
   const username = document.getElementById('username').value;
   const birthday = document.getElementById('birthday').value;
   const city = document.getElementById('city').value;
-		  
+
+  const selectedCountryInput = countryDropdown.value;
+
+	    const selectedCountry = input(selectedCountry);
+
+	      
 if(currentView > 1 && !username){
 showMainMessage("Username is blank");
 }
 
-
-if(updateUserProfile() == true){
+let ready = updateUserProfile();
+if( ready === true){
         window.location.href = `dashboard/?user=${userId}`;
 
 }else{
