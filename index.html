@@ -627,19 +627,20 @@ function updateView() {
   }
 
 
-  const countryDropdown = document.getElementById('countryDropdown');
-  const selectedCountry = countryDropdown.value;
-	
-  const stateDropdown = document.getElementById('stateDropdown');
-  const selectedState = stateDropdown.value;
+const countryDropdown = document.getElementById('countryDropdown');
+const stateDropdown = document.getElementById('stateDropdown');
+const username = document.getElementById('username').value;
+const birthday = document.getElementById('birthday').value;
+const city = document.getElementById('city').value;
 
-  const username = document.getElementById('username').value;
-  const birthday = document.getElementById('birthday').value;
-  const city = document.getElementById('city').value;
 
-  const selectedCountryInput = countryDropdown.value;
 
-	    const selectedCountry = input(selectedCountry);
+const selectedCountry = input(countryDropdown.value);
+const selectedState = input(stateDropdown.value);
+const cleanedUsername = input(username);
+const cleanedBirthday = input(birthday);
+const cleanedCity = input(city);
+
 
 	      
 if(currentView > 1 && !username){
