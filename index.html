@@ -630,8 +630,9 @@ function updateView() {
   document.getElementById(`view${currentView}`).style.display = 'grid';
 
   // Update progress bar
-  const progressBar = document.getElementById('progress');
-  progressBar.value = currentView - 1;
+  const progressBar = document.getElementById('progress-bar');
+	let percent = currentView * 100 / 3;
+  progressBar.style.width  = percent+"%"
 
 		  if (currentView === 1) {
      document.getElementById('mainContainer').style.display = 'none';
