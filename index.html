@@ -337,7 +337,7 @@ async function loginWithEmailPassword() {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
         }else{
- showMainMessage('No User, Please Register);
+ showMainMessage('No User, Please Register');
         }
 
         // Update the login count in Firestore
