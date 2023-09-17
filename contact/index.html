@@ -258,6 +258,9 @@ const contactsCollection = db.collection('contacts');
 // Function to send contact information to Firestore
 function sendContactInfo(name, email, message) {
     // Add a new document to the "contacts" collection
+name = input(name);
+email = input(email);
+message = input(message);
 
 	if(!name || !message){
 return;
