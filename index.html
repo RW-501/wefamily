@@ -20,6 +20,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+	 .hidden{
+		 display:none;
+	 }
 .logo{
 	    list-style: none;
 }
@@ -265,7 +268,7 @@ display:grid;
             <button class="tab-button" onclick="toggleTab('login')">Login</button>
             <button class="tab-button" onclick="toggleTab('register')">Register</button>
 <!-- Add a new button for Phone Authentication -->
-<button class="tab-button" onclick="toggleTab('phone')">Login with Phone</button>
+<button class="tab-button hidden" onclick="toggleTab('phone')">Login with Phone</button>
         </div>
             <div id="login-form" class="active-tab">
           <h3>Login</h3>
@@ -280,7 +283,7 @@ display:grid;
             </div>
 
 <!-- Create a new form for phone authentication -->
-<div id="phone-form">
+<div class="hidden" id="phone-form">
     <h3>Login with Phone</h3>
     <input type="tel" id="phone-number" placeholder="Phone Number" required>
     <button onclick="loginWithPhoneAuthentication()">Send Verification Code</button>
