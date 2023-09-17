@@ -917,14 +917,20 @@ async function loginWithEmailPassword() {
         // Fetch the user document to get the current login count
         const userDoc = await userDocRef.get();
         if (userDoc.exists) {
-            const userData = userDoc.data();
-            loginCount = userData.loginCount || 0;
-  await userDocRef.update({
+		            const userData = userDoc.data();
+
+  if (userData.data().userTrees && !userData.data().userTrees === "") {
+	               loginCount = userData.loginCount || 0;
+   // Update the login count in Firestore
+        await userDocRef.update({
             loginCount: loginCount + 1,
         });
+		window.location.href = `dashboard/?user=${userId}`;
+	    }else{
+ currentView = 0;
 
-        // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `dashboard/?user=${userId}`;
+ nextView(); 
+	    }
 		
         }else{
  showMainMessage('No User, Please Register');
@@ -1152,12 +1158,21 @@ if(userCredential){
         const userDoc = await userDocRef.get();
         if (userDoc.exists) {
             const userData = userDoc.data();
-            loginCount = userData.loginCount || 0;
+
+            if (userDoc.data().userTrees && !userDoc.data().userTrees === "") {
+	               loginCount = userData.loginCount || 0;
    // Update the login count in Firestore
         await userDocRef.update({
             loginCount: loginCount + 1,
         });
 		window.location.href = `dashboard/?user=${userId}`;
+	    }else{
+ currentView = 0;
+
+ nextView(); 
+	    }
+		
+ 
         } else {
 
 
@@ -1206,10 +1221,16 @@ nextView();
 }
 
 
+
+
+
+
 // Call the function to check and redirect
 checkLoggedInAndRedirect();
 
 toggleTab('login');
+
+
 	    
     </script>
 
