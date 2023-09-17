@@ -358,7 +358,7 @@ async function loginWithEmailPassword() {
 
         return true;
     } catch (error) {
-        showMainMessage.error('Login failed:', error.message);
+        console.error('Login failed:', error.message);
         return false;
     }
 }
@@ -416,7 +416,7 @@ const currentDate = new Date();
         // Redirect to the dashboard with user ID as a query parameter
         window.location.href = `dashboard/?user=${userId}`;
     } catch (error) {
-        showMainMessage.error('Phone login failed:', error.message);
+        console.error('Phone login failed:', error.message);
     }
 }
 
@@ -592,7 +592,7 @@ function checkLoggedInAndRedirect() {
 
         return true;
     } catch (error) {
-        showMainMessage.error('Login with Google failed:', error.message);
+        console.error('Login with Google failed:', error.message);
         return false;
     }
 }
