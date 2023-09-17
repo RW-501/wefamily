@@ -44,12 +44,15 @@ body{
 #tab-container button{
     background-color: transparent;
 }
-progress {
-    background-color: #898989;
-    width: 40%;
-    margin: auto;
-    color: #979797;
+.progress-container {
+  width: 50%;
+  background-color: #f3f3f3; /* Background color of the progress bar container */
+}
 
+.progress-bar {
+  width: 0; /* Initial width of the progress bar */
+  height: 20px; /* Height of the progress bar */
+  background-color: #4caf50; /* Color of the progress bar */
 }
 select	, input[type="text" i],  input[type="date" i] {
     font-size: 1.5em;
@@ -390,8 +393,11 @@ display:grid;
   <div id="welcomeDiv" class="container">
     <div id="progressBar">
    <div class="w20p">   <button id="previewbtn" onclick="prevView()">Previous</button></div>
-      <progress id="progress" value="0" max="3"></progress>
-     <div class="w20p"><button id="nextviewbtn" onclick="nextView()">Next</button></div>
+<div class="progress-container">
+  <div class="progress-bar" style="width: 0%;"></div>
+</div>
+	    
+	    <div class="w20p"><button id="nextviewbtn" onclick="nextView()">Next</button></div>
     </div>
 
 
