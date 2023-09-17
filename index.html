@@ -1152,7 +1152,6 @@ async function checkLoggedInAndRedirect() {
 
         // Sign in with Google
         const userCredential = await firebase.auth().signInWithPopup(provider);
-if(userCredential){
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
 
@@ -1218,10 +1217,9 @@ imgElement.src = photoURL;
 imgElement.src = photoURL;
             currentView = 0;
             nextView();
-    }else{
-	    	    showMainMessage("Google failed, try again");
+    }
+	
 
-}
     } catch (error) {
 	    	    showMainMessage("Google failed, try again");
 
