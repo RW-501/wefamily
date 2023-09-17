@@ -349,8 +349,7 @@ display:grid;
 
 	  
    <div id="views">
-   <div id="mainContainer" > <div class="container">
-
+   <div id="mainContainer" > 
         <h1>Welcome to WeFamily</h1>
         <div id="auth-container">
         <div id="tab-container">
@@ -386,7 +385,6 @@ display:grid;
 
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -478,6 +476,7 @@ function nextView() {
     updateView();
   }
 	  if (currentView > 1) {
+     document.getElementById('mainContainer').style.display = 'none';
      document.getElementById('previewbtn').style.display = 'none';
 
   }
@@ -496,7 +495,10 @@ function skip() {
     updateView();
   }
 }
+     document.getElementById('previewbtn').style.display = 'none';
 
+
+	    
 function updateView() {
   const views = document.querySelectorAll('.view');
   views.forEach(view => view.style.display = 'none');
@@ -519,7 +521,6 @@ async function updateUserProfile(userId) {
   const state = document.getElementById('state').value;
 
   // Use the retrieved values as needed
-  console.log('Selected Country:', selectedCountry);
   console.log('Username:', username);
   console.log('Birthday:', birthday);
   console.log('City:', city);
