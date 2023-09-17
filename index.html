@@ -541,7 +541,7 @@ display:grid;
 
 	      </diiv>
 	      
-        <button  id="skipviewbtn" onclick=" updateUserProfile(userId)">Skip</button>
+        <button  id="skipviewbtn" onclick=" updateUserProfile()">Done</button>
       </div>
 
    </div>
@@ -636,12 +636,10 @@ function updateView() {
   const birthday = document.getElementById('birthday').value;
   const city = document.getElementById('city').value;
 		  
-if(!username){
+if(currentView > 1 && !username){
 showMainMessage("Username is blank");
 }
-if(!selectedState){
-showMainMessage("State is blank");
-}
+
 
 if(updateUserProfile() == true){
         window.location.href = `dashboard/?user=${userId}`;
