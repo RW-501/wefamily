@@ -335,7 +335,22 @@ display:grid;
     </header>
  <!-- Photo area filler -->
     <div id="photo-area"></div>
-            <div id="mainContainer" > <div class="container">
+         
+
+  <div id="welcomeDiv" class="container">
+    <div id="progressBar">
+      <button id="previewbtn" onclick="prevView()">Previous</button>
+      <progress id="progress" value="0" max="3"></progress>
+      <button onclick="nextView()">Next</button>
+    </div>
+
+
+
+
+
+	  
+   <div id="views">
+   <div id="mainContainer" > <div class="container">
 
         <h1>Welcome to WeFamily</h1>
         <div id="auth-container">
@@ -375,14 +390,9 @@ display:grid;
     </div>
     </div>
 
-  <div id="welcomeDiv" class="container">
-    <div id="progressBar">
-      <button onclick="prevView()">Previous</button>
-      <progress id="progress" value="0" max="3"></progress>
-      <button onclick="nextView()">Next</button>
-    </div>
 
-   <div id="views">
+
+	   
       <div id="view1" class="view">
         <h2>Personalize Your Profile</h2>
         <p>Add a personal touch to your profile by uploading a profile picture and setting a unique username. Make your presence on our platform uniquely you.</p>
@@ -467,6 +477,10 @@ function nextView() {
   if (currentView < 3) {
     currentView++;
     updateView();
+  }
+	  if (currentView > 1) {
+     document.getElementById('previewbtn').style.display = 'none';
+
   }
 }
 
@@ -805,7 +819,6 @@ const currentDate = new Date();
             // Add more user-related data here
         });
 
-        // Redirect to the dashboard with user ID as a query parameter
         window.location.href = `dashboard/?user=${userId}`;
     } catch (error) {
         console.error('Phone login failed:', error.message);
@@ -891,8 +904,9 @@ async function register() {
         });
 
         // Redirect to the dashboard page with user ID as a query parameter
-        window.location.href = `dashboard/?user=${userCredential.user.uid}`;
-
+      //  window.location.href = `dashboard/?user=${userCredential.user.uid}`;
+    document.getElementById('mainContainer').style.display = 'none';
+nextView();
         return true;
     } catch (error) {
         console.error('Registration failed:', error.message);
@@ -951,6 +965,8 @@ function checkLoggedInAndRedirect() {
         if (userDoc.exists) {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
+		// Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `dashboard/?user=${userId}`;
         } else {
 
 
@@ -980,9 +996,9 @@ imgElement.src = imageUrl;
         await userDocRef.update({
             loginCount: loginCount + 1,
         });
-
-        // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `dashboard/?user=${userId}`;
+    document.getElementById('mainContainer').style.display = 'none';
+nextView();
+        
 
         return true;
     } catch (error) {
