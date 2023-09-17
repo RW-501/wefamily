@@ -658,15 +658,6 @@ const cleanedCity = input(city);
 if(currentView > 1 && username === ""){
 showMainMessage("Username is blank");
 }
-
-let ready = updateUserProfile();
-if( ready === true){
-        window.location.href = `dashboard/?user=${userId}`;
-
-}else{
-showMainMessage("Missing Info");
-
-}
 	    
 }
 
@@ -687,6 +678,10 @@ async function updateUserProfile(userId) {
   console.log('Birthday:', birthday);
   console.log('City:', city);
 
+	if(username === "" || stateDropdown === ""){
+		showMainMessage("Missing Info");
+		return;
+	}
 	    
 const selectedFile = document.getElementById('profilePicInput').files[0]; 
 					     // Get the selected file
@@ -702,9 +697,12 @@ if(!selectedFile){
             userID: userID
         });
         console.log('User profile updated successfully.');
-        return true;
+        window.location.href = `dashboard/?user=${userId}`;
+
     } catch (error) {
         console.error('Error updating user profile:', error);
+
+
         return false;
     }
 }else{
@@ -727,7 +725,8 @@ if(!selectedFile){
             userID: userID
 	});
         console.log('User profile updated successfully.');
-        return true;
+	        window.location.href = `dashboard/?user=${userId}`;
+
     } catch (error) {
         console.error('Error updating user profile:', error);
         return false;
