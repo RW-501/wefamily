@@ -244,6 +244,36 @@ display:grid;
 	 .grid button{
 		     margin: 2%;
 	 }
+
+
+
+	
+	.image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+		    margin: auto;
+        }
+
+        .uploaded-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-input {
+            display: none; /* Hide the file input */
+        }
+
+
+
+	 
     </style>
 </head>
 <body>
@@ -299,7 +329,80 @@ display:grid;
         </div>
     </div>
     </div>
-    
+
+  <div id="welcomeDiv">
+    <div id="progressBar">
+      <button onclick="prevView()">Previous</button>
+      <progress id="progress" value="0" max="3"></progress>
+      <button onclick="nextView()">Next</button>
+    </div>
+
+   <div id="views">
+      <div id="view1" class="view">
+        <h2>Personalize Your Profile</h2>
+        <p>Add a personal touch to your profile by uploading a profile picture and setting a unique username. Make your presence on our platform uniquely you.</p>
+
+	      		 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="profilePicInput" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+	      
+	      
+        <input type="text" id="username" placeholder="Enter your username">
+        <button onclick="skip()">Next</button>
+      </div>
+
+      <div id="view2" class="view">
+        <h2>Celebrate Special Moments</h2>
+        <p>Share your birthday with us, and let's celebrate the milestones of your life. We believe in commemorating each day that made you who you are.</p>
+        <input type="date" id="birthday">
+        <button onclick="skip()">Skip</button>
+      </div>
+
+      <div id="view3" class="view">
+        <h2>Connect Locally and Globally</h2>
+        <p>Tell us where you are! Connect with fellow users near you or from distant places. Our community spans the globe, and we'd love for you to be a part of it.</p>
+        <input type="text" id="city" placeholder="City">
+        <input type="text" id="state" placeholder="State">
+
+	<select id="countryDropdown">
+  <option value="US" selected>United States</option>
+  <option value="CA">Canada</option>
+  <option value="AU">Australia</option>
+  <option value="GB">United Kingdom</option>
+  <option value="DE">Germany</option>
+  <option value="FR">France</option>
+  <option value="JP">Japan</option>
+  <option value="IT">Italy</option>
+  <option value="ES">Spain</option>
+  <option value="BR">Brazil</option>
+  <option value="IN">India</option>
+  <option value="CN">China</option>
+  <option value="KR">South Korea</option>
+  <option value="MX">Mexico</option>
+  <option value="RU">Russia</option>
+  <option value="ZA">South Africa</option>
+  <option value="AR">Argentina</option>
+  <option value="NZ">New Zealand</option>
+  <option value="NL">Netherlands</option>
+  <option value="SE">Sweden</option>
+  <!-- Add more country options here -->
+</select>
+
+
+	      
+        <button onclick=" updateUserProfile(userId)">Skip</button>
+      </div>
+
+
+
+
+
+
+	
     <div class="mainMessage-box" id="mainMessageBox">
   <div class="mainMessage-content">
     <p id="mainMessageText">Your message here</p>
@@ -307,6 +410,246 @@ display:grid;
   </div>
 </div>
     <script>
+
+
+
+
+
+let currentView = 1;
+
+function nextView() {
+  if (currentView < 3) {
+    currentView++;
+    updateView();
+  }
+}
+
+function prevView() {
+  if (currentView > 1) {
+    currentView--;
+    updateView();
+  }
+}
+
+function skip() {
+  if (currentView < 3) {
+    currentView++;
+    updateView();
+  }
+}
+
+function updateView() {
+  const views = document.querySelectorAll('.view');
+  views.forEach(view => view.style.display = 'none');
+  document.getElementById(`view${currentView}`).style.display = 'block';
+
+  // Update progress bar
+  const progressBar = document.getElementById('progress');
+  progressBar.value = currentView - 1;
+}
+
+
+async function updateUserProfile(userId) {
+
+  const countryDropdown = document.getElementById('country-dropdown');
+  const selectedCountry = countryDropdown.value;
+
+  const username = document.getElementById('username').value;
+  const birthday = document.getElementById('birthday').value;
+  const city = document.getElementById('city').value;
+  const state = document.getElementById('state').value;
+
+  // Use the retrieved values as needed
+  console.log('Selected Country:', selectedCountry);
+  console.log('Username:', username);
+  console.log('Birthday:', birthday);
+  console.log('City:', city);
+  console.log('State:', state);
+
+if(!username){
+showMainMessage("Username is blank");
+	ruturn;
+}
+if(!state){
+showMainMessage("State is blank");
+	ruturn;
+}
+	    
+const selectedFile = document.getElementById('profilePicInput').files[0]; 
+					     // Get the selected file
+
+if(!selectedFile){
+         // Update the family tree document with the photo URL
+                                          try {
+        await firestore.collection('users').doc(userId).update({
+            userName: username,
+            state: state,
+            city: city,
+            country: selectedCountry,
+            userID: userID
+        });
+        console.log('User profile updated successfully.');
+        return true;
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        return false;
+    }
+}else{
+					     
+                        const storagePath = 'profilePicInput'; // Change the storage path as needed
+                        uploadImageToStorage(
+                            selectedFile,
+                            storagePath,
+                            (downloadURL) => {
+                                console.log('Image uploaded successfully:', downloadURL);
+                                // Handle success, e.g., save the downloadURL to your database
+
+                                try {
+        await firestore.collection('users').doc(userId).update({
+               userName: username,
+            photo: downloadURL,
+            state: state,
+            city: city,
+            country: selectedCountry,
+            userID: userID
+	});
+        console.log('User profile updated successfully.');
+        return true;
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        return false;
+    }
+                                })
+                                .then(() => {
+                                    console.log('Photo URL added to family tree document.');
+
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+
+	
+
+}
+
+}
+
+	    
+
+	    
+//showMainMessage("message");
+// Function to open the file input dialog when the image container is clicked
+function openFileInput(container) {
+    container.querySelector('.file-input').click();
+}
+
+// Function to handle file upload and display the selected image
+function handleFileUpload(input) {
+    const file = input.files[0];
+
+    if (file) {
+        // Check file type and size here (you can use the uploadImageToStorage function from earlier)
+        // For simplicity, we'll just display the selected image
+        const uploadedImage = input.previousElementSibling;
+        uploadedImage.src = URL.createObjectURL(file);
+    }
+}
+
+	    
+// Reusable function to upload an image to Firebase Storage
+function uploadImageToStorage(file, storagePath, successCallback, errorCallback) {
+  // Check if a file was selected
+  if (!file) {
+    if (errorCallback) errorCallback('Please select an image file.');
+    return;
+  }
+
+  // Check file type (allow only images)
+  if (!file.type.startsWith('image/')) {
+    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    return;
+  }
+
+  // Check file size (limit to 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    if (errorCallback) errorCallback('Image size must be less than 5MB.');
+    return;
+  }
+
+  // Create a reference to Firebase Storage
+  const storageRef = firebase.storage().ref();
+
+  // Generate a unique filename for the image
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
+
+  // Create a reference to the storage location
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
+
+  // Resize the image to 500x500 pixels (using a library like HTMLCanvasElement)
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  img.onload = () => {
+
+	  
+// Max width or height for the image
+const maxSize = 500;
+
+// Calculate new dimensions while maintaining aspect ratio
+let newWidth, newHeight;
+if (img.width > img.height) {
+  newWidth = maxSize;
+  newHeight = (img.height / img.width) * maxSize;
+} else {
+  newHeight = maxSize;
+  newWidth = (img.width / img.height) * maxSize;
+}
+
+
+// Resize the image using canvas
+canvas.width = newWidth;
+canvas.height = newHeight;
+ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+
+    // Convert the resized image to a Blob
+    canvas.toBlob((blob) => {
+      // Upload the Blob to Firebase Storage
+      const uploadTask = imageRef.put(blob);
+
+      // Monitor the upload progress
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload progress: ${progress}%`);
+        },
+        (error) => {
+          console.error('Upload error:', error);
+          if (errorCallback) errorCallback('Image upload failed.');
+        },
+        () => {
+          // Upload completed successfully, get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Image URL:', downloadURL);
+            if (successCallback) successCallback(downloadURL);
+          });
+        }
+      );
+    }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
+  };
+
+  // Load the selected image
+  img.src = URL.createObjectURL(file);
+}
+
+
+
+
+	    
+	    
         // JavaScript functions for login and registration
 function toggleTab(tabName) {
     // Hide all forms
@@ -581,7 +924,9 @@ function checkLoggedInAndRedirect() {
 		country:"USA",
             // Add more user-related data here
         });
-		
+		const imgElement = document.getElementById(photoURL);
+
+imgElement.src = imageUrl;
 	
 	}
 
