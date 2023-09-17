@@ -67,9 +67,9 @@ function checkUserLogin() {
     return new Promise((resolve, reject) => {
         const userLoggedIn = localStorage.getItem('userLoggedIn');
         console.log('userLoggedIn', userLoggedIn);
-
-        if (userLoggedIn === 'true') {
             const auth = firebase.auth();
+
+        if (userLoggedIn === 'true' && auth ) {
 
             const unsubscribe = auth.onAuthStateChanged((user) => {
                 unsubscribe(); // Unsubscribe to avoid memory leaks
