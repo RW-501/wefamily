@@ -1084,7 +1084,7 @@ async function register() {
 nextView();
         return true;
     } catch (error) {
-	    showMainMessage("Registration failed");
+	    showMainMessage(error.message);
 
         console.error('Registration failed:', error.message);
         return false;
