@@ -924,7 +924,6 @@ async function loginWithEmailPassword() {
 
         // Sign in the user
         const userCredential = await auth.signInWithEmailAndPassword(email, password);
-
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
 
