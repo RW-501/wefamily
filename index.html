@@ -439,6 +439,7 @@ display:grid;
                 <input type="email" id="register-email" placeholder="Email" required>
                 <input type="password" id="register-password" placeholder="Password" required>
                 <button onclick="register()">Register</button> 
+                <button id="googleLogin" onclick="loginWithGoogle()">Login With Google</button>
 
             </div>
         </div>
@@ -932,6 +933,8 @@ async function loginWithEmailPassword() {
         return true;
     } catch (error) {
         console.error('Login failed:', error.message);
+	    showMainMessage("Login failed");
+
         return false;
     }
 }
@@ -1076,6 +1079,8 @@ async function register() {
 nextView();
         return true;
     } catch (error) {
+	    showMainMessage("Registration failed");
+
         console.error('Registration failed:', error.message);
         return false;
     }
@@ -1169,6 +1174,8 @@ nextView();
 
         return true;
     } catch (error) {
+	    	    showMainMessage("Google failed");
+
         console.error('Login with Google failed:', error.message);
         return false;
     }
