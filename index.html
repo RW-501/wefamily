@@ -939,10 +939,7 @@ async function loginWithEmailPassword() {
 	    
 await updateLoginCountAndRedirect(userDocRef, userId);
 
-		
-        }else{
- showMainMessage('No User, Please Register');
-        }
+	
 
         // Update the login count in Firestore
         await userDocRef.update({
@@ -1172,10 +1169,14 @@ if(userCredential){
         // Get the current login count
         let loginCount = 0;
 
-        // Fetch the user document to get the current login count
-  await updateLoginCountAndRedirect(userDocRef, userId);
+            await userDocRef.update({
+                loginCount: loginCount + 1,
+            });
 
-		window.location.href = `dashboard/?user=${userId}`;
+            setTimeout(() => {
+                window.location.href = `dashboard/?user=${userId}`;
+            }, 3000); // 3-second timeout
+
 	    }else{
  currentView = -1;
 
