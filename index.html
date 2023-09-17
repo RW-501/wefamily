@@ -65,8 +65,15 @@ display:none;
 	 #view1 .image-container{
 border-radius: 0;
 	 }
+#view1{
 
+}
 	 
+	 #view2{
+
+	 }
+	 #iew3{
+	 }
 	 .hidden{
 		 display:none;
 	 }
@@ -517,7 +524,7 @@ function skip() {
 function updateView() {
   const views = document.querySelectorAll('.view');
   views.forEach(view => view.style.display = 'none');
-  document.getElementById(`view${currentView}`).style.display = 'block';
+  document.getElementById(`view${currentView}`).style.display = 'grid';
 
   // Update progress bar
   const progressBar = document.getElementById('progress');
