@@ -919,7 +919,7 @@ async function loginWithEmailPassword() {
         if (userDoc.exists) {
 		            const userData = userDoc.data();
 
-  if (userData.data().userTrees && !userData.data().userTrees === "") {
+  if (userData.data().userName && !userData.data().userName === "") {
 	               loginCount = userData.loginCount || 0;
    // Update the login count in Firestore
         await userDocRef.update({
@@ -986,7 +986,7 @@ const currentDate = new Date();
         const userId = user.uid;
         await firestore.collection('users').doc(userId).set({
             phoneNumber: user.phoneNumber,
-                userName: "Family Member", 
+                userName: "", 
                 loginCount: 1, // Initialize login count to 1
                 email: "",
             userTrees: [],
@@ -1072,7 +1072,7 @@ if(userId){
 
         // Create a user document in Firestore with the user's UID
         await firestore.collection('users').doc(userCredential.user.uid).set({
-                userName: "Family Member", 
+                userName: "", 
                 loginCount: 1, // Initialize login count to 1
                 email: email,
             userTrees: [],
@@ -1159,7 +1159,7 @@ if(userCredential){
         if (userDoc.exists) {
             const userData = userDoc.data();
 
-            if (userDoc.data().userTrees && !userDoc.data().userTrees === "") {
+            if (userDoc.data().state && !userDoc.data().state === "") {
 	               loginCount = userData.loginCount || 0;
    // Update the login count in Firestore
         await userDocRef.update({
