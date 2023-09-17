@@ -877,7 +877,30 @@ ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
 
 
-	    
+	    async function updateLoginCountAndRedirect(userDocRef, userId) {
+    const userDoc = await userDocRef.get();
+    if (userDoc.exists) {
+        const userData = userDoc.data();
+
+        if (userData.userName && userData.userName !== "") {
+            let loginCount = userData.loginCount || 0;
+
+            // Update the login count in Firestore
+            await userDocRef.update({
+                loginCount: loginCount + 1,
+            });
+
+            setTimeout(() => {
+                window.location.href = `dashboard/?user=${userId}`;
+            }, 3000); // 3-second timeout
+
+        } else {
+            currentView = 0;
+            nextView();
+        }
+    }
+}
+
 	    
         // JavaScript functions for login and registration
 function toggleTab(tabName) {
@@ -913,24 +936,9 @@ async function loginWithEmailPassword() {
 
         // Get the current login count
         let loginCount = 0;
+	    
+await updateLoginCountAndRedirect(userDocRef, userId);
 
-        // Fetch the user document to get the current login count
-        const userDoc = await userDocRef.get();
-        if (userDoc.exists) {
-		            const userData = userDoc.data();
-
-  if (userData.data().userName && !userData.data().userName === "") {
-	               loginCount = userData.loginCount || 0;
-   // Update the login count in Firestore
-        await userDocRef.update({
-            loginCount: loginCount + 1,
-        });
-		window.location.href = `dashboard/?user=${userId}`;
-	    }else{
- currentView = 0;
-
- nextView(); 
-	    }
 		
         }else{
  showMainMessage('No User, Please Register');
@@ -1165,16 +1173,8 @@ if(userCredential){
         let loginCount = 0;
 
         // Fetch the user document to get the current login count
-        const userDoc = await userDocRef.get();
-        if (userDoc.exists) {
-            const userData = userDoc.data();
+  await updateLoginCountAndRedirect(userDocRef, userId);
 
-            if (userDoc.data().state && !userDoc.data().state === "") {
-	               loginCount = userData.loginCount || 0;
-   // Update the login count in Firestore
-        await userDocRef.update({
-            loginCount: loginCount + 1,
-        });
 		window.location.href = `dashboard/?user=${userId}`;
 	    }else{
  currentView = -1;
