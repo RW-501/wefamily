@@ -907,7 +907,6 @@ async function loginWithEmailPassword() {
 
         // Get the user's ID
         const userId = userCredential.user.uid;
-const userId = userId;
 
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
@@ -920,6 +919,13 @@ const userId = userId;
         if (userDoc.exists) {
             const userData = userDoc.data();
             loginCount = userData.loginCount || 0;
+  await userDocRef.update({
+            loginCount: loginCount + 1,
+        });
+
+        // Redirect to the dashboard with user ID as a query parameter
+        window.location.href = `dashboard/?user=${userId}`;
+		
         }else{
  showMainMessage('No User, Please Register');
         }
@@ -928,9 +934,7 @@ const userId = userId;
         await userDocRef.update({
             loginCount: loginCount + 1,
         });
-
-        // Redirect to the dashboard with user ID as a query parameter
-        window.location.href = `dashboard/?user=${userId}`;
+	    
 
         return true;
     } catch (error) {
@@ -1056,7 +1060,7 @@ async function register() {
         // Create a new user in Firebase Authentication
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const userId = userCredential.user.uid;
-
+if(userId){
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
 
@@ -1081,7 +1085,15 @@ async function register() {
         // Redirect to the dashboard page with user ID as a query parameter
       //  window.location.href = `dashboard/?user=${userCredential.user.uid}`;
     document.getElementById('mainContainer').style.display = 'none';
+
 nextView();
+		        return true;
+
+}else{
+	    showMainMessage('Registration failed');
+
+}
+	    
         return true;
     } catch (error) {
 	    showMainMessage(error.message);
@@ -1120,7 +1132,7 @@ function checkLoggedInAndRedirect() {
 
         // Sign in with Google
         const userCredential = await firebase.auth().signInWithPopup(provider);
-
+if(userCredential){
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
 
@@ -1130,7 +1142,6 @@ function checkLoggedInAndRedirect() {
         const displayName = user.displayName;
         const photoURL = user.photoURL;
         const email = user.email;
-const userId = userId;
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
 
@@ -1182,6 +1193,10 @@ nextView();
         
 
         return true;
+}else{
+	    	    showMainMessage("Google failed, try again");
+
+}
     } catch (error) {
 	    	    showMainMessage("Google failed, try again");
 
