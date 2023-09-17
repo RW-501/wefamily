@@ -1169,6 +1169,15 @@ if(userCredential){
         // Get the current login count
         let loginCount = 0;
 
+
+  const userDoc = await userDocRef.get();
+    if (userDoc.exists) {
+        const userData = userDoc.data();
+
+        if (userData.userName) {
+            let loginCount = userData.loginCount || 0;
+
+            // Update the login count in Firestore
             await userDocRef.update({
                 loginCount: loginCount + 1,
             });
@@ -1177,17 +1186,19 @@ if(userCredential){
                 window.location.href = `dashboard/?user=${userId}`;
             }, 3000); // 3-second timeout
 
-	    }else{
- currentView = -1;
-
- nextView(); 
-	    }
 		
- 
         } else {
 
+		if( userData.userName !== ""){
+			const imgElement = document.getElementById(photoURL);
+imgElement.src = photoURL;
+            currentView = 0;
+            nextView();
+		}
+        }
+    }else{
 
-        // Create a user document in Firestore with the user's UID
+      // Create a user document in Firestore with the user's UID
         await firestore.collection('users').doc(userCredential.user.uid).set({
                 userName: displayName, 
                 loginCount: 1, // Initialize login count to 1
@@ -1204,22 +1215,11 @@ if(userCredential){
 		country:"USA",
             // Add more user-related data here
         });
-		const imgElement = document.getElementById(photoURL);
-
+			const imgElement = document.getElementById(photoURL);
 imgElement.src = photoURL;
-	
-	}
-
-        // Update the login count in Firestore
-        await userDocRef.update({
-            loginCount: loginCount + 1,
-        });
-    document.getElementById('mainContainer').style.display = 'none';
-nextView();
-        
-
-        return true;
-}else{
+            currentView = 0;
+            nextView();
+    }else{
 	    	    showMainMessage("Google failed, try again");
 
 }
