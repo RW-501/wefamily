@@ -983,6 +983,7 @@ const currentDate = new Date();
             signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
 		birthday: '',
 		photo: photoURL,
+		userID: userId,
 		state:'',
 		city:'',
 		country:"USA",
@@ -1053,6 +1054,7 @@ async function register() {
 
         // Create a new user in Firebase Authentication
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const userId = userCredential.user.uid;
 
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
@@ -1068,6 +1070,7 @@ async function register() {
                  signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
 		birthday: '',
 		photo: photoURL,
+		userID: userId,
 		state:'',
 		city:'',
 		country:"USA",
@@ -1154,6 +1157,7 @@ function checkLoggedInAndRedirect() {
             signUpDate:  firebase.firestore.FieldValue.serverTimestamp(), // Add a timestamp,
 		birthday: '',
 		photo: photoURL,
+	userID: userId,
 		state:'',
 		city:'',
 		country:"USA",
