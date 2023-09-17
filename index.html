@@ -500,14 +500,14 @@ display:grid;
 
 
 
-let currentView = 1;
+let currentView = 0;
 
 function nextView() {
   if (currentView < 3) {
     currentView++;
     updateView();
   }
-	  if (currentView > 1) {
+	  if (currentView > 0) {
      document.getElementById('mainContainer').style.display = 'none';
      document.getElementById('previewbtn').style.display = 'none';
 
