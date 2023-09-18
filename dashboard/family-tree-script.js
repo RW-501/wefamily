@@ -190,18 +190,18 @@ nodeGroup.append("circle")
 
 
 // Append images to nodes
-// Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
+    .attr("x", d => -imageWidth / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
+
 
 
 
@@ -216,22 +216,36 @@ const scale = 1;
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
     
 // Define the zoom function
- function zoomed(event) {
-        // Apply the zoom transformation to the chartGroup
-        chartGroup.attr("transform", event.transform);
+function zoomed(event) {
+    currentScale = event.transform.k;
 
-        // Apply the same zoom transformation to the link lines
-        chartGroup.selectAll("path.link")
-            .attr("d", d => {
-                // Generate the updated path data using the link generator
-                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-                return linkGenerator({ source, target });
-            });
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
     }
+
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / currentScale);
+
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / currentScale);
+
+    chartGroup.selectAll("image")
+        .attr("x", d => -imageWidth / 2 / currentScale)
+        .attr("y", d => -imageHeight / 2 / currentScale)
+        .attr("width", imageWidth / currentScale)
+        .attr("height", imageHeight / currentScale);
+
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / currentScale);
+
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+            const source = { x: d.source.x, y: d.source.y * currentScale };
+            const target = { x: d.target.x, y: d.target.y * currentScale };
+            return linkGenerator({ source, target });
+        });
 }
-
-
 
 // Create the zoom function
 function applyZoom(scale) {
