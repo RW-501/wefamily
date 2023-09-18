@@ -145,21 +145,7 @@ chartGroup.selectAll("path")
 
     
 
-// Add click event listener to nodes
-chartGroup.selectAll("circle")
-    .data(root.descendants())
-    .enter()
-    .append("circle")
-    .attr("class", "circle")
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
-    .attr("r", 20) // Radius of circles
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked circle Data:", d.data);
-showMemberPopup(d.data);
 
-    });
 
 let memberData = root.descendants().children;
 	    console.log('memberData: ', memberData);
@@ -204,7 +190,21 @@ showMemberPopup(d.data);
 
 	  }
 
-	      
+	// Add click event listener to nodes
+chartGroup.selectAll("circle")
+    .data(root.descendants())
+    .enter()
+    .append("circle")
+    .attr("class", "circle")
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y)
+    .attr("r", 20) // Radius of circles
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked circle Data:", d.data);
+showMemberPopup(d.data);
+
+    });      
     const imageWidth = 100;
 
     const imageHeight = 100;
@@ -304,13 +304,12 @@ chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
     // Populate image and text
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberInfo').value = member.location;
-    document.getElementById('memberName').textContent = `${member.first_name} ${member.last_name}`;
-
+    document.getElementById('memberName').textContent = `${member.name} `;
+      
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
-        'Member Name': `${member.first_name} ${member.last_name}`,
-        'Private': member.private,
+        'Member Name': `${member.name}`,
         'Location': member.location,
         'Birthdate': member.birthdate,
         'Deceased Date': member.deceaseddate,
