@@ -526,7 +526,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
 
 			
-                    const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
 
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
 const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
