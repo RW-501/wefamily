@@ -1829,17 +1829,20 @@ window.onclick = function(event) {
 	    
 async function createFamilyTree() {
   try {
+    // Retrieve family tree details from user input
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
     const treeDescription = document.getElementById("tree_description").value;
     const publicBool = document.getElementById("tree_public").value;
     const familyCode = document.getElementById("tree_code").value;
 
+    // Check if required fields are filled
     if (!treeName || !treeLocation || !familyCode || !userID) {
       showMainMessage("Please fill in all required fields.");
       return;
     }
 
+    // Check if a family tree with the same familyCode exists
     const existingTree = await firestore
       .collection('familyTrees')
       .where('familyCode', '==', familyCode)
@@ -1852,15 +1855,14 @@ async function createFamilyTree() {
 
     let downloadURL = '';  // Initialize downloadURL
 
+    // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
       const storagePath = 'family_Tree_Image';
-                        uploadImageToStorage(
-                            selectedFile,
-                            storagePath,
-                            (downloadURL) => {
+      downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+    }
 
-
+    // Create family tree data object
     const familyTreeData = {
       name: treeName,
       location: [treeLocation],
@@ -1874,34 +1876,31 @@ async function createFamilyTree() {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
+    // Add family tree data to Firestore
     const docRef = await firestore.collection('familyTrees').add(familyTreeData);
     currentFamilyID = docRef.id;
 
-
-			    })
-
-	
-
-
+    // Update family tree document with treeID and photo URL
     await firestore.collection('familyTrees').doc(currentFamilyID).update({
       treeID: currentFamilyID,
       photo: downloadURL,
     });
 
+    // Retrieve user information and update UI
     const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
     const docData = userDoc.data();
     document.getElementById("member-first_name").value = docData.userName;
     document.getElementById("member-birthdate").value = docData.birthday;
     document.getElementById("member_Image").src = docData.photo;
+
+    // Close modal and display success message
     closePopup();
     showAddMemberModal();
-
   } catch (error) {
     console.error('Error creating family tree:', error);
   }
 }
-
 
 
 
