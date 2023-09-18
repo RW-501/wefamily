@@ -1872,8 +1872,8 @@ async function createFamilyTree() {
     const docRef = await firestore.collection('familyTrees').add(familyTreeData);
     currentFamilyID = docRef.id;
 
-	  const userDocRef;
-    // Upload family tree image if selected
+
+	      // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
       const storagePath = 'family_Tree_Image';
