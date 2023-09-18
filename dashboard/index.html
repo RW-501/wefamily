@@ -1829,8 +1829,9 @@ window.onclick = function(event) {
 	    
 async function createFamilyTree() {
   try {
-	    const button = document.getElementById('createBTN');
-  button.disabled = true;
+    const button = document.getElementById('createBTN');
+    button.disabled = true;
+	  
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
     const treeDescription = document.getElementById("tree_description").value;
@@ -1855,10 +1856,7 @@ async function createFamilyTree() {
     }
 
 
-    if (!currentFamilyID) {
-      showMainMessage("No currentFamilyID");
-      return Promise.reject("No currentFamilyID ");
-    }
+   
 
 	    
     let downloadURL = '';  // Initialize downloadURL
@@ -1869,38 +1867,48 @@ async function createFamilyTree() {
       const storagePath = 'family_Tree_Image';
       downloadURL = await uploadImageToStorage(selectedFile, storagePath);
 
-      // Update family tree data with photo and treeID
-      const familyTreeData = {
-        name: treeName,
-        location: [treeLocation],
-        description: treeDescription,
-        adminID: userID,
-        public: publicBool,
-        familyCode: familyCode,
-        treeID: currentFamilyID,
-        root: '',
-        photo: downloadURL,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      };
+        const docRef = await firestore.collection('familyTrees').add({
+            name: treeName,
+            location: [treeLocation],
+            description: treeDescription,
+            adminID: userID,
+            public: publicBool,
+            familyCode: familyCode,
+            treeID: '',  // Placeholder for now
+            root: '',
+            photo: downloadURL,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
 
-      await firestore.collection('familyTrees').doc(currentFamilyID).set(familyTreeData);
+        // Update the family tree data with the generated document ID
+        const generatedTreeID = docRef.id;
+        await docRef.update({ treeID: generatedTreeID });
+
+        // Assign the generated tree ID to currentFamilyID
+        currentFamilyID = generatedTreeID;
+	    
     } else {
-      // Update family tree data without photo
-      const familyTreeData = {
-        name: treeName,
-        location: [treeLocation],
-        description: treeDescription,
-        adminID: userID,
-        public: publicBool,
-        familyCode: familyCode,
-        treeID: currentFamilyID,
-        root: '',
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      };
+        const docRef = await firestore.collection('familyTrees').add({
+            name: treeName,
+            location: [treeLocation],
+            description: treeDescription,
+            adminID: userID,
+            public: publicBool,
+            familyCode: familyCode,
+            treeID: '',  // Placeholder for now
+            root: '',
+            photo: '',
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
 
-      await firestore.collection('familyTrees').doc(currentFamilyID).set(familyTreeData);
-    }
+        // Update the family tree data with the generated document ID
+        const generatedTreeID = docRef.id;
+        await docRef.update({ treeID: generatedTreeID });
 
+        // Assign the generated tree ID to currentFamilyID
+        currentFamilyID = generatedTreeID;
+
+	    
     const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
     const docData = userDoc.data();
@@ -1910,14 +1918,15 @@ async function createFamilyTree() {
     document.getElementById("member-birthdate").value = docData.birthday;
     document.getElementById("member_Image").src = docData.photo;
 
-    // Close modal and display success message
-    closePopup();
+  closePopup();
     showAddMemberModal();
   } catch (error) {
     console.error('Error creating family tree:', error);
+  } finally {
+    // Enable the button again after the operation (success or error)
+    button.disabled = false;
   }
 }
-
 
 
 
