@@ -118,51 +118,45 @@ chartGroup.selectAll("path")
 
 
 
-let memberData = root.descendants().children;
-	    console.log('memberData: ', memberData);
 
-if (!memberData === undefined && memberData.length === 0) {
-    // Add text labels to nodes
+	
+// Create the zoom function
+function applyZoom(scale) {
+    currentScale = scale;
+
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
+
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / scale);
+
     chartGroup.selectAll("text")
-        .data(root.descendants())
-        .enter()
-        .append("text")
-        .attr("x", d => d.x)
-        .attr("y", d => d.y)
-        .attr("dy", 60) // Adjust the vertical position of labels
-        .attr("text-anchor", "middle")
-        .text(d => d.data.name) // Display member names
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked link
-        console.log("Clicked text Data:", d.data);
-        // You can now use d.data to access relationship information
-	    // Example usage
-showMemberPopup(d.data);
+        .attr("font-size", 14 / scale);
 
+    chartGroup.selectAll("image")
+//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
+   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
+    .attr("y", d => d.y) // Adjust the positioning
+        .attr("width", 100 / scale)
+        .attr("height", 100 / scale);
 
-    });
-                    }else{
-    // Add text labels to nodes
-    chartGroup.selectAll("text")
-        .data(root.descendants())
-        .enter()
-        .append("text")
-        .attr("x", d => d.x)
-        .attr("y", d => d.y)
-        .attr("dy", -60) // Adjust the vertical position of labels
-        .attr("text-anchor", "middle")
-        .text(d => d.data.name) // Display member names
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked link
-        console.log("Clicked text Data:", d.data);
-showMemberPopup(d.data);
-
-    });
-
-	  }
-
-const imageWidth = 100;
-const imageHeight = 100;
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / scale);
+	/*
+const translateY = 100;
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
+	*/
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+   
+		const source = { x: d.source.x, y: d.source.y * scale };
+            const target = { x: d.target.x, y: d.target.y * scale };
+            return linkGenerator({ source, target });
+        });
+}
 
 
 
