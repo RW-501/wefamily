@@ -121,9 +121,11 @@ chartGroup.selectAll("path")
 
 
 let memberData = root.descendants().children;
+let	memberArray = memberData.length;
 	    console.log('memberData: ', memberData);
+	    console.log('memberArray: ', memberArray);
 
-if (!memberData === undefined && memberData.length === 0) {
+if (!memberData && memberArray === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
@@ -191,19 +193,25 @@ nodeGroup.append("circle")
     });
 
 
-// Append images to nodes
-// Append images to nodes
-nodeGroup.append("image")
-    .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
-    });
+nodeGroup
+  .append('clipPath') // Create a unique clip path for each image
+  .attr('id', (d, i) => `clipCircle-${i}`)
+  .append('circle')
+  .attr('r', 20);
+
+nodeGroup
+  .append('image')
+  .attr('xlink:href', (d) => d.data.photo) // Set the image URL
+  .attr('x', (d) => -imageWidth / 2) // Adjust the positioning relative to the group
+  .attr('y', (d) => -imageHeight / 2) // Adjust the positioning relative to the group
+  .attr('width', imageWidth)
+  .attr('height', imageHeight)
+  .attr('clip-path', (d, i) => `url(#clipCircle-${i})`) // Apply the unique clip path
+  .on('click', function (event, d) {
+    // 'd' contains the data associated with the clicked node
+    console.log('Clicked image Data:', d.data);
+    showMemberPopup(d.data);
+  });
 
 
 
