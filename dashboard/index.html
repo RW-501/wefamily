@@ -1844,10 +1844,11 @@ async function createFamilyTree() {
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
       const storagePath = 'family_Tree_Image';
-      downloadURL = await uploadImageToStorage(selectedFile, storagePath);
-    }
+      await uploadImageToStorage(selectedFile, storagePath)
+        .then((url) => {
+          downloadURL = url;  // Set downloadURL with the resolved URL
 
-    const familyTreeData = {
+   const familyTreeData = {
       name: treeName,
       location: [treeLocation],
       description: treeDescription,
@@ -1876,6 +1877,14 @@ async function createFamilyTree() {
     document.getElementById("member_Image").src = docData.photo;
     closePopup();
     showAddMemberModal();
+		
+        })
+        .catch((error) => {
+          console.error('Error uploading image:', error);
+        });
+    }
+
+ 
   } catch (error) {
     console.error('Error creating family tree:', error);
   }
