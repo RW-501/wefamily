@@ -859,7 +859,7 @@ function initializeFamilyTreeChart() {
                 <label for="tree_description">Description:</label>
                 <textarea id="tree_description" placeholder="Brief Description"></textarea>
                 </p>
-                <button onclick="createFamilyTree()">Create</button>
+                <button id="createBTN" onclick="createFamilyTree()">Create</button>
             </div>
 <div id="join-tree-section" class="tree-section hidden">
             <h2>Join a Family Tree</h2><hr>
@@ -1829,6 +1829,8 @@ window.onclick = function(event) {
 	    
 async function createFamilyTree() {
   try {
+	    const button = document.getElementById('createBTN');
+  button.disabled = true;
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
     const treeDescription = document.getElementById("tree_description").value;
@@ -1852,6 +1854,13 @@ async function createFamilyTree() {
       return Promise.reject("Family tree with the same family code exists.");
     }
 
+
+    if (!currentFamilyID) {
+      showMainMessage("No currentFamilyID");
+      return Promise.reject("No currentFamilyID ");
+    }
+
+	    
     let downloadURL = '';  // Initialize downloadURL
 
     // Upload family tree image if selected
