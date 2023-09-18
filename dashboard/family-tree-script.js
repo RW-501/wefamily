@@ -95,7 +95,7 @@ let oofamilyData = {
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
  //   d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
-    d.y = d.depth *  50; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth *  100; // Adjust the '100' for your desired vertical spacing
 });
 
 
@@ -193,13 +193,16 @@ showMemberPopup(d.data);
 const imageWidth = 100;
 const imageHeight = 100;
 
-chartGroup.selectAll("circle")
+const nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
-    .append("circle")
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
+
+// Append circles to nodes
+nodeGroup.append("circle")
     .attr("class", "circle")
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
     .attr("r", 20) // Radius of circles
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
@@ -208,13 +211,10 @@ chartGroup.selectAll("circle")
     });
 
 // Append images to nodes
-chartGroup.selectAll("image")
-    .data(root.descendants())
-    .enter()
-    .append("image")
+nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
-    .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
+    .attr("x", -imageWidth / 2) // Adjust the positioning relative to the group
+    .attr("y", -imageHeight / 2) // Adjust the positioning relative to the group
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .on("click", function (event, d) {
@@ -222,6 +222,7 @@ chartGroup.selectAll("image")
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
+
 
 
     // Apply the zoom behavior to the SVG
@@ -443,17 +444,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
-   /*  
-                    if (treeData.root) {
-                        root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
-
-             if (children.length === 0) {
-                        root.children.push({ name, children: [] });
-                    }
-*/
+ 
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -463,33 +454,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
-/*
-                    children.forEach((childID) => {
-                        if (memberDataMap[childID]) {
-                            // Update childNode's parent
-                            memberDataMap[childID].parents.push(id);
-                            // Update current member's child
-                            memberDataMap[id].children.push(childID);
-                        }
-                    });
 
-                    siblings.forEach((siblingID) => {
-                        if (memberDataMap[siblingID]) {
-                            // Update siblingNode's sibling
-                            memberDataMap[siblingID].siblings.push(id);
-                            // Update current member's sibling
-                            memberDataMap[id].siblings.push(siblingID);
-                        }
-                    });
-
-                    spouse.forEach((spouseID) => {
-                        if (memberDataMap[spouseID]) {
-                            // Update spouseNode's spouse
-                            memberDataMap[spouseID].spouse.push(id);
-                            // Update current member's spouse
-                            memberDataMap[id].spouse.push(spouseID);
-                        }
-                    });*/
     });
 
 
