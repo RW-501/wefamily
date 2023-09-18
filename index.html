@@ -1112,11 +1112,11 @@ return true;
 async function checkLoggedInAndRedirect() {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
     const auth = firebase.auth();
-    
-    // Check if a user is currently signed in
-    if (userLoggedIn === 'true' && auth.currentUser) {
         const userId = auth.currentUser.uid; // Get the user's ID
 	        console.log('userId:', userId);
+    // Check if a user is currently signed in
+    if (userLoggedIn === 'true' && userId) {
+    
 
         const userDocRef = firestore.collection('users').doc(userId);
 
