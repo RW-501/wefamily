@@ -129,7 +129,7 @@ if (!memberData === undefined && memberData.length === 0) {
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", 45) // Adjust the vertical position of labels
+        .attr("dy", 60) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
@@ -149,7 +149,7 @@ showMemberPopup(d.data);
         .append("text")
         .attr("x", d => d.x)
         .attr("y", d => d.y)
-        .attr("dy", -35) // Adjust the vertical position of labels
+        .attr("dy", -60) // Adjust the vertical position of labels
         .attr("text-anchor", "middle")
         .text(d => d.data.name) // Display member names
     .on("click", function (event, d) {
