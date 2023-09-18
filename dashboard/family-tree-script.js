@@ -546,7 +546,7 @@ console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
 }
 
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
-  // ...
+    const uniqueChildren = {}; // Declare uniqueChildren as an empty object
 
   const childResults = node.children
     .map((childID) => {
