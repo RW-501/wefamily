@@ -718,7 +718,7 @@ async function updateUserProfile() {
                 userID: userID // Changed from userID to userId
             });
             console.log('User profile updated successfully.');
-            window.location.href = `dashboard/?user=${userID}`;
+          //  window.location.href = `dashboard/?user=${userID}`;
         } catch (error) {
             console.error('Error updating user profile:', error);
             return false;
@@ -741,8 +741,8 @@ async function updateUserProfile() {
                         country: selectedCountry,
                         userID: userID // Changed from userID to userId
                     });
-                    console.log('User profile updated successfully.');
-                    window.location.href = `dashboard/?user=${userID}`;
+                   console.log('User profile updated successfully.');
+                //    window.location.href = `dashboard/?user=${userID}`;
                 } catch (error) {
                     console.error('Error updating user profile:', error);
                     return false;
