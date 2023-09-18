@@ -388,15 +388,17 @@ function setRootValue(rootValue) {
 
 
 
+let maxHierarchyDepth = 0;
+let memberIDWithMaxDepth = null;
+
 const memberDataMap = {};
-let maxHierarchyDepth = 0; // Move this outside the function
+let rootCount = 0;
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
-	    
-
-        const root = {
+/*	    
+     const root = {
             id: treeID,
             name: treeData.name,
             children: [],
@@ -404,7 +406,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
         };
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
-
+   */
         const query = db.collection(collectionName).where('familyID', 'array-contains', treeID);
 
         query.get()
@@ -452,14 +454,14 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
-
+   /*  
                     if (treeData.root) {
                         root.children.push(treeData.root);
                     } else {
                         root.children.push(id);
                     }
 
-           /*       if (children.length === 0) {
+             if (children.length === 0) {
                         root.children.push({ name, children: [] });
                     }
 */
@@ -502,14 +504,43 @@ function fetchFamilyMemberData(collectionName, treeID) {
     });
 
 
+   let maxChildrenCount = 0;
 
+        Object.values(memberDataMap).forEach((member) => {
+          if (member.children.length > maxChildrenCount) {
+            maxChildrenCount = member.children.length;
+            memberIDWithMaxDepth = member.id;
+          }
+        });
+
+        // Update the root to use the member with the most children as the root
+        const root = {
+          id: treeID,
+          name: treeData.name,
+          children: [memberIDWithMaxDepth], // Set the member with the most children as the root
+          data: treeData,
+        };
+    console.log("treeID   " + treeID);
+    console.log("treeData.name   " + treeData.name);
+    console.log("treeData.children   " + treeData.children);
 
 
 			
                     const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
-            
 
+// Call buildTree to populate memberDataMap and calculate hierarchy depth
+const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
+
+console.log('Member ID with the greatest HierarchyDepth:', memberIDWithMaxDepth);
+console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
+
+
+
+		    
   resolve(hierarchicalTree);
+
+
+
             })
             .catch((error) => {
                 reject(error);
@@ -518,30 +549,34 @@ function fetchFamilyMemberData(collectionName, treeID) {
 }
 
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
-    if (depthLimit <= 0 || processedNodes.has(node.id)) {
-        return { node, maxDepth: currentDepth };
+  if (depthLimit <= 0 || processedNodes.has(node.id)) {
+    return { node, maxDepth: currentDepth };
+  }
+
+  processedNodes.add(node.id);
+
+  const uniqueChildren = {};
+
+  const childResults = node.children.map((childID) => {
+    const childNode = memberDataMap[childID];
+    if (childNode) {
+      if (!uniqueChildren[childID]) {
+        uniqueChildren[childID] = true;
+        return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
+      }
     }
+    return null;
+  });
 
-    processedNodes.add(node.id);
+  const currentMaxDepth = Math.max(currentDepth, ...childResults.map((result) => result.maxDepth));
+  if (currentMaxDepth > maxHierarchyDepth) {
+    maxHierarchyDepth = currentMaxDepth;
+    memberIDWithMaxDepth = node.memberID;
+  }
 
-    const uniqueChildren = {};
+  node.children = childResults.map((result) => result.node).filter(Boolean);
 
-    const childResults = node.children.map((childID) => {
-        const childNode = memberDataMap[childID];
-        if (childNode) {
-            if (!uniqueChildren[childID]) {
-                uniqueChildren[childID] = true;
-                return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
-            }
-        }
-        return null;
-    });
-
-     maxHierarchyDepth = Math.max(...childResults.map((result) => result.maxDepth));
-
-    node.children = childResults.map((result) => result.node).filter(Boolean);
-
-    return { node, maxDepth: Math.max(currentDepth, maxHierarchyDepth) };
+  return { node, maxDepth: currentMaxDepth };
 }
 
 
