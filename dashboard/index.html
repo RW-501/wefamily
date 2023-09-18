@@ -1839,6 +1839,14 @@ async function createFamilyTree() {
       return;
     }
 
+    let downloadURL = '';  // Initialize downloadURL
+
+    const selectedFile = document.getElementById('family_Tree_Image').files[0];
+    if (selectedFile) {
+      const storagePath = 'family_Tree_Image';
+      downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+    }
+
     const familyTreeData = {
       name: treeName,
       location: [treeLocation],
@@ -1848,28 +1856,17 @@ async function createFamilyTree() {
       familyCode: familyCode,
       treeID: "",
       root: "",
-      photo: "",
+      photo: downloadURL,  // Set downloadURL for the photo field
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
     const docRef = await firestore.collection('familyTrees').add(familyTreeData);
     currentFamilyID = docRef.id;
 
-    const selectedFile = document.getElementById('family_Tree_Image').files[0];
-    if (selectedFile) {
-      const storagePath = 'family_Tree_Image';
-      const downloadURL = await uploadImageToStorage(selectedFile, storagePath);
-    //  familyTreeData.photo = downloadURL;
-      await firestore.collection('familyTrees').doc(currentFamilyID).update({
-        treeID: currentFamilyID,
-        photo: downloadURL,
-      });
-    } else {
-      await firestore.collection('familyTrees').doc(currentFamilyID).update({
-        treeID: currentFamilyID,
-      });
-    }
-		    console.log("+ userID   " + userID);
+    await firestore.collection('familyTrees').doc(currentFamilyID).update({
+      treeID: currentFamilyID,
+      photo: downloadURL,
+    });
 
     const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
