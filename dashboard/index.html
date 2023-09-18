@@ -2383,7 +2383,7 @@ let memberID = member.memberID;
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
-			newsPost(`Admin ID ${familyTreeData.adminID} created ${familyTreeData.name} on ${familyTreeData.timestamp} `);
+			newsPost(`Admin ID ${memberID} created ${member.name} on ${member.timestamp} `);
                 loadFamilyTreeChart(treeData);
 
                             })
