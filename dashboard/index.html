@@ -2291,10 +2291,15 @@ if(!treeID){
     try {
 const querySnapshot = await familyMembersCollection.where('familyID', 'array-contains', treeID).get();
 if(querySnapshot.length === 0){ 
-     document.getElementById('memberData').style.display = 'none';
+                document.getElementById("tree-details").style.display = "none";
+                document.getElementById("family-tree").style.display = "none";
+                document.getElementById("family-news").style.display = "none";
+                document.getElementById("member_Request").style.display = "none";
 }else{
-     document.getElementById('memberData').style.display = 'block';
-
+                document.getElementById("tree-details").style.display = "block";
+                document.getElementById("family-tree").style.display = "block";
+                document.getElementById("family-news").style.display = "block";
+                document.getElementById("member_Request").style.display = "block";
 }
         querySnapshot.forEach((member) => {
             const data = member.data();
