@@ -194,19 +194,7 @@ nodeGroup.append("circle")
 
 
 
-nodeGroup
-  .append('image')
-  .attr('xlink:href', (d) => d.data.photo) // Set the image URL
-  .attr('x', (d) => -imageWidth / 2) // Adjust the positioning relative to the group
-  .attr('y', (d) => -imageHeight / 2) // Adjust the positioning relative to the group
-  .attr('width', imageWidth)
-  .attr('height', imageHeight)
-  //.attr('clip-path', (d, i) => `url(#clipCircle-${i})`) // Apply the unique clip path
-  .on('click', function (event, d) {
-    // 'd' contains the data associated with the clicked node
-    console.log('Clicked image Data:', d.data);
-    showMemberPopup(d.data);
-  });
+
 
 /*
 // Append images to nodes
