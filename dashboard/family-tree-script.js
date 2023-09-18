@@ -6,7 +6,6 @@ const zoomOutButton = document.getElementById('zoom-out');
 // Define zoom behavior and initial scale
 const initialScale = 1;
 let currentScale = initialScale;
-	                    console.log("??????????????????????????????????////////////// js");
 
 
 	// Add click event listeners for zoom controls
@@ -158,13 +157,8 @@ chartGroup.selectAll("circle")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
-const exampleMember = {
-    imageUrl: `${d.data.photo}`,
-    info: `${d.data.note}`,
-    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
-};
+showMemberPopup(d.data);
 
-showMemberPopup(exampleMember);
     });
 
 let memberData = root.descendants().children;
@@ -186,13 +180,8 @@ if (!memberData === undefined && memberData.length === 0) {
         console.log("Clicked text Data:", d.data);
         // You can now use d.data to access relationship information
 	    // Example usage
-const exampleMember = {
-    imageUrl: `${d.data.photo}`,
-    info: `${d.data.note}`,
-    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
-};
+showMemberPopup(d.data);
 
-showMemberPopup(exampleMember);
 
     });
                     }else{
@@ -209,13 +198,8 @@ showMemberPopup(exampleMember);
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked link
         console.log("Clicked text Data:", d.data);
-const exampleMember = {
-    imageUrl: `${d.data.photo}`,
-    info: `${d.data.note}`,
-    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
-};
+showMemberPopup(d.data);
 
-showMemberPopup(exampleMember);
     });
 
 	  }
@@ -242,13 +226,8 @@ chartGroup.selectAll("image")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
-const exampleMember = {
-    imageUrl: `${d.data.photo}`,
-    info: `${d.data.note}`,
-    details: [`${d.data.birthdate},${d.data.location },${d.data.contact}`]
-};
 
-showMemberPopup(exampleMember);
+showMemberPopup(d.data);
     });
 
 
@@ -327,6 +306,7 @@ function populateMemberInfo(member) {
     // Populate image and text
     document.getElementById('member-image').src = member.imageUrl;
     document.getElementById('member-info').value = member.info;
+    document.getElementById('memberName_tP').value = member.name;
 
     // Populate member details
     const memberDetails = member.details;
@@ -348,6 +328,12 @@ function showMemberPopup(member) {
     popup.style.display = 'block';
 }
 
+
+function hideMemberPopup() {
+
+    const popup = document.getElementById('meberDetailpopup');
+    popup.style.display = 'block';
+}
 
 
 
