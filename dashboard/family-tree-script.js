@@ -548,35 +548,31 @@ console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
 }
 
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
-  if (depthLimit <= 0 || processedNodes.has(node.id)) {
-    return { node, maxDepth: currentDepth };
-  }
+  // ...
 
-  processedNodes.add(node.id);
-
-  const uniqueChildren = {};
-
-  const childResults = node.children.map((childID) => {
-    const childNode = memberDataMap[childID];
-    if (childNode) {
-      if (!uniqueChildren[childID]) {
-        uniqueChildren[childID] = true;
-        return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
+  const childResults = node.children
+    .map((childID) => {
+      const childNode = memberDataMap[childID];
+      if (childNode) {
+        if (!uniqueChildren[childID]) {
+          return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
+        }
       }
-    }
-    return null;
-  });
+      return null;
+    })
+    .filter((result) => result !== null);  // Remove null results
 
-  const currentMaxDepth = Math.max(currentDepth, ...childResults.map((result) => result.maxDepth));
-  if (currentMaxDepth > maxHierarchyDepth) {
-    maxHierarchyDepth = currentMaxDepth;
-    memberIDWithMaxDepth = node.memberID;
+  if (childResults.length === 0) {
+    maxHierarchyDepth = currentDepth;
+  } else {
+    maxHierarchyDepth = Math.max(...childResults.map((result) => result.maxDepth));
   }
 
-  node.children = childResults.map((result) => result.node).filter(Boolean);
+  node.children = childResults.map((result) => result.node);
 
-  return { node, maxDepth: currentMaxDepth };
+  return { node, maxDepth: maxHierarchyDepth };
 }
+
 
 
 
