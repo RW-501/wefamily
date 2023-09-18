@@ -2228,7 +2228,12 @@ if(!treeID){
 
     try {
 const querySnapshot = await familyMembersCollection.where('familyID', 'array-contains', treeID).get();
+if(querySnapshot.length === 0){ 
+     document.getElementById('memberData').style.display = 'none';
+}else{
+     document.getElementById('memberData').style.display = 'block';
 
+}
         querySnapshot.forEach((member) => {
             const data = member.data();
             // Implement dynamic population of family member details here
