@@ -1977,11 +1977,12 @@ currentFamilyID = familyTreeId;
     }
 }
 
-
+var userID;
+	    
 async function fetchFamilyTree() {
     try {
-        const userID = await checkUserLogin();
-
+        const userId = await checkUserLogin();
+userID = userId;
         if (userID) {
 // Get the logo link element by its ID
 const logoLink = document.getElementById('logo-link');
