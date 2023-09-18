@@ -1863,9 +1863,10 @@ async function createFamilyTree() {
 
     // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
-    if (selectedFile) {
-      const storagePath = 'family_Tree_Image';
-      downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+if (selectedFile) {
+  const storagePath = 'family_Tree_Image';
+  downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+
 
         const docRef = await firestore.collection('familyTrees').add({
             name: treeName,
@@ -1876,7 +1877,7 @@ async function createFamilyTree() {
             familyCode: familyCode,
             treeID: '',  // Placeholder for now
             root: '',
-            photo: downloadURL,
+  ...(downloadURL && { photo: downloadURL }),
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
 
@@ -1909,42 +1910,39 @@ async function createFamilyTree() {
         currentFamilyID = generatedTreeID;
     }
 	    
-    const userDocRef = firestore.collection('users').doc(userID);
+   const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
     const docData = userDoc.data();
-	    
 
-// Update the 'userTrees' array by adding a new tree ID
-userDocRef.update({
-  userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
-})
-.then(() => {
-
-
-    document.getElementById("member-first_name").value = docData.userName;
-    document.getElementById("member-birthdate").value = docData.birthday;
-    document.getElementById("member_Image").src = docData.photo;
-	
-	console.log('UserTrees array updated with a new tree ID.');
-})
-.catch((error) => {
-  console.error('Error updating userTrees array:', error);
-});
-
+    // Update the 'userTrees' array by adding a new tree ID
+    userDocRef.update({
+      userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+    })
+    .then(() => {
+      document.getElementById("member-first_name").value = docData.userName;
+      document.getElementById("member-birthdate").value = docData.birthday;
+      document.getElementById("member_Image").src = docData.photo;
     
-  closePopup();
+      console.log('UserTrees array updated with a new tree ID.');
+    })
+    .catch((error) => {
+      console.error('Error updating userTrees array:', error);
+    })
+    .finally(() => {
+      // Enable the 'createBTN' button again after the operation (success or error)
+      createBTN.disabled = false;
+    });
+
+    // Close modal and display success message
+    closePopup();
     showAddMemberModal();
   } catch (error) {
     console.error('Error creating family tree:', error);
-  } finally {
-    // Enable the button again after the operation (success or error)
-    const createBTN = document.getElementById('createBTN');
 
+    // Enable the 'createBTN' button again in case of an error
     createBTN.disabled = false;
   }
 }
-
-
 
           var treeData = '';
 
