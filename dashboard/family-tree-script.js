@@ -190,7 +190,9 @@ showMemberPopup(d.data);
 
 	  }
 
-	// Add click event listener to nodes
+const imageWidth = 100;
+const imageHeight = 100;
+
 chartGroup.selectAll("circle")
     .data(root.descendants())
     .enter()
@@ -202,34 +204,24 @@ chartGroup.selectAll("circle")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
-showMemberPopup(d.data);
-
-    });      
-    const imageWidth = 100;
-
-    const imageHeight = 100;
+        showMemberPopup(d.data);
+    });
 
 // Append images to nodes
 chartGroup.selectAll("image")
     .data(root.descendants())
     .enter()
     .append("image")
-.attr("text-anchor", "middle")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-   // .attr("cx", d => d.x)
-    //.attr("cy", d => d.y)
-  .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
+    .attr("x", d => d.x - imageWidth / 2) // Adjust the positioning
     .attr("y", d => d.y - imageHeight / 2) // Adjust the positioning
-
-	.attr("width", imageWidth)
+    .attr("width", imageWidth)
     .attr("height", imageHeight)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
-
-showMemberPopup(d.data);
+        showMemberPopup(d.data);
     });
-
 
 
     // Apply the zoom behavior to the SVG
