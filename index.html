@@ -567,7 +567,7 @@ display:grid;
 
   <!-- Add more country options here -->
 </select>
-        <button  onclick=" updateUserProfile()">Done</button>
+        <button id="doneBTN" onclick=" updateUserProfile()">Done</button>
 
 	      </diiv>
 	      
@@ -689,7 +689,8 @@ async function updateUserProfile() {
     const selectedCountry = countryDropdown.value;
     const stateDropdown = document.getElementById('stateDropdown');
     const selectedState = stateDropdown.value;
-
+  const button = document.getElementById('doneBTN');
+  button.disabled = true;
     const username = document.getElementById('username').value;
     const birthday = document.getElementById('birthday').value;
     const city = document.getElementById('city').value;
@@ -701,6 +702,7 @@ async function updateUserProfile() {
 
     if (username === "" || selectedState === "") {
         showMainMessage("Missing Info");
+  button.disabled = false;
         return;
     }
 
@@ -718,9 +720,11 @@ async function updateUserProfile() {
                 userID: userID // Changed from userID to userId
             });
             console.log(userID+'  User profile updated successfully.');
-          //  window.location.href = `dashboard/?user=${userID}`;
+            window.location.href = `dashboard/?user=${userID}`;
         } catch (error) {
             console.error('Error updating user profile:', error);
+		  button.disabled = false;
+
             return false;
         }
     } else {
@@ -742,9 +746,11 @@ async function updateUserProfile() {
                         userID: userID // Changed from userID to userId
                     });
                    console.log('User profile updated successfully.');
-                //    window.location.href = `dashboard/?user=${userID}`;
+                   window.location.href = `dashboard/?user=${userID}`;
                 } catch (error) {
                     console.error('Error updating user profile:', error);
+			  button.disabled = false;
+
                     return false;
                 }
             });
