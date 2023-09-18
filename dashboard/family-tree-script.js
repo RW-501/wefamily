@@ -164,13 +164,6 @@ showMemberPopup(d.data);
 const imageWidth = 100;
 const imageHeight = 100;
 
-const nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
-
 
 svg.append("defs").append("clipPath")
     .attr("id", "clipCircle")
@@ -179,14 +172,21 @@ svg.append("defs").append("clipPath")
 
 
 	
-nodeGroup.append("circle")
-    .attr("class", "circle")
-    .attr("r", 20) // Radius of circles
-    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked circle Data:", d.data);
-    });
+  const nodeGroup = chartGroup.selectAll(".node")
+        .data(root.descendants())
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
+
+    nodeGroup.append("circle")
+        .attr("class", "circle")
+        .attr("r", 20) // Radius of circles
+        .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+        .on("click", function (event, d) {
+            // 'd' contains the data associated with the clicked node
+            console.log("Clicked circle Data:", d.data);
+        });
 
 
 // Append images to nodes
@@ -247,6 +247,10 @@ function zoomed(event) {
         });
 }
 
+
+
+
+	
 // Create the zoom function
 function applyZoom(scale) {
     currentScale = scale;
