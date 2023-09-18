@@ -596,6 +596,7 @@ display:grid;
 
 
 
+var userID;
 
 
 let currentView = 0;
@@ -624,7 +625,6 @@ function skip() {
 }
      document.getElementById('previewbtn').style.display = 'none';
      document.getElementById('progress-container').style.display = 'none';
-var userID;
 
 function updateView(userId) {
 
@@ -707,7 +707,7 @@ async function updateUserProfile() {
 
     if (!selectedFile) {
         try {
-            await firestore.collection('users').doc(userId).update({
+            await firestore.collection('users').doc(userID).update({
                 userName: username,
                 state: selectedState,
                 city: city,
