@@ -336,15 +336,15 @@ function showMemberPopup(member) {
 		    console.log("member   " + member);
 
     populateMemberInfo(member);
-    const popup = document.getElementById('meberDetailpopup');
+    const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
 }
 
 
 function hideMemberPopup() {
 
-    const popup = document.getElementById('meberDetailpopup');
-    popup.style.display = 'block';
+    const popup = document.getElementById('memberDetailPopup');
+    popup.style.display = 'none';
 }
 
 
