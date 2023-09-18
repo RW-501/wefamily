@@ -50,7 +50,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .attr("height", height);
 
 
-     const height_Layout = 150;
+     const height_Layout = 150 * maxHierarchyDepth;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
     
@@ -66,7 +66,7 @@ chartGroup  = svg.append("g");
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
  //   d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
-    d.y = d.depth *  100; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth *  50; // Adjust the '100' for your desired vertical spacing
 });
 
 
