@@ -2644,7 +2644,7 @@ function addChildToParent(newID, addFamily_MemberID) {
     const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
   childRef.update({
-        parents: firebase.firestore.FieldValue.arrayUnion(newID)
+        children: firebase.firestore.FieldValue.arrayUnion(newID)
     });   
 			loadFamilyTreeChart();
   
