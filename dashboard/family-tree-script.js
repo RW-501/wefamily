@@ -204,16 +204,18 @@ nodeGroup.append("image")
 
 
 
-
-
-    // Apply the zoom behavior to the SVG
-    svg.call(zoom)
-        .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+// Apply the zoom behavior to the SVG
+svg.call(zoom)
+    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 const translateX = 0;
 const translateY = 100;
 const scale = 1;    
-    // Set the transform attribute
+// Set the transform attribute
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+
+
+
+	
     
 // Define the zoom function
 function zoomed(event) {
