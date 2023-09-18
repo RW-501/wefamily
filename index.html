@@ -1160,9 +1160,7 @@ async function checkLoggedInAndRedirect() {
                 loginCount: loginCount + 1,
             });
 
-            setTimeout(() => {
                 window.location.href = `dashboard/?user=${userId}`;
-            }, 3000); // 3-second timeout
 
 		
         } else {
