@@ -2625,13 +2625,15 @@ addFamily_MemberData = member;
 // Function to add a parent to a child
 function addParentToChild(newID, addFamily_MemberID) {
 	     
+            console.log('addParentToChild newID:', newID);
+            console.log('addFamily_MemberID:', addFamily_MemberID);
 
-    const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+    const parentRef = firestore.collection('familyMembers').doc(newID);
 
 
     // Update the parent's children array to include the child's ID
     parentRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(newID)
+        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });
 				setRootValue(newID);
 			loadFamilyTreeChart();
@@ -2641,10 +2643,13 @@ function addParentToChild(newID, addFamily_MemberID) {
 
 // Function to add parent-child relationship
 function addChildToParent(newID, addFamily_MemberID) {
-    const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+    const childRef = firestore.collection('familyMembers').doc(newID);
+	
+            console.log('addChildToParent newID:', newID);
+            console.log('addFamily_MemberID:', addFamily_MemberID);
 
   childRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(newID)
+        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
     });   
 			loadFamilyTreeChart();
   
