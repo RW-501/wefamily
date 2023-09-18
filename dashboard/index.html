@@ -1903,11 +1903,13 @@ async function createFamilyTree() {
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
                                 });
+    }
    
   } catch (error) {
     console.error('Error creating family tree:', error);
   }
 }
+   
 
 
 
@@ -1948,7 +1950,6 @@ async function getFamilyTreeData(treeId) {
         return null;
     }
 }
-
 
 
 
