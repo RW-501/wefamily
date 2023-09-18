@@ -1886,9 +1886,9 @@ async function createFamilyTree() {
       treeID: currentFamilyID,
       photo: downloadURL,
     });
+
+	})  .then(() => {
    const userDocRef  = firestore.collection('users').doc(userID);
-
-
 
     // Retrieve user information and update UI
     const userDoc =  userDocRef.get();
@@ -1896,10 +1896,14 @@ async function createFamilyTree() {
     document.getElementById("member-first_name").value = docData.userName;
     document.getElementById("member-birthdate").value = docData.birthday;
     document.getElementById("member_Image").src = docData.photo;
-
-    // Close modal and display success message
+ // Close modal and display success message
     closePopup();
     showAddMemberModal();
+                                })
+                                .catch((error) => {
+                                    console.error('Error adding photo URL to family tree document:', error);
+                                });
+   
   } catch (error) {
     console.error('Error creating family tree:', error);
   }
