@@ -1869,6 +1869,7 @@ async function createFamilyTree() {
         treeID: currentFamilyID,
       });
     }
+		    console.log("+ userID   " + userID);
 
     const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
