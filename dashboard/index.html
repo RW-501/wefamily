@@ -1875,13 +1875,16 @@ async function createFamilyTree() {
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
       const storagePath = 'family_Tree_Image';
-      downloadURL = await uploadImageToStorage(selectedFile, storagePath) => {
+	       uploadImageToStorage(
+                            selectedFile,
+                            storagePath,
+                            (downloadURL) => {
                                 console.log('Image uploaded successfully:', downloadURL);
  firestore.collection('familyTrees').doc(currentFamilyID).update({
       treeID: currentFamilyID,
       photo: downloadURL,
     });
-      }
+      })
 
 
 
