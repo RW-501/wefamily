@@ -171,15 +171,23 @@ const nodeGroup = chartGroup.selectAll(".node")
     .attr("class", "node")
     .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
 
-// Append circles to nodes
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clipCircle")
+    .append("circle")
+    .attr("r", 20);  // Radius of the circle
+
+
+	
 nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", 20) // Radius of circles
+    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
-        showMemberPopup(d.data);
     });
+
 
 // Append images to nodes
 // Append images to nodes
