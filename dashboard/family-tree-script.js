@@ -59,35 +59,6 @@ chartGroup  = svg.append("g");
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
 
-// Usage example to generate the desired structure
-let oofamilyData = {
-    id: 'root',
-    name: 'Family Tree 333',
-    children: [
-        {
-            name: 'John Doe',
-            children: [
-                {
-                    name: 'Jane Doe',
-                    children: [
-                        {
-                            name: 'grand Doe',
-                            children: [],
-                        },
-                    ],
-                },
-                {
-                    name: 'Bob Doe',
-                    children: [],
-                },
-            ],
-        },
-        {
-            name: 'Alice Doe',
-            children: [],
-        },
-    ],
-};
 
 
 
@@ -211,10 +182,11 @@ nodeGroup.append("circle")
     });
 
 // Append images to nodes
+// Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", -imageWidth / 2) // Adjust the positioning relative to the group
-    .attr("y", -imageHeight / 2) // Adjust the positioning relative to the group
+    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .on("click", function (event, d) {
@@ -222,6 +194,7 @@ nodeGroup.append("image")
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
+
 
 
 
