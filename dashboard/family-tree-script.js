@@ -300,24 +300,36 @@ chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
 
 
 
-
-
-function populateMemberInfo(member) {
+         function populateMemberInfo(member) {
     // Populate image and text
-    document.getElementById('member-image').src = member.imageUrl;
-    document.getElementById('member-info').value = member.info;
-    document.getElementById('memberName_tP').value = member.name;
+    document.getElementById('memberImage').src = member.photo;
+    document.getElementById('memberInfo').value = member.location;
+    document.getElementById('memberName').textContent = `${member.first_name} ${member.last_name}`;
 
     // Populate member details
-    const memberDetails = member.details;
-    const detailsList = document.getElementById('member-details');
+    const memberDetails = {
+        'Member ID': member.id,
+        'Member Name': `${member.first_name} ${member.last_name}`,
+        'Private': member.private,
+        'Location': member.location,
+        'Birthdate': member.birthdate,
+        'Deceased Date': member.deceaseddate,
+        'Contact': member.contact,
+        'Note': member.note,
+        'Children': member.children.join(', '),
+        'Spouse': member.spouse.join(', '),
+        'Parents': member.parents.join(', '),
+        'Siblings': member.siblings.join(', ')
+    };
+
+    const detailsList = document.getElementById('memberDetails');
     detailsList.innerHTML = ''; // Clear previous content
 
-    memberDetails.forEach(detail => {
+    for (const [key, value] of Object.entries(memberDetails)) {
         const listItem = document.createElement('li');
-        listItem.textContent = detail;
+        listItem.innerHTML = `<strong>${key}:</strong> ${value}`;
         detailsList.appendChild(listItem);
-    });
+    }
 }
 
 function showMemberPopup(member) {
