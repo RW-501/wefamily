@@ -38,7 +38,7 @@ function generateFamilyTreeChart(familyData) {
 
 const width = 800;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
-
+document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
     const svg = d3.select("#family-tree-area")
         .append("svg")
