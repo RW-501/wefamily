@@ -8,8 +8,6 @@ const initialScale = 1;
 let currentScale = initialScale;
 
 
-    
-
 	// Add click event listeners for zoom controls
 zoomOutButton.addEventListener('click', () => {
 	if( currentScale > 2){
@@ -116,9 +114,12 @@ chartGroup.selectAll("path")
     .style("stroke-width", 2);
 
 
+    
+
+
 
 let memberData = root.descendants().children;
-	    console.log('memberData: '+ memberData);
+	    console.log('memberData: ', memberData);
 
 if (!memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
@@ -162,133 +163,6 @@ showMemberPopup(d.data);
 
 const imageWidth = 100;
 const imageHeight = 100;
-
-svg.append("defs").append("clipPath")
-    .attr("id", "clipCircle")
-    .append("circle")
-    .attr("r", 20);  // Radius of the circle
-
-
-	
-  const nodeGroup = chartGroup.selectAll(".node")
-        .data(root.descendants())
-        .enter()
-        .append("g")
-        .attr("class", "node")
-        .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
-
-    nodeGroup.append("circle")
-        .attr("class", "circle")
-        .attr("r", 20) // Radius of circles
-        .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-        .on("click", function (event, d) {
-            // 'd' contains the data associated with the clicked node
-            console.log("Clicked circle Data:", d.data);
-        });
-
-
-// Append images to nodes
-nodeGroup.append("image")
-    .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2 / currentScale) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2 / currentScale) // Adjust the positioning relative to the group
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale)
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
-    });
-
-
-
-// Apply the zoom behavior to the SVG
-svg.call(zoom)
-    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-const translateX = 0;
-const translateY = 100;
-const scale = 1;    
-// Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
-
-
-
-	
-    
-// Define the zoom function
-function zoomed(event) {
-    currentScale = event.transform.k;
-
-    if (!chartGroup) {
-        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-        return;
-    }
-
-    chartGroup.selectAll("circle")
-        .attr("r", 20 / currentScale);
-
-    chartGroup.selectAll("text")
-        .attr("font-size", 14 / currentScale);
-
-    chartGroup.selectAll("image")
-        .attr("x", d => -imageWidth / 2 / currentScale)
-        .attr("y", d => -imageHeight / 2 / currentScale)
-        .attr("width", imageWidth / currentScale)
-        .attr("height", imageHeight / currentScale);
-
-    chartGroup.selectAll("path.link")
-        .attr("stroke-width", 2 / currentScale);
-
-    chartGroup.selectAll("path.link")
-        .attr("d", d => {
-            const source = { x: d.source.x, y: d.source.y * currentScale };
-            const target = { x: d.target.x, y: d.target.y * currentScale };
-            return linkGenerator({ source, target });
-        });
-}
-
-
-
-
-
-	
-// Create the zoom function
-function applyZoom(scale) {
-    currentScale = scale;
-
-    if (!chartGroup) {
-        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-        return;
-    }
-
-    chartGroup.selectAll("circle")
-        .attr("r", 20 / scale);
-
-    chartGroup.selectAll("text")
-        .attr("font-size", 14 / scale);
-
-    chartGroup.selectAll("image")
-//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
-   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
-    .attr("y", d => d.y) // Adjust the positioning
-        .attr("width", 100 / scale)
-        .attr("height", 100 / scale);
-
-    chartGroup.selectAll("path.link")
-        .attr("stroke-width", 2 / scale);
-	/*
-const translateY = 100;
-    // Set the transform attribute
-chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
-	*/
-    chartGroup.selectAll("path.link")
-        .attr("d", d => {
-   
-		const source = { x: d.source.x, y: d.source.y * scale };
-            const target = { x: d.target.x, y: d.target.y * scale };
-            return linkGenerator({ source, target });
-        });
-}
 
 
 
