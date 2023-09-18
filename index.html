@@ -707,7 +707,7 @@ async function updateUserProfile() {
 
     if (!selectedFile) {
         try {
-             firestore.collection('users').doc(userID).update({
+            await firestore.collection('users').doc(userID).update({
                 userName: username,
                 photo: '',
                 birthday: birthday,
@@ -731,7 +731,7 @@ async function updateUserProfile() {
                 console.log('Image uploaded successfully:', downloadURL);
                 // Handle success, e.g., save the downloadURL to your database
                 try {
-                   await firestore.collection('users').doc(userID).update({
+                    firestore.collection('users').doc(userID).update({
                         userName: username,
                 birthday: birthday,
                         photo: downloadURL,
