@@ -374,7 +374,7 @@ function setRootValue(rootValue) {
     const db = firebase.firestore();
 			                    console.log(' rootValue.'+rootValue);
     // Reference to the document in the collection
-    const docRef = db.collection("familyTrees").doc(treeData.name);
+    const docRef = db.collection("familyTrees").doc(treeData.treeID);
 
     // Update the document with the new root value
     return docRef.update({ root: rootValue })
