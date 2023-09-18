@@ -1916,6 +1916,13 @@ const docData = doc.data();
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+
+	    	   const userDocRef = firestore.collection('users').doc(userID);
+        const doc = await userDocRef.get();
+const docData = doc.data();
+    document.getElementById("member-first_name").value = docData.userName;
+    document.getElementById("member-birthdate").value = docData.birthday;
+    document.getElementById("member_Image").src = docData.photo;
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
@@ -2136,15 +2143,17 @@ firestore.collection('familyMembers').add(familyMember)
 	    
 const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 		if(!selectedFile){
+			const picURL = document.getElementById("member_Image").src;
   firestore.collection('familyMembers').doc(docRef.id).update({
                                     memberID: docRef.id,
+                                    photo: picURL,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,docRef.id);
                 loadFamilyTreeChart(treeData);
-
+document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
