@@ -709,6 +709,7 @@ async function updateUserProfile() {
         try {
             await firestore.collection('users').doc(userID).update({
                 userName: username,
+                photo: '',
                 birthday: birthday,
                 state: selectedState,
                 city: city,
@@ -730,8 +731,9 @@ async function updateUserProfile() {
                 console.log('Image uploaded successfully:', downloadURL);
                 // Handle success, e.g., save the downloadURL to your database
                 try {
-                    firestore.collection('users').doc(userID).update({
+                   await firestore.collection('users').doc(userID).update({
                         userName: username,
+                birthday: birthday,
                         photo: downloadURL,
                         state: selectedState,
                         city: city,
@@ -739,7 +741,7 @@ async function updateUserProfile() {
                         userID: userID // Changed from userID to userId
                     });
                     console.log('User profile updated successfully.');
-                    window.location.href = `dashboard/?user=${userId}`;
+                    window.location.href = `dashboard/?user=${userID}`;
                 } catch (error) {
                     console.error('Error updating user profile:', error);
                     return false;
