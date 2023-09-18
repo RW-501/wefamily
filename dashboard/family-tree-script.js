@@ -40,11 +40,15 @@ const width = 800;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
+    const svgMain = d3.select("#family-tree-area")
+        .append("svgMain")
+        .attr("width", width)
+        .attr("height", height);
+	
     const svg = d3.select("#family-tree-area")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
-
 
 
      const height_Layout = 150;
