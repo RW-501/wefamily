@@ -1829,8 +1829,8 @@ window.onclick = function(event) {
 	    
 async function createFamilyTree() {
   try {
-    const button = document.getElementById('createBTN');
-    button.disabled = true;
+    const createBTN = document.getElementById('createBTN');
+    createBTN.disabled = true;
 	  
     const treeName = document.getElementById("tree_name").value;
     const treeLocation = document.getElementById("tree_location").value;
@@ -1907,24 +1907,40 @@ async function createFamilyTree() {
 
         // Assign the generated tree ID to currentFamilyID
         currentFamilyID = generatedTreeID;
-
+    }
 	    
     const userDocRef = firestore.collection('users').doc(userID);
     const userDoc = await userDocRef.get();
     const docData = userDoc.data();
+	    
 
-    // Update member information in the modal
+// Update the 'userTrees' array by adding a new tree ID
+userDocRef.update({
+  userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+})
+.then(() => {
+
+
     document.getElementById("member-first_name").value = docData.userName;
     document.getElementById("member-birthdate").value = docData.birthday;
     document.getElementById("member_Image").src = docData.photo;
-    }
+	
+	console.log('UserTrees array updated with a new tree ID.');
+})
+.catch((error) => {
+  console.error('Error updating userTrees array:', error);
+});
+
+    
   closePopup();
     showAddMemberModal();
   } catch (error) {
     console.error('Error creating family tree:', error);
   } finally {
     // Enable the button again after the operation (success or error)
-    button.disabled = false;
+    const createBTN = document.getElementById('createBTN');
+
+    createBTN.disabled = false;
   }
 }
 
