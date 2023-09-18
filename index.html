@@ -729,13 +729,13 @@ async function updateUserProfile() {
                 console.log('Image uploaded successfully:', downloadURL);
                 // Handle success, e.g., save the downloadURL to your database
                 try {
-                    firestore.collection('users').doc(userId).update({
+                    firestore.collection('users').doc(userID).update({
                         userName: username,
                         photo: downloadURL,
                         state: selectedState,
                         city: city,
                         country: selectedCountry,
-                        userID: userId // Changed from userID to userId
+                        userID: userID // Changed from userID to userId
                     });
                     console.log('User profile updated successfully.');
                     window.location.href = `dashboard/?user=${userId}`;
