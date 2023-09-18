@@ -695,7 +695,7 @@ async function updateUserProfile() {
 
     // Use the retrieved values as needed
     console.log('Username:', username);
-    console.log('Birthday:', birthday);
+    console.log('birthday:', birthday);
     console.log('userId:', userID);
 
     if (username === "" || selectedState === "") {
@@ -709,6 +709,7 @@ async function updateUserProfile() {
         try {
             await firestore.collection('users').doc(userID).update({
                 userName: username,
+                birthday: birthday,
                 state: selectedState,
                 city: city,
                 country: selectedCountry,
