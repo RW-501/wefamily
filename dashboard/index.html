@@ -2629,14 +2629,9 @@ addFamily_MemberData = member;
 function addParentToChild(newID, addFamily_MemberID) {
 	     
 
-    const childRef = firestore.collection('familyMembers').doc(newID);
     const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
-    // Update the child's parents array to include the parent's ID
-   /* childRef.update({
-        parents: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
-    });
-*/
+
     // Update the parent's children array to include the child's ID
     parentRef.update({
         children: firebase.firestore.FieldValue.arrayUnion(newID)
@@ -2646,36 +2641,22 @@ function addParentToChild(newID, addFamily_MemberID) {
 }
 
 
-// Function to add siblings to each other's sibling arrays
-function addSiblingToMember(newID, addFamily_MemberID) {
-    const memberRef1 = firestore.collection('familyMembers').doc(newID);
-    const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
-
-    // Update the sibling arrays for both members
-    memberRef1.update({
-        sibling: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
-    });
-    
-    memberRef2.update({
-        sibling: firebase.firestore.FieldValue.arrayUnion(newID)
-    });
-}
 
 // Function to add parent-child relationship
 function addChildToParent(newID, addFamily_MemberID) {
-    const parentRef = firestore.collection('familyMembers').doc(newID);
     const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
-    // Update the parent and child arrays
-    parentRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
-    });
-			loadFamilyTreeChart();
-   /* childRef.update({
+  childRef.update({
         parents: firebase.firestore.FieldValue.arrayUnion(newID)
-    });*/
+    });   
+			loadFamilyTreeChart();
+  
 }
 
+
+
+
+	    
 // Function to add spouses to each other's spouse arrays
 function addSpouseToMember(newID, addFamily_MemberID) {
     const memberRef1 = firestore.collection('familyMembers').doc(newID);
@@ -2692,7 +2673,21 @@ function addSpouseToMember(newID, addFamily_MemberID) {
 }
 
     
- 
+ // Function to add siblings to each other's sibling arrays
+function addSiblingToMember(newID, addFamily_MemberID) {
+    const memberRef1 = firestore.collection('familyMembers').doc(newID);
+    const memberRef2 = firestore.collection('familyMembers').doc(addFamily_MemberID);
+
+    // Update the sibling arrays for both members
+    memberRef1.update({
+        sibling: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+    });
+    
+    memberRef2.update({
+        sibling: firebase.firestore.FieldValue.arrayUnion(newID)
+    });
+}
+
             
 
 
