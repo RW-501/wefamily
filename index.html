@@ -1154,7 +1154,7 @@ async function checkLoggedInAndRedirect() {
 
         // Get the current login count
         let loginCount = 0;
-
+userID = userId;
 	        console.log('userId:', userId);
 
   const userDoc = await userDocRef.get();
@@ -1179,7 +1179,8 @@ async function checkLoggedInAndRedirect() {
 			const imgElement = document.getElementById("photoURL");
 imgElement.src = photoURL;
             currentView = 0;
-            nextView(userId);
+			
+            nextView(userID);
 		}
         }
     }else{
