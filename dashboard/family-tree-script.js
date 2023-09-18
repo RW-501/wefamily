@@ -176,7 +176,7 @@ const nodeGroup = chartGroup.selectAll(".node")
     .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
 
 
-svg.append("defs").append("clipPath")
+svg.append("g").append("clipPath")
     .attr("id", "clipCircle")
     .append("circle")
     .attr("r", 20);  // Radius of the circle
@@ -193,11 +193,6 @@ nodeGroup.append("circle")
     });
 
 
-nodeGroup
-  .append('clipPath') // Create a unique clip path for each image
-  .attr('id', (d, i) => `clipCircle-${i}`)
-  .append('circle')
-  .attr('r', 20);
 
 nodeGroup
   .append('image')
@@ -213,7 +208,20 @@ nodeGroup
     showMemberPopup(d.data);
   });
 
-
+/*
+// Append images to nodes
+nodeGroup.append("image")
+    .attr("xlink:href", d => d.data.photo) // Set the image URL
+    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
+    .attr("width", imageWidth)
+    .attr("height", imageHeight)
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked image Data:", d.data);
+        showMemberPopup(d.data);
+    });
+*/
 
 
     // Apply the zoom behavior to the SVG
