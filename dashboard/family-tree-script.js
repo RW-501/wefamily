@@ -8,113 +8,139 @@ const initialScale = 1;
 let currentScale = initialScale;
 
 
-	// Add click event listeners for zoom controls
-zoomOutButton.addEventListener('click', () => {
-	if( currentScale > 2){
-			return ;
-	}
-	const newScale = currentScale * 1.2; // Increase scale by 20%
-		    console.log("+ newScale   " + currentScale);
-
-    applyZoom(newScale);
-});
-
-zoomInButton.addEventListener('click', () => {
-	if( currentScale < .50){
-			return ;
-	}
-    const newScale = currentScale / 1.2; // Decrease scale by 20%
-		    console.log("- newScale   " + currentScale);
-
-    applyZoom(newScale);
-});
-
-    // Create a group element to hold the links
-       var chartGroup; 
- var linkGenerator;
-function generateFamilyTreeChart(familyData) {
-	
-
-const width = 800;// window.screen.width;
-    const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
-document.getElementById('family-tree-area').innerHTML ="";
-    // Create an SVG element to contain the chart
-    const svgMain = d3.select("#family-tree-area")
-        .append("svgMain")
-        .attr("width", width)
-        .attr("height", height);
-	
-    const svg = d3.select("#family-tree-area")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-
-
-     const height_Layout = 150 * maxHierarchyDepth;
-    // Create a hierarchical tree layout
-    const treeLayout = d3.tree().size([width, height_Layout]);
     
-chartGroup  = svg.append("g");
+
+
+let memberData = root.descendants().children;
+	    console.log('memberData: ', memberData);
+
+if (!memberData === undefined && memberData.length === 0) {
+    // Add text labels to nodes
+    chartGroup.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", 60) // Adjust the vertical position of labels
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name) // Display member names
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked text Data:", d.data);
+        // You can now use d.data to access relationship information
+	    // Example usage
+showMemberPopup(d.data);
+
+
+    });
+                    }else{
+    // Add text labels to nodes
+    chartGroup.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", -60) // Adjust the vertical position of labels
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name) // Display member names
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked link
+        console.log("Clicked text Data:", d.data);
+showMemberPopup(d.data);
+
+    });
+
+	  }
+
+const imageWidth = 100;
+const imageHeight = 100;
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clipCircle")
+    .append("circle")
+    .attr("r", 20);  // Radius of the circle
+
+
 	
-	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
-	    console.log("familyData   " + familyData);
+  const nodeGroup = chartGroup.selectAll(".node")
+        .data(root.descendants())
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
+
+    nodeGroup.append("circle")
+        .attr("class", "circle")
+        .attr("r", 20) // Radius of circles
+        .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+        .on("click", function (event, d) {
+            // 'd' contains the data associated with the clicked node
+            console.log("Clicked circle Data:", d.data);
+        });
+
+
+// Append images to nodes
+nodeGroup.append("image")
+    .attr("xlink:href", d => d.data.photo) // Set the image URL
+    .attr("x", d => -imageWidth / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale)
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked image Data:", d.data);
+        showMemberPopup(d.data);
+    });
 
 
 
+// Apply the zoom behavior to the SVG
+svg.call(zoom)
+    .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+const translateX = 0;
+const translateY = 100;
+const scale = 1;    
+// Set the transform attribute
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
 
+
+
+	
     
-// Create a root node for the tree with an initial y-coordinate of 50
-const root = d3.hierarchy(familyData).eachBefore(d => {
- //   d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
-    d.y = d.depth *  50; // Adjust the '100' for your desired vertical spacing
-});
+// Define the zoom function
+function zoomed(event) {
+    currentScale = event.transform.k;
 
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
 
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / currentScale);
 
-    // Assign coordinates to each node in the tree
-    treeLayout(root);
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / currentScale);
 
-// Create a link generator with zoom transformation
-     linkGenerator = d3.linkHorizontal()
-        .x(d => d.x) // Swap x and y due to vertical tree layout
-        .y(d => d.y);
+    chartGroup.selectAll("image")
+        .attr("x", d => -imageWidth / 2 / currentScale)
+        .attr("y", d => -imageHeight / 2 / currentScale)
+        .attr("width", imageWidth / currentScale)
+        .attr("height", imageHeight / currentScale);
 
-    // Initialize zoom with the initial scale
-    const zoom = d3.zoom()
-        .scaleExtent([0.5, 5]) // Define the zoom scale limits
-        .on("zoom", zoomed);
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / currentScale);
 
-    // Create links between parent and child nodes
-    const links = root.links();
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+            const source = { x: d.source.x, y: d.source.y * currentScale };
+            const target = { x: d.target.x, y: d.target.y * currentScale };
+            return linkGenerator({ source, target });
+        });
+}
 
-// Draw custom links between nodes
-// Define a function to generate curved paths
-const curvedPath = (d) => {
-    const sourceX = d.source.x;
-    const sourceY = d.source.y;
-    const targetX = d.target.x;
-    const targetY = d.target.y;
-
-    // Calculate control point coordinates for a curved link
-    const controlX = (sourceX + targetX) / 2;
-    const controlY = (sourceY + targetY) / 2;
-
-    return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-};
-
-// Append curved links
-chartGroup.selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("d", curvedPath) // Use the curvedPath function
-    .style("fill", "none")
-    .style("stroke", "gray")
-    .style("stroke-width", 2);
-
-
-    
 
 
 
