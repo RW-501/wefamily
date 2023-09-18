@@ -2130,23 +2130,23 @@ if(!first_name && !last_name){
 
         // Add other fields as needed
     };
-
+let memberID;
 // Add the family member to the 'familyMembers' collection
 firestore.collection('familyMembers').add(familyMember)
     .then((docRef) => {
      
-	    
+	    memberID = docRef.id;
 const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 		if(!selectedFile){
 			const picURL = document.getElementById("member_Image").src;
-  firestore.collection('familyMembers').doc(docRef.id).update({
+  firestore.collection('familyMembers').doc(memberID).update({
                                     memberID: docRef.id,
                                     photo: picURL,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
-					checkFirstMember(currentFamilyID,docRef.id);
+					checkFirstMember(currentFamilyID,memberID);
                 loadFamilyTreeChart(treeData);
 document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
                                 })
@@ -2163,14 +2163,15 @@ uploadImageToStorage(
     console.log('Image uploaded successfully to member_main_Image:', downloadURL);
     // Handle success, e.g., save the downloadURL to your database
    // Update the family tree document with the photo URL
-                                firestore.collection('familyMembers').doc(docRef.id).update({
+                                firestore.collection('familyMembers').doc(memberID).update({
                                     photo: downloadURL,
-                                    memberID: docRef.id,
+                                    memberID: memberID,
                                 })
                                 .then(() => {
+					
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
-					checkFirstMember(currentFamilyID,docRef.id);
+					checkFirstMember(currentFamilyID,memberID);
                 loadFamilyTreeChart(treeData);
 
                                 })
@@ -2198,11 +2199,6 @@ uploadImageToStorage(
     // Close the modal after adding the member
     closeAddMemberModal();
 }
-
-
-
-
-
 
 
 
@@ -2246,6 +2242,7 @@ isFirstChild(currentFamilyID)
             console.log("This is the first family member.");
             // Perform actions for the first family member here
 			                    console.log('setRootValue memberID.',memberID);
+claimMemberFunc(memberID);
 
 setRootValue(memberID);
 	    
@@ -2377,7 +2374,7 @@ let memberID = member.memberID;
 
                         // Update the user document to add the family tree ID to the "userTrees" array field
                         userDocRef.update({
-                            userTrees: firebase.firestore.FieldValue.arrayUnion(userID)
+                            userID: firebase.firestore.FieldValue.arrayUnion(userID)
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
