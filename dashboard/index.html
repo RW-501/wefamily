@@ -1844,6 +1844,7 @@ function createFamilyTree() {
       .collection('familyTrees')
       .where('familyCode', '==', familyCode)
       .get();
+                    console.log("currentFamilyID:"+ currentFamilyID);
 
     existingTreePromise
       .then((existingTree) => {
@@ -1859,7 +1860,14 @@ function createFamilyTree() {
         if (selectedFile) {
           const storagePath = 'family_Tree_Image';
           return uploadImageToStorage(selectedFile, storagePath);
-        }
+        }else{
+
+        return firestore.collection('familyTrees').doc(currentFamilyID).update({
+          treeID: currentFamilyID,
+        });
+
+
+	}
 
         return Promise.resolve(null);  // No image to upload
       })
@@ -1873,9 +1881,7 @@ function createFamilyTree() {
           });
         }
 
-        return firestore.collection('familyTrees').doc(currentFamilyID).update({
-          treeID: currentFamilyID,
-        });
+
       })
       .then(() => {
         const userDocRef = firestore.collection('users').doc(userID);
