@@ -166,7 +166,7 @@ showMemberPopup(exampleMember);
 let memberData = root.descendants().children;
 	    console.log('memberData: ', memberData);
 
-if (!memberData === null && memberData.length === 0) {
+if (!memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
