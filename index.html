@@ -600,10 +600,10 @@ display:grid;
 
 let currentView = 0;
 
-function nextView() {
+function nextView(userId) {
   if (currentView < 3) {
     currentView++;
-    updateView();
+    updateView(userId);
   }
 
 }
@@ -624,9 +624,13 @@ function skip() {
 }
      document.getElementById('previewbtn').style.display = 'none';
      document.getElementById('progress-container').style.display = 'none';
+var userID;
 
+function updateView(userId) {
 
-function updateView() {
+	if(userId){
+userID = userId;
+	}
   const views = document.querySelectorAll('.view');
   views.forEach(view => view.style.display = 'none');
   document.getElementById(`view${currentView}`).style.display = 'grid';
@@ -679,7 +683,7 @@ showMainMessage("Username is blank");
 }
 
 
-async function updateUserProfile(userId) {
+async function updateUserProfile() {
     const countryDropdown = document.getElementById('countryDropdown');
     const selectedCountry = countryDropdown.value;
     const stateDropdown = document.getElementById('stateDropdown');
@@ -692,7 +696,7 @@ async function updateUserProfile(userId) {
     // Use the retrieved values as needed
     console.log('Username:', username);
     console.log('Birthday:', birthday);
-    console.log('City:', city);
+    console.log('userId:', userID);
 
     if (username === "" || selectedState === "") {
         showMainMessage("Missing Info");
@@ -708,7 +712,7 @@ async function updateUserProfile(userId) {
                 state: selectedState,
                 city: city,
                 country: selectedCountry,
-                userID: userId // Changed from userID to userId
+                userID: userID // Changed from userID to userId
             });
             console.log('User profile updated successfully.');
             window.location.href = `dashboard/?user=${userId}`;
@@ -876,7 +880,7 @@ ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
         } else {
             currentView = 0;
-            nextView();
+            nextView(userId);
         }
     }
 }
@@ -909,6 +913,7 @@ async function loginWithEmailPassword() {
 
         // Get the user's ID
         const userId = userCredential.user.uid;
+    console.log('userId:', userId);
 
         // Reference to the user document in Firestore
         const userDocRef = firestore.collection('users').doc(userId);
@@ -1050,6 +1055,8 @@ async function register() {
         // Create a new user in Firebase Authentication
         const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         const userId = userCredential.user.uid;
+	        console.log('userId:', userId);
+
 if(userId){
         // Save login status to local storage
         localStorage.setItem('userLoggedIn', 'true');
@@ -1076,7 +1083,7 @@ if(userId){
       //  window.location.href = `dashboard/?user=${userCredential.user.uid}`;
     document.getElementById('mainContainer').style.display = 'none';
 
-nextView();
+nextView(userId;
 		        return true;
 
 }else{
@@ -1100,6 +1107,7 @@ async function checkLoggedInAndRedirect() {
     // Check if a user is currently signed in
     if (userLoggedIn === 'true' && auth.currentUser) {
         const userId = auth.currentUser.uid; // Get the user's ID
+	        console.log('userId:', userId);
 
         const userDocRef = firestore.collection('users').doc(userId);
 
@@ -1117,8 +1125,8 @@ async function checkLoggedInAndRedirect() {
 
                 window.location.href = `dashboard/?user=${userId}`;
             } else {
-                currentView = -1
-                nextView();
+                currentView = -1;
+                nextView(userId);
             }
         }
     }
@@ -1147,6 +1155,7 @@ async function checkLoggedInAndRedirect() {
         // Get the current login count
         let loginCount = 0;
 
+	        console.log('userId:', userId);
 
   const userDoc = await userDocRef.get();
     if (userDoc.exists) {
@@ -1170,7 +1179,7 @@ async function checkLoggedInAndRedirect() {
 			const imgElement = document.getElementById("photoURL");
 imgElement.src = photoURL;
             currentView = 0;
-            nextView();
+            nextView(userId);
 		}
         }
     }else{
