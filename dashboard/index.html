@@ -1815,7 +1815,18 @@ window.onclick = function(event) {
             document.getElementById("popup-container").style.display = "none";
         }
 
-			  
+
+
+
+
+	    
+
+
+
+
+
+
+	    
 async function createFamilyTree() {
   try {
     const treeName = document.getElementById("tree_name").value;
@@ -1844,14 +1855,11 @@ async function createFamilyTree() {
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
       const storagePath = 'family_Tree_Image';
-      await uploadImageToStorage(selectedFile, storagePath)
-        .then((url) => {
-          downloadURL = url;  // Set downloadURL with the resolved URL
-        })
-        .catch((error) => {
-          console.error('Error uploading image:', error);
-        });
-    }
+                        uploadImageToStorage(
+                            selectedFile,
+                            storagePath,
+                            (downloadURL) => {
+
 
     const familyTreeData = {
       name: treeName,
@@ -1868,6 +1876,12 @@ async function createFamilyTree() {
 
     const docRef = await firestore.collection('familyTrees').add(familyTreeData);
     currentFamilyID = docRef.id;
+
+
+			    })
+
+	
+
 
     await firestore.collection('familyTrees').doc(currentFamilyID).update({
       treeID: currentFamilyID,
