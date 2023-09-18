@@ -1871,6 +1871,8 @@ async function createFamilyTree() {
     // Add family tree data to Firestore
     const docRef = await firestore.collection('familyTrees').add(familyTreeData);
     currentFamilyID = docRef.id;
+
+	  const userDocRef;
     // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
     if (selectedFile) {
@@ -1884,12 +1886,12 @@ async function createFamilyTree() {
       treeID: currentFamilyID,
       photo: downloadURL,
     });
+   const userDocRef  = firestore.collection('users').doc(userID);
 
 
 
     // Retrieve user information and update UI
-    const userDocRef = firestore.collection('users').doc(userID);
-    const userDoc = await userDocRef.get();
+    const userDoc =  userDocRef.get();
     const docData = userDoc.data();
     document.getElementById("member-first_name").value = docData.userName;
     document.getElementById("member-birthdate").value = docData.birthday;
