@@ -2171,7 +2171,7 @@ const selectedFile = document.getElementById('member_main_Image').files[0]; // G
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,memberID);
-                loadFamilyTreeChart(treeData);
+                fetchFamilyTree();
 document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
                                 })
                                 .catch((error) => {
@@ -2196,7 +2196,7 @@ uploadImageToStorage(
                                     console.log('Photo URL added to family tree document.');
 					   displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,memberID);
-                loadFamilyTreeChart(treeData);
+                fetchFamilyTree();
 
                                 })
                                 .catch((error) => {
