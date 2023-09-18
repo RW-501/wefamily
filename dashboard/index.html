@@ -1817,18 +1817,18 @@ window.onclick = function(event) {
 
 			  
 async function createFamilyTree() {
-  const treeName = document.getElementById("tree_name").value;
-  const treeLocation = document.getElementById("tree_location").value;
-  const treeDescription = document.getElementById("tree_description").value;
-  const publicBool = document.getElementById("tree_public").value;
-  const familyCode = document.getElementById("tree_code").value;
-
-  if (!treeName || !treeLocation || !familyCode || !userID) {
-    showMainMessage("Please fill in all required fields.");
-    return;
-  }
-
   try {
+    const treeName = document.getElementById("tree_name").value;
+    const treeLocation = document.getElementById("tree_location").value;
+    const treeDescription = document.getElementById("tree_description").value;
+    const publicBool = document.getElementById("tree_public").value;
+    const familyCode = document.getElementById("tree_code").value;
+
+    if (!treeName || !treeLocation || !familyCode || !userID) {
+      showMainMessage("Please fill in all required fields.");
+      return;
+    }
+
     const existingTree = await firestore
       .collection('familyTrees')
       .where('familyCode', '==', familyCode)
@@ -1847,8 +1847,13 @@ async function createFamilyTree() {
       await uploadImageToStorage(selectedFile, storagePath)
         .then((url) => {
           downloadURL = url;  // Set downloadURL with the resolved URL
+        })
+        .catch((error) => {
+          console.error('Error uploading image:', error);
+        });
+    }
 
-   const familyTreeData = {
+    const familyTreeData = {
       name: treeName,
       location: [treeLocation],
       description: treeDescription,
@@ -1877,18 +1882,12 @@ async function createFamilyTree() {
     document.getElementById("member_Image").src = docData.photo;
     closePopup();
     showAddMemberModal();
-		
-        })
-        .catch((error) => {
-          console.error('Error uploading image:', error);
-        });
-    }
 
- 
   } catch (error) {
     console.error('Error creating family tree:', error);
   }
 }
+
 
 
 
