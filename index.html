@@ -696,7 +696,8 @@ async function updateUserProfile() {
 
     // Use the retrieved values as needed
     console.log('Username:', username);
-    console.log('Birthday:', birthday);
+    console.log('birthday:', birthday);
+    console.log('userId:', userID);
 
     if (username === "" || selectedState === "") {
         showMainMessage("Missing Info");
@@ -707,7 +708,7 @@ async function updateUserProfile() {
 
     if (!selectedFile) {
         try {
-            await firestore.collection('users').doc(userID).update({
+             firestore.collection('users').doc(userID).update({
                 userName: username,
                 photo: '',
                 birthday: birthday,
@@ -723,28 +724,22 @@ async function updateUserProfile() {
             return false;
         }
     } else {
-        const storageRef = firebase.storage().ref(); // Get the storage reference
-        const storagePath = `profilePics/${userID}/${selectedFile.name}`; // Adjust the storage path
-
-        const uploadTask = storageRef.child(storagePath).put(selectedFile);
-
-        uploadTask.on('state_changed', null, (error) => {
-            console.error('Error uploading image:', error);
-            return false;
-        }, () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        const storagePath = 'profilePicInput'; // Change the storage path as needed
+        uploadImageToStorage(
+            selectedFile,
+            storagePath,
+            (downloadURL) => {
                 console.log('Image uploaded successfully:', downloadURL);
-
-                // Update user profile with the downloadURL
+                // Handle success, e.g., save the downloadURL to your database
                 try {
                     firestore.collection('users').doc(userID).update({
                         userName: username,
-                        birthday: birthday,
+                birthday: birthday,
                         photo: downloadURL,
                         state: selectedState,
                         city: city,
                         country: selectedCountry,
-                        userID: userID
+                        userID: userID // Changed from userID to userId
                     });
                     console.log('User profile updated successfully.');
                     window.location.href = `dashboard/?user=${userID}`;
@@ -753,11 +748,8 @@ async function updateUserProfile() {
                     return false;
                 }
             });
-        });
     }
 }
-
-
 	    
 
 	    
