@@ -1112,31 +1112,39 @@ return true;
 async function checkLoggedInAndRedirect() {
     const userLoggedIn = localStorage.getItem('userLoggedIn');
     const auth = firebase.auth();
-        const userId = auth.currentUser.uid; // Get the user's ID
-	        console.log('userId:', userId);
+
     // Check if a user is currently signed in
-    if (userLoggedIn === 'true' && userId) {
-    
+    if (userLoggedIn === 'true' && auth.currentUser) {
+        const userId = auth.currentUser.uid; // Get the user's ID
+        console.log('userId:', userId);
 
         const userDocRef = firestore.collection('users').doc(userId);
 
-        const userDoc = await userDocRef.get();
-        if (userDoc.exists) {
-            const userData = userDoc.data();
+        try {
+            const userDoc = await userDocRef.get();
 
-            if (userData.userName && userData.userName !== "") {
-                loginCount = userData.loginCount || 0;
-                
-                // Update the login count in Firestore
-                await userDocRef.update({
-                    loginCount: loginCount + 1,
-                });
+            if (userDoc.exists) {
+                const userData = userDoc.data();
 
-                window.location.href = `dashboard/?user=${userId}`;
+                if (userData.userName && userData.userName !== "") {
+                    let loginCount = userData.loginCount || 0;
+
+                    // Update the login count in Firestore
+                    await userDocRef.update({
+                        loginCount: loginCount + 1,
+                    });
+
+                    window.location.href = `dashboard/?user=${userId}`;
+                } else {
+                    // Handle the case where userName is empty
+                    currentView = -1;
+                    nextView(userId);
+                }
             } else {
-                currentView = -1;
-                nextView(userId);
+                console.log("User document does not exist.");
             }
+        } catch (error) {
+            console.error('Error getting user document:', error);
         }
     }
 }
