@@ -221,6 +221,7 @@ min-height: 500px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 1em;
     }
     /* Tree details section */
      #tree-details, #tree-content, #family_News, #member_Request  {
@@ -667,7 +668,9 @@ font-size: 2em;
 #meberDetailpopup{
 
 }
+#create-tree-section input[type="text"], input[type="date"], textarea { {
 
+}
 
 	
 </style>
@@ -851,7 +854,7 @@ function initializeFamilyTreeChart() {
                  <input type="radio" id="tree_public" placeholder="public" checked>
                 </p><p>
                 <label for="tree_code">Code:</label>
-                <input type="text" id="tree_code" placeholder="code">
+                <input type="text" id="tree_code" placeholder="JoeFam411">
                 </p><p>
                 <label for="tree_description">Description:</label>
                 <textarea id="tree_description" placeholder="Brief Description"></textarea>
@@ -914,7 +917,7 @@ function initializeFamilyTreeChart() {
 	 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+        <img id="member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="member_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -1878,6 +1881,17 @@ const selectedFile = document.getElementById('family_Tree_Image').files[0]; // G
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
+	   const userDocRef = firestore.collection('users').doc(userID);
+        const doc = await userDocRef.get();
+const docData = doc.data();
+    document.getElementById("member-first_name").value = docData.userName;
+    document.getElementById("member-birthdate").value = docData.birthday;
+    document.getElementById("member_Image").src = docData.photo;
+  //  document.getElementById("member-first_name").value = docData.state;
+
+
+
+	
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
