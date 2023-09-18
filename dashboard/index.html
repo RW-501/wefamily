@@ -2549,16 +2549,13 @@ uploadImageToStorage(
                     if (addFamily_Type === "Parent") {
                         addChildToParent(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
-                    } else if (addFamily_Type === "Spouse") {
-                        addSpouseToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Spouse`);
-                    } else if (addFamily_Type === "Child") {
-                        addParentToChild(addFamily_MemberID, newID);
+                    }  else if (addFamily_Type === "Child") {
+                        addParentToChild( newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
-                    } else if (addFamily_Type === "Sibling") {
-                        addSiblingToMember(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name}} Sibling`);
-                    }
+                    } 
+
+
+	
 
 					
                     // Display updated family members
@@ -2610,17 +2607,7 @@ addFamily_MemberData = member;
 
     }
 
-    function addSpouse(member) {
-                   // console.log('member:'+ member);
-
-	   // showMainMessage("?????");
-        // Add spouse logic here
-showAddMemberTypePopup("Spouse");
-	    addFamily_MemberID = member.memberID;
-	    addFamily_Type = 'Spouse';
-addFamily_MemberData = member;
-
-    }
+ 
 
     function addChild(member) {
              //       console.log('member:'+ member);
@@ -2633,16 +2620,7 @@ addFamily_MemberData = member;
 
     }
 
-    function addSibling(member) {
-                 //   console.log('member:'+ member);
-
-        // Add sibling logic here
-showAddMemberTypePopup("Sibling");
-	    addFamily_MemberID = member.memberID;
-	    addFamily_Type = 'Sibling';
-addFamily_MemberData = member;
-
-    }
+ 
 	    
 // Function to add a parent to a child
 function addParentToChild(newID, addFamily_MemberID) {
