@@ -707,7 +707,7 @@ async function updateUserProfile() {
 
     if (!selectedFile) {
         try {
-            await firestore.collection('users').doc(userID).update({
+             firestore.collection('users').doc(userID).update({
                 userName: username,
                 photo: '',
                 birthday: birthday,
