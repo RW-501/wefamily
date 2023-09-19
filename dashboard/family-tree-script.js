@@ -454,15 +454,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
     console.log("treeData.children   " + treeData.children);
 
 
-		  if (treeData.root ) {
- root = {
-          id: treeID,
-          name: treeData.name,
-          children: [treeData.root], // Set the member with the most children as the root
-          data: treeData,
-        };
-			  
-                    } else if(maxChildrenCount > 0){
+ if(maxChildrenCount > 0){
 			  
 		  root = {
           id: treeID,
@@ -470,7 +462,17 @@ function fetchFamilyMemberData(collectionName, treeID) {
           children: [memberIDWithMaxDepth], // Set the member with the most children as the root
           data: treeData,
         };
-		  } else {
+	 setRootValue(memberIDWithMaxDepth);
+
+		  }else if (treeData.root ) {
+ root = {
+          id: treeID,
+          name: treeData.name,
+          children: [treeData.root], // Set the member with the most children as the root
+          data: treeData,
+        };
+			  
+                    } else {
                       root = {
           id: treeID,
           name: treeData.name,
