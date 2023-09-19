@@ -205,10 +205,9 @@ nodeGroup.append("image")
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
 
-document.getElementById(d.data.id).scrollIntoView({ behavior: 'smooth' });
 
 	
-       // showMemberPopup(d.data);
+        showMemberPopup(d.data);
     });
 
 
@@ -307,8 +306,15 @@ function applyZoom(scale) {
 }
 
 function showMemberPopup(member) {
-		    console.log("member   " + member);
+		    console.log("member   " + member.id);
+const scrollTo = document.getElementById('scrollTo');
 
+scrollTo.addEventListener('click', () => {
+	
+document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+  console.log('Div clicked!');
+});
+	
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
