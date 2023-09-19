@@ -1,4 +1,4 @@
-// Add a zoom control UI
+rewrite this code compltly to fix what we talked about earlier... // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
@@ -164,6 +164,13 @@ showMemberPopup(d.data);
 const imageWidth = 100;
 const imageHeight = 100;
 
+const nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
+
 
 svg.append("defs").append("clipPath")
     .attr("id", "clipCircle")
@@ -172,36 +179,29 @@ svg.append("defs").append("clipPath")
 
 
 	
-  const nodeGroup = chartGroup.selectAll(".node")
-        .data(root.descendants())
-        .enter()
-        .append("g")
-        .attr("class", "node")
-        .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
-
-    nodeGroup.append("circle")
-        .attr("class", "circle")
-        .attr("r", 20) // Radius of circles
-        .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-        .on("click", function (event, d) {
-            // 'd' contains the data associated with the clicked node
-            console.log("Clicked circle Data:", d.data);
-        });
+nodeGroup.append("circle")
+    .attr("class", "circle")
+    .attr("r", 20) // Radius of circles
+    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+    .on("click", function (event, d) {
+        // 'd' contains the data associated with the clicked node
+        console.log("Clicked circle Data:", d.data);
+    });
 
 
 // Append images to nodes
+// Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2 / currentScale) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2 / currentScale) // Adjust the positioning relative to the group
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale)
+    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
+    .attr("width", imageWidth)
+    .attr("height", imageHeight)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
-
 
 
 
@@ -216,41 +216,23 @@ const scale = 1;
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
     
 // Define the zoom function
-function zoomed(event) {
-    currentScale = event.transform.k;
+ function zoomed(event) {
+        // Apply the zoom transformation to the chartGroup
+        chartGroup.attr("transform", event.transform);
 
-    if (!chartGroup) {
-        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-        return;
+        // Apply the same zoom transformation to the link lines
+        chartGroup.selectAll("path.link")
+            .attr("d", d => {
+                // Generate the updated path data using the link generator
+                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+                return linkGenerator({ source, target });
+            });
     }
-
-    chartGroup.selectAll("circle")
-        .attr("r", 20 / currentScale);
-
-    chartGroup.selectAll("text")
-        .attr("font-size", 14 / currentScale);
-
-    chartGroup.selectAll("image")
-        .attr("x", d => -imageWidth / 2 / currentScale)
-        .attr("y", d => -imageHeight / 2 / currentScale)
-        .attr("width", imageWidth / currentScale)
-        .attr("height", imageHeight / currentScale);
-
-    chartGroup.selectAll("path.link")
-        .attr("stroke-width", 2 / currentScale);
-
-    chartGroup.selectAll("path.link")
-        .attr("d", d => {
-            const source = { x: d.source.x, y: d.source.y * currentScale };
-            const target = { x: d.target.x, y: d.target.y * currentScale };
-            return linkGenerator({ source, target });
-        });
 }
 
 
 
-
-	
 // Create the zoom function
 function applyZoom(scale) {
     currentScale = scale;
