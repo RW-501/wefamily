@@ -441,7 +441,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
         });
 
         // Update the root to use the member with the most children as the root
-        const root = {
+        let root = {
           id: treeID,
           name: treeData.name,
           children: [], // Set the member with the most children as the root
