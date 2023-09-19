@@ -1178,8 +1178,8 @@ if (querySnapshot.size > 0) {
 document.getElementById("add-member").style.display = "none";
 
 	    }
-	console.log('querySnapshot.size  ID:', querySnapshot.size );
-
+	//console.log('querySnapshot.size  ID:', querySnapshot.size );
+document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members";
 	    
         querySnapshot.forEach((member) => {
             const data = member.data();
