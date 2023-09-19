@@ -2650,12 +2650,12 @@ addFamily_MemberData = member;
 async function addParentToChild(newID, addFamily_MemberID) {
     try {
         console.log('addParentToChild newID:', newID);
-       showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
+      // showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
-        const parentRef = firestore.collection('familyMembers').doc(newID);
+        const childRef = firestore.collection('familyMembers').doc(newID);
 
         // Update the parent's children array to include the child's ID
-        await parentRef.update({
+        await childRef.update({
             children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
         });
 
@@ -2668,14 +2668,14 @@ async function addParentToChild(newID, addFamily_MemberID) {
 
 async function addChildToParent(newID, addFamily_MemberID) {
     try {
-        console.log('addChildToParent newID:', newID);
-        console.log('addFamily_MemberID:', addFamily_MemberID);
-       showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
+  
+	    
+   //    showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
-        const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+        const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
         // Update the child's parent array to include the parent's ID
-        await childRef.update({
+        await parentRef.update({
             children: firebase.firestore.FieldValue.arrayUnion(newID)
         });
 
