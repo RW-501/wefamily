@@ -2717,7 +2717,7 @@ console.log('newID :', newID);
 
 					
 					      // Display updated family members
-                             fetchFamilyTree();
+                          //   fetchFamilyTree();
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();	
@@ -2758,7 +2758,7 @@ console.log('newID :', newID);
 	
 
 					
-                                                fetchFamilyTree();
+                                               // fetchFamilyTree();
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();
@@ -2824,6 +2824,7 @@ addFamily_MemberData = member;
 async function addParentToChild(newID, addFamily_MemberID) {
     try {
         console.log('addParentToChild newID:', newID);
+        console.log('addParentToChild addFamily_MemberID:', addFamily_MemberID);
       // showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
         const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
@@ -2844,7 +2845,8 @@ async function addParentToChild(newID, addFamily_MemberID) {
 async function addChildToParent(newID, addFamily_MemberID) {
     try {
   
-	    
+	          console.log('addChildToParent newID:', newID);
+        console.log('addChildToParent addFamily_MemberID:', addFamily_MemberID);  
    //    showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
         const parentRef = firestore.collection('familyMembers').doc(newID);
