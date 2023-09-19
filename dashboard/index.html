@@ -1115,6 +1115,8 @@ function openEditFamilyTreePopup() {
 function closeEditFamilyTreePopup() {
     const popup = document.getElementById('edit-family-tree-popup');
     popup.style.display = 'none';
+	     displayFamilyMembers(currentFamilyID);
+                loadFamilyTreeChart(treeData);
 }
 
 // Function to save the edited family tree information to Firestore
@@ -2581,6 +2583,7 @@ function saveEditedFamilyMember() {
     
     // Close the popup after saving
     closeEditFamilyMemberPopup();
+
 }
 
 
