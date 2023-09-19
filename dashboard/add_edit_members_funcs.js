@@ -8,7 +8,7 @@
     document.getElementById('edit-last-name').value = memberData.last_name || '';
     document.getElementById('edit-birthdate').value = memberData.birthdate || '';
     document.getElementById('edit-note').value = memberData.note || '';
-    document.getElementById('userID_edit_Member').innerHTML = memberData.id || '';
+    document.getElementById('userID_edit_Member').innerHTML = memberData.memberID || '';
 
 		         document.getElementById('edit_member_Image').src = memberData.photo;
 
