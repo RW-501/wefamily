@@ -184,7 +184,7 @@ isPinned = false;
         <div class="photo-post">
 	                <div class="space_J">
                         <div class='pin_area'>${pinBTN}</div>
-            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
+            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
 	    </div>
            <div class="post_img_Box"><img class="post_img" src="${post.photo}" alt="Posted photo" /></div>
             <p class="post_content">${contentWithLinks}</p>
@@ -207,7 +207,7 @@ isPinned = false;
                     postElement.innerHTML = `
 		                            <div class="space_J">
                         <div class='pin_area'>${pinBTN}</div>
-            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete </button>
+            <button class="delete-button" onclick="deletePost('${doc.id}')">Delete</button>
 	    </div>
 
             <p class="post_content">${contentWithLinks}</p>
