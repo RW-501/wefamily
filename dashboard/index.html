@@ -602,8 +602,8 @@ let maxHeight = 500; // Maximum height
           // Upload completed successfully, get the download URL
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log('Image URL:', downloadURL);
-            if (successCallback) successCallback(downloadURL);
 		  return downloadURL;
+            if (successCallback) successCallback(downloadURL);
           });
         }
       );
