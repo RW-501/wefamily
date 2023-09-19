@@ -2529,8 +2529,41 @@ let memberID = member.memberID;
 showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 
 	    }
+
+
+async function saveEditedFamilyMember(memberID) {
+  try {
+    const firstName = document.getElementById('edit-first-name').value;
+    const lastName = document.getElementById('edit-last-name').value;
+    const birthdate = document.getElementById('edit-birthdate').value;
+    const note = document.getElementById('edit-note').value;
+
+    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
+
+    // Update the document with the new data
+    await memberRef.update({
+      first_name: firstName,
+      last_name: lastName,
+      birthdate: birthdate,
+      note: note
+      // Add other fields as needed
+    });
+
+    console.log('Family member updated successfully.');
+    // Close the edit family member popup
+    closeEditFamilyMemberPopup();
+  } catch (error) {
+    console.error('Error saving edited family member:', error);
+  }
+}
+
+
+
+
+
+	    
 function closeEditFamilyMemberPopup() {
-    // Close the popup
+
     document.getElementById('edit-family-member-popup').style.display = 'none';
 }
 
