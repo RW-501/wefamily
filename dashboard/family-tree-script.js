@@ -1,4 +1,4 @@
-// Add a zoom control UI
+rewrite this code compltly to fix what we talked about earlier... // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
@@ -32,8 +32,6 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
        var chartGroup; 
  var linkGenerator;
-
-
 function generateFamilyTreeChart(familyData) {
 	
 
@@ -121,11 +119,9 @@ chartGroup.selectAll("path")
 
 
 let memberData = root.descendants().children;
-let	memberArray = memberData.length;
-	    console.log('memberData: '+ memberData);
-	    console.log('memberArray: '+ memberArray);
+	    console.log('memberData: ', memberData);
 
-if (memberData && memberArray === 0) {
+if (!memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
@@ -194,6 +190,7 @@ nodeGroup.append("circle")
 
 
 // Append images to nodes
+// Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
     .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
@@ -206,6 +203,9 @@ nodeGroup.append("image")
         showMemberPopup(d.data);
     });
 
+
+
+
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
@@ -216,49 +216,59 @@ const scale = 1;
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
     
 // Define the zoom function
-function zoomed(event) {
-  // Apply the zoom transformation to the chartGroup
-  chartGroup.attr('transform', event.transform);
+ function zoomed(event) {
+        // Apply the zoom transformation to the chartGroup
+        chartGroup.attr("transform", event.transform);
 
-  // Apply the same zoom transformation to the link lines
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-      return linkGenerator({ source, target });
-    });
+        // Apply the same zoom transformation to the link lines
+        chartGroup.selectAll("path.link")
+            .attr("d", d => {
+                // Generate the updated path data using the link generator
+                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+                return linkGenerator({ source, target });
+            });
+    }
 }
+
 
 
 // Create the zoom function
 function applyZoom(scale) {
-  currentScale = scale;
+    currentScale = scale;
 
-  if (!chartGroup) {
-    console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-    return;
-  }
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
 
-  // Update circle radius, text font size, image dimensions, stroke width
-  chartGroup.selectAll('circle').attr('r', 20 / scale);
-  chartGroup.selectAll('text').attr('font-size', 14 / scale);
-  chartGroup
-    .selectAll('image')
-    .attr('y', (d) => d.y) // Adjust the positioning
-    .attr('width', 100 / scale)
-    .attr('height', 100 / scale);
-  chartGroup.selectAll('path.link').attr('stroke-width', 2 / scale);
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / scale);
 
-  // Update path 'd' attribute
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      const source = { x: d.source.x, y: d.source.y * scale };
-      const target = { x: d.target.x, y: d.target.y * scale };
-      return linkGenerator({ source, target });
-    });
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / scale);
+
+    chartGroup.selectAll("image")
+//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
+   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
+    .attr("y", d => d.y) // Adjust the positioning
+        .attr("width", 100 / scale)
+        .attr("height", 100 / scale);
+
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / scale);
+	/*
+const translateY = 100;
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
+	*/
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+   
+		const source = { x: d.source.x, y: d.source.y * scale };
+            const target = { x: d.target.x, y: d.target.y * scale };
+            return linkGenerator({ source, target });
+        });
 }
 
 
@@ -379,7 +389,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
-                    const member_ID = doc.memberID;
+                    const memberID = doc.memberID;
                     const private = doc.private;
                     const location = doc.location;
                     const birthdate = doc.birthdate;
@@ -397,7 +407,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     if (!memberDataMap[id]) {
                         const memberData = {
                             id: id,
-                            member_ID: member_ID,
+                            memberID: memberID,
                             name: name,
                             private: private,
                             location: location,
