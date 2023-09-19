@@ -2520,6 +2520,23 @@ const selectedFile = document.getElementById('newMember_main_Image').files[0]; /
                                     memberID: newID,
                                 })
                                 .then(() => {
+
+                              console.log('Photo URL added to family tree document.');
+console.log('addFamily_Type :', addFamily_Type);
+console.log('addFamily_MemberID :', addFamily_MemberID);
+console.log('newID :', newID);
+
+                    if (addFamily_Type === "Parent") {
+                        addChildToParent(newID, addFamily_MemberID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
+                    }  
+		    
+	    if (addFamily_Type === "Child") {
+                        addParentToChild( newID, addFamily_MemberID);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
+                    } 
+
+					
 					      // Display updated family members
                     displayFamilyMembers(currentFamilyID);
                 loadFamilyTreeChart(treeData);
