@@ -1,1 +1,672 @@
+#create-tree-section   .image-container{
+border-radius:0;
+}
+
+@media screen and (max-width: 900px) {
+    .popup-content {
+        /* Flex styles for screen size 800px and above */
+        display: flex;
+        /* Additional flex styles if needed */
+        flex-direction: column; /* or row, or any other flex styles */
+    }
+}
+
+
+
+
+
+#tree-details .image-container{
+    height: 100%;
+    border-radius: 0;
+}
+
+	.w30{
+    width: 30%;
+
+	}
+	.w70{
+    width: 70%;
+
+	}
+
+	.add-spouse, .add-sibling{
+    display: none !important;
+	
+	}
+	#LRP{
+    text-decoration: none;
+    color: #858585;
+    font-weight: 600;
+    font-size: 1.5em;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: block;
+    margin: 1%;
+}
+        .post-image-container {
+width: 50px;
+    height: 50px;
+    border-radius: 5%;
+    overflow: hidden;
+    background-color: lightgray;
+    display: inline-grid;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+        }
+	
+	.image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: lightgray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+		    margin: auto;
+        }
+
+        .uploaded-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .file-input {
+            display: none; /* Hide the file input */
+        }
+
+	
+/* Styling for the message box */
+.mainMessage-box {
+  position: fixed;
+  top: -100px; /* Initially hidden above the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+    color: #fff;
+    font-weight: 800;
+	width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  transition: top 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+.mainMessage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+text-align: center;
+}
+
+#mainMessageText {
+  margin: 10px 0;
+    color: #fff;
+}
+
+/* Styling for the close button */
+#mainCloseButton {
+    background-color: #7b7978;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: 600;
+
+}
+
+#mainCloseButton:hover {
+  background-color: #575453;
+}
+
+
+    /* Global styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+*{
+    box-sizing: border-box;
+}
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    /* Styles for buttons */
+    button {
+    background-color: #8e9399;
+    color: #fff;
+    border: #5d5d5d solid;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    font-weight: 800;
+
+    }
+
+    button:hover {
+        background-color: #4d4d4d;
+    }
+
+
+
+    label {
+        font-weight: 700;
+        margin-right: 10px;
+    }
+
+	
+
+
+#tree-details
+		    input[type="text"],
+    input[type="date"],
+    textarea {
+       width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.5em
+    }
+	
+	
+#post-content
+	    input[type="text"],
+    input[type="date"],
+    textarea {
+       width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.5em
+    }
+
+	#tree-content{
+min-height: 500px;
+    overflow-y: auto;
+    max-height: 1000px;
+	}
+
+	
+    input[type="text"],
+    input[type="date"],
+    textarea {
+       width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    }
+    /* Tree details section */
+     #tree-details, #tree-content, #family_News, #member_Request  {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        margin: 20px 0;
+    }
+        #family-news-area, #family-members {
+            max-height: 700px;
+            resize: vertical;
+            overflow-y: auto;
+            position: relative;
+            display: block;
+        }
+    #family-members {
+        margin-top: 20px;
+    }
+
+    /* Pop-up styles */
+    .popup-container {
+        display: none;
+        position: fixed;
+     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        margin: auto;
+            position: fixed;
+        overflow-y: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: fit-content;
+            display: block;
+            height: fit-content;
+	        max-height: 90%;
+    }
+
+    .close-button {
+text-align: end;
+        font-size: 20px;
+        cursor: pointer;
+            display: block;
+	        font-weight: 900;
+    }
+
+    /* Tree sections */
+   
+    .tree-section h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* Switch button styles */
+    #join-create-button {
+    /* background-color: #007BFF; */
+    color: #fff;
+    /* border: none; */
+    /* padding: 10px 20px; */
+    /* font-size: 16px; */
+    cursor: pointer;
+    /* border-radius: 4px; */
+    transition: background-color 0.3s ease;
+    }
+
+    #join-create-button:hover {
+        background-color: #0056b3;
+    }
+#search-family-tree input[type="text"], input[type="date"], textarea {  
+    font-size: 1.5em;
+}
+
+	
+    /* Search input and button styles */
+    #family-tree-search,
+    #family-tree-code {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #search-button,
+    #enter-code-button {
+  background-color: #007BFF; */
+    color: #fff;
+    /* border: none; */
+    padding: 10px 20px;
+    font-size: 16px;
+    /* cursor: pointer; */
+    /* border-radius: 4px; */
+    transition: background-color 0.3s ease;
+    }
+
+    #search-button:hover,
+    #enter-code-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Add member modal styles */
+    #add-member-modal {
+        display: none;
+    }
+
+    #add-member-modal .popup {
+        width: 400px;
+    }
+
+    #add-member-form label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    #add-member-form input[type="text"],
+    #add-member-form input[type="date"],
+    #add-member-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #add-member-form button {
+         /* background-color: #007BFF; */
+    color: #fff;
+    /* border: none; */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    /* border-radius: 4px; */
+    transition: background-color 0.3s ease;
+    }
+
+    #add-member-form button:hover {
+        background-color: #0056b3;
+    }
+
+
+.hidden {
+    display: none;
+}
+
+
+
+.post .post-content {
+    padding: 10px;
+}
+
+.post .image-container {
+    margin-top: 10px; /* Add space below text content for image */
+}
+
+/* CSS for pinned posts */
+
+#mainFamily-news-area {
+    max-height: 700px;
+    resize: vertical;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px;
+padding-top: 15px;
+}
+	
+#pinnedFamily-news-area {
+    max-height: 700px;
+    resize: vertical;
+    position: absolute;
+    display: block;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+	
+.post {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pin-post {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    outline: none;
+    position: sticky; /* Use sticky position */
+    top: 0; /* Stick to the top of the container */
+    width: 100%;
+    z-index: 1;
+}
+
+	.pin-post button {
+            background-color: #fff;
+		color: #007bff;
+}
+.pin_area{
+	display:block;
+	width: 400px;
+}
+	
+.space_J {
+    display: flex;
+    justify-content: space-between;
+	    width: 100%;
+
+}
+.flex {
+display: flex;
+    gap: 10px;
+
+}
+
+
+#family-tree {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.family-member {
+  text-align: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  min-width: 150px;
+  background-color: #f9f9f9;
+  position: relative;
+}
+
+.member-details {
+  margin-bottom: 10px;
+}
+
+.family-member button {
+  display: none;
+}
+
+.family-member:hover button {
+  display: inline-block;
+}
+
+/* Adjust styling as needed */
+
+html, body{
+    overflow: hidden;
+    overflow-y: auto;
+}
+	
+/* Navigation Bar styles */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.navbar .logo {
+      font-size: 3em;
+    font-weight: 800;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-right: 10px;
+}
+
+.navbar .logout {
+    background-color: #fff;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navbar .logout:hover {
+    background-color: #555;
+    color: #fff;
+    transition: 0.3s;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+
+    width: 100%;
+}
+
+/* Add this CSS in your stylesheet */
+.navbar .dropdown-menu {
+    display: none;
+    background-color: #333;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navbar .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar .dropdown-menu ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar .dropdown-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+/* Media query to show/hide the dropdown menu */
+@media screen and (max-width: 900px) {
+    .navbar .nav-links {
+        display: none;
+    }
+
+    .navbar .dropdown-menu {
+        display: block;
+    }
+
+
+}
+	#family-tree, #family-tree-area{
+    width: 100%;
+    height: 800px;	
+    overflow: auto;
+}
+
+	
+	      .node {
+            cursor: pointer;
+        }
+#postPic_img{
+    border-radius: 10px;
+    overflow: hidden;
+ cursor: pointer;
+
+}
+.post_img{
+width: 90% !important;
+    object-fit: contain;
+    margin: auto;
+    display: block;
+}
+.post_img_Box{
+width: 90% !important;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    height: 90%;
+    padding: 2%;
+    box-sizing: border-box;
+
+}
+#post_content{
+    font-size: 2em;
+    font-weight: 400;
+	}
+	.post_content{
+    font-size: 2em;
+    font-weight: 400;
+font-size: 2em;
+    font-weight: 400;
+    padding: 2%;
+    overflow-wrap: break-word;
+	}
+#meberDetailpopup{
+
+
+.popup {
+    display: flex;
+}
+
+.popup-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-image img {
+    width: 100%; /* Ensure the image fills the container */
+}
+
+.popup-right {
+    margin-left: 10px; /* Adjust spacing between the columns */
+}
+
+/* Media query for mobile view */
+@media (max-width: 767px) {
+    .popup {
+        flex-direction: column; /* Switch to a single column layout for mobile */
+    }
+}
+	
+}
+#meberDetailpopup{
+
+}
+#create-tree-section input[type="text"], input[type="date"], textarea { {
+
+}
+
+	
 
