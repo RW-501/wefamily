@@ -260,11 +260,8 @@ async function addParentToChild(newID, addFamily_MemberID) {
         });
 
         await setRootValue(newID);
-const delayInMilliseconds = 5000; // Adjust the delay as needed (in milliseconds)
+  await resetFamilyTree();
 
-setTimeout(async () => {
-  await fetchFamilyTree();
-}, delayInMilliseconds);
 
     } catch (error) {
         console.error('Error adding parent to child:', error);
@@ -285,11 +282,8 @@ async function addChildToParent(newID, addFamily_MemberID) {
             children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
         });
 
-const delayInMilliseconds = 5000; // Adjust the delay as needed (in milliseconds)
+  await resetFamilyTree();
 
-setTimeout(async () => {
-  await fetchFamilyTree();
-}, delayInMilliseconds);
     } catch (error) {
         console.error('Error adding child to parent:', error);
     }
@@ -397,7 +391,7 @@ const selectedFile = document.getElementById('member_main_Image').files[0]; // G
                                     console.log('Photo URL added to family tree document.');
 					  // displayFamilyMembers(currentFamilyID);
 					checkFirstMember(currentFamilyID,memberID);
-                fetchFamilyTree();
+   resetFamilyTree();
 					//loadFamilyTreeChart(treeData);
 document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
                                 })
