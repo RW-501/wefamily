@@ -8,8 +8,10 @@
     document.getElementById('edit-last-name').value = memberData.last_name || '';
     document.getElementById('edit-birthdate').value = memberData.birthdate || '';
     document.getElementById('edit-note').value = memberData.note || '';
+    document.getElementById('userID_edit_Member').innerHTML = memberData.id || '';
 
-		    
+		         document.getElementById('edit_member_Image').src = memberData.photo;
+
     document.getElementById('edit-family-member-popup').style.display = 'block';
 
 
@@ -19,32 +21,73 @@ showMainMessage(`${userID} edit ${memberData.first_name} ${memberData.last_name}
 	    }
 
 
-async function saveEditedFamilyMember(memberID) {
+async function saveEditedFamilyMember() {
   try {
-    const firstName = document.getElementById('edit-first-name').value;
-    const lastName = document.getElementById('edit-last-name').value;
-    const birthdate = document.getElementById('edit-birthdate').value;
-    const note = document.getElementById('edit-note').value;
+    const editedFirstName = document.getElementById('edit-first-name').value;
+    const editedLastName = document.getElementById('edit-last-name').value;
+    const editedBirthdate = document.getElementById('edit-birthdate').value;
+    const editedNote = document.getElementById('edit-note').value;
+	  
+    // Use appropriate method to get photo data
+const memberID =   document.getElementById('userID_edit_Member').innerHTML
 
+	  
     const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
 
-    // Update the document with the new data
+  const selectedFile = document.getElementById('edit-photo-file').files[0];
+
+	  
+    if (selectedFile) {
+        // Handle uploading the edited photo and get the download URL
+        // Replace 'uploadPhotoToStorage' with your actual photo upload function
+       uploadImageToStorage(
+  selectedFile,
+  'member_main_Image',
+  (downloadURL) => {
+ // Update the document with the new data
     await memberRef.update({
-      first_name: firstName,
-      last_name: lastName,
-      birthdate: birthdate,
-      note: note
+      first_name: editedFirstName,
+      last_name: editedLastName,
+      birthdate: editedBirthdate,
+      note: editedNote,
+	    photo:downloadURL
+	    
       // Add other fields as needed
     });
 
     console.log('Family member updated successfully.');
     // Close the edit family member popup
     closeEditFamilyMemberPopup();
+            })
+            .catch(error => {
+                console.error('Error uploading edited photo:', error);
+            });
+    } else {
+	    
+ // Update the document with the new data
+    await memberRef.update({
+      first_name: editedFirstName,
+      last_name: editedLastName,
+      birthdate: editedBirthdate,
+      note: editedNote
+      // Add other fields as needed
+    });
+
+    console.log('Family member updated successfully.');
+    // Close the edit family member popup
+    closeEditFamilyMemberPopup();
+    }
+
+
+
+
+
+	  
+   
   } catch (error) {
     console.error('Error saving edited family member:', error);
   }
 }
-
 
 
 
@@ -55,21 +98,7 @@ function closeEditFamilyMemberPopup() {
 }
 
 
-function saveEditedFamilyMember() {
-    // Code to save edited member data to the database
-    const editedFirstName = document.getElementById('edit-first-name').value;
-    const editedLastName = document.getElementById('edit-last-name').value;
-    const editedBirthdate = document.getElementById('edit-birthdate').value;
-    const editedNote = document.getElementById('edit-note').value;
-    const editedPhoto = document.getElementById('edit-photo').value; // Use appropriate method to get photo data
-    
-    // Save the edited data to the database using Firebase or your chosen database
-    // Example: firestore.collection('familyMembers').doc(memberID).update({ firstName: editedFirstName, lastName: editedLastName, ... });
-    
-    // Close the popup after saving
-    closeEditFamilyMemberPopup();
 
-}
 
 function addNewFamilyMember() {
     // Get input values
