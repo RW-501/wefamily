@@ -181,9 +181,14 @@ console.log('newID :', newID);
 
 
 	
-
+// Clear input values
+document.getElementById('member-first_name_type').value = '';
+document.getElementById('member-last_name_type').value = '';
+document.getElementById('member-birthdate_type').value = '';
+document.getElementById('member-deceaseddate_type').value = '';
+document.getElementById('member-note_type').value = '';
 					
-                                               // fetchFamilyTree();
+                                                fetchFamilyTree();
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();
