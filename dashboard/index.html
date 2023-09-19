@@ -600,11 +600,13 @@ let maxHeight = 500; // Maximum height
         },
         () => {
           // Upload completed successfully, get the download URL
-          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            console.log('Image URL:', downloadURL);
-		  return downloadURL;
-            if (successCallback) successCallback(downloadURL);
-          });
+      uploadTask.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+    console.log('Image URL:', downloadURL);
+    if (successCallback) successCallback(downloadURL);
+
+    // Call the upload complete callback function if provided
+    if (uploadCompleteCallback) await uploadCompleteCallback();
+  });
         }
       );
     }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
