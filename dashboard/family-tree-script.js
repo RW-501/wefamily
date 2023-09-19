@@ -39,7 +39,7 @@ zoomInButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
 
-const width = 800;// window.screen.width;
+const width = window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
@@ -123,9 +123,10 @@ chartGroup.selectAll("path")
 
 
 let memberData = root.descendants().children;
-	    console.log('memberData: ', memberData);
+	    console.log('memberData: '+ memberData);
+	    console.log('memberData.length: '+ memberData.length);
 
-if (!memberData === undefined && memberData.length === 0) {
+if (memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
@@ -193,7 +194,6 @@ nodeGroup.append("circle")
     });
 
 
-// Append images to nodes
 // Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
