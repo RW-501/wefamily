@@ -46,7 +46,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .attr("width", width)
         .attr("height", height);
 
-width = window.screen.width;
+//width = window.screen.width;
 	
     const svg = d3.select("#family-tree-area")
         .append("svg")
