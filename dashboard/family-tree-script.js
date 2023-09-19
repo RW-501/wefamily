@@ -120,8 +120,8 @@ chartGroup.selectAll("path")
 
 let memberData = root.descendants().children;
 	    console.log('memberData: ', memberData);
-
-if (!memberData === undefined && memberData.length === 0) {
+if(0 == 0){
+//if (!memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
