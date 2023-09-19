@@ -2627,7 +2627,7 @@ addFamily_MemberData = member;
 async function addParentToChild(newID, addFamily_MemberID) {
     try {
         console.log('addParentToChild newID:', newID);
-        console.log('addFamily_MemberID:', addFamily_MemberID);
+       showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
         const parentRef = firestore.collection('familyMembers').doc(newID);
 
