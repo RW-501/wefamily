@@ -1,5 +1,12 @@
 
 
+.userID{
+width: 100%;
+    margin: 2%;
+    text-align: end;
+    display: block;
+}
+
 .popup-image{
     padding: 2%;
     background-color: #f1f3f4;
