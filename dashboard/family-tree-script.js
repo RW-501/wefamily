@@ -312,7 +312,7 @@ const scrollTo = document.getElementById('scrollTo');
 scrollTo.addEventListener('click', () => {
 	
 
-    const memberDiv = document.getElementById(memberId);
+    const memberDiv = document.getElementById(member.id);
     
     if (memberDiv) {
         // Scroll to the member's div
