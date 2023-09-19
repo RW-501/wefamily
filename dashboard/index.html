@@ -2545,12 +2545,16 @@ uploadImageToStorage(
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
-
+console.log('addFamily_Type :', addFamily_Type);
+console.log('addFamily_MemberID :', addFamily_MemberID);
+console.log('newID :', newID);
 
                     if (addFamily_Type === "Parent") {
                         addChildToParent(newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
-                    }  else if (addFamily_Type === "Child") {
+                    }  
+		    
+	    if (addFamily_Type === "Child") {
                         addParentToChild( newID, addFamily_MemberID);
                         newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
                     } 
@@ -2647,6 +2651,7 @@ async function addChildToParent(newID, addFamily_MemberID) {
     try {
         console.log('addChildToParent newID:', newID);
         console.log('addFamily_MemberID:', addFamily_MemberID);
+       showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
         const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
