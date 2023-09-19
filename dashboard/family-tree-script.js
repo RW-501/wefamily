@@ -311,7 +311,22 @@ const scrollTo = document.getElementById('scrollTo');
 
 scrollTo.addEventListener('click', () => {
 	
-document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+const element = document.getElementById(member.id);
+const windowHeight = window.innerHeight;
+
+if (element) {
+  // Calculate the desired scroll position to center the element
+  const scrollPosition = element.offsetTop - (windowHeight / 2) + (element.offsetHeight / 2);
+
+  // Scroll to the element with smooth behavior
+  window.scrollTo({
+    top: scrollPosition,
+    behavior: 'smooth'
+  });
+}
+
+
+
   console.log('Div clicked!');
 	hideMemberPopup();
 });
