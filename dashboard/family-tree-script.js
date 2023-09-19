@@ -1,4 +1,5 @@
-rewrite this code compltly to fix what we talked about earlier... // Add a zoom control UI
+	
+	// Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
