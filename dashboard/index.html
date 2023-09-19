@@ -1047,6 +1047,9 @@ function initializeFamilyTreeChart() {
         </div>
     </div>
 </div>
+
+
+	
  <div id="edit-family-tree-popup" class="popup-container">
     <div class="popup">
         <span class="close-button" onclick="closeEditFamilyTreePopup()">&times;</span>
@@ -1070,6 +1073,24 @@ function initializeFamilyTreeChart() {
         <button onclick="saveEditedFamilyTree()">Save Changes</button>
     </div>
 </div>
+
+
+
+<div id="edit-family-member-popup" class="popup-container">
+    <div class="popup">
+        <span class="close-button" onclick="closeEditFamilyMemberPopup()">&times;</span>
+        <h2>Edit Family Member</h2>
+        <input type="text" id="edit-first-name" placeholder="First Name">
+        <input type="text" id="edit-last-name" placeholder="Last Name">
+        <input type="date" id="edit-birthdate" placeholder="Birthdate">
+        <!-- Add other fields as needed (contact, location, etc.) -->
+        <textarea id="edit-note" placeholder="Note"></textarea>
+        <input type="file" id="edit-photo" accept="image/*" placeholder="Choose a photo">
+        <button onclick="saveEditedFamilyMember()">Save</button>
+    </div>
+</div>
+
+
 
 
 	
@@ -2493,11 +2514,44 @@ let memberID = member.memberID;
 	newsPost(`${userID} claimed ${member.first_name} ${member.last_name} `);
 
 	    }	    
-	    function editMemberFunc(member){
+	    function editMemberFunc(memberData){
+
+ document.getElementById('edit-first-name').value = memberData.first_name || '';
+    document.getElementById('edit-last-name').value = memberData.last_name || '';
+    document.getElementById('edit-birthdate').value = memberData.birthdate || '';
+    document.getElementById('edit-note').value = memberData.note || '';
+
+		    
+    document.getElementById('edit-family-member-popup').style.display = 'block';
+
+
+		    
 showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
 
 	    }
+function closeEditFamilyMemberPopup() {
+    // Close the popup
+    document.getElementById('edit-family-member-popup').style.display = 'none';
+}
 
+
+function saveEditedFamilyMember() {
+    // Code to save edited member data to the database
+    const editedFirstName = document.getElementById('edit-first-name').value;
+    const editedLastName = document.getElementById('edit-last-name').value;
+    const editedBirthdate = document.getElementById('edit-birthdate').value;
+    const editedNote = document.getElementById('edit-note').value;
+    const editedPhoto = document.getElementById('edit-photo').value; // Use appropriate method to get photo data
+    
+    // Save the edited data to the database using Firebase or your chosen database
+    // Example: firestore.collection('familyMembers').doc(memberID).update({ firstName: editedFirstName, lastName: editedLastName, ... });
+    
+    // Close the popup after saving
+    closeEditFamilyMemberPopup();
+}
+
+
+	    
 
 	    var addFamily_Type = '';
 	    var addFamily_MemberID = '';
