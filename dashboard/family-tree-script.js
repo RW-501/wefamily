@@ -358,7 +358,7 @@ let maxHierarchyDepth = 0;
 let memberIDWithMaxDepth = null;
 
 const memberDataMap = {};
-let rootCount = 0;
+let rootID = "";
 
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
@@ -415,7 +415,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
-       
+       rootID = id;
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -455,7 +455,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 		  if (treeData.root || memberIDWithMaxDepth === 0) {
                         root.children.push(treeData.root);
                     } else {
-                        root.children.push(id);
+                        root.children.push(rootID);
                     }	
 
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
