@@ -23,6 +23,7 @@ function removeFamilyMember() {
 
 	
 const memberID = document.getElementById('userID_edit_Member').innerText;
+    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
 
     memberRef.delete()
         .then(() => {
