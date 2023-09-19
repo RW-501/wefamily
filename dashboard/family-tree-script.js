@@ -363,13 +363,13 @@ let rootCount = 0;
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
-/*	    
+	    
      const root = {
             id: treeID,
             name: treeData.name,
             children: [],
             data: treeData,
-        };
+        };/*
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
    */
@@ -420,7 +420,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
- 
+         if (treeData.root) {
+                        root.children.push(treeData.root);
+                    } else {
+                        root.children.push(id);
+                    }
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
