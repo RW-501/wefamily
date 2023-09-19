@@ -111,7 +111,8 @@ function initializeFamilyTreeChart() {
 		    </div></div>
             </div>
             <div id="tree-content">
-                <h2>Family Members</h2>
+             			    <div class="space_J">
+  <h2>Family Members</h2><small id="familyCount"></small></div>
                 <div id="family-members">
                     <!-- Family member details will be added here dynamically -->
                 </div>
@@ -1173,11 +1174,10 @@ if(querySnapshot.length === 0){
                 document.getElementById("family-news").style.display = "block";
                 document.getElementById("member_Request").style.display = "block";
 }
-if (querySnapshot.length > 0) {
+if (querySnapshot.size > 0) {
 document.getElementById("add-member").style.display = "none";
 
 	    }
-	console.log('querySnapshot.length  ID:', querySnapshot.length );
 	console.log('querySnapshot.size  ID:', querySnapshot.size );
 
 	    
