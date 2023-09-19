@@ -204,7 +204,11 @@ nodeGroup.append("image")
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
+
+document.getElementById(d.data.id).scrollIntoView({ behavior: 'smooth' });
+
+	
+       // showMemberPopup(d.data);
     });
 
 
