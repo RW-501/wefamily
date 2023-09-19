@@ -1,3 +1,22 @@
+
+
+
+
+.popup-image{
+overflow: hidden;
+}
+
+.memberImage{
+overflow: hidden;
+    margin: auto;
+    display: block;
+    background-color: #f1f3f4;
+}
+
+
+
+
+
 #create-tree-section   .image-container{
 border-radius:0;
 }
