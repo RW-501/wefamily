@@ -1243,7 +1243,7 @@ if (data.memberID === userID || data.addByID === userID) {
 }
 
 	    function claimMemberFunc(member){
-showMainMessage("claim "+member.memberID);
+//showMainMessage("claim "+member.memberID);
 
 let memberID = member.memberID;
             const userDocRef = firestore.collection('familyMembers').doc(memberID);
