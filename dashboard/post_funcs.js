@@ -1,4 +1,17 @@
 
+     const post_content_Input = document.getElementById('post-content');
+
+
+post_content_Input.addEventListener('keydown', function (event) {
+      if ( event.key === 'Enter' ) {
+        event.preventDefault();
+        addPost();
+      }
+    });
+//event.key === 'Backspace'
+
+
+
 	    
 function deletePost(postID) {
     const postRef = firestore.collection('posts').doc(postID);
