@@ -2358,20 +2358,19 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
             <button class="add-child">Add Child</button>
             <button class="add-sibling">Add Sibling</button>
         `;
-//showMainMessage("data "+ data);
+showMainMessage("add data "+ data);
 
         // Add event listeners for each button in the new family member
    const addParentBtn = memberDiv.querySelector('.add-parent');
 addParentBtn.addEventListener('click', () => addParent(data));
 
-const addSpouseBtn = memberDiv.querySelector('.add-spouse');
-addSpouseBtn.addEventListener('click', () => addSpouse(data));
 
 const addChildBtn = memberDiv.querySelector('.add-child');
 addChildBtn.addEventListener('click', () => addChild(data));
 
-const addSiblingBtn = memberDiv.querySelector('.add-sibling');
-addSiblingBtn.addEventListener('click', () => addSibling(data));
+
+
+		
 
 if (data.userID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
@@ -2626,37 +2625,43 @@ addFamily_MemberData = member;
  
 	    
 // Function to add a parent to a child
-function addParentToChild(newID, addFamily_MemberID) {
-	     
-            console.log('addParentToChild newID:', newID);
-            console.log('addFamily_MemberID:', addFamily_MemberID);
+async function addParentToChild(newID, addFamily_MemberID) {
+    try {
+        console.log('addParentToChild newID:', newID);
+        console.log('addFamily_MemberID:', addFamily_MemberID);
 
-    const parentRef = firestore.collection('familyMembers').doc(newID);
+        const parentRef = firestore.collection('familyMembers').doc(newID);
 
+        // Update the parent's children array to include the child's ID
+        await parentRef.update({
+            children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+        });
 
-    // Update the parent's children array to include the child's ID
-    parentRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
-    });
-				setRootValue(newID);
-			loadFamilyTreeChart();
+        await setRootValue(newID);
+        await loadFamilyTreeChart();
+    } catch (error) {
+        console.error('Error adding parent to child:', error);
+    }
 }
 
+async function addChildToParent(newID, addFamily_MemberID) {
+    try {
+        console.log('addChildToParent newID:', newID);
+        console.log('addFamily_MemberID:', addFamily_MemberID);
 
+        const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
-// Function to add parent-child relationship
-function addChildToParent(newID, addFamily_MemberID) {
-    const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
-	
-            console.log('addChildToParent newID:', newID);
-            console.log('addFamily_MemberID:', addFamily_MemberID);
+        // Update the child's parent array to include the parent's ID
+        await childRef.update({
+            children: firebase.firestore.FieldValue.arrayUnion(newID)
+        });
 
-  childRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(newID)
-    });   
-			loadFamilyTreeChart();
-  
+        await loadFamilyTreeChart();
+    } catch (error) {
+        console.error('Error adding child to parent:', error);
+    }
 }
+
 
 
 
