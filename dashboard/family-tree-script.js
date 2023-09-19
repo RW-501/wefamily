@@ -364,12 +364,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
 	    
-     const root = {
-            id: treeID,
-            name: treeData.name,
-            children: [],
-            data: treeData,
-        };/*
+    /*
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
    */
@@ -379,7 +374,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .then((querySnapshot) => {
                 const querySnapshotCount = querySnapshot.size;
 
-
+ 
 
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
@@ -420,11 +415,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                         // Store member data in the map
                         memberDataMap[id] = memberData;
                     }
-         if (treeData.root) {
-                        root.children.push(treeData.root);
-                    } else {
-                        root.children.push(id);
-                    }
+       
                     // Check and update parent and sibling relationships
                     parents.forEach((parentsID) => {
                         if (memberDataMap[parentsID]) {
@@ -455,11 +446,17 @@ function fetchFamilyMemberData(collectionName, treeID) {
           data: treeData,
         };
     console.log("treeID   " + treeID);
+    console.log("maxChildrenCount   " + maxChildrenCount);
+    console.log("memberIDWithMaxDepth   " + memberIDWithMaxDepth);
     console.log("treeData.name   " + treeData.name);
     console.log("treeData.children   " + treeData.children);
 
 
-			
+		  if (treeData.root || memberIDWithMaxDepth === 0) {
+                        root.children.push(treeData.root);
+                    } else {
+                        root.children.push(id);
+                    }	
 
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
 const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
