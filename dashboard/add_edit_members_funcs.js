@@ -14,7 +14,7 @@
 
 
 		    
-showMainMessage(`${userID} edit ${member.first_name} ${member.last_name} `);
+showMainMessage(`${userID} edit ${memberData.first_name} ${memberData.last_name} `);
 
 	    }
 
