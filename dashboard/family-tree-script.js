@@ -454,8 +454,14 @@ function fetchFamilyMemberData(collectionName, treeID) {
     console.log("treeData.children   " + treeData.children);
 
 
-		  if (treeData.root || memberIDWithMaxDepth === 0) {
-                        root.children.push(treeData.root);
+		  if (treeData.root ) {
+ root = {
+          id: treeID,
+          name: treeData.name,
+          children: [treeData.root], // Set the member with the most children as the root
+          data: treeData,
+        };
+			  
                     } else if(maxChildrenCount > 0){
 			  
 		  root = {
