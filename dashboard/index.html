@@ -532,8 +532,8 @@ function handleFileUpload(input) {
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, successCallback, errorCallback) {
 
 	
-	const maxWidth = 500; // Maximum width
-const maxHeight = 500; // Maximum height
+let maxWidth = 500; // Maximum width
+let maxHeight = 500; // Maximum height
 
   // Check if a file was selected
   if (!file) {
