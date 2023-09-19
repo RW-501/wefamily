@@ -1177,6 +1177,9 @@ if (querySnapshot.length > 0) {
 document.getElementById("add-member").style.display = "none";
 
 	    }
+	console.log('querySnapshot.length  ID:', querySnapshot.length );
+	console.log('querySnapshot.size  ID:', querySnapshot.size );
+
 	    
         querySnapshot.forEach((member) => {
             const data = member.data();
