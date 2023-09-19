@@ -30,7 +30,7 @@ const memberID = document.getElementById('userID_edit_Member').innerText;
             // Add any other actions you want to take after successful deletion
 		                      
 	newsPost(`${userID} removed ID: ${memberID}`);
-
+closeEditFamilyMemberPopup();
         })
         .catch((error) => {
             console.error('Error removing family member:', error);
