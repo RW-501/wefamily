@@ -19,6 +19,23 @@
 //showMainMessage(`${userID} edit ${memberData.first_name} ${memberData.last_name} `);
 
 	    }
+function removeFamilyMember() {
+
+	
+const memberID = document.getElementById('userID_edit_Member').innerText;
+
+    memberRef.delete()
+        .then(() => {
+            console.log('Family member successfully deleted.');
+            // Add any other actions you want to take after successful deletion
+		                      
+	newsPost(`${userID} removed ID: ${memberID}`);
+
+        })
+        .catch((error) => {
+            console.error('Error removing family member:', error);
+        });
+}
 
 
 async function saveEditedFamilyMember() {
@@ -29,7 +46,7 @@ async function saveEditedFamilyMember() {
     const editedNote = document.getElementById('edit-note').value;
 	  
     // Use appropriate method to get photo data
-const memberID =   document.getElementById('userID_edit_Member').innerHTML
+const memberID = document.getElementById('userID_edit_Member').innerText;
 
 	  
     const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
