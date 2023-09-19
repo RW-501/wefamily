@@ -439,6 +439,35 @@ var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
 
+
+
+function setupEnterKeyNavigation(inputIdArray) {
+  inputIdArray.forEach((inputId, index) => {
+    const inputElement = document.getElementById(inputId);
+
+    inputElement.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+       // addPost();
+
+        const nextInput = inputIdArray[index + 1];
+        if (nextInput) {
+          document.getElementById(nextInput).focus();
+        }
+      }
+    });
+  });
+}
+
+// Call the function and provide an array of input IDs to navigate
+const inputIdsToNavigate = ['post-content','editFamilyTreeName', 'editFamilyTreeDescription', 'editFamilyTreeLocation','edit-first-name','edit-last-name','edit-birthdate','member-first_name','member-last_name','member-birthdate','member-contact','member-note','tree_name','tree_location','tree_code','tree_description','family-tree-search','family-tree-code'];
+setupEnterKeyNavigation(inputIdsToNavigate);
+
+
+
+
+	    
+
 // Function to open the edit family tree popup and populate fields with existing data
 function openEditFamilyTreePopup() {
     const popup = document.getElementById('edit-family-tree-popup');
