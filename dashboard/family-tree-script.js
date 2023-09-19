@@ -539,6 +539,20 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
 }
 
 
+function resetFamilyTree() {
+    // Clear the family tree area
+    const familyTreeArea = document.getElementById('family-tree-area');
+    familyTreeArea.innerHTML = '';
+
+    // Reset variables
+    let maxHierarchyDepth = 0;
+    let memberIDWithMaxDepth = null;
+    const memberDataMap = {};
+    let rootID = '';
+
+    // Load the family tree chart again
+    loadFamilyTreeChart();
+}
 
 
 function loadFamilyTreeChart(treeData) {
