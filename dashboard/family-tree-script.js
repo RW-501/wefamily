@@ -32,8 +32,6 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
        var chartGroup; 
  var linkGenerator;
-
-
 function generateFamilyTreeChart(familyData) {
 	
 
@@ -166,13 +164,6 @@ showMemberPopup(d.data);
 const imageWidth = 100;
 const imageHeight = 100;
 
-const nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
-
 
 svg.append("defs").append("clipPath")
     .attr("id", "clipCircle")
@@ -181,29 +172,36 @@ svg.append("defs").append("clipPath")
 
 
 	
-nodeGroup.append("circle")
-    .attr("class", "circle")
-    .attr("r", 20) // Radius of circles
-    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked circle Data:", d.data);
-    });
+  const nodeGroup = chartGroup.selectAll(".node")
+        .data(root.descendants())
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
+
+    nodeGroup.append("circle")
+        .attr("class", "circle")
+        .attr("r", 20) // Radius of circles
+        .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+        .on("click", function (event, d) {
+            // 'd' contains the data associated with the clicked node
+            console.log("Clicked circle Data:", d.data);
+        });
 
 
-// Append images to nodes
 // Append images to nodes
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
+    .attr("x", d => -imageWidth / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("y", d => -imageHeight / 2 / currentScale) // Adjust the positioning relative to the group
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale)
     .on("click", function (event, d) {
         // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
+
 
 
 
@@ -219,48 +217,76 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${sca
     
 // Define the zoom function
 function zoomed(event) {
-  // Apply the zoom transformation to the chartGroup
-  chartGroup.attr('transform', event.transform);
+    currentScale = event.transform.k;
 
-  // Apply the same zoom transformation to the link lines
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-      return linkGenerator({ source, target });
-    });
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
+
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / currentScale);
+
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / currentScale);
+
+    chartGroup.selectAll("image")
+        .attr("x", d => -imageWidth / 2 / currentScale)
+        .attr("y", d => -imageHeight / 2 / currentScale)
+        .attr("width", imageWidth / currentScale)
+        .attr("height", imageHeight / currentScale);
+
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / currentScale);
+
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+            const source = { x: d.source.x, y: d.source.y * currentScale };
+            const target = { x: d.target.x, y: d.target.y * currentScale };
+            return linkGenerator({ source, target });
+        });
 }
 
 
+
+
+	
 // Create the zoom function
 function applyZoom(scale) {
-  currentScale = scale;
+    currentScale = scale;
 
-  if (!chartGroup) {
-    console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-    return;
-  }
+    if (!chartGroup) {
+        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+        return;
+    }
 
-  // Update circle radius, text font size, image dimensions, stroke width
-  chartGroup.selectAll('circle').attr('r', 20 / scale);
-  chartGroup.selectAll('text').attr('font-size', 14 / scale);
-  chartGroup
-    .selectAll('image')
-    .attr('y', (d) => d.y) // Adjust the positioning
-    .attr('width', 100 / scale)
-    .attr('height', 100 / scale);
-  chartGroup.selectAll('path.link').attr('stroke-width', 2 / scale);
+    chartGroup.selectAll("circle")
+        .attr("r", 20 / scale);
 
-  // Update path 'd' attribute
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      const source = { x: d.source.x, y: d.source.y * scale };
-      const target = { x: d.target.x, y: d.target.y * scale };
-      return linkGenerator({ source, target });
-    });
+    chartGroup.selectAll("text")
+        .attr("font-size", 14 / scale);
+
+    chartGroup.selectAll("image")
+//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
+   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
+    .attr("y", d => d.y) // Adjust the positioning
+        .attr("width", 100 / scale)
+        .attr("height", 100 / scale);
+
+    chartGroup.selectAll("path.link")
+        .attr("stroke-width", 2 / scale);
+	/*
+const translateY = 100;
+    // Set the transform attribute
+chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
+	*/
+    chartGroup.selectAll("path.link")
+        .attr("d", d => {
+   
+		const source = { x: d.source.x, y: d.source.y * scale };
+            const target = { x: d.target.x, y: d.target.y * scale };
+            return linkGenerator({ source, target });
+        });
 }
 
 
