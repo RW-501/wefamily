@@ -539,24 +539,15 @@ async function uploadImageToStorage(file, storagePath, successCallback, errorCal
     return;
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    if (errorCallback) errorCallback('Image size must be less than 5MB.');
-    return;
-  }
-
-  const storageRef = firebase.storage().ref();
-  const timestamp = Date.now();
-  const filename = `${timestamp}_${file.name}`;
-  const imageRef = storageRef.child(`${storagePath}/${filename}`);
-
-  const img = new Image();
+  const maxSize = 500; // Max width or height for the image
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
+  const img = new Image();
   img.onload = () => {
-    const maxSize = 500;
     let newWidth, newHeight;
 
+    // Calculate new dimensions while maintaining aspect ratio
     if (img.width > img.height) {
       newWidth = maxSize;
       newHeight = (img.height / img.width) * maxSize;
@@ -565,11 +556,20 @@ async function uploadImageToStorage(file, storagePath, successCallback, errorCal
       newWidth = (img.width / img.height) * maxSize;
     }
 
+    // Resize the image using canvas
     canvas.width = newWidth;
     canvas.height = newHeight;
     ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-    canvas.toBlob((blob) => {
+    // Convert the resized image to a Blob
+    canvas.toBlob(async (blob) => {
+      // Create a reference to Firebase Storage
+      const storageRef = firebase.storage().ref();
+      const timestamp = Date.now();
+      const filename = `${timestamp}_${file.name}`;
+      const imageRef = storageRef.child(`${storagePath}/${filename}`);
+
+      // Upload the Blob to Firebase Storage
       const uploadTask = imageRef.put(blob);
 
       uploadTask.on(
@@ -594,8 +594,10 @@ async function uploadImageToStorage(file, storagePath, successCallback, errorCal
     }, 'image/jpeg', 0.9);
   };
 
+  // Load the selected image
   img.src = URL.createObjectURL(file);
 }
+
 
 
 
