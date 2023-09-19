@@ -756,13 +756,22 @@ function initializeFamilyTreeChart() {
         <div id="family-tree-container">
             <button onclick="openPopup()">Join / Create Family Tree</button>
             <div id="tree-details">
-                <h2>Tree Details</h2>
+                <h2>Tree Details</h2><button onclick="openEditFamilyTreePopup()">Edit</button>
+
+		    <div class="space_J">
+    <div class="image-container">
+  
+        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+
+    </div>
+		    <div>
                 <label for="tree-name">Name:</label>
                 <input type="text" id="tree-name" placeholder="Family Tree Name" required>
                 <label for="tree-location">Location:</label>
                 <input type="text" id="tree-location" placeholder="Location">
                 <label for="tree-description">Description:</label>
                 <textarea id="tree-description" placeholder="Brief Description"></textarea>
+		    </div></div>
             </div>
             <div id="tree-content">
                 <h2>Family Members</h2>
@@ -1038,7 +1047,29 @@ function initializeFamilyTreeChart() {
         </div>
     </div>
 </div>
-  
+ <div id="edit-family-tree-popup" class="popup-container">
+    <div class="popup">
+        <span class="close-button" onclick="closeEditFamilyTreePopup()">&times;</span>
+        <h2>Edit Family Tree</h2>
+        				 <!-- Image container with onclick event -->
+    <div class="image-container" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="family_Tree_ImageEdit" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+        <label for="editFamilyTreeName">Name:</label>
+        <input type="text" id="editFamilyTreeName" placeholder="Family Name">
+        
+        <label for="editFamilyTreeDescription">Description:</label>
+        <input type="text" id="editFamilyTreeDescription" placeholder="Family Description">
+        
+        <label for="editFamilyTreeLocation">Location:</label>
+        <input type="text" id="editFamilyTreeLocation" placeholder="Location">
+        
+        <button onclick="saveEditedFamilyTree()">Save Changes</button>
+    </div>
+</div>
 
 
 	
@@ -1048,6 +1079,49 @@ var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
 
+// Function to open the edit family tree popup and populate fields with existing data
+function openEditFamilyTreePopup() {
+    const popup = document.getElementById('edit-family-tree-popup');
+    popup.style.display = 'block';
+
+    // Populate fields with existing data
+    document.getElementById('editFamilyTreeName').value =  document.getElementById('tree-name').value;
+    document.getElementById('editFamilyTreeDescription').value =  document.getElementById('tree-description').value;
+    document.getElementById('editFamilyTreeLocation').value =  document.getElementById('tree-location').value;
+}
+
+// Function to close the edit family tree popup
+function closeEditFamilyTreePopup() {
+    const popup = document.getElementById('edit-family-tree-popup');
+    popup.style.display = 'none';
+}
+
+// Function to save the edited family tree information to Firestore
+function saveEditedFamilyTree() {
+	
+    const newName = document.getElementById('editFamilyTreeName').value;
+    const newDescription = document.getElementById('editFamilyTreeDescription').value;
+    const newLocation = document.getElementById('editFamilyTreeLocation').value;
+
+   
+	
+    const treeID = currentFamilyID; // Replace with actual treeID
+    const treeRef = firestore.collection('familyTrees').doc(treeID);
+
+    treeRef.update({
+        name: newName,
+        description: newDescription,
+        location: newLocation
+        // Add other fields if needed
+    }).then(() => {
+        console.log('Family tree information updated successfully!');
+        closeEditFamilyTreePopup(); // Close the popup after saving
+	    newsPost(`${userID} edited the Family Tree Info`);
+
+    }).catch((error) => {
+        console.error('Error updating family tree information:', error);
+    });
+}
 
 	    
 //showMainMessage("message");
