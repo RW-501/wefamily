@@ -62,7 +62,7 @@ const memberID = document.getElementById('userID_edit_Member').innerText;
   'member_main_Image',
   (downloadURL) => {
  // Update the document with the new data
-    await memberRef.update({
+     memberRef.update({
       first_name: editedFirstName,
       last_name: editedLastName,
       birthdate: editedBirthdate,
