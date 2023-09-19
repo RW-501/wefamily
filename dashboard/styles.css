@@ -29,7 +29,13 @@ input[type="text"], input[type="date"], textarea {
 #create-tree-section   .image-container{
 border-radius:0;
 }
+@media screen and (max-width: 900px) {
 
+.flex{
+	
+flex-flow: wrap-reverse
+}
+}
 @media screen and (max-width: 900px) {
     .popup-content {
         /* Flex styles for screen size 800px and above */
