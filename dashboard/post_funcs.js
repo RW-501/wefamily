@@ -365,4 +365,18 @@ function newsPost(xxx) {
 
 
 
-        
+        function limitPostContent() {
+    const textarea = document.getElementById('post-content');
+    const content = textarea.value;
+
+    // Limit the post to 500 characters
+    const truncatedContent = content.slice(0, 500);
+    textarea.value = truncatedContent;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const textarea = document.getElementById('post-content');
+    textarea.addEventListener('input', limitPostContent);
+});
+
+
