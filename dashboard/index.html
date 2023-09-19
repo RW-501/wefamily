@@ -2439,7 +2439,7 @@ if(querySnapshot.length === 0){
             const data = member.data();
             // Implement dynamic population of family member details here
 let claim_Div = "";		
-if(data.userID === userID ){
+if (data.memberID === userID || data.addByID === userID) {
  Current_USERNAME = data.first_name;
  Current_USERPHOTO = data.photo;
 claim_Div = "<button class='edit-member'>Edit Member</button>";
