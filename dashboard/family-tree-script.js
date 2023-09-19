@@ -1,4 +1,4 @@
-
+// Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
@@ -32,6 +32,8 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
        var chartGroup; 
  var linkGenerator;
+
+
 function generateFamilyTreeChart(familyData) {
 	
 
@@ -120,8 +122,8 @@ chartGroup.selectAll("path")
 
 let memberData = root.descendants().children;
 	    console.log('memberData: ', memberData);
-if(0 == 0){
-//if (!memberData === undefined && memberData.length === 0) {
+
+if (!memberData === undefined && memberData.length === 0) {
     // Add text labels to nodes
     chartGroup.selectAll("text")
         .data(root.descendants())
@@ -232,7 +234,6 @@ function zoomed(event) {
 }
 
 
-
 // Create the zoom function
 function applyZoom(scale) {
   currentScale = scale;
@@ -261,6 +262,7 @@ function applyZoom(scale) {
       return linkGenerator({ source, target });
     });
 }
+
 
 
 
