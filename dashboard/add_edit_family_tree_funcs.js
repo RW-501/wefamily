@@ -41,7 +41,7 @@ async function createFamilyTree() {
     // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
 if (selectedFile) {
-  const storage path = 'family_Tree_Image';
+  const storagePath = 'family_Tree_Image';
   downloadURL = await uploadImageToStorage(selectedFile, storagePath);
 
 
