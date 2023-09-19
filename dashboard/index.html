@@ -166,7 +166,7 @@ function initializeFamilyTreeChart() {
 
 
 	  <!-- Add a button to enable/disable the newsPost function -->
-  <div clas="flex">  <button id="toggleNewsButton">System Posting</button>
+  <div class="flex">  <button id="toggleNewsButton">System Posting</button>
 
 	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
 	<button class="posts-buttons" onclick="loadPosts()">All Posts</button></div>
@@ -419,6 +419,16 @@ function initializeFamilyTreeChart() {
     <div class="popup">
         <span class="close-button" onclick="closeEditFamilyMemberPopup()">&times;</span>
         <h2>Edit Family Member</h2>
+
+<div class="flex">
+	    	 <!-- Image container with onclick event -->
+    <div class="image-container w30" onclick="openFileInput(this)">
+        <!-- Display uploaded image here -->
+        <img id="edit_member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+        <!-- File input element -->
+        <input id="edit-photo-file" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    </div>
+	    <div class="w70">
         <input type="text" id="edit-first-name" placeholder="First Name">
         <input type="text" id="edit-last-name" placeholder="Last Name">
         <input type="date" id="edit-birthdate" placeholder="Birthdate">
@@ -426,6 +436,7 @@ function initializeFamilyTreeChart() {
         <textarea id="edit-note" placeholder="Note"></textarea>
         <input type="file" id="edit-photo" accept="image/*" placeholder="Choose a photo">
         <button onclick="saveEditedFamilyMember()">Save</button>
+	    </div></div>
     </div>
 </div>
 
