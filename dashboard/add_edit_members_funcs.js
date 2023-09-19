@@ -44,69 +44,57 @@ async function saveEditedFamilyMember() {
     const editedLastName = document.getElementById('edit-last-name').value;
     const editedBirthdate = document.getElementById('edit-birthdate').value;
     const editedNote = document.getElementById('edit-note').value;
-	  
+
     // Use appropriate method to get photo data
-const memberID = document.getElementById('userID_edit_Member').innerText;
+    const memberID = document.getElementById('userID_edit_Member').innerText;
 
-	  
-    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
-
-  const selectedFile = document.getElementById('edit-photo-file').files[0];
-
-	  
-    if (selectedFile) {
-        // Handle uploading the edited photo and get the download URL
-        // Replace 'uploadPhotoToStorage' with your actual photo upload function
-       uploadImageToStorage(
-  selectedFile,
-  'member_main_Image',
-  (downloadURL) => {
- // Update the document with the new data
-     memberRef.update({
-      first_name: editedFirstName,
-      last_name: editedLastName,
-      birthdate: editedBirthdate,
-      note: editedNote,
-	    photo:downloadURL
-	    
-      // Add other fields as needed
-    });
-
-    console.log('Family member updated successfully.');
-    // Close the edit family member popup
-    closeEditFamilyMemberPopup();
-            })
-            .catch(error => {
-                console.error('Error uploading edited photo:', error);
-            });
-    } else {
-	    
- // Update the document with the new data
-    await memberRef.update({
-      first_name: editedFirstName,
-      last_name: editedLastName,
-      birthdate: editedBirthdate,
-      note: editedNote
-      // Add other fields as needed
-    });
-
-    console.log('Family member updated successfully.');
-    // Close the edit family member popup
-    closeEditFamilyMemberPopup();
+    // Check if memberID is empty or undefined
+    if (!memberID) {
+      console.error('Member ID is empty or undefined.');
+      return;
     }
 
+    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
 
+    const selectedFile = document.getElementById('edit-photo-file').files[0];
 
+    if (selectedFile) {
+      // Handle uploading the edited photo and get the download URL
+      uploadImageToStorage(selectedFile, 'member_main_Image', async (downloadURL) => {
+        // Update the document with the new data including the photo URL
+        await memberRef.update({
+          first_name: editedFirstName,
+          last_name: editedLastName,
+          birthdate: editedBirthdate,
+          note: editedNote,
+          photo: downloadURL
+          // Add other fields as needed
+        });
 
+        console.log('Family member updated successfully.');
+        // Close the edit family member popup
+        closeEditFamilyMemberPopup();
+      }).catch(error => {
+        console.error('Error uploading edited photo:', error);
+      });
+    } else {
+      // Update the document with the new data (excluding the photo URL)
+      await memberRef.update({
+        first_name: editedFirstName,
+        last_name: editedLastName,
+        birthdate: editedBirthdate,
+        note: editedNote
+        // Add other fields as needed
+      });
 
-	  
-   
+      console.log('Family member updated successfully.');
+      // Close the edit family member popup
+      closeEditFamilyMemberPopup();
+    }
   } catch (error) {
     console.error('Error saving edited family member:', error);
   }
 }
-
-
 
 	    
 function closeEditFamilyMemberPopup() {
