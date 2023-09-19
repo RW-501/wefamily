@@ -2514,7 +2514,8 @@ let memberID = member.memberID;
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
 			newsPost(`Admin ID ${memberID} created ${member.name} on ${member.timestamp} `);
-                loadFamilyTreeChart(treeData);
+               // loadFamilyTreeChart(treeData);
+                fetchFamilyTree();
 
                             })
                             .catch((error) => {
@@ -2716,8 +2717,7 @@ console.log('newID :', newID);
 
 					
 					      // Display updated family members
-                    displayFamilyMembers(currentFamilyID);
-                loadFamilyTreeChart(treeData);
+                             fetchFamilyTree();
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();	
@@ -2758,9 +2758,7 @@ console.log('newID :', newID);
 	
 
 					
-                    // Display updated family members
-                    displayFamilyMembers(currentFamilyID);
-                loadFamilyTreeChart(treeData);
+                                                fetchFamilyTree();
 
     // Close the modal after adding the member
     closeAddMemberTypePopup();
@@ -2828,15 +2826,16 @@ async function addParentToChild(newID, addFamily_MemberID) {
         console.log('addParentToChild newID:', newID);
       // showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
-        const childRef = firestore.collection('familyMembers').doc(newID);
+        const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 
         // Update the parent's children array to include the child's ID
         await childRef.update({
-            children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+            children: firebase.firestore.FieldValue.arrayUnion(newID)
         });
 
         await setRootValue(newID);
-        await loadFamilyTreeChart();
+        await fetchFamilyTree();
+
     } catch (error) {
         console.error('Error adding parent to child:', error);
     }
@@ -2848,14 +2847,14 @@ async function addChildToParent(newID, addFamily_MemberID) {
 	    
    //    showMainMessage(newID+' newID  addFamily_MemberID:', addFamily_MemberID);
 
-        const parentRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
+        const parentRef = firestore.collection('familyMembers').doc(newID);
 
         // Update the child's parent array to include the parent's ID
         await parentRef.update({
-            children: firebase.firestore.FieldValue.arrayUnion(newID)
+            children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
         });
 
-        await loadFamilyTreeChart();
+        await fetchFamilyTree();
     } catch (error) {
         console.error('Error adding child to parent:', error);
     }
