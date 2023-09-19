@@ -311,18 +311,32 @@ const scrollTo = document.getElementById('scrollTo');
 
 scrollTo.addEventListener('click', () => {
 	
-const element = document.getElementById(member.id);
-const windowHeight = window.innerHeight;
 
-if (element) {
-  // Calculate the desired scroll position to center the element
-  const scrollPosition = element.offsetTop - (windowHeight / 2) + (element.offsetHeight / 2);
+    const memberDiv = document.getElementById(memberId);
+    
+    if (memberDiv) {
+        // Scroll to the member's div
+        memberDiv.scrollIntoView({ behavior: 'smooth' });
 
-  // Scroll to the element with smooth behavior
-  window.scrollTo({
-    top: scrollPosition,
-    behavior: 'smooth'
-  });
+        // Get the height of the viewport
+        const viewportHeight = window.innerHeight;
+
+        // Get the top position of the div
+        const divTop = memberDiv.getBoundingClientRect().top;
+
+        // Calculate the scroll position to center the div
+        const scrollPosition = divTop - (viewportHeight / 2);
+
+        // Scroll to center the div
+        window.scrollBy({
+            top: scrollPosition,
+            behavior: 'smooth'
+        });
+
+}else{
+document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+
+
 }
 
 
