@@ -2160,11 +2160,14 @@ firestore.collection('familyMembers').add(familyMember)
     .then((docRef) => {
      
 	    memberID = docRef.id;
+
+	    		    console.log("- new memberID   " + memberID);
+
 const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 		if(!selectedFile){
 			const picURL = document.getElementById("member_Image").src;
   firestore.collection('familyMembers').doc(memberID).update({
-                                    memberID: docRef.id,
+                                    memberID: memberID,
                                     photo: picURL,
                                 })
                                 .then(() => {
@@ -2643,13 +2646,13 @@ function addParentToChild(newID, addFamily_MemberID) {
 
 // Function to add parent-child relationship
 function addChildToParent(newID, addFamily_MemberID) {
-    const childRef = firestore.collection('familyMembers').doc(newID);
+    const childRef = firestore.collection('familyMembers').doc(addFamily_MemberID);
 	
             console.log('addChildToParent newID:', newID);
             console.log('addFamily_MemberID:', addFamily_MemberID);
 
   childRef.update({
-        children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
+        children: firebase.firestore.FieldValue.arrayUnion(newID)
     });   
 			loadFamilyTreeChart();
   
