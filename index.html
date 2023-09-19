@@ -1237,6 +1237,27 @@ imgElement.src = photoURL;
 }
 
 
+function setupEnterKeyNavigation(inputIdArray) {
+  inputIdArray.forEach((inputId, index) => {
+    const inputElement = document.getElementById(inputId);
+
+    inputElement.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        //addPost();
+
+        const nextInput = inputIdArray[index + 1];
+        if (nextInput) {
+          document.getElementById(nextInput).focus();
+        }
+      }
+    });
+  });
+}
+
+// Call the function and provide an array of input IDs to navigate
+const inputIdsToNavigate = ['login-email', 'login-password', 'register-email', 'register-password', 'username', 'birthday', 'city', 'stateDropdown', 'countryDropdown'];
+setupEnterKeyNavigation(inputIdsToNavigate);
 
 
 
