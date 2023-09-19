@@ -36,7 +36,7 @@ zoomInButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
 
-const width = 800;// window.screen.width;
+const width =  window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
@@ -217,59 +217,50 @@ const scale = 1;
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
     
 // Define the zoom function
- function zoomed(event) {
-        // Apply the zoom transformation to the chartGroup
-        chartGroup.attr("transform", event.transform);
+function zoomed(event) {
+  // Apply the zoom transformation to the chartGroup
+  chartGroup.attr('transform', event.transform);
 
-        // Apply the same zoom transformation to the link lines
-        chartGroup.selectAll("path.link")
-            .attr("d", d => {
-                // Generate the updated path data using the link generator
-                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-                return linkGenerator({ source, target });
-            });
-    }
+  // Apply the same zoom transformation to the link lines
+  chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+      return linkGenerator({ source, target });
+    });
 }
 
 
 
 // Create the zoom function
 function applyZoom(scale) {
-    currentScale = scale;
+  currentScale = scale;
 
-    if (!chartGroup) {
-        console.error('chartGroup is not defined. Ensure that it is properly initialized.');
-        return;
-    }
+  if (!chartGroup) {
+    console.error('chartGroup is not defined. Ensure that it is properly initialized.');
+    return;
+  }
 
-    chartGroup.selectAll("circle")
-        .attr("r", 20 / scale);
+  // Update circle radius, text font size, image dimensions, stroke width
+  chartGroup.selectAll('circle').attr('r', 20 / scale);
+  chartGroup.selectAll('text').attr('font-size', 14 / scale);
+  chartGroup
+    .selectAll('image')
+    .attr('y', (d) => d.y) // Adjust the positioning
+    .attr('width', 100 / scale)
+    .attr('height', 100 / scale);
+  chartGroup.selectAll('path.link').attr('stroke-width', 2 / scale);
 
-    chartGroup.selectAll("text")
-        .attr("font-size", 14 / scale);
-
-    chartGroup.selectAll("image")
-//  .attr("x", d => d.x - 100 / 2) // Adjust the positioning
-   // .attr("y", d => d.y - 100 / 2) // Adjust the positioning
-    .attr("y", d => d.y) // Adjust the positioning
-        .attr("width", 100 / scale)
-        .attr("height", 100 / scale);
-
-    chartGroup.selectAll("path.link")
-        .attr("stroke-width", 2 / scale);
-	/*
-const translateY = 100;
-    // Set the transform attribute
-chartGroup.attr("transform", `translate(0 ,${translateY}) scale(${scale})`);
-	*/
-    chartGroup.selectAll("path.link")
-        .attr("d", d => {
-   
-		const source = { x: d.source.x, y: d.source.y * scale };
-            const target = { x: d.target.x, y: d.target.y * scale };
-            return linkGenerator({ source, target });
-        });
+  // Update path 'd' attribute
+  chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      const source = { x: d.source.x, y: d.source.y * scale };
+      const target = { x: d.target.x, y: d.target.y * scale };
+      return linkGenerator({ source, target });
+    });
 }
 
 
