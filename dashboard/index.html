@@ -2835,7 +2835,11 @@ async function addParentToChild(newID, addFamily_MemberID) {
         });
 
         await setRootValue(newID);
-        await fetchFamilyTree();
+const delayInMilliseconds = 1000; // Adjust the delay as needed (in milliseconds)
+
+setTimeout(async () => {
+  await fetchFamilyTree();
+}, delayInMilliseconds);
 
     } catch (error) {
         console.error('Error adding parent to child:', error);
@@ -2856,7 +2860,11 @@ async function addChildToParent(newID, addFamily_MemberID) {
             children: firebase.firestore.FieldValue.arrayUnion(addFamily_MemberID)
         });
 
-        await fetchFamilyTree();
+const delayInMilliseconds = 1000; // Adjust the delay as needed (in milliseconds)
+
+setTimeout(async () => {
+  await fetchFamilyTree();
+}, delayInMilliseconds);
     } catch (error) {
         console.error('Error adding child to parent:', error);
     }
