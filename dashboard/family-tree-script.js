@@ -313,6 +313,7 @@ scrollTo.addEventListener('click', () => {
 	
 document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
   console.log('Div clicked!');
+	hideMemberPopup();
 });
 	
     populateMemberInfo(member);
