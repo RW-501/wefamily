@@ -2250,6 +2250,7 @@ if(!first_name && !last_name){
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
         userID: "",
+        bio: "",
         memberID: "",
         spouse: [],
         parents: [],
@@ -2480,7 +2481,7 @@ addChildBtn.addEventListener('click', () => addChild(data));
 
 		
 
-if (data.userID === userID) {
+if (data.memberID === userID || data.addByID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
     editMemberBTN.addEventListener('click', () => editMemberFunc(data));
 } else {
@@ -2667,6 +2668,7 @@ function addNewFamilyMember() {
         private: false,
         addByID: userID,
         familyID: [currentFamilyID], // Initialize familyID as an array with currentFamilyID
+        bio: "",
         userID: "",
         memberID: "",
         spouse: [],
