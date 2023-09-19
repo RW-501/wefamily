@@ -171,12 +171,12 @@ console.log('newID :', newID);
 
                     if (addFamily_Type === "Parent") {
                         addChildToParent(newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
                     }  
 		    
 	    if (addFamily_Type === "Child") {
                         addParentToChild( newID, addFamily_MemberID);
-                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Child`);
+                        newsPost(`${userID} added ${addFamily_MemberData.first_name} ${addFamily_MemberData.last_name} as ${familyMember.first_name} ${familyMember.last_name} Parent`);
                     } 
 
 
