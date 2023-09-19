@@ -160,7 +160,7 @@ text-align: center;
     border-radius: 10px;
     overflow: hidden;
     font-weight: 800;
-
+    box-sizing: border-box;
     }
 
     button:hover {
