@@ -603,6 +603,11 @@ async function handleFileUpload(input) {
     const uploadFileInput = input.previousElementSibling;
     uploadFileInput.src = URL.createObjectURL(file);
 
+	      const parentDiv = input.parentElement;
+
+    // Get the img tag from the previous sibling
+    const image = parentDiv.querySelector('img');
+
     const parentDiv = input.parentElement;
     resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
@@ -615,7 +620,7 @@ async function handleFileUpload(input) {
     resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
     resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
 
-    handleResizeAndCrop(uploadFileInput);
+    handleResizeAndCrop(image);
   }
 }
 
