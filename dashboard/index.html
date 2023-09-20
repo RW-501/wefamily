@@ -613,7 +613,12 @@ function handleFileUpload(input) {
 
 	    
 async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
-  // Check if a file was selected
+  // Check if successCallback is a valid function
+  if (typeof successCallback !== 'function') {
+    console.error('Success callback is not a valid function.');
+    return;
+  }
+	// Check if a file was selected
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
@@ -656,35 +661,33 @@ let maxHeight = 500;
     canvas.toBlob((blob) => {
       const uploadTask = imageRef.put(blob);
 
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload progress: ${progress}%`);
-        },
-        (error) => {
-          console.error('Upload error:', error);
-          if (errorCallback) errorCallback('Image upload failed.');
-        },
-        async () => {
-          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-          console.log('Image URL:', downloadURL);
-          if (successCallback) successCallback(downloadURL);
+      canvas.toBlob(async (blob) => {
+    const uploadTask = imageRef.put(blob);
 
-          // Remove the resizable crop box after successful upload
-          const cropBox = document.getElementById("resizable-crop-box");
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload progress: ${progress}%`);
+      },
+      (error) => {
+        console.error('Upload error:', error);
+        if (errorCallback) errorCallback('Image upload failed.');
+      },
+      async () => {
+        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+        console.log('Image URL:', downloadURL);
+        successCallback(downloadURL);
 
-	          successCallback(downloadURL);
+        // Remove the resizable crop box after successful upload
+        const cropBox = document.getElementById("resizable-crop-box");
 
-          if (cropBox) {
-            cropBox.parentElement.removeChild(cropBox);
-          }
+        if (cropBox) {
+          cropBox.parentElement.removeChild(cropBox);
         }
-      );
-    }, 'image/jpeg', 0.9);
-  };
-
-  img.src = URL.createObjectURL(file);
+      }
+    );
+  }, 'image/jpeg', 0.9);
 }
 
 
