@@ -343,6 +343,7 @@ function handleCollisions(nodes) {
         node.x += xAdjust;
         node.y += yAdjust;
       }
+  console.log('isCollision     '+isCollision);
 
       return isCollision;
     });
