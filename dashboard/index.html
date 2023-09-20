@@ -676,6 +676,9 @@ let maxHeight = 500;
 
           // Remove the resizable crop box after successful upload
           const cropBox = document.getElementById("resizable-crop-box");
+
+	          successCallback(downloadURL);
+
           if (cropBox) {
             cropBox.parentElement.removeChild(cropBox);
           }
