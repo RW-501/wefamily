@@ -122,7 +122,7 @@ if (selectedFile) {
 }
 
 // Function to save the edited family tree information to Firestore
-function saveEditedFamilyTree() {
+async function saveEditedFamilyTree() {
 	
     const newName = document.getElementById('editFamilyTreeName').value;
     const newDescription = document.getElementById('editFamilyTreeDescription').value;
