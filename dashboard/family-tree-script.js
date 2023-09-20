@@ -198,6 +198,13 @@ svg.append("defs").append("clipPath")
     .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
 
 // Update the image elements to use the circular clip path
+nodeGroup.append("circle")
+    .attr("class", "circle")
+    .attr("r", imageWidth / 2) // Radius of circles, half of the image width
+    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+    .style("stroke", "black")  // Border color
+    .style("stroke-width", "1px")  // Border width
+
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
     .attr("x", d => -imageWidth / 2)
@@ -205,8 +212,7 @@ nodeGroup.append("image")
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "fill")  // Apply object-fit: cover
-    .style("border", "black 1em solid")  
+    .style("object-fit", "cover")  // Apply object-fit: cover
     .on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
