@@ -778,9 +778,7 @@ newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family
         .catch((error) => {
             console.error('Error updating user document:', error);
         });
- });
 }
-
 
 function declineJoinRequest(requestID) {
     // Delete the join request from the memberRequest collection
