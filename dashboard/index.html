@@ -625,18 +625,23 @@ async function handleFileUpload(input) {
 }
 
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
+  console.log('Starting upload process...');
+
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
+    console.log('No file selected.');
     return;
   }
 
   if (!file.type.startsWith('image/')) {
     if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    console.log('File is not an image.');
     return;
   }
 
   if (file.size > 5 * 1024 * 1024) {
     if (errorCallback) errorCallback('Image size must be less than 5MB.');
+    console.log('Image size exceeds 5MB.');
     return;
   }
 
@@ -650,6 +655,8 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
   const ctx = canvas.getContext('2d');
 
   img.onload = async () => {
+    console.log('Image loaded successfully.');
+
     let newWidth, newHeight;
     if (img.width > img.height) {
       newWidth = maxWidth;
@@ -666,9 +673,12 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
     canvas.height = maxHeight;
     ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-    // Check if canvas.toBlob is supported
     if (canvas.toBlob) {
+      console.log('Creating Blob...');
+
       canvas.toBlob(async (blob) => {
+        console.log('Blob created successfully.');
+
         const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
 
         uploadTask.on(
@@ -685,10 +695,12 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
             const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
             console.log('Image URL:', downloadURL);
             if (successCallback) successCallback(downloadURL);
+
             const cropBox = document.getElementById('resizable-crop-box');
             if (cropBox) {
               cropBox.parentElement.removeChild(cropBox);
             }
+
             if (uploadCompleteCallback) uploadCompleteCallback();
           }
         );
@@ -700,10 +712,9 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
   };
 
   img.src = URL.createObjectURL(file);
+  console.log('Image source set.');
 }
 
-
-	    
 
 
 function openJoinRequestPopup() {
