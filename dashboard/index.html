@@ -537,13 +537,6 @@ function closeEditFamilyTreePopup() {
     // Handle image cropping
     let isCropping = false;
 
-    resizableCropBox.addEventListener('mousedown', (e) => {
-      isCropping = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      document.addEventListener('mousemove', cropImage);
-      document.addEventListener('mouseup', stopCrop);
-    });
 
     function cropImage(e) {
       if (!isCropping) return;
@@ -568,18 +561,9 @@ function closeEditFamilyTreePopup() {
       document.removeEventListener('mouseup', stopCrop);
     }
 
-    // Handle file upload
-    uploadFileInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          image.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
 
+
+    
 
 
 	    
