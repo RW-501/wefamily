@@ -205,10 +205,17 @@ nodeGroup.append("image")
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
+    .style("object-fit", "cover")  // Apply object-fit: cover
     .on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
+
+
+
+
+
+
 
 
 
