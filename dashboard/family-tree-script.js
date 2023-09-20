@@ -343,38 +343,23 @@ function applyZoom(scale) {
     // Populate image and text
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bio;
+          document.getElementById('memberInfo').value = member.bioX || "";
 
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
         'Member Name': `${member.name}`,
         'Location': member.location,
-        'Birthdate': member.birthdate,
-        'Deceased Date': member.deceaseddate,
-        'Contact': member.contact,
-        'Note': member.note,
+        'Birthdate': member.birthdateX,
+        'Deceased Date': member.deceaseddateX,
+        'Contact': member.contactX,
+        'Note': member.noteX,
         'Children': member.children.join(', '),
         'Spouse': member.spouse.join(', '),
         'Parents': member.parents.join(', '),
         'Siblings': member.siblings.join(', ')
     };
-               const docData = doc.data();
-                    const id = doc.id;
-                    const memberID = doc.memberID;
-                    const private = doc.private;
-                    const location = doc.location;
-                    const birthdate = doc.birthdate;
-                    const deceaseddate = doc.deceaseddate;
-                    const contact = doc.contact;
-                    const note = doc.note;
-                    const name = `${docData.first_name} ${docData.last_name}`;
-                    const photo = docData.photo || '';
-                    const children = docData.children || [];
-                    const spouse = docData.spouse || [];
-                    const parents = docData.parents || [];
-                    const siblings = docData.sibling || [];
-
+    
 		 
     const detailsList = document.getElementById('memberDetails');
     detailsList.innerHTML = ''; // Clear previous content
@@ -526,11 +511,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             name: name,
                             private: private,
                             location: location,
-                            birthdate: birthdate,
-                            deceaseddate: deceaseddate,
-                            contact: contact,
-                            bio: bio,
-                            note: note,
+                            birthdateX: birthdate,
+                            deceaseddateX: deceaseddate,
+                            contactX: contact,
+                            bioX: bio,
+                            noteX: note,
                             photo: photo,
                             children: children,
                             spouse: spouse,
