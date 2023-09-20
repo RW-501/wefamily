@@ -420,12 +420,13 @@ firestore.collection('familyMembers').add(familyMember)
 
 	    		    console.log("- new memberID   " + memberID);
 
-const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
+const selectedFile = document.getElementById('edit_member_Image').src; // Get the selected file
+//const selectedFile = document.getElementById('member_main_Image').files[0]; // Get the selected file
 		if(!selectedFile){
-			const picURL = document.getElementById("member_Image").src;
+		//	const picURL = document.getElementById("member_Image").src;
   firestore.collection('familyMembers').doc(memberID).update({
                                     memberID: memberID,
-                                    photo: picURL,
+                                 //   photo: picURL,
                                 })
                                 .then(() => {
                                     console.log('Photo URL added to family tree document.');
@@ -433,7 +434,7 @@ const selectedFile = document.getElementById('member_main_Image').files[0]; // G
 					checkFirstMember(currentFamilyID,memberID);
    resetFamilyTree();
 					//loadFamilyTreeChart(treeData);
-document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
+//document.getElementById("member_Image").src = "/images/memberPlaceholder.jpg";
                                 })
                                 .catch((error) => {
                                     console.error('Error adding photo URL to family tree document:', error);
