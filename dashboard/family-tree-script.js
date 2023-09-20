@@ -59,7 +59,9 @@ document.getElementById('family-tree-area').innerHTML ="";
     const svg = d3.select("#family-tree-area")
         .append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+	   .style("margin", "0 auto")  // Center horizontally using margin
+    .style("display", "block");  // Ensure it's a block element
 
 
      const height_Layout = 150 * maxHierarchyDepth;
