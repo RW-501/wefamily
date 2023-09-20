@@ -2,6 +2,15 @@
 /// works
 
 
+
+function updateImageAttributes() {
+  nodeGroup.selectAll("image")
+    .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
+    .attr("y", d => -imageHeight / (2 * currentScale))
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale);
+}
+
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
@@ -227,6 +236,9 @@ function zoomed(event) {
   // Apply the zoom transformation to the chartGroup
   chartGroup.attr('transform', event.transform);
 
+
+	  updateImageAttributes();
+
   // Apply the same zoom transformation to the link lines
   chartGroup
     .selectAll('path.link')
@@ -270,6 +282,9 @@ function applyZoom(scale) {
       const target = { x: d.target.x, y: d.target.y * scale };
       return linkGenerator({ source, target });
     });
+
+	  updateImageAttributes();
+
 }
 
 
