@@ -510,85 +510,6 @@ function closeEditFamilyTreePopup() {
 let resizableCropBox;
 
 	    
-function handleResizeAndCrop(image) {
- // const image = document.getElementById('image');
-   resizableCropBox = document.getElementById('resizable-crop-box');
-  let startX, startY;
-  let isResizing = false;
-  let isCropping = false;
-
-  // Handle image resizing
-  image.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    startY = e.clientY;
-    isResizing = true;
-    document.addEventListener('mousemove', resizeImage);
-    document.addEventListener('mouseup', stopResize);
-  });
-
-function resizeImage(e) {
-  if (!isResizing) return;
-
-  const image = e.target;
-  const aspectRatio = image.naturalWidth / image.naturalHeight;
-
-  const newWidth = image.offsetWidth + (e.clientX - startX);
-  const newHeight = newWidth / aspectRatio;
-
-  image.style.width = `${newWidth}px`;
-  image.style.height = `${newHeight}px`;
-
-  startX = e.clientX;
-  startY = e.clientY;
-}
-
-
-  function stopResize() {
-    isResizing = false;
-    document.removeEventListener('mousemove', resizeImage);
-    document.removeEventListener('mouseup', stopResize);
-  }
-
-  // Handle image cropping
-  resizableCropBox.addEventListener('mousedown', (e) => {
-    startX = e.clientX;
-    startY = e.clientY;
-    isCropping = true;
-    document.addEventListener('mousemove', cropImage);
-    document.addEventListener('mouseup', stopCrop);
-  });
-
-function cropImage(e) {
-  if (!isCropping) return;
-
-  const rect = resizableCropBox.getBoundingClientRect();
-  const offsetX = e.clientX - startX;
-  const offsetY = e.clientY - startY;
-
-  const newLeft = Math.max(0, rect.left + offsetX);
-  const newTop = Math.max(0, rect.top + offsetY);
-
-  // Ensure the crop box stays within the image
-  if (newLeft + rect.width <= image.offsetWidth && newTop + rect.height <= image.offsetHeight) {
-    resizableCropBox.style.left = `${newLeft}px`;
-    resizableCropBox.style.top = `${newTop}px`;
-  }
-
-  startX = e.clientX;
-  startY = e.clientY;
-}
-
-
-  function stopCrop() {
-    isCropping = false;
-    document.removeEventListener('mousemove', cropImage);
-    document.removeEventListener('mouseup', stopCrop);
-  }
-}
-
-// Call the function to set up resize and crop handlers
-//handleResizeAndCrop();
-
 
 // Open the file input dialog when the image container is clicked
 function openFileInput(container) {
@@ -623,6 +544,72 @@ async function handleFileUpload(input) {
     handleResizeAndCrop(image);
   }
 }
+
+
+	    
+function handleResizeAndCrop(image) {
+
+	   resizableCropBox = document.getElementById('resizable-crop-box');
+  let startX, startY;
+  let isResizing = false;
+  let isCropping = false;
+
+  // Handle image resizing
+  image.addEventListener('mousedown', (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
+    isResizing = true;
+    document.addEventListener('mousemove', resizeImage);
+    document.addEventListener('mouseup', stopResize);
+  });
+
+  function resizeImage(e) {
+    if (!isResizing) return;
+    const width = image.offsetWidth + (e.clientX - startX);
+    const height = image.offsetHeight + (e.clientY - startY);
+    image.style.width = `${width}px`;
+    image.style.height = `${height}px`;
+    startX = e.clientX;
+    startY = e.clientY;
+  }
+
+  function stopResize() {
+    isResizing = false;
+    document.removeEventListener('mousemove', resizeImage);
+    document.removeEventListener('mouseup', stopResize);
+  }
+
+  // Handle image cropping
+  resizableCropBox.addEventListener('mousedown', (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
+    isCropping = true;
+    document.addEventListener('mousemove', cropImage);
+    document.addEventListener('mouseup', stopCrop);
+  });
+
+  function cropImage(e) {
+    if (!isCropping) return;
+    const rect = resizableCropBox.getBoundingClientRect();
+    const offsetX = e.clientX - startX;
+    const offsetY = e.clientY - startY;
+    const newLeft = rect.left + offsetX;
+    const newTop = rect.top + offsetY;
+    resizableCropBox.style.left = `${newLeft}px`;
+    resizableCropBox.style.top = `${newTop}px`;
+    startX = e.clientX;
+    startY = e.clientY;
+  }
+
+  function stopCrop() {
+    isCropping = false;
+    document.removeEventListener('mousemove', cropImage);
+    document.removeEventListener('mouseup', stopCrop);
+  }
+}
+
+
+	    
 
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
   console.log('Starting upload process...');
