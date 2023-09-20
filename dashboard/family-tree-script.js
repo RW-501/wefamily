@@ -345,6 +345,9 @@ function applyZoom(scale) {
     document.getElementById('memberName').textContent = `${member.name} `;
           document.getElementById('memberInfo').value = member.bioX || "";
 
+
+let children = displayChildrenNames(member.id, displayChildrenCallback);
+		 
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
@@ -354,12 +357,13 @@ function applyZoom(scale) {
         'Deceased Date': member.deceaseddateX,
         'Contact': member.contactX,
         'Note': member.noteX,
-        'Children': member.children.join(', '),
+        'Children': children,
+       // 'Children': member.children.join(', '),
         'Spouse': member.spouse.join(', '),
         'Parents': member.parents.join(', '),
         'Siblings': member.siblings.join(', ')
     };
-    
+
 		 
     const detailsList = document.getElementById('memberDetails');
     detailsList.innerHTML = ''; // Clear previous content
@@ -655,6 +659,42 @@ function resetFamilyTree() {
 
     // Load the family tree chart again
     loadFamilyTreeChart();
+}
+function displayChildrenNames(parentID, callback) {
+    const parent = memberDataMap[parentID];
+
+    if (!parent) {
+        console.log(`Parent with ID ${parentID} not found.`);
+        return;
+    }
+
+    const childrenIDs = parent.children;
+
+    if (childrenIDs.length === 0) {
+        console.log(`Parent ${parent.name} has no children.`);
+        return;
+    }
+
+    const childrenNames = childrenIDs.map((childID) => {
+        const child = memberDataMap[childID];
+        return {
+            id: child.id,
+            name: child.name,
+        };
+    });
+
+    callback(parent.name, childrenNames);
+}
+
+// Example callback function to display children names
+function displayChildrenCallback(parentName, childrenNames) {
+    console.log(`Children of ${parentName}:`);
+	let children = "";
+    childrenNames.forEach((child) => {
+        console.log(`- ${child.name} (ID: ${child.id})`);
+	    children = children + child.name+", ";
+    });
+	return children;
 }
 
 
