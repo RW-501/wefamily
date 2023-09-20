@@ -1,15 +1,8 @@
 
 /// works
 
+const nodeGroup;
 
-
-function updateImageAttributes() {
-  nodeGroup.selectAll("image")
-    .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
-    .attr("y", d => -imageHeight / (2 * currentScale))
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale);
-}
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
@@ -178,7 +171,7 @@ showMemberPopup(d.data);
 const imageWidth = 100;
 const imageHeight = 100;
 
-const nodeGroup = chartGroup.selectAll(".node")
+ nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
@@ -253,6 +246,13 @@ function zoomed(event) {
 	
 }
 
+function updateImageAttributes() {
+  nodeGroup.selectAll("image")
+    .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
+    .attr("y", d => -imageHeight / (2 * currentScale))
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale);
+}
 
 
 // Create the zoom function
