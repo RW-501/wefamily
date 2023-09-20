@@ -16,16 +16,10 @@ let currentScale = initialScale;
 let imageWidth = 100;
 let imageHeight = 100;
 
-
-
-
-
-
 zoomOutButton.addEventListener('click', () => {
   if (currentScale > 2) {
     return;
-  }		    console.log("+ newScale   " + currentScale);
-
+  }
   const newScale = currentScale * 1.2; // Increase scale by 20%
   applyZoom(newScale);
 });
@@ -33,8 +27,7 @@ zoomOutButton.addEventListener('click', () => {
 zoomInButton.addEventListener('click', () => {
   if (currentScale < 0.5) {
     return;
-  }		    console.log("- newScale   " + currentScale);
-
+  }
   const newScale = currentScale / 1.2; // Decrease scale by 20%
   applyZoom(newScale);
 });
