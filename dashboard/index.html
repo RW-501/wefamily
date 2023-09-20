@@ -507,7 +507,7 @@ function closeEditFamilyTreePopup() {
 
 
 
-var resizableCropBox;
+let resizableCropBox;
 
 	    
 function handleResizeAndCrop(image) {
@@ -581,7 +581,7 @@ function openFileInput(container) {
 }
 
 // Function to handle file upload and display the selected image
-function handleFileUpload(input) {
+async function handleFileUpload(input) {
   const file = input.files[0];
 
   if (file) {
@@ -589,31 +589,20 @@ function handleFileUpload(input) {
     uploadFileInput.src = URL.createObjectURL(file);
 
     const parentDiv = input.parentElement;
-
-    // Get the img tag from the previous sibling
-    const image = parentDiv.querySelector('img');
-
-    // Create and display the resizable crop box
-     resizableCropBox = document.createElement('div');
+    resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
     const imageContainer = uploadFileInput.parentElement;
     imageContainer.appendChild(resizableCropBox);
 
-    // Set initial position and size for the resizable crop box
     const imageRect = uploadFileInput.getBoundingClientRect();
-    resizableCropBox.style.width = '100px'; // Set an initial width
-    resizableCropBox.style.height = '100px'; // Set an initial height
-    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`; // Center horizontally
-    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`; // Center vertically
+    resizableCropBox.style.width = '100px';
+    resizableCropBox.style.height = '100px';
+    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
+    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
 
-    // Call the function to set up resize and crop handlers
     handleResizeAndCrop(uploadFileInput);
-
-
   }
 }
-
-
 
 
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
