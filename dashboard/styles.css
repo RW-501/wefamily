@@ -20,6 +20,8 @@
     z-index: 100;
     resize: auto;
     -webkit-user-drag: auto;
+	        width: 150px;
+    height: 150px;
     }
 
 .userID{
