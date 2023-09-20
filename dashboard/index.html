@@ -511,39 +511,6 @@ let resizableCropBox;
 
 	    
 
-// Open the file input dialog when the image container is clicked
-function openFileInput(container) {
-  container.querySelector('.file-input').click();
-}
-
-// Function to handle file upload and display the selected image
-async function handleFileUpload(input) {
-  const file = input.files[0];
-
-  if (file) {
-    const uploadFileInput = input.previousElementSibling;
-    uploadFileInput.src = URL.createObjectURL(file);
-
-	      const parentDiv = input.parentElement;
-
-    // Get the img tag from the previous sibling
-    const image = parentDiv.querySelector('img');
-
-
-    resizableCropBox = document.createElement('div');
-    resizableCropBox.id = 'resizable-crop-box';
-    const imageContainer = image.parentElement;
-    imageContainer.appendChild(resizableCropBox);
-
-    const imageRect = image.getBoundingClientRect();
-    resizableCropBox.style.width = '100px';
-    resizableCropBox.style.height = '100px';
-    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
-    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
-
-    handleResizeAndCrop(image);
-  }
-}
 
 
 	    
@@ -611,98 +578,85 @@ function handleResizeAndCrop(image) {
 
 	    
 
-async function uploadImageToStorage(file, storagePath, successCallback, maxWidth, maxHeight, errorCallback, uploadCompleteCallback) {
-  console.log('Starting upload process...');
-/*
-  if (!file) {
-    if (errorCallback) errorCallback('Please select an image file.');
-    console.log('No file selected.');
-    return;
-  }
-
-  if (!file.type.startsWith('image/')) {
-    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
-    console.log('File is not an image.');
-    return;
-  }
-
-  if (file.size > 5 * 1024 * 1024) {
-    if (errorCallback) errorCallback('Image size must be less than 5MB.');
-    console.log('Image size exceeds 5MB.');
-    return;
-  }
-*/
+async function uploadImageToStorage(canvas, storagePath, successCallback, errorCallback, uploadCompleteCallback) {
   const storageRef = firebase.storage().ref();
   const timestamp = Date.now();
-  const filename = `${timestamp}_${file.name}`;
+  const filename = `${timestamp}_edited_image.jpg`; // Adjust the filename as needed
   const imageRef = storageRef.child(`${storagePath}/${filename}`);
 
-  const img = new Image();
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  canvas.toBlob(async (blob) => {
+    const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
 
-//  img.onload = async () => {
-    console.log('Image loaded successfully.');
-/*
-    let newWidth, newHeight;
-    if (img.width > img.height) {
-      newWidth = maxWidth;
-      newHeight = (img.height / img.width) * maxWidth;
-    } else {
-      newHeight = maxHeight;
-      newWidth = (img.width / img.height) * maxHeight;
-    }
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload progress: ${progress}%`);
+      },
+      (error) => {
+        console.error('Upload error:', error);
+        if (errorCallback) errorCallback('Image upload failed.');
+      },
+      async () => {
+        const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+        console.log('Image URL:', downloadURL);
+        if (successCallback) successCallback(downloadURL);
 
-    const cropX = (newWidth - maxWidth) / 2;
-    const cropY = (newHeight - maxHeight) / 2;
+        if (uploadCompleteCallback) uploadCompleteCallback();
+      }
+    );
+  }, 'image/jpeg', 0.9);
+}
 
-    canvas.width = maxWidth;
-    canvas.height = maxHeight;
-    ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
+// Inside your handleFileUpload function
 
-    if (canvas.toBlob) {
-      console.log('Creating Blob...');
+async function handleFileUpload(input) {
+  const file = input.files[0];
 
-      canvas.toBlob(async (blob) => {
-        console.log('Blob created successfully.');
-*/
-        const uploadTask = imageRef.put(file, { contentType: 'image/jpeg' });
+  if (file) {
+    const uploadFileInput = input.previousElementSibling;
+    uploadFileInput.src = URL.createObjectURL(file);
 
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload progress: ${progress}%`);
-          },
-          (error) => {
-            console.error('Upload error:', error);
-            if (errorCallback) errorCallback('Image upload failed.');
-          },
-          async () => {
-            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-            console.log('Image URL:', downloadURL);
-            if (successCallback) successCallback(downloadURL);
+    const parentDiv = input.parentElement;
+    const image = parentDiv.querySelector('img');
 
-            const cropBox = document.getElementById('resizable-crop-box');
-            if (cropBox) {
-              cropBox.parentElement.removeChild(cropBox);
-            }
+    const resizableCropBox = document.createElement('div');
+    resizableCropBox.id = 'resizable-crop-box';
+    const imageContainer = uploadFileInput.parentElement;
+    imageContainer.appendChild(resizableCropBox);
 
-            if (uploadCompleteCallback) uploadCompleteCallback();
-          }
-        );
-      }, 'image/jpeg', 0.9);
-/*    } else {
-      console.error('toBlob is not supported on this browser.');
-      if (errorCallback) errorCallback('Image upload failed.');
-    }*/
-//  };
+    const imageRect = uploadFileInput.getBoundingClientRect();
+    resizableCropBox.style.width = '100px';
+    resizableCropBox.style.height = '100px';
+    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
+    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
 
-//  img.src = URL.createObjectURL(file);
-//  console.log('Image source set.');
+    handleResizeAndCrop(image);
+
+    // Assuming your canvas is accessible as a global variable or is defined elsewhere in your code
+    // Call the uploadImageToStorage function with the canvas
+    uploadImageToStorage(canvas, 'member_main_Image', (downloadURL) => {
+      // Handle success
+      console.log('Image uploaded successfully. URL:', downloadURL);
+    }, (error) => {
+      // Handle error
+      console.error('Image upload failed:', error);
+    }, () => {
+      // Handle upload completion
+      console.log('Image upload complete.');
+    });
+  }
 }
 
 
+
+
+
+
+
+
+
+	    
 
 function openJoinRequestPopup() {
     document.getElementById('join-request-popup').style.display = 'block';
