@@ -624,8 +624,8 @@ function handleFileUpload(input) {
 
 
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, successCallback, errorCallback) {
-  // Check if a file was selected
-  if (!file) {
+  return new Promise(async (resolve, reject) => {
+	  if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
   }
@@ -767,6 +767,7 @@ newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family
         .catch((error) => {
             console.error('Error updating user document:', error);
         });
+ });
 }
 
 
