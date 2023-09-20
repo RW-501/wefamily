@@ -180,7 +180,7 @@ showMemberPopup(d.data);
 
 
 
-	
+	/*
 nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", 20) // Radius of circles
@@ -189,8 +189,12 @@ nodeGroup.append("circle")
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
     });
+*/
+
+
+	
 // Update the clipPath to create a circular clip
-svg.append("defs").append("clipPath")
+nodeGroup.append("defs").append("clipPath")
     .attr("id", "clipCircle")
     .append("circle")
     .attr("cx", 0)  // Center X at 0
