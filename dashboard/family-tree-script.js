@@ -10,7 +10,7 @@ const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 
 // Define zoom behavior and initial scale
-const initialScale = -2;
+const initialScale = 1;
 let currentScale = initialScale;
 
 let imageWidth = 100;
@@ -37,7 +37,8 @@ zoomInButton.addEventListener('click', () => {
  var linkGenerator;
 function generateFamilyTreeChart(familyData) {
 	
-
+currentScale = initialScale - maxHierarchyDepth;
+	
 let width = 1000;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 document.getElementById('family-tree-area').innerHTML ="";
@@ -46,7 +47,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svgMain")
         .attr("width", width)
         .attr("height", height)
-	   .style("margin", "0 auto")  // Center horizontally using margin
+	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 //width = window.screen.width;
 	
@@ -54,7 +55,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-	   .style("margin", "0 auto")  // Center horizontally using margin
+	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 
 
