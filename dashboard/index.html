@@ -582,6 +582,7 @@ function handleFileUpload(input) {
   if (file) {
     const uploadFileInput = input.previousElementSibling;
     uploadFileInput.src = URL.createObjectURL(file);
+
     const parentDiv = input.parentElement;
 
     // Get the img tag from the previous sibling
@@ -602,17 +603,27 @@ function handleFileUpload(input) {
 
     // Call the function to set up resize and crop handlers
     handleResizeAndCrop(image);
+
+    // Upload the resized image to Firebase Storage
+    uploadImageToStorage(file, 'family_Tree_Image', 500, 500, (downloadURL) => {
+      // Handle success (e.g., update UI with downloadURL)
+      console.log('Image uploaded successfully:', downloadURL);
+
+      // TODO: Use the downloadURL as needed (e.g., update your Firestore data)
+      // ...
+    }, (error) => {
+      // Handle error (e.g., display error message)
+      console.error('Image upload failed:', error);
+
+      // TODO: Handle error in your UI (e.g., show an error message)
+      // ...
+    });
   }
 }
 
 
 
-async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
-
-	
-let maxWidth = 500; // Maximum width
-let maxHeight = 500; // Maximum height
-
+async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, successCallback, errorCallback) {
   // Check if a file was selected
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
@@ -681,12 +692,12 @@ let maxHeight = 500; // Maximum height
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
             console.log('Image URL:', downloadURL);
             if (successCallback) successCallback(downloadURL);
-		      // Remove the resizable crop box after successful upload
-          const cropBox = document.getElementById("resizable-crop-box");
-          if (cropBox) {
-            cropBox.parentElement.removeChild(cropBox);
-          }
-          resolve(downloadURL);
+            // Remove the resizable crop box after successful upload
+            const cropBox = document.getElementById("resizable-crop-box");
+            if (cropBox) {
+              cropBox.parentElement.removeChild(cropBox);
+            }
+            return downloadURL;
           });
         }
       );
@@ -696,7 +707,6 @@ let maxHeight = 500; // Maximum height
   // Load the selected image
   img.src = URL.createObjectURL(file);
 }
-
 
 
 
