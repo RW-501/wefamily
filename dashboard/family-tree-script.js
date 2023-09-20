@@ -353,10 +353,10 @@ let children = displayChildrenNames(member.id, displayChildrenCallback);
         'Member ID': member.id,
         'Member Name': `${member.name}`,
         'Location': member.location,
-        'Birthdate': member.birthdateX,
-        'Deceased Date': member.deceaseddateX,
-        'Contact': member.contactX,
-        'Note': member.noteX,
+        'Birthdate': member.birthdate,
+        'Deceased Date': member.deceaseddate,
+        'Contact': member.contact,
+        'Note': member.note,
         'Children': children,
        // 'Children': member.children.join(', '),
         'Spouse': member.spouse.join(', '),
@@ -491,14 +491,14 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
                 querySnapshot.forEach((doc) => {
                     const docData = doc.data();
-                    const id = doc.id;
-                    const memberID = doc.memberID;
-                    const private = doc.private;
-                    const location = doc.location;
-                    const birthdate = doc.birthdate;
-                    const deceaseddate = doc.deceaseddate || '';
-                    const contact = doc.contact || '';
-                    const note = doc.note || '';
+                    const id = docData.USERid;
+                    const memberID = docData.memberID;
+                    const private = docData.private;
+                    const location = docData.location;
+                    const birthdate = docData.birthdate;
+                    const deceaseddate = docData.deceaseddate || '';
+                    const contact = docData.contact || '';
+                    const note = docData.note || '';
                     const name = `${docData.first_name} ${docData.last_name}`;
                     const photo = docData.photo || '';
                     const bio = docData.bio || '';
@@ -515,11 +515,11 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             name: name,
                             private: private,
                             location: location,
-                            birthdateX: birthdate,
-                            deceaseddateX: deceaseddate,
-                            contactX: contact,
-                            bioX: bio,
-                            noteX: note,
+                            birthdate: birthdate,
+                            deceaseddate: deceaseddate,
+                            contact: contact,
+                            bio: bio,
+                            note: note,
                             photo: photo,
                             children: children,
                             spouse: spouse,
