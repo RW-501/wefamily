@@ -607,53 +607,65 @@ function handleFileUpload(input) {
 
 
 
-async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
-  return new Promise(async (resolve, reject) => {
-    // Check if a file was selected
-    if (!file) {
-      console.error('Please select an image file.');
-      reject('Please select an image file.');
-      return;
-    }
+async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
 
-    // Check file type (allow only images)
-    if (!file.type.startsWith('image/')) {
-      console.error('Please select an image file (e.g., JPEG or PNG).');
-      reject('Please select an image file (e.g., JPEG or PNG).');
-      return;
-    }
+	
+let maxWidth = 500; // Maximum width
+let maxHeight = 500; // Maximum height
 
+  // Check if a file was selected
+  if (!file) {
+    if (errorCallback) errorCallback('Please select an image file.');
+    return;
+  }
+
+  // Check file type (allow only images)
+  if (!file.type.startsWith('image/')) {
+    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    return;
+  }
+
+  // Create a reference to Firebase Storage
+  const storageRef = firebase.storage().ref();
+
+  // Generate a unique filename for the image
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
+
+  // Create a reference to the storage location
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
+
+  // Resize and crop the image using canvas
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  img.onload = () => {
+    // Calculate new dimensions while maintaining aspect ratio
     let newWidth, newHeight;
+    if (img.width > img.height) {
+      newWidth = maxWidth;
+      newHeight = (img.height / img.width) * maxWidth;
+    } else {
+      newHeight = maxHeight;
+      newWidth = (img.width / img.height) * maxHeight;
+    }
 
-    const storageRef = firebase.storage().ref();
-    const timestamp = Date.now();
-    const filename = `${timestamp}_${file.name}`;
-    const imageRef = storageRef.child(`${storagePath}/${filename}`);
+    // Crop dimensions to maintain the desired aspect ratio
+    const cropX = (newWidth - maxWidth) / 2;
+    const cropY = (newHeight - maxHeight) / 2;
 
-    const img = new Image();
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    // Resize the image using canvas
+    canvas.width = maxWidth;
+    canvas.height = maxHeight;
+    ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-    img.onload = async () => {
-      if (img.width > img.height) {
-        newWidth = maxWidth;
-        newHeight = (img.height / img.width) * maxWidth;
-      } else {
-        newHeight = maxHeight;
-        newWidth = (img.width / img.height) * maxHeight;
-      }
-
-      const cropX = (newWidth - maxWidth) / 2;
-      const cropY = (newHeight - maxHeight) / 2;
-
-      canvas.width = maxWidth;
-      canvas.height = maxHeight;
-      ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
-
-      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.9));
-
+    // Convert the resized image to a Blob
+    canvas.toBlob((blob) => {
+      // Upload the Blob to Firebase Storage
       const uploadTask = imageRef.put(blob);
 
+      // Monitor the upload progress
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -662,26 +674,29 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
         },
         (error) => {
           console.error('Upload error:', error);
-          reject('Image upload failed.');
+          if (errorCallback) errorCallback('Image upload failed.');
         },
-        async () => {
-          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-          console.log('Image URL:', downloadURL);
-          resolve(downloadURL);
-
-          // Remove the resizable crop box after successful upload
-          const cropBox = document.getElementById('resizable-crop-box');
-
+        () => {
+          // Upload completed successfully, get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Image URL:', downloadURL);
+            if (successCallback) successCallback(downloadURL);
+		      // Remove the resizable crop box after successful upload
+          const cropBox = document.getElementById("resizable-crop-box");
           if (cropBox) {
             cropBox.parentElement.removeChild(cropBox);
           }
+		  return downloadURL;
+          });
         }
       );
-    };
+    }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
+  };
 
-    img.src = URL.createObjectURL(file);
-  });
+  // Load the selected image
+  img.src = URL.createObjectURL(file);
 }
+
 
 
 
