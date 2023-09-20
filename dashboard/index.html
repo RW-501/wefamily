@@ -625,39 +625,35 @@ async function handleFileUpload(input) {
 }
 
 
-async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
-  return new Promise((resolve, reject) => {
-	  if (!file) {
+async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
+  // Error handling for invalid file
+  if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
   }
 
+  // Error handling for non-image files
   if (!file.type.startsWith('image/')) {
     if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
     return;
   }
 
+  // Error handling for large image size
   if (file.size > 5 * 1024 * 1024) {
     if (errorCallback) errorCallback('Image size must be less than 5MB.');
     return;
   }
 
-  // Create a reference to Firebase Storage
   const storageRef = firebase.storage().ref();
-
-  // Generate a unique filename for the image
   const timestamp = Date.now();
   const filename = `${timestamp}_${file.name}`;
-
-  // Create a reference to the storage location
   const imageRef = storageRef.child(`${storagePath}/${filename}`);
 
   const img = new Image();
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  img.onload = () => {
-    // Calculate new dimensions while maintaining aspect ratio
+  img.onload = async () => {
     let newWidth, newHeight;
     if (img.width > img.height) {
       newWidth = maxWidth;
@@ -667,21 +663,16 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
       newWidth = (img.width / img.height) * maxHeight;
     }
 
-    // Crop dimensions to maintain the desired aspect ratio
     const cropX = (newWidth - maxWidth) / 2;
     const cropY = (newHeight - maxHeight) / 2;
 
-    // Resize the image using canvas
     canvas.width = maxWidth;
     canvas.height = maxHeight;
     ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-    // Convert the resized image to a Blob
-    canvas.toBlob((blob) => {
-      // Upload the Blob to Firebase Storage
+    canvas.toBlob(async (blob) => {
       const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
 
-      // Monitor the upload progress
       uploadTask.on(
         'state_changed',
         (snapshot) => {
@@ -692,16 +683,14 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
           console.error('Upload error:', error);
           if (errorCallback) errorCallback('Image upload failed.');
         },
-  async () => {
-      const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-      console.log('Image URL:', downloadURL);
-      resolve(downloadURL); 
+        async () => {
+          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+          console.log('Image URL:', downloadURL);
           if (successCallback) successCallback(downloadURL);
           const cropBox = document.getElementById('resizable-crop-box');
           if (cropBox) {
             cropBox.parentElement.removeChild(cropBox);
           }
-          // Notify upload completion
           if (uploadCompleteCallback) uploadCompleteCallback();
         }
       );
@@ -709,8 +698,6 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
   };
 
   img.src = URL.createObjectURL(file);
-
-  });
 }
 
 
