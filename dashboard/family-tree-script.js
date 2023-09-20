@@ -242,9 +242,9 @@ nodeGroup.append("image")
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 const translateX = 0;
 const translateY = 100;
-const scale = 1;    
+//const scale = 1;    
     // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
     
 // Define the zoom function
 function zoomed(event) {
