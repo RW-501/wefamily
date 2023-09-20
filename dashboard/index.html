@@ -526,15 +526,22 @@ function handleResizeAndCrop(image) {
     document.addEventListener('mouseup', stopResize);
   });
 
-  function resizeImage(e) {
-    if (!isResizing) return;
-    const width = image.offsetWidth + (e.clientX - startX);
-    const height = image.offsetHeight + (e.clientY - startY);
-    image.style.width = `${width}px`;
-    image.style.height = `${height}px`;
-    startX = e.clientX;
-    startY = e.clientY;
-  }
+function resizeImage(e) {
+  if (!isResizing) return;
+
+  const image = e.target;
+  const aspectRatio = image.naturalWidth / image.naturalHeight;
+
+  const newWidth = image.offsetWidth + (e.clientX - startX);
+  const newHeight = newWidth / aspectRatio;
+
+  image.style.width = `${newWidth}px`;
+  image.style.height = `${newHeight}px`;
+
+  startX = e.clientX;
+  startY = e.clientY;
+}
+
 
   function stopResize() {
     isResizing = false;
@@ -551,18 +558,26 @@ function handleResizeAndCrop(image) {
     document.addEventListener('mouseup', stopCrop);
   });
 
-  function cropImage(e) {
-    if (!isCropping) return;
-    const rect = resizableCropBox.getBoundingClientRect();
-    const offsetX = e.clientX - startX;
-    const offsetY = e.clientY - startY;
-    const newLeft = rect.left + offsetX;
-    const newTop = rect.top + offsetY;
+function cropImage(e) {
+  if (!isCropping) return;
+
+  const rect = resizableCropBox.getBoundingClientRect();
+  const offsetX = e.clientX - startX;
+  const offsetY = e.clientY - startY;
+
+  const newLeft = Math.max(0, rect.left + offsetX);
+  const newTop = Math.max(0, rect.top + offsetY);
+
+  // Ensure the crop box stays within the image
+  if (newLeft + rect.width <= image.offsetWidth && newTop + rect.height <= image.offsetHeight) {
     resizableCropBox.style.left = `${newLeft}px`;
     resizableCropBox.style.top = `${newTop}px`;
-    startX = e.clientX;
-    startY = e.clientY;
   }
+
+  startX = e.clientX;
+  startY = e.clientY;
+}
+
 
   function stopCrop() {
     isCropping = false;
