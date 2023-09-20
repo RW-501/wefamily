@@ -609,8 +609,8 @@ function handleFileUpload(input) {
 
 
 
-async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
-  // Check if successCallback is a valid function
+async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight) {
+  return new Promise((resolve, reject) => {  // Check if successCallback is a valid function
   if (typeof successCallback !== 'function') {
     console.error('Success callback is not a valid function.');
     return;
@@ -671,10 +671,12 @@ async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, su
         console.error('Upload error:', error);
         if (errorCallback) errorCallback('Image upload failed.');
       },
-      async () => {
+    async () => {
         const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
         console.log('Image URL:', downloadURL);
-        successCallback(downloadURL);
+
+
+	            resolve(downloadURL);
 
         // Remove the resizable crop box after successful upload
         const cropBox = document.getElementById('resizable-crop-box');
