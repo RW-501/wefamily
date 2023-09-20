@@ -342,9 +342,9 @@ function applyZoom(scale) {
          function populateMemberInfo(member) {
     // Populate image and text
     document.getElementById('memberImage').src = member.photo;
-    document.getElementById('memberInfo').value = member.location;
     document.getElementById('memberName').textContent = `${member.name} `;
-      
+          document.getElementById('memberInfo').value = member.bio;
+
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
@@ -359,7 +359,23 @@ function applyZoom(scale) {
         'Parents': member.parents.join(', '),
         'Siblings': member.siblings.join(', ')
     };
+               const docData = doc.data();
+                    const id = doc.id;
+                    const memberID = doc.memberID;
+                    const private = doc.private;
+                    const location = doc.location;
+                    const birthdate = doc.birthdate;
+                    const deceaseddate = doc.deceaseddate;
+                    const contact = doc.contact;
+                    const note = doc.note;
+                    const name = `${docData.first_name} ${docData.last_name}`;
+                    const photo = docData.photo || '';
+                    const children = docData.children || [];
+                    const spouse = docData.spouse || [];
+                    const parents = docData.parents || [];
+                    const siblings = docData.sibling || [];
 
+		 
     const detailsList = document.getElementById('memberDetails');
     detailsList.innerHTML = ''; // Clear previous content
 
@@ -387,10 +403,11 @@ scrollTo.addEventListener('click', () => {
         const viewportHeight = window.innerHeight;
 
         // Get the top position of the div
-        const divTop = memberDiv.getBoundingClientRect().top;
+const divHeight = memberDiv.offsetHeight; // Height of the element
+const divCenter = divTop + divHeight / 2; // Center of the element relative to the viewport
 
         // Calculate the scroll position to center the div
-        const scrollPosition = divTop - (viewportHeight / 2);
+        const scrollPosition = divCenter - (viewportHeight / 2);
 
         // Scroll to center the div
         window.scrollBy({
@@ -490,11 +507,12 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const private = doc.private;
                     const location = doc.location;
                     const birthdate = doc.birthdate;
-                    const deceaseddate = doc.deceaseddate;
-                    const contact = doc.contact;
-                    const note = doc.note;
+                    const deceaseddate = doc.deceaseddate || '';
+                    const contact = doc.contact || '';
+                    const note = doc.note || '';
                     const name = `${docData.first_name} ${docData.last_name}`;
                     const photo = docData.photo || '';
+                    const bio = docData.bio || '';
                     const children = docData.children || [];
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
@@ -511,6 +529,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             birthdate: birthdate,
                             deceaseddate: deceaseddate,
                             contact: contact,
+                            bio: bio,
                             note: note,
                             photo: photo,
                             children: children,
