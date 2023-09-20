@@ -13,7 +13,8 @@ const zoomOutButton = document.getElementById('zoom-out');
 const initialScale = 1;
 let currentScale = initialScale;
 
-
+let imageWidth = 100;
+let imageHeight = 100;
 
 zoomOutButton.addEventListener('click', () => {
   if (currentScale > 2) {
@@ -168,8 +169,7 @@ showMemberPopup(d.data);
 
 	  }
 
-const imageWidth = 100;
-const imageHeight = 100;
+
 
  nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
