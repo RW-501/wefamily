@@ -123,55 +123,45 @@ if (selectedFile) {
 
 // Function to save the edited family tree information to Firestore
 async function saveEditedFamilyTree() {
-	
+  try {
+    // Get the updated family tree information
     const newName = document.getElementById('editFamilyTreeName').value;
     const newDescription = document.getElementById('editFamilyTreeDescription').value;
     const newLocation = document.getElementById('editFamilyTreeLocation').value;
 
-   
-	
-    const treeID = currentFamilyID; // Replace with actual treeID
+    // Get the current family tree ID (replace with actual logic to get the ID)
+    const treeID = currentFamilyID;
     const treeRef = firestore.collection('familyTrees').doc(treeID);
+
     let downloadURL = '';  // Initialize downloadURL
 
     // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_ImageEdit').files[0];
-if (selectedFile) {
-  const storagePath = 'family_Tree_Image';
-  downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+    if (selectedFile) {
+      const storagePath = 'family_Tree_Image';
+      try {
+        downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+      } catch (error) {
+        console.error('Error uploading family tree image:', error);
+        return;
+      }
+    }
 
-
-       treeRef.update({
-        name: newName,
-        description: newDescription,
-        location: newLocation,
-        photo: downloadURL
-        // Add other fields if needed
-    }).then(() => {
-        console.log('Family tree information updated successfully!');
-        closeEditFamilyTreePopup(); // Close the popup after saving
-	    newsPost(`${userID} edited the Family Tree Info`);
-
-    }).catch((error) => {
-        console.error('Error updating family tree information:', error);
+    // Update the family tree information in Firestore
+    await treeRef.update({
+      name: newName,
+      description: newDescription,
+      location: newLocation,
+      photo: downloadURL  // Update the photo URL
+      // Add other fields as needed
     });
-	    
-    } else {
-    treeRef.update({
-        name: newName,
-        description: newDescription,
-        location: newLocation
-        // Add other fields if needed
-    }).then(() => {
-        console.log('Family tree information updated successfully!');
-        closeEditFamilyTreePopup(); // Close the popup after saving
-	    newsPost(`${userID} edited the Family Tree Info`);
 
-    }).catch((error) => {
-        console.error('Error updating family tree information:', error);
-    });
-}
-	
+    console.log('Family tree information updated successfully!');
+    closeEditFamilyTreePopup(); // Close the popup after saving
+    newsPost(`${userID} edited the Family Tree Info`);
+  } catch (error) {
+    console.error('Error saving edited family tree:', error);
+  }
 }
 
 	    
