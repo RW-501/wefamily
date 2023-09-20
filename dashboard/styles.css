@@ -1,5 +1,18 @@
 
 
+
+
+    #image-container {
+      position: relative;
+    }
+    #resizable-crop-box {
+      position: absolute;
+      border: 2px dashed #000;
+      pointer-events: none;
+    }
+
+
+
 .userID{
 width: 100%;
     margin: 2%;
