@@ -371,7 +371,7 @@ function initializeFamilyTreeChart() {
         <div class="popup-content">
             <div class="popup-left">
                 <div class="popup-image">
-                    <img id="memberImage" src="" alt="Member Image">
+                    <img id="memberImage" src="/wefamily/images/memberPlaceholder.jpg" alt="Member Image">
                 </div>
                 <div class="popup-text">
                     <textarea id="memberInfo" placeholder="Member Info"></textarea>
@@ -640,7 +640,7 @@ async function handleFileUpload(input) {
     resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
     resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
 
-    handleResizeAndCrop(image, resizableCropBox); // Pass resizableCropBox to handleResizeAndCrop
+   // handleResizeAndCrop(image, resizableCropBox); // Pass resizableCropBox to handleResizeAndCrop
   }
 }
 
