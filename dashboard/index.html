@@ -618,7 +618,8 @@ async function handleFileUpload(input) {
   const file = input.files[0];
   console.log('File:', file);
   if (file) {
-    const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
+  //  const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
+    const uploadFileInput = input.parentElement; // Change to nextElementSibling to get the img element
     uploadFileInput.src = URL.createObjectURL(file);
 	  
 console.log('uploadFileInput:', uploadFileInput);
