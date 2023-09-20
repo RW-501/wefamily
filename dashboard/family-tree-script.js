@@ -74,7 +74,7 @@ chartGroup  = svg.append("g");
 // Create a root node for the tree with an initial y-coordinate of 50
 const root = d3.hierarchy(familyData).eachBefore(d => {
  //   d.y = d.depth * 100 + 50; // Adjust the '100' for your desired vertical spacing
-    d.y = d.depth *  100; // Adjust the '100' for your desired vertical spacing
+    d.y = d.depth *  100 +60, d.x = d.depth * 100; // Adjust the '100' for your desired vertical spacing
 });
 
 
