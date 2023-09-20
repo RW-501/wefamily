@@ -697,7 +697,7 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, succ
             if (cropBox) {
               cropBox.parentElement.removeChild(cropBox);
             }
-            return downloadURL;
+      resolve(downloadURL);
           });
         }
       );
