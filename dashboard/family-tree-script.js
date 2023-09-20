@@ -16,6 +16,11 @@ let currentScale = initialScale;
 let imageWidth = 100;
 let imageHeight = 100;
 
+
+
+
+
+
 zoomOutButton.addEventListener('click', () => {
   if (currentScale > 2) {
     return;
@@ -286,9 +291,10 @@ function applyZoom(scale) {
   chartGroup.selectAll('text').attr('font-size', 14 / scale);
   chartGroup
     .selectAll('image')
-    .attr('y', (d) => d.y) // Adjust the positioning
-    .attr('width', 100 / scale)
-    .attr('height', 100 / scale);
+   .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
+    .attr("y", d => -imageHeight / (2 * currentScale))
+	  .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale)
   chartGroup.selectAll('path.link').attr('stroke-width', 2 / scale);
 
   // Update path 'd' attribute
