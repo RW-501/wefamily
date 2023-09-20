@@ -121,33 +121,29 @@ if (selectedFile) {
   }
 }
 
-// Function to save the edited family tree information to Firestore
+
 async function saveEditedFamilyTree() {
   try {
-    // Get the updated family tree information
-    const newName = document.getElementById('editFamilyTreeName').value;
+ const newName = document.getElementById('editFamilyTreeName').value;
     const newDescription = document.getElementById('editFamilyTreeDescription').value;
     const newLocation = document.getElementById('editFamilyTreeLocation').value;
 
-    // Get the current family tree ID (replace with actual logic to get the ID)
+    if (!newName) {
+      console.error('Name is empty or undefined.');
+      return;
+    }
+      const storagePath = 'family_Tree_Image';
+
     const treeID = currentFamilyID;
     const treeRef = firestore.collection('familyTrees').doc(treeID);
 
-    let downloadURL = '';  // Initialize downloadURL
 
-    // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_ImageEdit').files[0];
-    if (selectedFile) {
-      const storagePath = 'family_Tree_Image';
-      try {
-        downloadURL = await uploadImageToStorage(selectedFile, storagePath);
-      } catch (error) {
-        console.error('Error uploading family tree image:', error);
-        return;
-      }
-    }
 
-    // Update the family tree information in Firestore
+    if (selectedFile) {
+      // Handle uploading the edited photo and get the download URL
+      uploadImageToStorage(selectedFile, storagePath, async (downloadURL) => {
+        // Update the document with the new data including the photo URL
     await treeRef.update({
       name: newName,
       description: newDescription,
@@ -156,12 +152,31 @@ async function saveEditedFamilyTree() {
       // Add other fields as needed
     });
 
-    console.log('Family tree information updated successfully!');
+        console.log('Family member updated successfully.');
+        // Close the edit family member popup
+        closeEditFamilyMemberPopup();
+	    newsPost(`${userID} edited the Family Tree Info`);
+
+      }).catch(error => {
+        console.error('Error uploading edited photo:', error);
+      });
+    } else {
+      // Update the document with the new data (excluding the photo URL)
+   await treeRef.update({
+      name: newName,
+      description: newDescription,
+      location: newLocation,
+      // Add other fields as needed
+    });
+
+ console.log('Family tree information updated successfully!');
     closeEditFamilyTreePopup(); // Close the popup after saving
     newsPost(`${userID} edited the Family Tree Info`);
+    }
   } catch (error) {
-    console.error('Error saving edited family tree:', error);
+    console.error('Error saving edited family member:', error);
   }
 }
 
-	    
+
+
