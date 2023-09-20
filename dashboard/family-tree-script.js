@@ -265,8 +265,8 @@ function handleCollisions(nodes) {
 }
 
 // After appending the images to nodeGroup
-const nodes = root.descendants();
-handleCollisions(nodes);
+//const nodes = root.descendants();
+handleCollisions(nodeGroup);
 
 
 
