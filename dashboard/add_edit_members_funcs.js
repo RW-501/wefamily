@@ -55,10 +55,9 @@ async function saveEditedFamilyMember() {
       return;
     }
 
-    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
-const selectedFile = document.getElementById('edit_member_Image').src; // Get the selected file
 
- //   const selectedFile = document.getElementById('edit-photo-file').files[0];
+    const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
+ const selectedFile = document.getElementById('edit-photo-file').files[0];
 
     if (selectedFile) {
       // Handle uploading the edited photo and get the download URL
