@@ -10,13 +10,15 @@ margin: auto 0;
       position: relative;
     }
 
-.member-name{
-
+.member-name {
+    font-size: 1.2em;
+    font-weight: 600;
 }
-  .member-birthday{
-	  
-	  
-  }
+ .member-birthday {
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
 
 
 
