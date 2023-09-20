@@ -10,7 +10,7 @@
     document.getElementById('edit-note').value = memberData.note || '';
     document.getElementById('userID_edit_Member').innerHTML = memberData.memberID || '';
 
-		         document.getElementById('edit_member_Image').src = memberData.photo;
+		         document.getElementById('edit_member_Image').src = memberData.photo || "/wefamily/images/memberPlaceholder.jpg" ;
 
     document.getElementById('edit-family-member-popup').style.display = 'block';
 
