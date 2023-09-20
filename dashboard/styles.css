@@ -4,6 +4,8 @@
 
     #image-container {
       position: relative;
+    }
+.image-container {
     border-radius: 0;
     }
     #resizable-crop-box {
@@ -11,9 +13,12 @@
       pointer-events: none;
     border: 2px dashed #000;
     pointer-events: none;
-    border-radius: 50%
+    border-radius: 50%;
+    position: fixed;
+    border-radius: 50%;
     z-index: 100;
-    position: absolute;
+    resize: auto;
+    -webkit-user-drag: auto;
     }
 
 .userID{
@@ -329,6 +334,7 @@ min-height: 500px;
             display: block;
             height: fit-content;
 	        max-height: 90%;
+	    min-width: 60%;
     }
 
     .close-button {
