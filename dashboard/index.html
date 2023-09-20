@@ -519,9 +519,124 @@ function openFileInput(container) {
 
 
 	    
-function handleResizeAndCrop(image) {
 
-	   resizableCropBox = document.getElementById('resizable-crop-box');
+function uploadImageToStorage(file, storagePath, successCallback, errorCallback) {
+  // Check if a file was selected
+  if (!file) {
+    if (errorCallback) errorCallback('Please select an image file.');
+    return;
+  }
+
+  // Check file type (allow only images)
+  if (!file.type.startsWith('image/')) {
+    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    return;
+  }
+
+  // Check file size (limit to 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    if (errorCallback) errorCallback('Image size must be less than 5MB.');
+    return;
+  }
+
+  // Create a reference to Firebase Storage
+  const storageRef = firebase.storage().ref();
+
+  // Generate a unique filename for the image
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
+
+  // Create a reference to the storage location
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
+
+  // Resize the image to 500x500 pixels (using a library like HTMLCanvasElement)
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+
+  img.onload = () => {
+
+	  
+// Max width or height for the image
+const maxSize = 500;
+
+// Calculate new dimensions while maintaining aspect ratio
+let newWidth, newHeight;
+if (img.width > img.height) {
+  newWidth = maxSize;
+  newHeight = (img.height / img.width) * maxSize;
+} else {
+  newHeight = maxSize;
+  newWidth = (img.width / img.height) * maxSize;
+}
+
+
+// Resize the image using canvas
+canvas.width = newWidth;
+canvas.height = newHeight;
+ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+
+    // Convert the resized image to a Blob
+    canvas.toBlob((blob) => {
+      // Upload the Blob to Firebase Storage
+      const uploadTask = imageRef.put(blob);
+
+      // Monitor the upload progress
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload progress: ${progress}%`);
+        },
+        (error) => {
+          console.error('Upload error:', error);
+          if (errorCallback) errorCallback('Image upload failed.');
+        },
+        () => {
+          // Upload completed successfully, get the download URL
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Image URL:', downloadURL);
+            if (successCallback) successCallback(downloadURL);
+          });
+        }
+      );
+    }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
+  };
+
+  // Load the selected image
+  img.src = URL.createObjectURL(file);
+}
+
+
+	    
+// Inside your handleFileUpload function
+
+async function handleFileUpload(input) {
+  const file = input.files[0];
+
+  if (file) {
+    const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
+    uploadFileInput.src = URL.createObjectURL(file);
+
+    const parentDiv = input.parentElement;
+    const image = parentDiv.querySelector('img');
+
+    const resizableCropBox = document.createElement('div');
+    resizableCropBox.id = 'resizable-crop-box';
+    parentDiv.appendChild(resizableCropBox); // Append resizableCropBox to the parent div
+
+    const imageRect = image.getBoundingClientRect();
+    resizableCropBox.style.width = '100px';
+    resizableCropBox.style.height = '100px';
+    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
+    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
+
+    handleResizeAndCrop(image, resizableCropBox); // Pass resizableCropBox to handleResizeAndCrop
+  }
+}
+
+function handleResizeAndCrop(image, resizableCropBox) {
   let startX, startY;
   let isResizing = false;
   let isCropping = false;
@@ -579,91 +694,6 @@ function handleResizeAndCrop(image) {
     document.removeEventListener('mouseup', stopCrop);
   }
 }
-
-
-	    
-
-async function uploadImageToStorage(blob, storagePath, successCallback, errorCallback, uploadCompleteCallback) {
-
-
-      console.log(`blob: ${blob}`);
-
-	    
-  const storageRef = firebase.storage().ref();
-  const timestamp = Date.now();
-  const filename = `${timestamp}_edited_image.jpg`; // Adjust the filename as needed
-  const imageRef = storageRef.child(`${storagePath}/${filename}`);
-
-  // Convert canvas to a data URL
- // const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-
-  // Convert data URL to Blob
- // const blob = await fetch(dataUrl).then((res) => res.blob());
-
-  const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
-
-  uploadTask.on(
-    'state_changed',
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`Upload progress: ${progress}%`);
-    },
-    (error) => {
-      console.error('Upload error:', error);
-      if (errorCallback) errorCallback('Image upload failed.');
-    },
-    async () => {
-      const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
-      console.log('Image URL:', downloadURL);
-      if (successCallback) successCallback(downloadURL);
-
-      if (uploadCompleteCallback) uploadCompleteCallback();
-    }
-  );
-}
-
-// Inside your handleFileUpload function
-
-async function handleFileUpload(input) {
-  const file = input.files[0];
-
-  if (file) {
-    const uploadFileInput = input.previousElementSibling;
-    uploadFileInput.src = URL.createObjectURL(file);
-
-    const parentDiv = input.parentElement;
-    const image = parentDiv.querySelector('img');
-
-    const resizableCropBox = document.createElement('div');
-    resizableCropBox.id = 'resizable-crop-box';
-    const imageContainer = uploadFileInput.parentElement;
-    imageContainer.appendChild(resizableCropBox);
-
-    const imageRect = uploadFileInput.getBoundingClientRect();
-    resizableCropBox.style.width = '100px';
-    resizableCropBox.style.height = '100px';
-    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
-    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`;
-
-    handleResizeAndCrop(image);
-/*
-    // Assuming your canvas is accessible as a global variable or is defined elsewhere in your code
-    // Call the uploadImageToStorage function with the canvas
-    uploadImageToStorage(canvas, 'member_main_Image', (downloadURL) => {
-      // Handle success
-      console.log('Image uploaded successfully. URL:', downloadURL);
-    }, (error) => {
-      // Handle error
-      console.error('Image upload failed:', error);
-    }, () => {
-      // Handle upload completion
-      console.log('Image upload complete.');
-    });
-	  */
-  }
-}
-
-
 
 
 
