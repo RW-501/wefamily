@@ -686,7 +686,7 @@ let maxHeight = 500; // Maximum height
           if (cropBox) {
             cropBox.parentElement.removeChild(cropBox);
           }
-		  return downloadURL;
+          resolve(downloadURL);
           });
         }
       );
