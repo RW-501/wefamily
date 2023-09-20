@@ -423,12 +423,11 @@ function initializeFamilyTreeChart() {
 
 <div class="flex">
 	    	 <!-- Image container with onclick event -->
-    <div class="image-container w30" onclick="openFileInput(this)">
-        <!-- Display uploaded image here -->
-        <img id="edit_member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
-        <!-- File input element -->
-        <input id="edit-photo-file" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
-    </div>
+<div class="image-container w30" onclick="openFileInput(this)">
+  <img id="edit_member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+  <input id="edit-photo-file" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+</div>
+
 	    <div class="grid">
         <input type="text" id="edit-first-name" placeholder="First Name">
         <input type="text" id="edit-last-name" placeholder="Last Name">
@@ -613,8 +612,11 @@ ctx.drawImage(img, 0, 0, newWidth, newHeight);
 // Inside your handleFileUpload function
 
 async function handleFileUpload(input) {
-  const file = input.files[0];
+  console.log('handleFileUpload called');
+  console.log('Input:', input);
 
+  const file = input.files[0];
+  console.log('File:', file);
   if (file) {
     const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
     uploadFileInput.src = URL.createObjectURL(file);
