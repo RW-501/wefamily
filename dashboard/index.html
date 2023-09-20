@@ -582,14 +582,11 @@ function handleFileUpload(input) {
   if (file) {
     const uploadFileInput = input.previousElementSibling;
     uploadFileInput.src = URL.createObjectURL(file);
-	  
-  const parentDiv = input.parentElement;
+    const parentDiv = input.parentElement;
 
-  // Get the img tag from the previous sibling
-  const image = parentDiv.querySelector('img');
-//  const image = parentDiv.previousElementSibling.querySelector('img');
+    // Get the img tag from the previous sibling
+    const image = parentDiv.querySelector('img');
 
-	  
     // Create and display the resizable crop box
     const resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
@@ -602,10 +599,10 @@ function handleFileUpload(input) {
     resizableCropBox.style.height = '100px'; // Set an initial height
     resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`; // Center horizontally
     resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`; // Center vertically
-	  // Call the function to set up resize and crop handlers
-handleResizeAndCrop(image);
+
+    // Call the function to set up resize and crop handlers
+    handleResizeAndCrop(image);
   }
-	
 }
 
 
