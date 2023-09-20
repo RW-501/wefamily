@@ -228,45 +228,10 @@ nodeGroup.append("image")
         showMemberPopup(d.data);
     });
 
-// Collision detection to prevent overlapping
-function handleCollisions(nodes) {
-  const padding = 5; // Adjust padding based on your preference
-
-  const quadtree = d3.quadtree()
-    .x(d => d.x)
-    .y(d => d.y)
-    .addAll(nodes);
-
-  nodes.forEach(node => {
-    const radius = imageWidth / 2; // Assuming images are circular
-    const x = node.x;
-    const y = node.y;
-
-    quadtree.visit(visitedNode => {
-      const isCollision = visitedNode !== null && visitedNode !== node &&
-        Math.abs(x - visitedNode.x) < radius + padding &&
-        Math.abs(y - visitedNode.y) < radius + padding;
-
-      if (isCollision) {
-        const xDirection = x < visitedNode.x ? -1 : 1;
-        const yDirection = y < visitedNode.y ? -1 : 1;
-
-        const xAdjust = (radius + padding) * xDirection;
-        const yAdjust = (radius + padding) * yDirection;
-
-        node.x += xAdjust;
-        node.y += yAdjust;
-      }
-  console.log('Div isCollision   '+isCollision);
-
-      return isCollision;
-    });
-  });
-}
 
 // After appending the images to nodeGroup
-//const nodes = root.descendants();
-handleCollisions(root);
+const nodes = root.descendants();
+handleCollisions(nodes);
 
 
 
@@ -310,8 +275,43 @@ function updateImageAttributes() {
     .attr("height", imageHeight / currentScale);
 }
 
+// Collision detection to prevent overlapping
+function handleCollisions(nodes) {
+  const padding = 10; // Adjust padding based on your preference
+
+  const quadtree = d3.quadtree()
+    .x(d => d.x)
+    .y(d => d.y)
+    .addAll(nodes);
+
+  nodes.forEach(node => {
+    const radius = imageWidth / (2 * currentScale); // Assuming images are circular
+    const x = node.x;
+    const y = node.y;
+
+    quadtree.visit(visitedNode => {
+      const isCollision = visitedNode !== null && visitedNode !== node &&
+        Math.abs(x - visitedNode.x) < radius + padding &&
+        Math.abs(y - visitedNode.y) < radius + padding;
+
+      if (isCollision) {
+        const xDirection = x < visitedNode.x ? -1 : 1;
+        const yDirection = y < visitedNode.y ? -1 : 1;
+
+        const xAdjust = (radius + padding) * xDirection;
+        const yAdjust = (radius + padding) * yDirection;
+
+        node.x += xAdjust;
+        node.y += yAdjust;
+      }
+
+      return isCollision;
+    });
+  });
+}
 
 // Create the zoom function
+
 function applyZoom(scale) {
   currentScale = scale;
 
@@ -321,15 +321,15 @@ function applyZoom(scale) {
   }
 
   // Update circle radius, text font size, image dimensions, stroke width
-  chartGroup.selectAll('circle').attr('r', 20 / scale);
-  chartGroup.selectAll('text').attr('font-size', 14 / scale);
+  chartGroup.selectAll('.circle').attr('r', imageWidth / (2 * currentScale));
+  chartGroup.selectAll('text').attr('font-size', 14 / currentScale);
   chartGroup
     .selectAll('image')
-   .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
-    .attr("y", d => -imageHeight / (2 * currentScale))
-	  .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale)
-  chartGroup.selectAll('path.link').attr('stroke-width', 2 / scale);
+    .attr('x', d => -imageWidth / (2 * currentScale))
+    .attr('y', d => -imageHeight / (2 * currentScale))
+    .attr('width', imageWidth / currentScale)
+    .attr('height', imageHeight / currentScale);
+  chartGroup.selectAll('path.link').attr('stroke-width', 2 / currentScale);
 
   // Update path 'd' attribute
   chartGroup
@@ -340,10 +340,8 @@ function applyZoom(scale) {
       return linkGenerator({ source, target });
     });
 
-	  updateImageAttributes();
-
+  updateImageAttributes();
 }
-
 
 
 
