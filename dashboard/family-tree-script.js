@@ -267,7 +267,10 @@ function zoomed(event) {
     });
 }
 
-	
+	// After appending the images to nodeGroup
+const nodes = root.descendants();
+handleCollisions(nodes);
+
 }
 
 function updateImageAttributes() {
@@ -312,6 +315,39 @@ function applyZoom(scale) {
 
 }
 
+function handleCollisions(nodes) {
+  const padding = 5; // Adjust padding based on your preference
+
+  const quadtree = d3.quadtree()
+    .x(d => d.x)
+    .y(d => d.y)
+    .addAll(nodes);
+
+  nodes.forEach(node => {
+    const radius = imageWidth / 2; // Assuming images are circular
+    const x = node.x;
+    const y = node.y;
+
+    quadtree.visit(visitedNode => {
+      const isCollision = visitedNode !== null && visitedNode !== node &&
+        Math.abs(x - visitedNode.x) < radius + padding &&
+        Math.abs(y - visitedNode.y) < radius + padding;
+
+      if (isCollision) {
+        const xDirection = x < visitedNode.x ? -1 : 1;
+        const yDirection = y < visitedNode.y ? -1 : 1;
+
+        const xAdjust = (radius + padding) * xDirection;
+        const yAdjust = (radius + padding) * yDirection;
+
+        node.x += xAdjust;
+        node.y += yAdjust;
+      }
+
+      return isCollision;
+    });
+  });
+}
 
 
          function populateMemberInfo(member) {
