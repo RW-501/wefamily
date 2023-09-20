@@ -98,7 +98,7 @@ function initializeFamilyTreeChart() {
 		    <div class="space_J">
     <div class="image-container w30">
   
-        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+        <img id="tree-photo" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
 
     </div>
 		    <div class="w70">
@@ -397,7 +397,7 @@ function initializeFamilyTreeChart() {
         				 <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
-        <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+        <img id="editFamilyTreePhoto" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
         <!-- File input element -->
         <input id="family_Tree_ImageEdit" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
@@ -491,6 +491,7 @@ function openEditFamilyTreePopup() {
     document.getElementById('editFamilyTreeName').value =  document.getElementById('tree-name').value;
     document.getElementById('editFamilyTreeDescription').value =  document.getElementById('tree-description').value;
     document.getElementById('editFamilyTreeLocation').value =  document.getElementById('tree-location').value;
+    document.getElementById('editFamilyTreePhoto').src =  document.getElementById('tree-photo').src;
 }
 
 // Function to close the edit family tree popup
@@ -1244,6 +1245,7 @@ var Current_USERPHOTO = '';
             document.getElementById("tree-name").value = tree.name;
             document.getElementById("tree-location").value = tree.location;
             document.getElementById("tree-description").value = tree.description;
+            document.getElementById("tree-photo").value = tree.description || "/wefamily/images/imgPlacehoder.png";
 
         }
 
