@@ -606,7 +606,6 @@ async function handleFileUpload(input) {
 
 
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
-
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
@@ -622,48 +621,47 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
     return;
   }
 
-    // Create a reference to Firebase Storage
-    const storageRef = firebase.storage().ref();
+  // Create a reference to Firebase Storage
+  const storageRef = firebase.storage().ref();
 
-    // Generate a unique filename for the image
-    const timestamp = Date.now();
-    const filename = `${timestamp}_${file.name}`;
+  // Generate a unique filename for the image
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
 
-    // Create a reference to the storage location
-    const imageRef = storageRef.child(`${storagePath}/${filename}`);
+  // Create a reference to the storage location
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
 
-    // Resize and crop the image using canvas
-    const img = new Image();
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+  const img = new Image();
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
-    img.onload = () => {
-      // Calculate new dimensions while maintaining aspect ratio
-      let newWidth, newHeight;
-      if (img.width > img.height) {
-        newWidth = maxWidth;
-        newHeight = (img.height / img.width) * maxWidth;
-      } else {
-        newHeight = maxHeight;
-        newWidth = (img.width / img.height) * maxHeight;
-      }
+  img.onload = () => {
+    // Calculate new dimensions while maintaining aspect ratio
+    let newWidth, newHeight;
+    if (img.width > img.height) {
+      newWidth = maxWidth;
+      newHeight = (img.height / img.width) * maxWidth;
+    } else {
+      newHeight = maxHeight;
+      newWidth = (img.width / img.height) * maxHeight;
+    }
 
-      // Crop dimensions to maintain the desired aspect ratio
-      const cropX = (newWidth - maxWidth) / 2;
-      const cropY = (newHeight - maxHeight) / 2;
+    // Crop dimensions to maintain the desired aspect ratio
+    const cropX = (newWidth - maxWidth) / 2;
+    const cropY = (newHeight - maxHeight) / 2;
 
-      // Resize the image using canvas
-      canvas.width = maxWidth;
-      canvas.height = maxHeight;
-      ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
+    // Resize the image using canvas
+    canvas.width = maxWidth;
+    canvas.height = maxHeight;
+    ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-      // Convert the resized image to a Blob
-      canvas.toBlob((blob) => {
-        // Upload the Blob to Firebase Storage
-        const uploadTask = imageRef.put(blob);
+    // Convert the resized image to a Blob
+    canvas.toBlob((blob) => {
+      // Upload the Blob to Firebase Storage
+      const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
 
-        // Monitor the upload progress
-        uploadTask.on(
+      // Monitor the upload progress
+      uploadTask.on(
         'state_changed',
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -677,10 +675,10 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
           const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
           console.log('Image URL:', downloadURL);
           if (successCallback) successCallback(downloadURL);
-       const cropBox = document.getElementById("resizable-crop-box");
-              if (cropBox) {
-                cropBox.parentElement.removeChild(cropBox);
-              }
+          const cropBox = document.getElementById('resizable-crop-box');
+          if (cropBox) {
+            cropBox.parentElement.removeChild(cropBox);
+          }
           // Notify upload completion
           if (uploadCompleteCallback) uploadCompleteCallback();
         }
@@ -690,7 +688,6 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
 
   img.src = URL.createObjectURL(file);
 }
-
 
 
 
