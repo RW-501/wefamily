@@ -122,6 +122,10 @@ if (selectedFile) {
 }
 
 
+
+
+
+
 async function saveEditedFamilyTree() {
   try {
     const newName = document.getElementById('editFamilyTreeName').value;
@@ -136,21 +140,15 @@ async function saveEditedFamilyTree() {
     const storagePath = 'family_Tree_Image';
     const treeID = currentFamilyID;
     const treeRef = firestore.collection('familyTrees').doc(treeID);
-    let downloadURL = '';  // Initialize downloadURL
 
     // Upload family tree image if selected
     const selectedFile = document.getElementById('family_Tree_ImageEdit').files[0];
 
     if (selectedFile) {
-      try {
-        downloadURL = await uploadImageToStorage(selectedFile, storagePath);
-      } catch (error) {
-        console.error('Error uploading family tree image:', error);
-        return;
-      }
-    }
-
-    // Update the family tree information in Firestore
+      // Handle uploading the edited photo and get the download URL
+      uploadImageToStorage(selectedFile, 'member_main_Image', async (downloadURL) => {
+        // Update the document with the new data including the photo URL
+     // Update the family tree information in Firestore
     await treeRef.update({
       name: newName,
       description: newDescription,
@@ -162,10 +160,25 @@ async function saveEditedFamilyTree() {
     console.log('Family tree information updated successfully!');
     closeEditFamilyTreePopup(); // Close the popup after saving
     newsPost(`${userID} edited the Family Tree Info`);
+      }).catch(error => {
+        console.error('Error uploading edited photo:', error);
+      });
+    } else {
+    // Update the family tree information in Firestore
+    await treeRef.update({
+      name: newName,
+      description: newDescription,
+      location: newLocation,
+      // Add other fields as needed
+    });
+
+    console.log('Family tree information updated successfully!');
+    closeEditFamilyTreePopup(); // Close the popup after saving
+    newsPost(`${userID} edited the Family Tree Info`);
+    }
   } catch (error) {
-    console.error('Error saving edited family tree:', error);
+    console.error('Error saving edited family member:', error);
   }
 }
 
-
-
+	    
