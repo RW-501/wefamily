@@ -132,7 +132,31 @@ function saveEditedFamilyTree() {
 	
     const treeID = currentFamilyID; // Replace with actual treeID
     const treeRef = firestore.collection('familyTrees').doc(treeID);
+    let downloadURL = '';  // Initialize downloadURL
 
+    // Upload family tree image if selected
+    const selectedFile = document.getElementById('family_Tree_ImageEdit').files[0];
+if (selectedFile) {
+  const storagePath = 'family_Tree_Image';
+  downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+
+
+       treeRef.update({
+        name: newName,
+        description: newDescription,
+        location: newLocation,
+        photo: downloadURL
+        // Add other fields if needed
+    }).then(() => {
+        console.log('Family tree information updated successfully!');
+        closeEditFamilyTreePopup(); // Close the popup after saving
+	    newsPost(`${userID} edited the Family Tree Info`);
+
+    }).catch((error) => {
+        console.error('Error updating family tree information:', error);
+    });
+	    
+    } else {
     treeRef.update({
         name: newName,
         description: newDescription,
@@ -146,6 +170,8 @@ function saveEditedFamilyTree() {
     }).catch((error) => {
         console.error('Error updating family tree information:', error);
     });
+}
+	
 }
 
 	    
