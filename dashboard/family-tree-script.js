@@ -231,6 +231,9 @@ nodeGroup.append("image")
 
 
 
+	// After appending the images to nodeGroup
+const nodes = root.descendants();
+handleCollisions(nodes);
 
 
 
@@ -267,9 +270,6 @@ function zoomed(event) {
     });
 }
 
-	// After appending the images to nodeGroup
-const nodes = root.descendants();
-handleCollisions(nodes);
 
 }
 
