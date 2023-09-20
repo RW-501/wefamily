@@ -5,9 +5,52 @@
     #image-container {
       position: relative;
     }
+
+
+
+
+/* Style for the image container */
+.image-container {
+  position: relative;
+  width: 300px; /* Adjust as needed */
+  height: 300px; /* Adjust as needed */
+  border: 2px solid #ccc; /* Add a border for visual clarity */
+  overflow: hidden; /* Ensure the crop box doesn't overflow */
+}
+
+/* Style for the uploaded image */
+.uploaded-image {
+  width: 100%; /* Make the image fill the container */
+  height: 100%; /* Make the image fill the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+/* Style for the file input */
+.file-input {
+  display: none; /* Hide the file input */
+}
+
+/* Style for the resizable crop box */
+#resizable-crop-box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 2px dashed #ff0000; /* Add a dashed border for visual clarity */
+  box-sizing: border-box; /* Include the border size in the dimensions */
+  pointer-events: none; /* Allow pointer events to go through to the image */
+}
+
+/* Optional hover effect for the crop box */
+#resizable-crop-box:hover {
+  border-color: #00ff00; /* Change border color on hover */
+}
+
+
+
 .image-container {
     border-radius: 0 !important;
-	width: fit-content !important;
+/*	width: fit-content !important;
+	*/
 }
     #resizable-crop-box {
       border: 2px dashed #000;
