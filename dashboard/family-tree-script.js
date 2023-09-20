@@ -10,7 +10,7 @@ const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 
 // Define zoom behavior and initial scale
-const initialScale = 1;
+const initialScale = -2;
 let currentScale = initialScale;
 
 let imageWidth = 100;
