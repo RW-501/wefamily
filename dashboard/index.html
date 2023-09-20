@@ -505,9 +505,14 @@ function closeEditFamilyTreePopup() {
 
 //showMainMessage("message");
 
+
+
+var resizableCropBox;
+
+	    
 function handleResizeAndCrop(image) {
  // const image = document.getElementById('image');
-  const resizableCropBox = document.getElementById('resizable-crop-box');
+   resizableCropBox = document.getElementById('resizable-crop-box');
   let startX, startY;
   let isResizing = false;
   let isCropping = false;
@@ -589,7 +594,7 @@ function handleFileUpload(input) {
     const image = parentDiv.querySelector('img');
 
     // Create and display the resizable crop box
-    const resizableCropBox = document.createElement('div');
+     resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
     const imageContainer = uploadFileInput.parentElement;
     imageContainer.appendChild(resizableCropBox);
