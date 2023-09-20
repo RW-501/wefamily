@@ -504,6 +504,85 @@ function closeEditFamilyTreePopup() {
 
 
 //showMainMessage("message");
+
+
+  const image = document.getElementById('image');
+    const resizableCropBox = document.getElementById('resizable-crop-box');
+    const uploadFileInput = document.getElementById('upload-file');
+
+    let startX, startY;
+
+    // Handle image resizing
+    image.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      startY = e.clientY;
+      document.addEventListener('mousemove', resizeImage);
+      document.addEventListener('mouseup', stopResize);
+    });
+
+    function resizeImage(e) {
+      const width = image.offsetWidth + (e.clientX - startX);
+      const height = image.offsetHeight + (e.clientY - startY);
+      image.style.width = `${width}px`;
+      image.style.height = `${height}px`;
+      startX = e.clientX;
+      startY = e.clientY;
+    }
+
+    function stopResize() {
+      document.removeEventListener('mousemove', resizeImage);
+      document.removeEventListener('mouseup', stopResize);
+    }
+
+    // Handle image cropping
+    let isCropping = false;
+
+    resizableCropBox.addEventListener('mousedown', (e) => {
+      isCropping = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      document.addEventListener('mousemove', cropImage);
+      document.addEventListener('mouseup', stopCrop);
+    });
+
+    function cropImage(e) {
+      if (!isCropping) return;
+
+      const rect = resizableCropBox.getBoundingClientRect();
+      const offsetX = e.clientX - startX;
+      const offsetY = e.clientY - startY;
+
+      const newLeft = rect.left + offsetX;
+      const newTop = rect.top + offsetY;
+
+      resizableCropBox.style.left = `${newLeft}px`;
+      resizableCropBox.style.top = `${newTop}px`;
+
+      startX = e.clientX;
+      startY = e.clientY;
+    }
+
+    function stopCrop() {
+      isCropping = false;
+      document.removeEventListener('mousemove', cropImage);
+      document.removeEventListener('mouseup', stopCrop);
+    }
+
+    // Handle file upload
+    uploadFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          image.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+
+
+	    
 // Function to open the file input dialog when the image container is clicked
 function openFileInput(container) {
     container.querySelector('.file-input').click();
@@ -511,14 +590,25 @@ function openFileInput(container) {
 
 // Function to handle file upload and display the selected image
 function handleFileUpload(input) {
-    const file = input.files[0];
+  const file = input.files[0];
 
-    if (file) {
-        // Check file type and size here (you can use the uploadImageToStorage function from earlier)
-        // For simplicity, we'll just display the selected image
-        const uploadedImage = input.previousElementSibling;
-        uploadedImage.src = URL.createObjectURL(file);
-    }
+  if (file) {
+    const uploadedImage = input.previousElementSibling;
+    uploadedImage.src = URL.createObjectURL(file);
+
+    // Create and display the resizable crop box
+    const resizableCropBox = document.createElement('div');
+    resizableCropBox.id = 'resizable-crop-box';
+    const imageContainer = uploadedImage.parentElement;
+    imageContainer.appendChild(resizableCropBox);
+
+    // Set initial position and size for the resizable crop box
+    const imageRect = uploadedImage.getBoundingClientRect();
+    resizableCropBox.style.width = '100px'; // Set an initial width
+    resizableCropBox.style.height = '100px'; // Set an initial height
+    resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`; // Center horizontally
+    resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`; // Center vertically
+  }
 }
 
 
@@ -528,48 +618,48 @@ function handleFileUpload(input) {
 
 
 	    
-async function uploadImageToStorage(file, storagePath, successCallback, errorCallback, uploadCompleteCallback) {
+async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
+  // Check if a file was selected
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
   }
 
+  // Check file type (allow only images)
   if (!file.type.startsWith('image/')) {
     if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
     return;
   }
+let maxWidth = 500; 
+let maxHeight = 500;
+	
+  const storageRef = firebase.storage().ref();
+  const timestamp = Date.now();
+  const filename = `${timestamp}_${file.name}`;
+  const imageRef = storageRef.child(`${storagePath}/${filename}`);
 
-  const maxSize = 500; // Max width or height for the image
+  const img = new Image();
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  const img = new Image();
   img.onload = () => {
     let newWidth, newHeight;
-
-    // Calculate new dimensions while maintaining aspect ratio
     if (img.width > img.height) {
-      newWidth = maxSize;
-      newHeight = (img.height / img.width) * maxSize;
+      newWidth = maxWidth;
+      newHeight = (img.height / img.width) * maxWidth;
     } else {
-      newHeight = maxSize;
-      newWidth = (img.width / img.height) * maxSize;
+      newHeight = maxHeight;
+      newWidth = (img.width / img.height) * maxHeight;
     }
 
-    // Resize the image using canvas
-    canvas.width = newWidth;
-    canvas.height = newHeight;
-    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+    const cropX = (newWidth - maxWidth) / 2;
+    const cropY = (newHeight - maxHeight) / 2;
 
-    // Convert the resized image to a Blob
-    canvas.toBlob(async (blob) => {
-      // Create a reference to Firebase Storage
-      const storageRef = firebase.storage().ref();
-      const timestamp = Date.now();
-      const filename = `${timestamp}_${file.name}`;
-      const imageRef = storageRef.child(`${storagePath}/${filename}`);
+    canvas.width = maxWidth;
+    canvas.height = maxHeight;
+    ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-      // Upload the Blob to Firebase Storage
+    canvas.toBlob((blob) => {
       const uploadTask = imageRef.put(blob);
 
       uploadTask.on(
@@ -587,16 +677,19 @@ async function uploadImageToStorage(file, storagePath, successCallback, errorCal
           console.log('Image URL:', downloadURL);
           if (successCallback) successCallback(downloadURL);
 
-          // Notify upload completion
-          if (uploadCompleteCallback) uploadCompleteCallback();
+          // Remove the resizable crop box after successful upload
+          const cropBox = document.getElementById("resizable-crop-box");
+          if (cropBox) {
+            cropBox.parentElement.removeChild(cropBox);
+          }
         }
       );
     }, 'image/jpeg', 0.9);
   };
 
-  // Load the selected image
   img.src = URL.createObjectURL(file);
 }
+
 
 
 
