@@ -38,7 +38,7 @@ zoomInButton.addEventListener('click', () => {
 function generateFamilyTreeChart(familyData) {
 	
 	
-let width = 1000;// window.screen.width;
+let width = 1500;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
