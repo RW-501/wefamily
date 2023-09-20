@@ -609,16 +609,14 @@ function handleFileUpload(input) {
 
 
 
-
-
-	    
 async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, successCallback, errorCallback) {
   // Check if successCallback is a valid function
   if (typeof successCallback !== 'function') {
     console.error('Success callback is not a valid function.');
     return;
   }
-	// Check if a file was selected
+
+  // Check if a file was selected
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
     return;
@@ -629,9 +627,10 @@ async function uploadImageToStorage(file, storagePath, maxWidthx, maxHeightx, su
     if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
     return;
   }
-let maxWidth = 500; 
-let maxHeight = 500;
-	
+
+  let maxWidth = 500;
+  let maxHeight = 500;
+
   const storageRef = firebase.storage().ref();
   const timestamp = Date.now();
   const filename = `${timestamp}_${file.name}`;
@@ -641,7 +640,7 @@ let maxHeight = 500;
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
 
-  img.onload = () => {
+  img.onload = async () => {
     let newWidth, newHeight;
     if (img.width > img.height) {
       newWidth = maxWidth;
@@ -658,10 +657,8 @@ let maxHeight = 500;
     canvas.height = maxHeight;
     ctx.drawImage(img, -cropX, -cropY, newWidth, newHeight);
 
-    canvas.toBlob((blob) => {
-      const uploadTask = imageRef.put(blob);
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.9));
 
-      canvas.toBlob(async (blob) => {
     const uploadTask = imageRef.put(blob);
 
     uploadTask.on(
@@ -680,17 +677,17 @@ let maxHeight = 500;
         successCallback(downloadURL);
 
         // Remove the resizable crop box after successful upload
-        const cropBox = document.getElementById("resizable-crop-box");
+        const cropBox = document.getElementById('resizable-crop-box');
 
         if (cropBox) {
           cropBox.parentElement.removeChild(cropBox);
         }
       }
     );
-  }, 'image/jpeg', 0.9);
+  };
+
+  img.src = URL.createObjectURL(file);
 }
-
-
 
 
 
