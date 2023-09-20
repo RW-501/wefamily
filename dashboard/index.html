@@ -586,7 +586,8 @@ function handleFileUpload(input) {
   const parentDiv = input.parentElement;
 
   // Get the img tag from the previous sibling
-  const image = parentDiv.previousElementSibling.querySelector('img');
+  const image = parentDiv.querySelector('img');
+//  const image = parentDiv.previousElementSibling.querySelector('img');
 
 	  
     // Create and display the resizable crop box
