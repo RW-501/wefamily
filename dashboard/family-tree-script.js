@@ -37,7 +37,6 @@ zoomInButton.addEventListener('click', () => {
  var linkGenerator;
 function generateFamilyTreeChart(familyData) {
 	
-currentScale = 5;
 	
 let width = 1000;// window.screen.width;
     const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
