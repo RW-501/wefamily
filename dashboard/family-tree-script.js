@@ -502,9 +502,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
           children: [memberIDWithMaxDepth], // Set the member with the most children as the root
           data: memberDataMap,
         }; 
-	 setRootValue(memberIDWithMaxDepth);
-    console.log("maxChildrenCount root   " + [root]);
+    console.log("maxChildrenCount root   " + root);
 console.log('memberDataMap:', memberDataMap);
+	 setRootValue(memberIDWithMaxDepth);
 
 		  }else if (treeData.root ) {
  root = {
