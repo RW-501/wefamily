@@ -532,10 +532,10 @@ async function handleFileUpload(input) {
 
     resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
-    const imageContainer = uploadFileInput.parentElement;
+    const imageContainer = image.parentElement;
     imageContainer.appendChild(resizableCropBox);
 
-    const imageRect = uploadFileInput.getBoundingClientRect();
+    const imageRect = image.getBoundingClientRect();
     resizableCropBox.style.width = '100px';
     resizableCropBox.style.height = '100px';
     resizableCropBox.style.left = `${imageRect.left + imageRect.width / 2 - 50}px`;
@@ -611,7 +611,7 @@ function handleResizeAndCrop(image) {
 
 	    
 
-async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
+async function uploadImageToStorage(file, storagePath, successCallback, maxWidth, maxHeight, errorCallback, uploadCompleteCallback) {
   console.log('Starting upload process...');
 
   if (!file) {
@@ -619,13 +619,13 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, erro
     console.log('No file selected.');
     return;
   }
-
+/*
   if (!file.type.startsWith('image/')) {
     if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
     console.log('File is not an image.');
     return;
   }
-
+*/
   if (file.size > 5 * 1024 * 1024) {
     if (errorCallback) errorCallback('Image size must be less than 5MB.');
     console.log('Image size exceeds 5MB.');
