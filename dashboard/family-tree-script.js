@@ -500,9 +500,10 @@ function fetchFamilyMemberData(collectionName, treeID) {
           id: treeID,
           name: treeData.name,
           children: [memberIDWithMaxDepth], // Set the member with the most children as the root
-          data: treeData,
-        };
+          data: memberDataMap,
+        }; 
 	 setRootValue(memberIDWithMaxDepth);
+    console.log("maxChildrenCount root   " + root);
 
 		  }else if (treeData.root ) {
  root = {
@@ -511,14 +512,17 @@ function fetchFamilyMemberData(collectionName, treeID) {
           children: [treeData.root], // Set the member with the most children as the root
           data: treeData,
         };
-			  
+		    console.log("treeData root   " + root);
+	  
                     } else {
                       root = {
           id: treeID,
           name: treeData.name,
           children: [rootID], // Set the member with the most children as the root
-          data: treeData,
+          data: memberDataMap,
         };    
+	 		    console.log("else root   " + root);
+
                     }	
 
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
