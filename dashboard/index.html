@@ -583,17 +583,22 @@ function handleResizeAndCrop(image) {
 
 	    
 
-async function uploadImageToStorage(canvas, storagePath, successCallback, errorCallback, uploadCompleteCallback) {
+async function uploadImageToStorage(blob, storagePath, successCallback, errorCallback, uploadCompleteCallback) {
+
+
+      console.log(`blob: ${blob}`);
+
+	    
   const storageRef = firebase.storage().ref();
   const timestamp = Date.now();
   const filename = `${timestamp}_edited_image.jpg`; // Adjust the filename as needed
   const imageRef = storageRef.child(`${storagePath}/${filename}`);
 
   // Convert canvas to a data URL
-  const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+ // const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
 
   // Convert data URL to Blob
-  const blob = await fetch(dataUrl).then((res) => res.blob());
+ // const blob = await fetch(dataUrl).then((res) => res.blob());
 
   const uploadTask = imageRef.put(blob, { contentType: 'image/jpeg' });
 
