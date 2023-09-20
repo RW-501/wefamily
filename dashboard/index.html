@@ -607,22 +607,9 @@ function handleFileUpload(input) {
     resizableCropBox.style.top = `${imageRect.top + imageRect.height / 2 - 50}px`; // Center vertically
 
     // Call the function to set up resize and crop handlers
-    handleResizeAndCrop(image);
+    handleResizeAndCrop(uploadFileInput);
 
-    // Upload the resized image to Firebase Storage
-    uploadImageToStorage(file, 'family_Tree_Image', 500, 500, (downloadURL) => {
-      // Handle success (e.g., update UI with downloadURL)
-      console.log('Image uploaded successfully:', downloadURL);
 
-      // TODO: Use the downloadURL as needed (e.g., update your Firestore data)
-      // ...
-    }, (error) => {
-      // Handle error (e.g., display error message)
-      console.error('Image upload failed:', error);
-
-      // TODO: Handle error in your UI (e.g., show an error message)
-      // ...
-    });
   }
 }
 
