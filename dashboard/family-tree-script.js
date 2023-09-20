@@ -186,11 +186,6 @@ const nodeGroup = chartGroup.selectAll(".node")
     .attr("transform", d => `translate(${d.x},${d.y})`) // Set group position
 
 
-svg.append("defs").append("clipPath")
-    .attr("id", "clipCircle")
-    .append("circle")
-    .attr("r", 20);  // Radius of the circle
-
 
 	
 nodeGroup.append("circle")
@@ -201,23 +196,28 @@ nodeGroup.append("circle")
         // 'd' contains the data associated with the clicked node
         console.log("Clicked circle Data:", d.data);
     });
+// Update the clipPath to create a circular clip
+svg.append("defs").append("clipPath")
+    .attr("id", "clipCircle")
+    .append("circle")
+    .attr("cx", 0)  // Center X at 0
+    .attr("cy", 0)  // Center Y at 0
+    .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
 
-
-// Append images to nodes
+// Update the image elements to use the circular clip path
 nodeGroup.append("image")
-    .attr("xlink:href", d => d.data.photo) // Set the image URL
-    .attr("x", d => -imageWidth / 2) // Adjust the positioning relative to the group
-    .attr("y", d => -imageHeight / 2) // Adjust the positioning relative to the group
+    .attr("xlink:href", d => d.data.photo)
+    .attr("x", d => -imageWidth / 2)
+    .attr("y", d => -imageHeight / 2)
     .attr("width", imageWidth)
     .attr("height", imageHeight)
+    .attr("clip-path", "url(#clipCircle)")
     .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
         console.log("Clicked image Data:", d.data);
-
-
-	
         showMemberPopup(d.data);
     });
+
+
 
 
 
