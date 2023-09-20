@@ -618,14 +618,17 @@ async function handleFileUpload(input) {
   const file = input.files[0];
   console.log('File:', file);
   if (file) {
-  //  const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
-    const uploadFileInput = input.parentElement; // Change to nextElementSibling to get the img element
-    uploadFileInput.src = URL.createObjectURL(file);
-	  
-console.log('uploadFileInput:', uploadFileInput);
 
     const parentDiv = input.parentElement;
     const image = parentDiv.querySelector('img');
+
+  //  const uploadFileInput = input.nextElementSibling; // Change to nextElementSibling to get the img element
+ //   const uploadFileInput = input.parentElement; // Change to nextElementSibling to get the img element
+    image.src = URL.createObjectURL(file);
+	  
+//console.log('uploadFileInput:', uploadFileInput);
+
+	  
 
     const resizableCropBox = document.createElement('div');
     resizableCropBox.id = 'resizable-crop-box';
