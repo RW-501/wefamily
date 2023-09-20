@@ -1,7 +1,7 @@
 
 /// works
 
-const nodeGroup;
+let nodeGroup;
 
 
 // Add a zoom control UI
