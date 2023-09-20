@@ -627,19 +627,24 @@ function handleFileUpload(input) {
 }
 
 
-async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, successCallback, errorCallback) {
-  return new Promise(async (resolve, reject) => {
-    // Check if a file was selected
-    if (!file) {
-      if (errorCallback) errorCallback('Please select an image file.');
-      return reject('No file selected.');
-    }
 
-    // Check file type (allow only images)
-    if (!file.type.startsWith('image/')) {
-      if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
-      return reject('File is not an image.');
-    }
+
+async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, uploadCompleteCallback) {
+
+  if (!file) {
+    if (errorCallback) errorCallback('Please select an image file.');
+    return;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    if (errorCallback) errorCallback('Please select an image file (e.g., JPEG or PNG).');
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    if (errorCallback) errorCallback('Image size must be less than 5MB.');
+    return;
+  }
 
     // Create a reference to Firebase Storage
     const storageRef = firebase.storage().ref();
@@ -683,39 +688,32 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, succ
 
         // Monitor the upload progress
         uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload progress: ${progress}%`);
-          },
-          (error) => {
-            console.error('Upload error:', error);
-            if (errorCallback) errorCallback('Image upload failed.');
-            reject('Image upload failed.');
-          },
-          () => {
-            // Upload completed successfully, get the download URL
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              console.log('Image URL:', downloadURL);
-              if (successCallback) successCallback(downloadURL);
-              // Remove the resizable crop box after successful upload
-              const cropBox = document.getElementById("resizable-crop-box");
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload progress: ${progress}%`);
+        },
+        (error) => {
+          console.error('Upload error:', error);
+          if (errorCallback) errorCallback('Image upload failed.');
+        },
+        async () => {
+          const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+          console.log('Image URL:', downloadURL);
+          if (successCallback) successCallback(downloadURL);
+       const cropBox = document.getElementById("resizable-crop-box");
               if (cropBox) {
                 cropBox.parentElement.removeChild(cropBox);
               }
-              resolve(downloadURL); // Resolve here
-            });
-          }
-        );
-      }, 'image/jpeg', 0.9); // Convert to JPEG with 90% quality
-    };
+          // Notify upload completion
+          if (uploadCompleteCallback) uploadCompleteCallback();
+        }
+      );
+    }, 'image/jpeg', 0.9);
+  };
 
-    // Load the selected image
-    img.src = URL.createObjectURL(file);
-  });
+  img.src = URL.createObjectURL(file);
 }
-
-
 
 
 
