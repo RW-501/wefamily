@@ -627,7 +627,6 @@ function handleFileUpload(input) {
 }
 
 
-
 async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, successCallback, errorCallback) {
   return new Promise(async (resolve, reject) => {
     // Check if a file was selected
@@ -715,6 +714,13 @@ async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, succ
     img.src = URL.createObjectURL(file);
   });
 }
+
+
+
+
+
+
+	    
 
 
 function openJoinRequestPopup() {
