@@ -629,7 +629,7 @@ function handleFileUpload(input) {
 
 
 
-async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, uploadCompleteCallback) {
+async function uploadImageToStorage(file, storagePath, maxWidth, maxHeight, errorCallback, successCallback, uploadCompleteCallback) {
 
   if (!file) {
     if (errorCallback) errorCallback('Please select an image file.');
