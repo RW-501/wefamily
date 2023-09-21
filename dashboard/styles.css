@@ -308,7 +308,7 @@ text-align: center;
 	
 
 
-#tree-details
+#tree-details  select,
 		    input[type="text"],
     input[type="date"],
     textarea {
@@ -321,7 +321,7 @@ text-align: center;
     }
 	
 	
-#post-content
+#post-content select,
 	    input[type="text"],
     input[type="date"],
     textarea {
@@ -339,7 +339,7 @@ min-height: 500px;
     max-height: 1000px;
 	}
 
-	
+	select ,
     input[type="text"],
     input[type="date"],
     textarea {
