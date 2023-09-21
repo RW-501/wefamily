@@ -49,7 +49,7 @@ let height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
 const height_Layout = 150 * maxHierarchyDepth;
 
 	// Center the y-axis vertically in the chart
-const yOffset = (height - height_Layout) / 2;
+const yOffset = (width - width) / 2;
 
 	
 document.getElementById('family-tree-area').innerHTML ="";
@@ -58,7 +58,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svgMain")
         .attr("width", width)
         .attr("height", height)
-  .attr("transform", `translate(0, ${yOffset})`)
+  //.attr("transform", `translate(0, ${yOffset})`)
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 //width = window.screen.width;
@@ -69,7 +69,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-  .attr("transform", `translate(0, ${yOffset})`)
+ // .attr("transform", `translate(0, ${yOffset})`)
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 
@@ -82,7 +82,7 @@ document.getElementById('family-tree-area').innerHTML ="";
     
 
  chartGroup = svgMain.append("g")
-  .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
+  .attr("transform", `translate(${yOffset}, 0)`); // Adjust the y-offset
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
