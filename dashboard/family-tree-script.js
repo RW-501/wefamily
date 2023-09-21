@@ -5,7 +5,6 @@
 
 /// works
 
-let nodeGroup;
 
 
 // Add a zoom control UI
@@ -19,6 +18,7 @@ let currentScale = initialScale;
 
 let imageWidth = 100;
 let imageHeight = 100;
+let nodeGroup;
 
 zoomOutButton.addEventListener('click', () => {
   if (currentScale > 2) {
@@ -39,7 +39,9 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
 var chartGroup; 
 var linkGenerator;
-
+const zoom = d3.zoom()
+    .scaleExtent([0.5, 5]) // Define the zoom scale limits
+    .on("zoom", zoomed);
 	
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
@@ -197,6 +199,9 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
 	
 
 
+}
+
+
   // Apply the same zoom transformation to the link lines
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
@@ -210,9 +215,6 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
                 return linkGenerator({ source, target });
             });
     }
-}
-
-
 
 
 
