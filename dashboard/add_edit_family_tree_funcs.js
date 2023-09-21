@@ -60,8 +60,12 @@ if (selectedFile) {
 
         // Update the family tree data with the generated document ID
         const generatedTreeID = docRef.id;
-        await docRef.update({ treeID: generatedTreeID });
-
+await userDocRef.update({
+    userTrees: firebase.firestore.FieldValue.arrayUnion({
+        id: generatedTreeID,
+        name: treeName
+    })
+});
         // Assign the generated tree ID to currentFamilyID
         currentFamilyID = generatedTreeID;
 	    
@@ -81,8 +85,12 @@ if (selectedFile) {
 
         // Update the family tree data with the generated document ID
         const generatedTreeID = docRef.id;
-        await docRef.update({ treeID: generatedTreeID });
-
+await userDocRef.update({
+    userTrees: firebase.firestore.FieldValue.arrayUnion({
+        id: generatedTreeID,
+        name: treeName
+    })
+});
         // Assign the generated tree ID to currentFamilyID
         currentFamilyID = generatedTreeID;
     }
