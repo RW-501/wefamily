@@ -69,14 +69,14 @@ const height_Layout = 150 * maxHierarchyDepth;
 // Center the y-axis vertically in the chart
 const yOffset = (height - height_Layout) / 2;
 
- let XchartGroup = svgMain.append(svg)
+ chartGroup = svgMain.append("g")
   .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
 
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
     
-chartGroup  = svg.append("g");
+//chartGroup  = svg.append("g");
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
