@@ -70,8 +70,11 @@ const height_Layout = 150 * maxHierarchyDepth;
 const yOffset = (height - height_Layout) / 2;
 
  chartGroup = svgMain.append("g")
-  .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
-
+  .attr("transform", `translate(0, ${yOffset})`) // Adjust the y-offset
+.attr("width", width)
+        .attr("height", height)
+	   .style("margin", "auto")  // Center horizontally using margin
+    .style("display", "block");  // Ensure it's a block element
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
