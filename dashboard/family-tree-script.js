@@ -14,7 +14,7 @@ const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 
 // Define zoom behavior and initial scale
-const initialScale = 0.5;
+const initialScale = 0.7;
 let currentScale = initialScale;
 
 let imageWidth = 100;
@@ -50,7 +50,7 @@ const height_Layout = 150 * maxHierarchyDepth;
 
 	// Center the y-axis vertically in the chart
 const offset = width / 2;
-let yOffset = - 700; //= offset - offset;
+let yOffset = -1700; //= offset - offset;
 	
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
