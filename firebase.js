@@ -210,3 +210,20 @@ function showMainMessage(message) {
 // Example usage:
 //showMainMessage("Thank you for rating the quiz!");
 
+
+function formatDateToMonthDay(dateString) {
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const [year, month, day] = dateString.split('-').map(Number);
+
+  if (isNaN(year) || isNaN(month) || isNaN(day) ||
+      month < 1 || month > 12 || day < 1 || day > 31) {
+    return 'Invalid date';
+  }
+
+  const formattedDate = `${months[month - 1]} ${day}`;
+  return formattedDate;
+}
