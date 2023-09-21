@@ -183,9 +183,7 @@ handleCollisions(nodes);
 
 
 
-    // Apply the zoom behavior to the SVG
-    svg.call(zoom)
-        .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+
 
 	
 const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as needed
@@ -214,6 +212,8 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
  zoom = d3.zoom()
     .scaleExtent([0.5, 5]) // Define the zoom scale limits
     .on("zoom", zoomed);
+
+	
   updateImageAttributes();
 
 }
