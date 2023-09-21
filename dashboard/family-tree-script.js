@@ -293,13 +293,13 @@ function applyZoom(scale) {
   chartGroup.selectAll('path.link').attr('stroke-width', 2 / currentScale);
 
   // Update path 'd' attribute
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      const source = { x: d.source.x, y: d.source.y * scale };
-      const target = { x: d.target.x, y: d.target.y * scale };
-      return linkGenerator({ source, target });
-    });
+chartGroup
+  .selectAll('path.link')
+  .attr('d', (d) => {
+    const source = { x: d.source.x, y: d.source.y * currentScale };
+    const target = { x: d.target.x, y: d.target.y * currentScale };
+    return curvedPath({ source, target });
+  });
 
 	
   updateImageAttributes();
