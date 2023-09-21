@@ -75,7 +75,7 @@ function generateFamilyTreeChart(familyData) {
 	
     const links = root.links();
 
-/*    const curvedPath = (d) => {
+  const curvedPath = (d) => {
         const sourceX = d.source.x;
         const sourceY = d.source.y;
         const targetX = d.target.x;
@@ -84,10 +84,7 @@ function generateFamilyTreeChart(familyData) {
         const controlY = (sourceY + targetY) / 2;
 
         return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-    };*/
-const curvedPath = d3.linkHorizontal()
-  .x(d => d.y)
-  .y(d => d.x);
+
 	
 chartGroup.selectAll("path")
   .data(links)
