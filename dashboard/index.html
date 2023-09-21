@@ -1313,8 +1313,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
 }
 	
 }
-	                //console.log('userID ID:', userID);
-	                //console.log('data.userID ID:', data.userID);
+let formattedBirthdate = formatDateToMonthDay(data.birthdate);
 	
             const memberDiv = document.createElement("div");
         memberDiv.className = 'family-member';
@@ -1323,7 +1322,7 @@ claim_Div = "<button class='claim-member'>Claim Member</button>";
             <div id="${data.memberID}" class="member-details">
                 <!-- Member details go here -->
                <p class="member-name">${data.first_name} ${data.last_name}</p>
-                <p class="member-birthday">Birthdate: ${data.birthdate}</p>
+                <p class="member-birthday">Birthdate: ${formattedBirthdate}</p>
             ${claim_Div}
                 <!-- Add other fields as needed -->
   
