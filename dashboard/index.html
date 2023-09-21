@@ -1304,7 +1304,7 @@ document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members"
             // Implement dynamic population of family member details here
 let claim_Div = "";	
 if (data.memberID === userID || data.addByID === userID) {
-claim_Div = claim_Div + = "<button class='edit-member'>Edit Member</button>";
+claim_Div += "<button class='edit-member'>Edit Member</button>";
 
 		
 if (data.userID === userID) {
@@ -1313,7 +1313,7 @@ if (data.userID === userID) {
 }
 }else{
 if(data.userID === "" ){
-claim_Div = claim_Div + "<button class='claim-member'>Claim Member</button>";
+claim_Div += "<button class='claim-member'>Claim Member</button>";
 }
 	
 }
