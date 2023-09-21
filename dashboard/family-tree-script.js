@@ -501,22 +501,23 @@ function fetchFamilyMemberData(collectionName, treeID) {
  
 
               querySnapshot.forEach((doc) => {
-    const id = doc.data().id;
-    const userID = doc.data().userID;
-    const memberID = doc.data().memberID;
-    const privateInfo = doc.data().private;
-    const location = doc.data().location;
-    const birthdate = doc.data().birthdate;
-    const deceaseddate = doc.data().deceaseddate || '';
-    const contact = doc.data().contact || '';
-    const note = doc.data().note || '';
-    const name = `${doc.data().first_name} ${doc.data().last_name}`;
-    const photo = doc.data().photo || '';
-    const bio = doc.data().bio || '';
-    const children = doc.data().children || [];
-    const spouse = doc.data().spouse || [];
-    const parents = doc.data().parents || [];
-    const siblings = doc.data().sibling || [];
+                    const docData = doc.data();
+                    const id = doc.id;
+                    const memberID = doc.memberID;
+                    const bio = doc.bio;
+                    const userID = doc.userID;
+                    const privateInfo = doc.private;
+                    const location = doc.location;
+                    const birthdate = doc.birthdate;
+                    const deceaseddate = doc.deceaseddate;
+                    const contact = doc.contact;
+                    const note = doc.note;
+                    const name = `${docData.first_name} ${docData.last_name}`;
+                    const photo = docData.photo || '';
+                    const children = docData.children || [];
+                    const spouse = docData.spouse || [];
+                    const parents = docData.parents || [];
+                    const siblings = docData.sibling || [];
 
 
                     // Check if the member is not already in memberDataMap and map them
