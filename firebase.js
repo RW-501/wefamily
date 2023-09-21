@@ -212,6 +212,10 @@ function showMainMessage(message) {
 
 
 function formatDateToMonthDay(dateString) {
+  if (!dateString || typeof dateString !== 'string') {
+    return 'Invalid date';
+  }
+
   const months = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
