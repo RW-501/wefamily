@@ -365,14 +365,17 @@ function applyZoom(scale) {
           document.getElementById('memberInfo').value = member.bioX || "";
 
 
-let children = displayChildrenNames(member.id, displayChildrenCallback);
+//let children = displayChildrenNames(member.id, displayChildrenCallback);
     console.log(`member of ${member}:`);
-    console.log(`Children of ${children}:`);
+  //  console.log(`Children of ${children}:`);
 		 
 	 let parentNames = "";
 	 
 const memberID = member.id;
  const memberData = memberDataMap[memberID];
+
+    console.log(memberData+`  Member with ID ${memberID} not found.`);
+		 
 /*
 if (member) {
      parentNames = getParentNames(memberData.parents);
@@ -381,18 +384,22 @@ if (member) {
     console.log(`Member with ID ${memberID} not found.`);
 }
 	*/	 
+
+let formattedBirthdate = formatDateToMonthDay(member.birthdate);
+
+		 
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
         'Member Name': `${member.name}`,
         'Location': member.location,
-        'Birthdate': member.birthdate,
+        'Birthdate': formattedBirthdate,
         'Deceased Date': member.deceaseddate,
         'Contact': member.contact,
         'Note': member.note,
-        'Children': children,
+     //   'Children': children,
        // 'Spouse': member.spouse.join(', '),
-        'Parent': parentNames,
+    //    'Parent': parentNames,
      //   'Siblings': member.siblings.join(', ')
     };
 
