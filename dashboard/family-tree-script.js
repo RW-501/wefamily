@@ -196,14 +196,6 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
 
 	
 
-	
-	
-// Define the zoom function
-function zoomed(event) {
-  // Apply the zoom transformation to the chartGroup
-  chartGroup.attr('transform', event.transform);
-
-
 
   // Apply the same zoom transformation to the link lines
   function zoomed(event) {
@@ -219,6 +211,10 @@ function zoomed(event) {
             });
     }
 }
+
+
+
+
 
 function updateImageAttributes() {
   nodeGroup.selectAll("image")
