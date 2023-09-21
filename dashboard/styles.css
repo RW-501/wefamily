@@ -4,12 +4,6 @@
     width: 100%;
 }
 
-select , label,
-    input[type="text"],
-    input[type="date"],
-    textarea {
-    width: 100%;
-    }
 
 .space_J {
     display: grid !important;
@@ -17,11 +11,28 @@ select , label,
     width: 100%;
     gap: 10px !important;
 }
-
+.w70{
+    width: 100%;
+}
 
 
 }
+@media screen and (max-width: 900px) {
+
+.flex{
 	
+flex-flow: wrap-reverse
+}
+}
+@media screen and (max-width: 900px) {
+    .popup-content {
+        /* Flex styles for screen size 800px and above */
+        display: flex;
+        /* Additional flex styles if needed */
+        flex-direction: column; /* or row, or any other flex styles */
+    }
+}
+
 	
 
 #familyCount{
@@ -48,6 +59,12 @@ margin: auto 0;
 
 }
 
+select , label,
+    input[type="text"],
+    input[type="date"],
+    textarea {
+    width: 100%;
+    }
 
 /* Style for the image container */
 .image-container {
@@ -136,9 +153,7 @@ overflow: hidden;
 }
 
 input[type="text"], input[type="date"], textarea {
-    width: 100%;
     margin: auto;
-    display: block;
 
 }
 
@@ -148,21 +163,6 @@ input[type="text"], input[type="date"], textarea {
 
 #create-tree-section   .image-container{
 border-radius:0;
-}
-@media screen and (max-width: 900px) {
-
-.flex{
-	
-flex-flow: wrap-reverse
-}
-}
-@media screen and (max-width: 900px) {
-    .popup-content {
-        /* Flex styles for screen size 800px and above */
-        display: flex;
-        /* Additional flex styles if needed */
-        flex-direction: column; /* or row, or any other flex styles */
-    }
 }
 
 {
