@@ -44,7 +44,7 @@ function generateFamilyTreeChart(familyData) {
 	
 	
 let width = 1500;// window.screen.width;
-let height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
+let height = 300 *  maxHierarchyDepth; // Height of the chart
 	
 const height_Layout = 150 * maxHierarchyDepth;
 
@@ -58,7 +58,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svgMain")
         .attr("width", width)
         .attr("height", height)
-  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
+//  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 //width = window.screen.width;
@@ -69,7 +69,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
+//  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 
