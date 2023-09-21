@@ -1,4 +1,16 @@
+@media screen and (max-width: 900px) {
+.space_J {
+    display: grid;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
 
+
+
+}
+	
+	
 
 #familyCount{
 margin: auto 0;
@@ -292,6 +304,7 @@ text-align: center;
     overflow: hidden;
     font-weight: 800;
     box-sizing: border-box;
+    width: fit-content;
     }
 
     button:hover {
@@ -726,9 +739,7 @@ html, body{
     height: 800px;	
     overflow: auto;
 }
-
-	
-	      .node {
+      .node {
             cursor: pointer;
         }
 #postPic_img{
