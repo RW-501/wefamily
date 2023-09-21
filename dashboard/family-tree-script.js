@@ -69,23 +69,31 @@ function generateFamilyTreeChart(familyData) {
 
     treeLayout(root);
 	
+     linkGenerator = d3.linkHorizontal()
+        .x(d => d.x) // Swap x and y due to vertical tree layout
+        .y(d => d.y);
+
+	
      zoom = d3.zoom()
         .scaleExtent([0.5, 5]) // Define the zoom scale limits
         .on("zoom", zoomed);
 	
     const links = root.links();
 
-  const curvedPath = (d) => {
-        const sourceX = d.source.x;
-        const sourceY = d.source.y;
-        const targetX = d.target.x;
-        const targetY = d.target.y;
-        const controlX = (sourceX + targetX) / 2;
-        const controlY = (sourceY + targetY) / 2;
 
-        return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-  }
-	
+	const curvedPath = (d) => {
+    const sourceX = d.source.x;
+    const sourceY = d.source.y;
+    const targetX = d.target.x;
+    const targetY = d.target.y;
+
+    // Calculate control point coordinates for a curved link
+    const controlX = (sourceX + targetX) / 2;
+    const controlY = (sourceY + targetY) / 2;
+
+    return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
+};
+
 	
 chartGroup.selectAll("path")
   .data(links)
@@ -207,14 +215,16 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
         chartGroup.attr('transform', event.transform);
         updateImageAttributes();
 
-chartGroup
-  .selectAll('path.link')
-  .attr('d', (d) => {
-    const source = { x: d.source.x, y: d.source.y * currentScale };
-    const target = { x: d.target.x, y: d.target.y * currentScale };
-    return curvedPath({ source, target });
-  });
-    }
+  chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+      return linkGenerator({ source, target });
+    });
+}
+
 
 
  zoom = d3.zoom()
@@ -294,13 +304,13 @@ function applyZoom(scale) {
   chartGroup.selectAll('path.link').attr('stroke-width', 2 / currentScale);
 
   // Update path 'd' attribute
-chartGroup
-  .selectAll('path.link')
-  .attr('d', (d) => {
-    const source = { x: d.source.x, y: d.source.y * currentScale };
-    const target = { x: d.target.x, y: d.target.y * currentScale };
-    return curvedPath({ source, target });
-  });
+  chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      const source = { x: d.source.x, y: d.source.y * scale };
+      const target = { x: d.target.x, y: d.target.y * scale };
+      return linkGenerator({ source, target });
+    });
 
 	
   updateImageAttributes();
