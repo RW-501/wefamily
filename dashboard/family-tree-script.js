@@ -524,7 +524,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             id: id,
                             memberID: memberID,
                             name: name,
-                            private: private,
+                            private: privateInfo,
                             location: location,
                             birthdate: birthdate,
                             deceaseddate: deceaseddate,
