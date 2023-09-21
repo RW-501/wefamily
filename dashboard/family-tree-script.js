@@ -465,7 +465,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const userID = doc.userID;
                     const privateInfo = doc.private;
                     const location = doc.location;
-                    const birthdate = doc.birthdate;
+                    const birthdate = docData.birthdate;
                     const deceaseddate = doc.deceaseddate;
                     const contact = doc.contact;
                     const note = doc.note;
