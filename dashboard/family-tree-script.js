@@ -517,7 +517,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
               querySnapshot.forEach((doc) => {
                     const docData = doc.data();
-                    const id = doc.id;
+                    const id = docData.id;
                     const memberID = doc.memberID;
                     const bio = doc.bio;
                     const userID = doc.userID;
