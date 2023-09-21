@@ -501,7 +501,8 @@ function fetchFamilyMemberData(collectionName, treeID) {
  
 
               querySnapshot.forEach((doc) => {
-    const id = doc.data().userID;
+    const id = doc.data().id;
+    const userID = doc.data().userID;
     const memberID = doc.data().memberID;
     const privateInfo = doc.data().private;
     const location = doc.data().location;
@@ -522,6 +523,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     if (!memberDataMap[id]) {
                         const memberData = {
                             id: id,
+                            userID: userID,
                             memberID: memberID,
                             name: name,
                             private: privateInfo,
