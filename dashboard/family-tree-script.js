@@ -81,7 +81,7 @@ document.getElementById('family-tree-area').innerHTML ="";
     const treeLayout = d3.tree().size([width, height_Layout]);
     
 
- chartGroup = svg.append("g")  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
+ chartGroup = svg.append("g")  .attr("transform", `translate(${yOffset}, 0)`);
 
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
