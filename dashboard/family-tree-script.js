@@ -182,7 +182,11 @@ handleCollisions(nodes);
 
 
 
+ // Apply the zoom behavior to the SVG
+    svg.call(zoom)
+        .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 
+	
 
 
 	
