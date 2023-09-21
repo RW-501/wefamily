@@ -225,5 +225,5 @@ function formatDateToMonthDay(dateString) {
   }
 
   const formattedDate = `${months[month - 1]} ${day}`;
-  return formattedDate;
+  return formattedDate || "";
 }
