@@ -37,38 +37,44 @@ zoomInButton.addEventListener('click', () => {
  var linkGenerator;
 function generateFamilyTreeChart(familyData) {
 	
-	
-let width = 1500;// window.screen.width;
-    const height = 1500 ;//*  maxHierarchyDepth; // Height of the chart
-document.getElementById('family-tree-area').innerHTML ="";
-    // Create an SVG element to contain the chart
-    const svgMain = d3.select("#family-tree-area")
-        .append("svgMain")
-        .attr("width", width)
-        .attr("height", height)
-	   .style("margin", "auto")  // Center horizontally using margin
-    .style("display", "block");  // Ensure it's a block element
-//width = window.screen.width;
-	
-    const svg = d3.select("#family-tree-area")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-	   .style("margin", "auto")  // Center horizontally using margin
-    .style("display", "block");  // Ensure it's a block element
+const width = 1500; // Set your desired width
+const height = 1500; // Set your desired height
+const maxHierarchyDepth = 10; // Assuming you have a max hierarchy depth
+
+document.getElementById('family-tree-area').innerHTML = '';
+
+// Calculate the y-axis position to be in the middle of the chart
+const yAxisPosition = height / 2;
+
+// Create an SVG element to contain the chart
+const svg = d3.select("#family-tree-area")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height)
+  .style("margin", "auto")  // Center horizontally using margin
+  .style("display", "block");  // Ensure it's a block element
+
+const heightLayout = 150 * maxHierarchyDepth;
+
+// Adjust the y-axis position for the tree layout to be centered
+const treeLayout = d3.tree().size([width, heightLayout]).nodeSize([0, 50]);
+const root = d3.hierarchy(familyData); // Replace 'yourData' with your actual data
+
+const tree = treeLayout(root);
+
+// Center the y-axis vertically in the chart
+const yOffset = (height - heightLayout) / 2;
+
+ chartGroup = svg.append("g")
+  .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
 
 
-     const height_Layout = 150 * maxHierarchyDepth;
-    // Create a hierarchical tree layout
-    const treeLayout = d3.tree().size([width, height_Layout]);
-    
-chartGroup  = svg.append("g");
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
 
 
-
+/*
 
     
 // Create a root node for the tree with an initial y-coordinate of 50
@@ -81,7 +87,8 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 
     // Assign coordinates to each node in the tree
     treeLayout(root);
-
+*/
+	
 // Create a link generator with zoom transformation
      linkGenerator = d3.linkHorizontal()
         .x(d => d.x) // Swap x and y due to vertical tree layout
