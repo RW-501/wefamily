@@ -57,6 +57,12 @@ document.getElementById('family-tree-area').innerHTML ="";
 
 const height_Layout = 150 * maxHierarchyDepth;
 
+// Center the y-axis vertically in the chart
+const yOffset = (height - height_Layout) / 2;
+
+ let XchartGroup = svgMain.append(svg)
+  .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
+
 
 	
     const svg = d3.select("#family-tree-area")
@@ -66,17 +72,11 @@ const height_Layout = 150 * maxHierarchyDepth;
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 
-// Center the y-axis vertically in the chart
-const yOffset = (height - height_Layout) / 2;
-
- chartGroup = svg.append("g")
-  .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
-
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
     
-//chartGroup  = svg.append("g");
+chartGroup  = svg.append("g");
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
