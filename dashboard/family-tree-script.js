@@ -505,7 +505,6 @@ function fetchFamilyMemberData(collectionName, treeID) {
     const spouse = doc.data().spouse || [];
     const parents = doc.data().parents || [];
     const siblings = doc.data().sibling || [];
-});
 
 
                     // Check if the member is not already in memberDataMap and map them
