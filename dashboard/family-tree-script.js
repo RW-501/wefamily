@@ -75,7 +75,7 @@ function generateFamilyTreeChart(familyData) {
 	
     const links = root.links();
 
-    const curvedPath = (d) => {
+/*    const curvedPath = (d) => {
         const sourceX = d.source.x;
         const sourceY = d.source.y;
         const targetX = d.target.x;
@@ -84,18 +84,20 @@ function generateFamilyTreeChart(familyData) {
         const controlY = (sourceY + targetY) / 2;
 
         return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-    };
-
+    };*/
+const curvedPath = d3.linkHorizontal()
+  .x(d => d.y)
+  .y(d => d.x);
 	
-    chartGroup.selectAll("path")
-        .data(links)
-        .enter()
-        .append("path")
-        .attr("class", "link")
-        .attr("d", curvedPath)
-        .style("fill", "none")
-        .style("stroke", "gray")
-        .style("stroke-width", 2);
+chartGroup.selectAll("path")
+  .data(links)
+  .enter()
+  .append("path")
+  .attr("class", "link")
+  .attr("d", curvedPath)  // Use the link generator function
+  .style("fill", "none")
+  .style("stroke", "gray")
+  .style("stroke-width", 2);
 
     let memberData = root.descendants().children;
 
@@ -207,13 +209,13 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
         chartGroup.attr('transform', event.transform);
         updateImageAttributes();
 
-        chartGroup
-            .selectAll('path.link')
-            .attr('d', (d) => {
-                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-                return linkGenerator({ source, target });
-            });
+chartGroup
+  .selectAll('path.link')
+  .attr('d', (d) => {
+    const source = { x: d.source.x, y: d.source.y * currentScale };
+    const target = { x: d.target.x, y: d.target.y * currentScale };
+    return curvedPath({ source, target });
+  });
     }
 
 
