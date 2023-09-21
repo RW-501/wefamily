@@ -50,29 +50,19 @@ const height_Layout = 150 * maxHierarchyDepth;
 
 	// Center the y-axis vertically in the chart
 const offset = width / 2;
-let yOffset = -1700; //= offset - offset;
+let yOffset = -750; //= offset - offset;
 	
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
     const svgMain = d3.select("#family-tree-area")
         .append("svgMain")
         .attr("width", width)
-        .attr("height", height)
-  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
-	   .style("margin", "auto")  // Center horizontally using margin
-    .style("display", "block");  // Ensure it's a block element
-//width = window.screen.width;
+        .attr("height", height);
 
 
 	
     const svg = d3.select("#family-tree-area")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
-	   .style("margin", "auto")  // Center horizontally using margin
-    .style("display", "block");  // Ensure it's a block element
-
+        .append("svg");
 
 
 
@@ -81,7 +71,13 @@ document.getElementById('family-tree-area').innerHTML ="";
     const treeLayout = d3.tree().size([width, height_Layout]);
     
 
- chartGroup = svg.append("g")  .attr("transform", `translate(${yOffset}, 0)`);
+ chartGroup = svg.append("g")
+        .attr("width", width)
+        .attr("height", height)
+  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
+	   .style("margin", "auto")  // Center horizontally using margin
+    .style("display", "block");  // Ensure it's a block element
+
 
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
