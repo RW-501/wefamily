@@ -6,7 +6,13 @@
 
  document.getElementById('edit-first-name').value = memberData.first_name || '';
     document.getElementById('edit-last-name').value = memberData.last_name || '';
+    document.getElementById('edit-middle-name').value = memberData.middle_name || '';
+    document.getElementById('nameSuffix').value = memberData.nameSuffix || '';
     document.getElementById('edit-birthdate').value = memberData.birthdate || '';
+    document.getElementById('edit-bio').value = memberData.bio || '';
+    document.getElementById('edit-deceaseddate').value = memberData.deceaseddate || '';
+    document.getElementById('edit-contact').value = memberData.contact || '';
+    document.getElementById('edit-private').value = memberData.private || '';
     document.getElementById('edit-note').value = memberData.note || '';
     document.getElementById('userID_edit_Member').innerHTML = memberData.memberID || '';
 
