@@ -91,7 +91,15 @@ function initializeFamilyTreeChart() {
     <div class="container">
         <h1>Family Tree Management</h1>
         <div id="family-tree-container">
+
+            <div id="user_Families_area">
+	<h2>Your Families</h2>
+            <div id="user_Families">
+<small>Loadinh</small>
+	    </div>
+		
             <button onclick="openPopup()">Join / Create Family Tree</button>
+	    </div>
             <div id="tree-details">
                 <h2>Tree Details</h2><button onclick="openEditFamilyTreePopup()">Edit</button>
 
@@ -472,6 +480,67 @@ var requestFamilyID = "";
 // Add this JavaScript code in your script section
 
 
+
+
+function getFamiliesFunc(){
+
+
+const userDocRef = db.collection('users').doc(userID);
+
+userDocRef.get().then((doc) => {
+  if (doc.exists) {
+    const userTrees = doc.data().userTrees;
+    // Now you have the userTrees array, proceed to populate the UI.
+
+const userFamiliesDiv = document.getElementById('user_Families');
+
+// Assuming userTrees is an array of family tree objects with properties 'id' and 'name'
+userTrees.forEach((tree) => {
+  const editButton = document.createElement('button');
+  editButton.innerText = `Edit ${tree.name}`;
+  editButton.addEventListener('click', () => {
+
+console.log(`Edit button clicked for family tree: ${tree.name}`);
+	  fetchFamilyTree();
+
+	      const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+    window.location.href = editUrl;
+  });
+
+  const viewButton = document.createElement('button');
+  viewButton.innerText = `View ${tree.name}`;
+  viewButton.addEventListener('click', () => {
+    const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
+    window.location.href = viewUrl;
+	  
+    console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
+  });
+
+  // Append buttons to the UI
+  userFamiliesDiv.appendChild(editButton);
+  userFamiliesDiv.appendChild(viewButton);
+});
+
+
+
+	  
+  } else {
+    console.log('User document not found.');
+  }
+}).catch((error) => {
+  console.error('Error getting user document:', error);
+});
+
+
+
+
+
+}
+
+
+
+
+	    
 
 
 function setupEnterKeyNavigation(inputIdArray) {
