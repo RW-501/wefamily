@@ -18,7 +18,7 @@ let currentScale = initialScale;
 
 let imageWidth = 100;
 let imageHeight = 100;
-let nodeGroup;
+var nodeGroup;
 
 zoomOutButton.addEventListener('click', () => {
   if (currentScale > 2) {
@@ -125,12 +125,13 @@ function generateFamilyTreeChart(familyData) {
             });
     }
 
-     nodeGroup = chartGroup.selectAll(".node")
-        .data(root.descendants())
-        .enter()
-        .append("g")
-        .attr("class", "node")
-        .attr("transform", d => `translate(${d.x},${d.y})`);
+  nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
 
 
 	/*
@@ -213,6 +214,7 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
  zoom = d3.zoom()
     .scaleExtent([0.5, 5]) // Define the zoom scale limits
     .on("zoom", zoomed);
+  updateImageAttributes();
 
 }
 
@@ -292,7 +294,10 @@ function applyZoom(scale) {
       return linkGenerator({ source, target });
     });
 
+	
   updateImageAttributes();
+
+	
 }
 
 
