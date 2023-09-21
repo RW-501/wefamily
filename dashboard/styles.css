@@ -175,10 +175,12 @@ border-radius:0;
 
 #tree-details .image-container{
     height: 100%;
-    border-radius: 0;
-	width: auto;
-	    padding: 1%;
+    border-radius: 0 !important;
+    width: auto !important;
+    padding: 1%;
     margin: 2%;
+    box-sizing: border-box;
+    display: grid;
 }
 
 	.w30{
