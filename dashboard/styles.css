@@ -14,16 +14,14 @@
 .w70{
     width: 100%  !important;
 }
-
-
-}
-@media screen and (max-width: 900px) {
-
 .flex{
-	
-flex-flow: wrap-reverse
+    display: grid !important;
+    grid-auto-flow: column;
 }
+
 }
+
+
 @media screen and (max-width: 900px) {
     .popup-content {
         /* Flex styles for screen size 800px and above */
