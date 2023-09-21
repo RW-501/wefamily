@@ -61,8 +61,7 @@ document.getElementById('family-tree-area').innerHTML ="";
 
 
 	
-    const svg = d3.select("#family-tree-area")
-        .append("svg");
+    const svg = d3.select("#family-tree-area").append("svg");
 
 
 
@@ -71,12 +70,7 @@ document.getElementById('family-tree-area').innerHTML ="";
     const treeLayout = d3.tree().size([width, height_Layout]);
     
 
- chartGroup = svg.append("g")
-        .attr("width", width)
-        .attr("height", height)
-  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
-	   .style("margin", "auto")  // Center horizontally using margin
-    .style("display", "block");  // Ensure it's a block element
+ chartGroup = svg.append("g");  // Ensure it's a block element
 
 
 	
@@ -250,12 +244,17 @@ handleCollisions(nodes);
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-const translateX = 0;
+	
+const translateX = (width - treeWidth) / 2;
 const translateY = 100;
 //const scale = 1;    
     // Set the transform attribute
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
-    
+    const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as needed
+
+
+	
+	
 // Define the zoom function
 function zoomed(event) {
   // Apply the zoom transformation to the chartGroup
