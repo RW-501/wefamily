@@ -1302,11 +1302,14 @@ document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members"
         querySnapshot.forEach((member) => {
             const data = member.data();
             // Implement dynamic population of family member details here
-let claim_Div = "";		
+let claim_Div = "";	
+if (data.memberID === userID || data.addByID === userID) {
+claim_Div = "<button class='edit-member'>Edit Member</button>";
+}
+		
 if (data.userID === userID) {
  Current_USERNAME = data.first_name;
  Current_USERPHOTO = data.photo;
-claim_Div = "<button class='edit-member'>Edit Member</button>";
 }else{
 if(data.userID === "" ){
 claim_Div = "<button class='claim-member'>Claim Member</button>";
