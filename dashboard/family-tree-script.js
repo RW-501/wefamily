@@ -39,9 +39,7 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
 var chartGroup; 
 var linkGenerator;
-var zoom = d3.zoom()
-    .scaleExtent([0.5, 5]) // Define the zoom scale limits
-    .on("zoom", zoomed);
+var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
@@ -84,6 +82,7 @@ function generateFamilyTreeChart(familyData) {
         return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
     };
 
+	
     chartGroup.selectAll("path")
         .data(links)
         .enter()
@@ -211,7 +210,9 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
     }
 
 
-
+ zoom = d3.zoom()
+    .scaleExtent([0.5, 5]) // Define the zoom scale limits
+    .on("zoom", zoomed);
 
 }
 
