@@ -69,7 +69,7 @@ const height_Layout = 150 * maxHierarchyDepth;
 // Center the y-axis vertically in the chart
 const yOffset = (height - height_Layout) / 2;
 
- chartGroup = svgMain.append("svg")
+ chartGroup = svg.append("g")
   .attr("transform", `translate(0, ${yOffset})`); // Adjust the y-offset
 
 
