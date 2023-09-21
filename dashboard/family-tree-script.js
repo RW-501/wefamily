@@ -64,11 +64,15 @@ function generateFamilyTreeChart(familyData) {
 
     const root = d3.hierarchy(familyData).eachBefore(d => {
         d.y = d.depth * 100 + 60;
-        d.x = d.depth * 100;
+     //   d.x = d.depth * 100;
     });
 
     treeLayout(root);
-
+	
+     zoom = d3.zoom()
+        .scaleExtent([0.5, 5]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+	
     const links = root.links();
 
     const curvedPath = (d) => {
@@ -182,11 +186,11 @@ handleCollisions(nodes);
 
 
 
- // Apply the zoom behavior to the SVG
+
+
+    // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-
-	
 
 
 	
