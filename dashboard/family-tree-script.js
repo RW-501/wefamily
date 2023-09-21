@@ -517,7 +517,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
 
               querySnapshot.forEach((doc) => {
                     const docData = doc.data();
-                    const id = docData.id;
+                    const id = doc.id;
                     const memberID = doc.memberID;
                     const bio = doc.bio;
                     const userID = doc.userID;
@@ -707,7 +707,7 @@ function displayChildrenNames(parentID, callback) {
     const childrenNames = childrenIDs.map((childID) => {
         const child = memberDataMap[childID];
         return {
-            id: child.id,
+           // id: child.id,
             name: child.name,
         };
     });
