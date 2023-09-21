@@ -358,6 +358,8 @@ function applyZoom(scale) {
 
          function populateMemberInfo(member) {
     // Populate image and text
+		 			                    console.log(' populateMemberInfo.'+member);
+
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
           document.getElementById('memberInfo').value = member.bioX || "";
@@ -411,8 +413,9 @@ function showMemberPopup(member) {
 const scrollTo = document.getElementById('scrollTo');
 
 scrollTo.addEventListener('click', () => {
-	
+	  console.log('Div clicked!');
 
+});
     const memberDiv = document.getElementById(member.id);
     
     if (memberDiv) {
@@ -443,9 +446,8 @@ document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
 
 
 
-  console.log('Div clicked!');
 	hideMemberPopup();
-});
+
 	
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
