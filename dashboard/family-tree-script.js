@@ -39,14 +39,14 @@ zoomInButton.addEventListener('click', () => {
     // Create a group element to hold the links
 var chartGroup; 
 var linkGenerator;
-const zoom = d3.zoom()
+var zoom = d3.zoom()
     .scaleExtent([0.5, 5]) // Define the zoom scale limits
     .on("zoom", zoomed);
 	
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
     const height_Layout = 150 * maxHierarchyDepth;
-    const offset = width / 2;
+    let offset = width / 2;
     let yOffset = -750;
 
     document.getElementById('family-tree-area').innerHTML = "";
@@ -196,12 +196,6 @@ const translateY = 100;
     // Set the transform attribute
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
 
-	
-
-
-}
-
-
   // Apply the same zoom transformation to the link lines
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
@@ -215,6 +209,12 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
                 return linkGenerator({ source, target });
             });
     }
+
+
+
+
+}
+
 
 
 
