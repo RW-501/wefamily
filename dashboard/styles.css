@@ -376,7 +376,7 @@ min-height: 500px;
     font-size: 1em;
     }
     /* Tree details section */
-     #tree-details, #tree-content, #family_News, #member_Request #user_Families_area {
+     #tree-details, #tree-content, #family_News, #member_Request, #user_Families_area {
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
