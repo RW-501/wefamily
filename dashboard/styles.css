@@ -141,11 +141,15 @@ flex-flow: wrap-reverse
     box-sizing: border-box;
 }
 
-
-
+#tree-details .w70 {
+    margin: 2%;
+}
 #tree-details .image-container{
     height: 100%;
     border-radius: 0;
+	width: auto;
+	    padding: 1%;
+    margin: 2%;
 }
 
 	.w30{
@@ -197,12 +201,7 @@ width: 50px;
 		    margin: auto;
         }
 
-        .uploaded-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+  
         .file-input {
             display: none; /* Hide the file input */
         }
