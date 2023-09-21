@@ -44,8 +44,8 @@ var zoom ;
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
     const height_Layout = 150 * maxHierarchyDepth;
-    let offset = width / 2;
-    let yOffset = -750;
+/*    let offset = width / 2;
+    let yOffset = -750;*/
 
     document.getElementById('family-tree-area').innerHTML = "";
     
