@@ -58,7 +58,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svgMain")
         .attr("width", width)
         .attr("height", height)
-  //.attr("transform", `translate(0, ${yOffset})`)
+  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 //width = window.screen.width;
@@ -69,7 +69,7 @@ document.getElementById('family-tree-area').innerHTML ="";
         .append("svg")
         .attr("width", width)
         .attr("height", height)
- // .attr("transform", `translate(0, ${yOffset})`)
+  .attr("transform", `translate(${yOffset}, 0)`)// Adjust the y-offset
 	   .style("margin", "auto")  // Center horizontally using margin
     .style("display", "block");  // Ensure it's a block element
 
@@ -81,8 +81,7 @@ document.getElementById('family-tree-area').innerHTML ="";
     const treeLayout = d3.tree().size([width, height_Layout]);
     
 
- chartGroup = svgMain.append("g")
-  .attr("transform", `translate(${yOffset}, 0)`); // Adjust the y-offset
+ chartGroup = svgMain.append("g");
 	
 	    console.log("maxHierarchyDepth   " + maxHierarchyDepth);
 	    console.log("familyData   " + familyData);
