@@ -1,4 +1,16 @@
+
 @media screen and (max-width: 900px) {
+ .image-container{
+    width: 100%;
+}
+
+select , label,
+    input[type="text"],
+    input[type="date"],
+    textarea {
+    width: 100%;
+    }
+
 .space_J {
     display: grid !important;
     justify-content: space-between !important;
@@ -160,6 +172,9 @@ flex-flow: wrap-reverse
 #tree-details .w70 {
     margin: 2%;
 }
+
+
+
 #tree-details .image-container{
     height: 100%;
     border-radius: 0;
@@ -319,7 +334,6 @@ text-align: center;
     }
 
 	
-
 
 #tree-details  select,
 		    input[type="text"],
