@@ -371,39 +371,15 @@ let formattedBirthdate = formatDateToMonthDay(member.birthdate);
 
 function showMemberPopup(member) {
 		    console.log("member   " + member.id);
+
 const scrollTo = document.getElementById('scrollTo');
 
 scrollTo.addEventListener('click', () => {
-	  console.log('Div clicked!');
-
-});
-    const memberDiv = document.getElementById(member.id);
-    
-    if (memberDiv) {
-        // Scroll to the member's div
-        memberDiv.scrollIntoView({ behavior: 'smooth' });
-
-        // Get the height of the viewport
-        const viewportHeight = window.innerHeight;
-
-        // Get the top position of the div
-const divHeight = memberDiv.offsetHeight; // Height of the element
-const divCenter = divTop + divHeight / 2; // Center of the element relative to the viewport
-
-        // Calculate the scroll position to center the div
-        const scrollPosition = divCenter - (viewportHeight / 2);
-
-        // Scroll to center the div
-        window.scrollBy({
-            top: scrollPosition,
-            behavior: 'smooth'
-        });
-
-}else{
+	
 document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
 
+   });
 
-}
 
 
 
