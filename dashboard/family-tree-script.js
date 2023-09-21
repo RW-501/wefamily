@@ -49,8 +49,8 @@ let height = 300 *  maxHierarchyDepth; // Height of the chart
 const height_Layout = 150 * maxHierarchyDepth;
 
 	// Center the y-axis vertically in the chart
-const yOffset = (width - width) / 2;
-
+const offset = width / 2;
+let yOffset = - 700; //= offset - offset;
 	
 document.getElementById('family-tree-area').innerHTML ="";
     // Create an SVG element to contain the chart
