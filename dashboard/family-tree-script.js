@@ -348,6 +348,17 @@ function applyZoom(scale) {
 
 let children = displayChildrenNames(member.id, displayChildrenCallback);
 		 
+const memberID = member.id;
+ const memberData = memberDataMap[memberID];
+ let parentNames = "";
+
+if (member) {
+     parentNames = getParentNames(memberData.parents);
+    console.log('Parent Names:', parentNames);
+} else {
+    console.log(`Member with ID ${memberID} not found.`);
+}
+		 
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
@@ -359,7 +370,7 @@ let children = displayChildrenNames(member.id, displayChildrenCallback);
         'Note': member.note,
         'Children': children,
        // 'Spouse': member.spouse.join(', '),
-        'Parents': member.parents.join(', '),
+        'Parent': parentNames,
      //   'Siblings': member.siblings.join(', ')
     };
 
@@ -696,6 +707,30 @@ function displayChildrenCallback(parentName, childrenNames) {
     });
 	return children;
 }
+
+
+
+
+
+
+
+function getParentNames(parentIDs) {
+    const parentNames = [];
+    
+    for (const parentID of parentIDs) {
+        const parent = memberDataMap[parentID];
+        if (parent) {
+            parentNames.push({
+                id: parent.id,
+                name: parent.name
+            });
+        }
+    }
+    
+    return parentNames;
+}
+
+
 
 
 function loadFamilyTreeChart(treeData) {
