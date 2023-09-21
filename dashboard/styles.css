@@ -18,7 +18,11 @@ margin: auto 0;
     font-weight: 400;
 
 }
+#edit-family-member-popup .image-container {
+    width: auto;
+    height: auto;
 
+}
 
 
 /* Style for the image container */
