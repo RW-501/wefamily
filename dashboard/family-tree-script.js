@@ -362,18 +362,21 @@ function applyZoom(scale) {
 
 
 let children = displayChildrenNames(member.id, displayChildrenCallback);
+    console.log(`member of ${member}:`);
+    console.log(`Children of ${children}:`);
 		 
+	 let parentNames = "";
+	 
 const memberID = member.id;
  const memberData = memberDataMap[memberID];
- let parentNames = "";
-
+/*
 if (member) {
      parentNames = getParentNames(memberData.parents);
     console.log('Parent Names:', parentNames);
 } else {
     console.log(`Member with ID ${memberID} not found.`);
 }
-		 
+	*/	 
     // Populate member details
     const memberDetails = {
         'Member ID': member.id,
@@ -689,6 +692,10 @@ function resetFamilyTree() {
     // Load the family tree chart again
     loadFamilyTreeChart();
 }
+
+
+
+
 function displayChildrenNames(parentID, callback) {
     const parent = memberDataMap[parentID];
 
