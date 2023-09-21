@@ -84,7 +84,8 @@ function generateFamilyTreeChart(familyData) {
         const controlY = (sourceY + targetY) / 2;
 
         return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-
+  }
+	
 	
 chartGroup.selectAll("path")
   .data(links)
