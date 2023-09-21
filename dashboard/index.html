@@ -95,7 +95,7 @@ function initializeFamilyTreeChart() {
             <div id="user_Families_area">
 	<h2>Your Families</h2>
             <div id="user_Families">
-<small>Loadinh</small>
+<small>Loading</small>
 	    </div>
 		
             <button onclick="openPopup()">Join / Create Family Tree</button>
@@ -501,9 +501,9 @@ userTrees.forEach((tree) => {
   editButton.addEventListener('click', () => {
 
 console.log(`Edit button clicked for family tree: ${tree.name}`);
-	  fetchFamilyTree();
+	 // fetchFamilyTree();
 
-	      const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+	      const editUrl = `/dashboard?tree=${tree}`; // Replace with the actual edit URL
     window.location.href = editUrl;
   });
 
