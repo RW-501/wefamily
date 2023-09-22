@@ -122,9 +122,11 @@ chartGroup.selectAll("path")
 
 
 	
-    let memberData = root.descendants();
+    let memberData = root.descendants().children;
+console.log('memberData :', memberData);
+console.log('memberData data:', memberData.data);
 
-    if (memberData.children === "undefined" || memberData.children === "" || memberData.children === null ) {
+    if (memberData.id === "undefined" || memberData.id === "" || memberData.id === null ) {
         chartGroup.selectAll("text")
             .data(root.descendants())
             .enter()
@@ -180,8 +182,6 @@ chartGroup.selectAll("text")
     
 
 
-console.log('memberData :', memberData);
-console.log('memberData id:', memberData.id);
 
     if (memberData.id === userID) {
 
