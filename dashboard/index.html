@@ -955,24 +955,25 @@ function joinRequestFunc() {
     // Get input values
 		let userInfo =  userDocRef.data();
 
-    const userName = userInfo.userName;
-    const location = userInfo.city", "+userInfo.state,", "+userInfo.country ;
-    const note = document.getElementById('request_note').value;
+const userName = userInfo.userName;
+const location = userInfo.city + ', ' + userInfo.state + ', ' + userInfo.country;
+const note = document.getElementById('request_note').value;
 
-    // Validate input data if needed
+// Validate input data if needed
 
-    // Create an object to represent the join request data
-    const joinRequestData = {
-        userName: userName,
-        location: location,
-        treeID: requestFamilyID,
-        photo: userInfo.photo,
-        userID: userID,
-        note: note,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+// Create an object to represent the join request data
+const joinRequestData = {
+    userName: userName,
+    location: location,
+    treeID: requestFamilyID,
+    photo: userInfo.photo,
+    userID: userID,
+    note: note,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 
-        // Add more fields as needed
-    };
+    // Add more fields as needed
+};
+
 
     // Add the join request to the Firestore collection
     firestore.collection('memberRequest').add(joinRequestData)
