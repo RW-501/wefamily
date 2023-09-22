@@ -65,7 +65,7 @@ width: 100%;
 }
 
 #edit-family-member-popup  .grid{
-    width: 100%;
+    width: 100% !important;
     height: auto;
     display: grid;
     margin: auto;
