@@ -329,7 +329,7 @@ function applyZoom(scale) {
 
   // Update circle radius, text font size, image dimensions, stroke width
   chartGroup.selectAll('.circle').attr('r', imageWidth / (2 * currentScale));
-  chartGroup.selectAll('text').attr('font-size', 1.2em / currentScale);
+  chartGroup.selectAll('text').attr('font-size', "1.2em" / currentScale);
   chartGroup
     .selectAll('image')
     .attr('x', d => -imageWidth / (2 * currentScale))
