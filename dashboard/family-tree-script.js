@@ -92,6 +92,11 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 };
 
 
+     zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+
+	
 chartGroup.selectAll("path")
   .data(links)
   .enter()
