@@ -164,11 +164,11 @@ width: 100%;
 }
 
 
-#memberImage{
+#memberImage {
     margin: auto;
     display: block;
+    width: inherit;
 }
-
 .popup-image{
     padding: 2%;
     background-color: #f1f3f4;
