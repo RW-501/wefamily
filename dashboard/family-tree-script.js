@@ -239,9 +239,9 @@ console.log('Browser width:', browserWidth);
 const translateX = (browserWidth - width) / 2;
 const translateY = 100;
  const scale =  browserWidth / width;
-	let newScale = (scale * 100);
+	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
-const middle = (browserWidth - width ) / (scale * 100);
+const middle = (browserWidth - width ) / (scale * 10);
 
 	
 	            console.log('newScale :', newScale);
