@@ -52,10 +52,11 @@ margin: auto 0;
 
 }
 #edit-family-member-popup .image-container {
-    width: 40%;
+width: 40%;
     height: auto;
     display: block;
     margin: auto;
+    padding: 2%;
 }
 
 #edit-family-member-popup  .grid{
