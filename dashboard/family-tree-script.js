@@ -161,7 +161,7 @@ chartGroup.selectAll("text")
      .on("click", function (event, d) {
         console.log("Clicked text Data:", d.data);
         showMemberPopup(d.data);
-    })
+    });
 
 
 	    
