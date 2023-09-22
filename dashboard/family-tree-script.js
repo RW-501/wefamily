@@ -200,7 +200,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "#f2fd90")  // Border color
-    .style("stroke-width", "10px");  // Border width
+    .style("stroke-width", "2em");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -233,7 +233,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "black")  // Border color
-    .style("stroke-width", "10px");  // Border width
+    .style("stroke-width", "2em");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
