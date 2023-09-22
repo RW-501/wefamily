@@ -62,8 +62,8 @@ function generateFamilyTreeChart(familyData) {
     chartGroup = svg.append("g").style("transform-origin", "center top");
 
     const root = d3.hierarchy(familyData).eachBefore(d => {
-        d.y = d.depth * 10 + 60;
-        d.x = d.depth * 5 + 50;
+        d.y = d.depth * 100 + 60;
+        d.x = d.depth * 100 + 60;
     });
 
     treeLayout(root);
