@@ -28,8 +28,14 @@
 
 	
 }
-.SECTION{
 
+html{
+    scroll-snap-type: y mandatory;
+	 scroll-padding: 1em; 
+}
+
+.SECTION{
+scroll-snap-align: center;
 }
 
 @media screen and (max-width: 900px) {
