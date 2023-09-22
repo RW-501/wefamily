@@ -52,9 +52,10 @@ margin: auto 0;
 
 }
 #edit-family-member-popup .image-container {
-    width: auto;
+    width: 40%;
     height: auto;
-
+    display: block;
+    margin: auto;
 }
 
 select , label,
