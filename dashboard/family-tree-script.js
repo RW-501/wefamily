@@ -157,9 +157,11 @@ chartGroup.selectAll("text")
             .attr("height", bbox.height + 4)  // Adjust height to have some padding
             .style("fill", "black")  // Set the box fill color
             .style("opacity", 1)  // Set the box opacity
-            .style("border-radius", "5px");  // Set the border radius
-    });
-
+            .style("border-radius", "5px")  // Set the border radius
+     .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    })
 
 
 	    
@@ -277,7 +279,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${current
 
 	
   updateImageAttributes();
-applyZoom(scale);
+//applyZoom(scale);
 }
 
 
