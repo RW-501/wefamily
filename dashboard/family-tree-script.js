@@ -234,7 +234,7 @@ handleCollisions(nodes);
 
 console.log('Browser width:', browserWidth);
 	
-const translateX = (browserWidth - treeWidth) / 2;
+const translateX = (browserWidth - width) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
 	
