@@ -108,6 +108,13 @@ chartGroup.selectAll("path")
   .style("stroke", "gray")
   .style("stroke-width", 2);
 
+  nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
 
 	
     let memberData = root.descendants().children;
@@ -155,9 +162,10 @@ chartGroup.selectAll("text")
             .attr("y", bbox.y - 2)  // Adjust y to have some padding
             .attr("width", bbox.width + 10)  // Adjust width to have some padding
             .attr("height", bbox.height + 4)  // Adjust height to have some padding
-    .attr("rx", 5)  // Horizontal radius for rounded corners
-    .attr("ry", 5)  // Vertical radius for rounded corners
-    .style("fill", "black")            .style("opacity", 1)  // Set the box opacity
+    .attr("rx", 10)  // Horizontal radius for rounded corners
+    .attr("ry", 10)  // Vertical radius for rounded corners
+    .style("fill", "black")       
+		.style("opacity", 1)  // Set the box opacity
          .on("click", function (event, d) {
                 console.log("Clicked text Data:", d.data);
                 showMemberPopup(d.data);
@@ -169,13 +177,6 @@ chartGroup.selectAll("text")
 	 }
 	    
     
-
-  nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
 
@@ -204,8 +205,8 @@ nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .style("stroke", "pink")  // Border color
-    .style("stroke-width", "1px");  // Border width
+    .style("stroke", "#8e9399")  // Border color
+    .style("stroke-width", "5px");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -215,7 +216,8 @@ nodeGroup.append("image")
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
     .style("object-fit", "cover")
-
+.style("width", imageWidth)
+.style("height", imageHeight)
 	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
