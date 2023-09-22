@@ -22,6 +22,11 @@
     grid-auto-flow: column;
 }
 
+
+
+
+
+	
 }
 
 
@@ -34,7 +39,7 @@
     }
 }
 
-	
+
 
 #familyCount{
 margin: auto 0;
@@ -137,7 +142,12 @@ select , label,
   border-color: #00ff00; /* Change border color on hover */
 }
 
-
+#create-tree-section  .uploaded-image {
+    width: auto;
+    height: auto;
+    object-fit: fill;
+}
+}
 
 .image-container {
     border-radius: 0 !important;
