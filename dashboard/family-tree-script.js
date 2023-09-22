@@ -402,8 +402,31 @@ if (member) {
 	*/	 
 
 let formattedBirthdate = formatDateToMonthDay(member.birthdate);
+const memberDetails = {
+    'Name': `${member.name}`,
+    'Location': member.location,
+    'Birthdate': formattedBirthdate,
+    'Contact': member.contact,
+    'Note': member.note,
+};
 
-		
+// Check if 'Deceased Date' is not blank before adding it to memberDetails
+if (member.deceaseddate) {
+    memberDetails['Deceased Date'] = member.deceaseddate;
+}
+
+// Other properties can be added similarly based on your logic
+// if (member.children) {
+//     memberDetails['Children'] = children;
+// }
+// ...
+
+// Example of adding 'Spouse' property if it's not blank
+// if (member.spouse && member.spouse.length > 0) {
+//     memberDetails['Spouse'] = member.spouse.join(', ');
+// }
+
+		/*
     // Populate member details
     const memberDetails = {
         'Name': `${member.name}`,
@@ -417,7 +440,7 @@ let formattedBirthdate = formatDateToMonthDay(member.birthdate);
     //    'Parent': parentNames,
      //   'Siblings': member.siblings.join(', ')
     };
-
+*/
        // 'Children': member.children.join(', '),
 
     const detailsList = document.getElementById('memberDetails');
