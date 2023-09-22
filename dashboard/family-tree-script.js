@@ -126,11 +126,31 @@ chartGroup.selectAll("path")
 
 
 // Add a box around the text
+// Rest of your existing code for adding the text
+chartGroup.selectAll("text")
+    .data(root.descendants())
+    .enter()
+    .append("text")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr("dy", 70)
+    .attr("text-anchor", "middle")
+    .style("font-weight", "900")  // Set font weight to bold
+    .style("font-size", "1.2em")     // Set font size to 1em
+    .style("fill", "white")        // Set font color to white
+    .style("pointer-events", "none")  // Prevent text from blocking click events
+    .text(d => d.data.name)
+    .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    });
+
+// Append the rectangles after the text
 chartGroup.selectAll("text")
     .each(function () {
         const bbox = this.getBBox();  // Get the bounding box of the text
         d3.select(this.parentNode)  // Select the parent (g) element
-            .append("rect")  // Append a rectangle
+            .insert("rect", ":first-child")  // Insert a rectangle as the first child
             .attr("x", bbox.x)
             .attr("y", bbox.y)
             .attr("width", bbox.width)
@@ -141,26 +161,7 @@ chartGroup.selectAll("text")
 
         // Hide the text by setting rectangle fill to the background color
         d3.select(this)
-            .style("fill", "black");  // Set the text fill color
-    });
-
-// Rest of your existing code for adding the text
-chartGroup.selectAll("text")
-    .data(root.descendants())
-    .enter()
-    .append("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dy", 65)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")  // Set font weight to bold
-    .style("font-size", "1.2em")     // Set font size to 1em
-    .style("fill", "white")        // Set font color to white
-    .style("pointer-events", "none")  // Prevent text from blocking click events
-    .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
+            .style("fill", "transparent");  // Set the text fill color to transparent
     });
 
 
