@@ -147,6 +147,8 @@ function addNewFamilyMember() {
     const familyMember = {
         first_name: first_name,
         last_name: last_name,
+        middle_name: '',
+          nameSuffix:"",
         location: "",
         birthdate: birthdate,
         deceaseddate: deceaseddate,
@@ -416,6 +418,8 @@ if(!first_name && !last_name){
     const familyMember = {
         first_name: first_name,
         last_name: last_name,
+	 middle_name: "",
+          nameSuffix: "",
         location: "",
         birthdate: birthdate,
         deceaseddate: "",
