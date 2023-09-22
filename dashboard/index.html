@@ -92,15 +92,16 @@ function initializeFamilyTreeChart() {
         <h1>Family Tree Management</h1>
         <div id="family-tree-container">
 
-            <div id="user_Families_area">
+            <div id="user_Families_area" class="SECTION">
 	<h2>Your Families</h2>
             <div id="user_Families">
-<small>Loading</small>
 	    </div>
 		
             <button onclick="openPopup()">Join / Create Family Tree</button>
 	    </div>
-            <div id="tree-details">
+
+		
+            <div id="tree-details" class="SECTION">
                 <h2>Tree Details</h2><button onclick="openEditFamilyTreePopup()">Edit</button>
 
 		    <div class="space_J">
@@ -118,7 +119,14 @@ function initializeFamilyTreeChart() {
                 <textarea id="tree-description" placeholder="Brief Description"></textarea>
 		    </div></div>
             </div>
-            <div id="tree-content">
+
+
+
+
+
+
+		
+            <div id="tree-content" class="SECTION">
              			    <div class="space_J">
   <h2>Family Members</h2><small id="familyCount"></small></div>
                 <div id="family-members">
@@ -129,7 +137,7 @@ function initializeFamilyTreeChart() {
 
 
 		
-            <div id="family-tree">
+            <div id="family-tree" class="SECTION">
               <div>  <h2>Family Tree</h2></div>
 		    <div class="space_J" id="zoom-controls">
 <div>
@@ -148,7 +156,7 @@ function initializeFamilyTreeChart() {
             </div>
 
 		
-<div id="family-news">
+<div id="family-news" class="SECTION">
     <h2>Family Chat</h2>
 	
     <div id="mainFamily-news-area">
@@ -185,7 +193,7 @@ function initializeFamilyTreeChart() {
 
 
             
- <div id="member_Request">
+ <div id="member_Request" class="SECTION">
                 <h2>Family Member Request</h2>
                     <button class="memberRequest" onclick="openJoinRequestPopup()">View Member Request</button>
 
