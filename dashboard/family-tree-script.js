@@ -122,7 +122,7 @@ chartGroup.selectAll("path")
 
 
 	
-    let memberData = root.descendants().children;
+    let memberData = familyData;
 console.log('memberData :', memberData);
 console.log('memberData data:', memberData.data);
 
