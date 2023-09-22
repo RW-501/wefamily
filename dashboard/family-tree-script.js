@@ -4,6 +4,7 @@
 
 
 /// works
+const zoomControls = document.getElementById('familyCount');
 
 
 
