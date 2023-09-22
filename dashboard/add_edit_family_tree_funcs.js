@@ -69,6 +69,7 @@ await userDocRef.update({
         name: treeName
     })
 });
+	      });
         // Assign the generated tree ID to currentFamilyID
         currentFamilyID = generatedTreeID;
 	    
