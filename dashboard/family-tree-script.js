@@ -204,7 +204,7 @@ nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .style("stroke", "black")  // Border color
+    .style("stroke", "pink")  // Border color
     .style("stroke-width", "1px");  // Border width
 
 nodeGroup.append("image")
@@ -214,8 +214,9 @@ nodeGroup.append("image")
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "fill")  // Apply object-fit: cover
-    .on("click", function (event, d) {
+    .style("object-fit", "cover")
+
+	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
     });
