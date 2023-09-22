@@ -42,7 +42,7 @@ var linkGenerator;
 var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
-    const width =500 * window.screen.width;
+    const width = window.screen.width;
     const height_Layout = 150 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
