@@ -93,33 +93,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
-  // Apply the same zoom transformation to the link lines
-  function zoomed(event) {
-        chartGroup.attr('transform', event.transform);
-        updateImageAttributes();
-
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-      return linkGenerator({ source, target });
-    });
-}
-
-
-	
-chartGroup.selectAll("path")
-  .data(links)
-  .enter()
-  .append("path")
-  .attr("class", "link")
-  .attr("d", curvedPath)  // Use the link generator function
-  .style("fill", "none")
-  .style("stroke", "gray")
-  .style("stroke-width", 2);
-
+ 
     let memberData = root.descendants().children;
 
     if (memberData === "undefined" || memberData === "" || memberData === null ) {
@@ -267,6 +241,32 @@ const translateY = 100;
     // Set the transform attribute   ${translateX}
 chartGroup.attr("transform", `translate(${half},${translateY}) scale(${currentScale})`);
 
+ // Apply the same zoom transformation to the link lines
+  function zoomed(event) {
+        chartGroup.attr('transform', event.transform);
+        updateImageAttributes();
+
+  chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+      return linkGenerator({ source, target });
+    });
+}
+
+
+	
+chartGroup.selectAll("path")
+  .data(links)
+  .enter()
+  .append("path")
+  .attr("class", "link")
+  .attr("d", curvedPath)  // Use the link generator function
+  .style("fill", "none")
+  .style("stroke", "gray")
+  .style("stroke-width", 2);
 
 
  zoom = d3.zoom()
