@@ -52,7 +52,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
     // Create an SVG element to contain the chart
     const svgMain = d3.select("#family-tree-area")
         .append("svg")
-        .attr("width", width)
+        .attr("width", browserWidth)
         .attr("height", height_Layout);
 
     const svg = d3.select("#family-tree-area").append("svg");
@@ -248,8 +248,11 @@ const translateY = 100;
             console.log('scale :', scale);
 
     // Set the transform attribute   ${translateX}
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${currentScale})`);
 
+
+
+	
  // Apply the same zoom transformation to the link lines
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
