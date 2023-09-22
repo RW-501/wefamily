@@ -818,9 +818,11 @@ function acceptJoinRequest(requestID, userID) {
 	
     // Update the user's document to add the currentFamilyID to the userTrees array
     firestore.collection('users').doc(userID)
-        .update({
-            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
-        })
+        update({
+    userTrees: firebase.firestore.FieldValue.arrayUnion({
+        id: generatedTreeID,
+        name: treeName
+    })
         .then(() => {
 		
             // Get the document reference
