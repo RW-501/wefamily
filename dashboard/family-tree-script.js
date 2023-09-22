@@ -165,11 +165,7 @@ chartGroup.selectAll("text")
     .attr("rx", 10)  // Horizontal radius for rounded corners
     .attr("ry", 10)  // Vertical radius for rounded corners
     .style("fill", "black")       
-		.style("opacity", 1)  // Set the box opacity
-         .on("click", function (event, d) {
-                console.log("Clicked text Data:", d.data);
-                showMemberPopup(d.data);
-	    });
+		.style("opacity", 1);
 
 	    
 	    });
