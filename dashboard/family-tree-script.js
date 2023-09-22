@@ -21,19 +21,18 @@ let imageHeight = 100;
 var nodeGroup;
 
 zoomOutButton.addEventListener('click', () => {
-  if (currentScale > 2) {
-    return;
-  }
-  const newScale = currentScale * 1.2; // Increase scale by 20%
-  applyZoom(newScale);
+            console.log('scale :', currentScale);
+	    const width = window.screen.width;
+       console.log('width :', width);
+       console.log('zoom :', zoom);
+
+
+	
 });
 
 zoomInButton.addEventListener('click', () => {
-  if (currentScale < 0.5) {
-    return;
-  }
-  const newScale = currentScale / 1.2; // Decrease scale by 20%
-  applyZoom(newScale);
+
+	
 });
 
     // Create a group element to hold the links
@@ -248,7 +247,7 @@ const middle = (browserWidth - width * currentScale) ;
             console.log('width :', width);
 
             console.log('translateX :', translateX);
-            console.log('scale :', scale);
+            console.log('scale :', currentScale);
 
 
 // Set the transform attribute
