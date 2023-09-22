@@ -238,7 +238,7 @@ console.log('Browser width:', browserWidth);
 	
 const translateX = (browserWidth - width) / 2;
 const translateY = 100;
- const scale = width / width;
+ const scale = width / browserWidth;
 	
 // Calculate the middle position within the browser view width
 const middle = (browserWidth - width * currentScale) / 2;
