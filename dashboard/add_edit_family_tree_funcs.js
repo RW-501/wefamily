@@ -33,8 +33,6 @@ async function createFamilyTree() {
     }
 
 
-   
-
 	    
     let downloadURL = '';  // Initialize downloadURL
 
@@ -42,21 +40,26 @@ async function createFamilyTree() {
     const selectedFile = document.getElementById('family_Tree_Image').files[0];
 if (selectedFile) {
   const storagePath = 'family_Tree_Image';
-  downloadURL = await uploadImageToStorage(selectedFile, storagePath);
+      uploadImageToStorage(selectedFile, storagePath, async (downloadURL) => {
 
+// Split the string into an array based on commas
+const locationArray = treeLocation.split(',');
 
-        const docRef = await firestore.collection('familyTrees').add({
-            name: treeName,
-            location: [treeLocation],
-            description: treeDescription,
-            adminID: userID,
-            public: publicBool,
-            familyCode: familyCode,
-            treeID: '',  // Placeholder for now
-            root: '',
-  ...(downloadURL && { photo: downloadURL }),
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        });
+// Upload the data to Firestore with the location as an array
+const docRef = await firestore.collection('familyTrees').add({
+    name: treeName,
+    location: locationArray,  // Use the array of locations
+    description: treeDescription,
+    adminID: userID,
+    public: publicBool,
+    familyCode: familyCode,
+    treeID: '',  // Placeholder for now
+    root: '',
+    photo: downloadURL,  // Update the photo URL
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+}).catch(error => {
+    console.error('Error uploading edited photo:', error);
+});
 
         // Update the family tree data with the generated document ID
         const generatedTreeID = docRef.id;
@@ -70,6 +73,8 @@ await userDocRef.update({
         currentFamilyID = generatedTreeID;
 	    
     } else {
+
+	
         const docRef = await firestore.collection('familyTrees').add({
             name: treeName,
             location: [treeLocation],
@@ -116,11 +121,12 @@ await userDocRef.update({
     .finally(() => {
       // Enable the 'createBTN' button again after the operation (success or error)
       createBTN.disabled = false;
-    });
-
     // Close modal and display success message
     closePopup();
     showAddMemberModal();
+    });
+
+
   } catch (error) {
     console.error('Error creating family tree:', error);
 
@@ -154,8 +160,8 @@ async function saveEditedFamilyTree() {
 
     if (selectedFile) {
       // Handle uploading the edited photo and get the download URL
-      uploadImageToStorage(selectedFile, 'member_main_Image', async (downloadURL) => {
-        // Update the document with the new data including the photo URL
+      uploadImageToStorage(selectedFile, storagePath, async (downloadURL) => {
+	      // Update the document with the new data including the photo URL
      // Update the family tree information in Firestore
     await treeRef.update({
       name: newName,
