@@ -12,7 +12,9 @@
     gap: 10px !important;
 }
 .w70{
-    width: 100%  !important;
+    width: 100% !important;
+    display: block;
+    margin: auto !important;
 }
 .flex{
     display: grid !important;
