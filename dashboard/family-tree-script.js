@@ -245,8 +245,8 @@ const translateY = 100;
             console.log('translateX :', translateX);
             console.log('scale :', scale);
 
-    // Set the transform attribute
-chartGroup.attr("transform", `translate(-${translateX},${translateY}) scale(${currentScale})`);
+    // Set the transform attribute   ${translateX}
+chartGroup.attr("transform", `translate(0,${translateY}) scale(${currentScale})`);
 
   // Apply the same zoom transformation to the link lines
   function zoomed(event) {
