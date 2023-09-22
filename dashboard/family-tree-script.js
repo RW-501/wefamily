@@ -52,7 +52,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
     // Create an SVG element to contain the chart
     const svgMain = d3.select("#family-tree-area")
         .append("svg")
-        .attr("width", browserWidth)
+        .attr("width", width)
         .attr("height", height_Layout);
 
     const svg = d3.select("#family-tree-area").append("svg");
@@ -62,10 +62,11 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
     chartGroup = svg.append("g").style("transform-origin", "center top");
 
-    const root = d3.hierarchy(familyData).eachBefore(d => {
-        d.y = d.depth * 100 + 60;
-        d.x = d.depth * 100 + 60;
-    });
+   // Generate the tree layout using the modified size
+const root = d3.hierarchy(familyData).eachBefore(d => {
+    d.y = d.depth * width + 60; // Adjust the width between nodes as needed
+    d.x = d.depth * 100; // Adjust the vertical spacing as needed
+})
 
     treeLayout(root);
 	
