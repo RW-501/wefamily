@@ -809,57 +809,54 @@ function closeJoinRequestPopup() {
     document.getElementById('join-request-popup').style.display = 'none';
 }
 
-function acceptJoinRequest(requestID, userID) {
+function getFamiliesFunc() {
+  // Get a reference to the user document in Firestore
+  const userDocRef = db.collection('users').doc(userID);
 
-	if(!requestID && !userID){
-		return;
-	}
-	
-    // Update the user's document to add the currentFamilyID to the userTrees array
-    firestore.collection('users').doc(userID)
-        update({
-    userTrees: firebase.firestore.FieldValue.arrayUnion({
-        id: generatedTreeID,
-        name: treeName
-    })
-        .then(() => {
-		
-            // Get the document reference
-            const requestRef = firestore.collection('memberRequest').doc(requestID);
-            
-            // Get the field data before deleting the document
-            requestRef.get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const requestData = doc.data();
-                        
-                   
-                        // Delete the document
-                        requestRef.delete()
-                            .then(() => {
-                                console.log('Join request accepted and deleted.');
-                                loadJoinRequests(); // Reload the list of join requests
-				    
-newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family Tree`);
+  // Retrieve the user's data
+  userDocRef.get().then((doc) => {
+    if (doc.exists) {
+      const userTrees = doc.data().userTrees;
 
-                                // Now you can use 'requestData' to access the field data of the deleted document
-                                console.log('Field data of deleted document:', requestData);
-                            })
-                            .catch((error) => {
-                                console.error('Error deleting join request:', error);
-                            });
-                    } else {
-                        console.log('Document does not exist.');
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error getting join request document:', error);
-                });
-        })
-        .catch((error) => {
-            console.error('Error updating user document:', error);
+      // Get the user_Families div from the DOM
+      const userFamiliesDiv = document.getElementById('user_Families');
+
+      // Iterate over the userTrees array
+      userTrees.forEach((tree) => {
+        // Create an 'Edit' button
+        const editButton = document.createElement('button');
+        editButton.innerText = `Edit ${tree.name}`;
+        editButton.addEventListener('click', () => {
+          console.log(`Edit button clicked for family tree: ${tree.name}`);
+
+          // Navigate to the edit URL for the selected tree
+          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+          window.location.href = editUrl;
         });
+
+        // Create a 'View' button
+        const viewButton = document.createElement('button');
+        viewButton.innerText = `View ${tree.name}`;
+        viewButton.addEventListener('click', () => {
+          console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
+
+          // Navigate to the view URL for the selected tree
+          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
+          window.location.href = viewUrl;
+        });
+
+        // Append buttons to the UI
+        userFamiliesDiv.appendChild(editButton);
+        userFamiliesDiv.appendChild(viewButton);
+      });
+    } else {
+      console.log('User document not found');
+    }
+  }).catch((error) => {
+    console.error('Error getting user document:', error);
+  });
 }
+
 
 function declineJoinRequest(requestID) {
     // Delete the join request from the memberRequest collection
