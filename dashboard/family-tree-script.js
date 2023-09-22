@@ -655,10 +655,10 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
 
         // Update the root to use the member with the most children as the root
         let root = {
-          id: treeID,
-          name: treeData.name,
-          children: [], // Set the member with the most children as the root
-          data: treeData,
+  id: treeID,
+  name: treeData.name,
+  children: maxChildrenCount > 0 ? [memberIDWithMaxDepth] : [treeData.root || rootID],
+  data: maxChildrenCount > 0 ? memberDataMap : treeData,
           photo: treeData.photo,
           location: treeData.location,
           description: treeData.description,
@@ -672,7 +672,7 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
     console.log("treeData.name   " + treeData.name);
     console.log("treeData.children   " + treeData.children);
 
-
+/*
  if(maxChildrenCount > 0){
 			  
 		  root = {
@@ -719,10 +719,13 @@ console.log('memberDataMap:', memberDataMap);
           adminID: treeData.adminID,
           familyCode: treeData.familyCode,
         }; 
-	 		    console.log("else root   " + root);
 
                     }	
+*/
 
+	 		    console.log("else root   " + root);
+
+		    
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
 const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
 
@@ -746,6 +749,14 @@ console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     const uniqueChildren = {}; // Declare uniqueChildren as an empty object
 
+const childResults = node.children
+  .map((childID) => {
+    const childNode = memberDataMap[childID];
+    return childNode ? buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1) : null;
+  })
+  .filter((result) => result !== null);
+	
+/*
   const childResults = node.children
     .map((childID) => {
       const childNode = memberDataMap[childID];
@@ -757,7 +768,7 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
       return null;
     })
     .filter((result) => result !== null);  // Remove null results
-
+*/
   if (childResults.length === 0) {
     maxHierarchyDepth = currentDepth;
   } else {
