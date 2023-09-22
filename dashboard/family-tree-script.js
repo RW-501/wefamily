@@ -172,11 +172,11 @@ chartGroup.selectAll("text")
             .attr("height", bbox.height)
             .style("fill", "black")  // Set the box fill color
             .style("opacity", 1)  // Set the box opacity
-            .style("border-radius", "5px");  // Set the border radius
+            .style("border-radius", "0.5em");  // Set the border radius
 
         // Hide the text by setting rectangle fill to the background color
         d3.select(this)
-            .style("fill", "transparent");  // Set the text fill color to transparent
+            .style("color", "pink");  // Set the text fill color to transparent
     });
 
 
