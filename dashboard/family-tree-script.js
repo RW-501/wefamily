@@ -205,10 +205,11 @@ const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as nee
 const translateX = (width - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
-	
+	            console.log('treeWidth :', treeWidth);
+            console.log('width :', width);
+
             console.log('translateX :', translateX);
             console.log('scale :', scale);
-            console.log('treeWidth :', treeWidth);
 
     // Set the transform attribute
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
