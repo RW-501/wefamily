@@ -1080,9 +1080,9 @@ function getFamilyTreeWithCode() {
    const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
     const tree_photo_Join = document.getElementById("tree_photo_Join");
- join_tree_name.innerHTML = data.name;                   
-join_tree_location.innerHTML = data.location;
-tree_photo_Join.src = data.photo || "";
+ join_tree_name.innerHTML = familyTreeData.name;                   
+join_tree_location.innerHTML = familyTreeData.location;
+tree_photo_Join.src = familyTreeData.photo || "";
                     toggleJoinTree();
 
     
