@@ -99,7 +99,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
         .scaleExtent([0.1, 10]) // Define the zoom scale limits
         .on("zoom", zoomed);
 
-	/*
+	
 chartGroup.selectAll("path")
   .data(links)
   .enter()
@@ -109,7 +109,10 @@ chartGroup.selectAll("path")
   .style("fill", "none")
   .style("stroke", "darkgrey")
   .style("stroke-width", 2);
-*/
+
+
+
+	
   nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
@@ -289,17 +292,6 @@ const middle = (browserWidth - width ) / (scale * 10);
 
 // Set the transform attribute
 chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
-
-	
-chartGroup.selectAll("path")
-  .data(links)
-  .enter()
-  .append("path")
-  .attr("class", "link")
-  .attr("d", curvedPath)  // Use the link generator function
-  .style("fill", "none")
-  .style("stroke", "darkgrey")
-  .style("stroke-width", 2);
 
 
 	
