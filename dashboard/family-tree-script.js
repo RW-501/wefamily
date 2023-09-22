@@ -737,6 +737,7 @@ function buildTree(node, depthLimit, processedNodes, currentDepth) {
     maxHierarchyDepth = currentDepth;
   } else {
     maxHierarchyDepth = Math.max(...childResults.map((result) => result.maxDepth));
+	document.getElementById('familyDepth').innerHTML =  maxHierarchyDepth + "Generations"; 
   }
 
   node.children = childResults.map((result) => result.node);
