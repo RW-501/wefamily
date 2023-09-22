@@ -427,7 +427,9 @@ min-height: 500px;
             overflow-y: auto;
             position: relative;
             display: block;
+		    width: 100%;
         }
+
     #family-members {
         margin-top: 20px;
     }
@@ -614,6 +616,8 @@ padding-top: 15px;
     padding: 10px;
     border-radius: 4px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	width: 100%;
+
 }
 
 .pin-post {
