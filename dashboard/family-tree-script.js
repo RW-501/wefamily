@@ -113,20 +113,6 @@ chartGroup.selectAll("path")
             .append("text")
             .attr("x", d => d.x)
             .attr("y", d => d.y)
-            .attr("dy", 60)
-            .attr("text-anchor", "middle")
-            .text(d => d.data.name)
-            .on("click", function (event, d) {
-                console.log("Clicked text Data:", d.data);
-                showMemberPopup(d.data);
-            });
-    } else {
-        chartGroup.selectAll("text")
-            .data(root.descendants())
-            .enter()
-            .append("text")
-            .attr("x", d => d.x)
-            .attr("y", d => d.y)
             .attr("dy", -60)
             .attr("text-anchor", "middle")
             .text(d => d.data.name)
@@ -134,6 +120,40 @@ chartGroup.selectAll("path")
                 console.log("Clicked text Data:", d.data);
                 showMemberPopup(d.data);
             });
+    } else {
+	    
+chartGroup.selectAll("text")
+    .data(root.descendants())
+    .enter()
+    .append("text")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr("dy", 60)
+    .attr("text-anchor", "middle")
+    .style("font-weight", "bold")  // Set font weight to bold
+    .style("font-size", "1em")     // Set font size to 1em
+    .style("fill", "white")        // Set font color to white
+    .style("pointer-events", "none")  // Prevent text from blocking click events
+    .text(d => d.data.name)
+    .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    });
+
+// Add a box around the text
+chartGroup.selectAll("text")
+    .each(function () {
+        const bbox = this.getBBox();  // Get the bounding box of the text
+        d3.select(this.parentNode)  // Select the parent (g) element
+            .append("rect")  // Append a rectangle
+            .attr("x", bbox.x)
+            .attr("y", bbox.y)
+            .attr("width", bbox.width)
+            .attr("height", bbox.height)
+            .style("fill", "black")  // Set the box fill color
+            .style("opacity", 0.7);  // Set the box opacity
+    });
+
     }
 
   nodeGroup = chartGroup.selectAll(".node")
