@@ -170,7 +170,7 @@ function checkPostForMedia(xxx) {
   }
 }
 
-const contentWithLinks = checkPostForMedia(post.content);
+//const contentWithLinks = checkPostForMedia(post.content);
 
 
 	    
