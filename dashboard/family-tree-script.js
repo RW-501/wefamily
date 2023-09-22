@@ -135,6 +135,7 @@ chartGroup.selectAll("text")
             .attr("y", bbox.y)
             .attr("width", bbox.width)
             .attr("height", bbox.height)
+    .style("border", "black solid 1em")        
             .style("fill", "black")  // Set the box fill color
             .style("opacity", 0.7)  // Set the box opacity
             .style("border-radius", "5px");  // Set the border radius
