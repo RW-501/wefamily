@@ -42,7 +42,7 @@ var linkGenerator;
 var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
-    const width = window.screen.width;
+    const width =3000; // window.screen.width;
     const height_Layout = 150 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
@@ -63,8 +63,8 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
     chartGroup = svg.append("g").style("transform-origin", "center top");
 
     const root = d3.hierarchy(familyData).eachBefore(d => {
-        d.y = d.depth * 100 + 60;
-        d.x = d.depth * 100 + 60;
+        d.y = d.depth * 1 + 60;
+        d.x = d.depth * 1 + 60;
     });
 
     treeLayout(root);
