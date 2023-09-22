@@ -44,6 +44,7 @@ var zoom ;
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
     const height_Layout = 150 * maxHierarchyDepth;
+const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
 
     document.getElementById('family-tree-area').innerHTML = "";
@@ -220,9 +221,10 @@ handleCollisions(nodes);
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
 
 
+console.log('Browser width:', browserWidth);
 	
 const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as needed
-const translateX = (width - treeWidth) / 2;
+const translateX = (browserWidth - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
 	            console.log('treeWidth :', treeWidth);
@@ -232,7 +234,7 @@ const translateY = 100;
             console.log('scale :', scale);
 
     // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
+chartGroup.attr("transform", `translate(-${translateX},${translateY}) scale(${currentScale})`);
 
   // Apply the same zoom transformation to the link lines
   function zoomed(event) {
