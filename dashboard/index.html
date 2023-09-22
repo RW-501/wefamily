@@ -889,6 +889,9 @@ newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family
             console.error('Error updating user document:', error);
         });
 }
+
+
+	    
 function declineJoinRequest(requestID) {
     // Delete the join request from the memberRequest collection
     firestore.collection('memberRequest').doc(requestID).delete()
@@ -1488,11 +1491,11 @@ let formattedBirthdate = formatDateToMonthDay(data.birthdate);
  <button class="add-parent">Add Parent</button>
             <div id="${data.memberID}" class="member-details">
                 <!-- Member details go here -->
-               <p class="member-name">${data.first_name} ${data.last_name}</p>
+               <p class="member-name">${data.first_name} ${data.last_name} ${data.nameSuffix}</p>
                 <p class="member-birthday">Birthdate: ${formattedBirthdate}</p>
             ${claim_Div}
                 <!-- Add other fields as needed -->
-  
+       
             </div>
             <button class="add-child">Add Child</button>
         `;
