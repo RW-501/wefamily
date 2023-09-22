@@ -75,7 +75,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
 	
      zoom = d3.zoom()
-        .scaleExtent([0.5, 5]) // Define the zoom scale limits
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
         .on("zoom", zoomed);
 	
     const links = root.links();
@@ -126,8 +126,6 @@ chartGroup.selectAll("path")
     } else {
 	    
 
-
-// Add a box around the text
 // Rest of your existing code for adding the text
 chartGroup.selectAll("text")
     .data(root.descendants())
@@ -145,27 +143,19 @@ chartGroup.selectAll("text")
     .on("click", function (event, d) {
         console.log("Clicked text Data:", d.data);
         showMemberPopup(d.data);
-    });
-
-// Append the rectangles after the text
-chartGroup.selectAll("text")
+    })
     .each(function () {
         const bbox = this.getBBox();  // Get the bounding box of the text
         d3.select(this.parentNode)  // Select the parent (g) element
             .insert("rect", ":first-child")  // Insert a rectangle as the first child
-            .attr("x", bbox.x)
-            .attr("y", bbox.y)
-            .attr("width", bbox.width)
-            .attr("height", bbox.height)
+            .attr("x", bbox.x - 5)  // Adjust x to have some padding
+            .attr("y", bbox.y - 2)  // Adjust y to have some padding
+            .attr("width", bbox.width + 10)  // Adjust width to have some padding
+            .attr("height", bbox.height + 4)  // Adjust height to have some padding
             .style("fill", "black")  // Set the box fill color
             .style("opacity", 1)  // Set the box opacity
-            .style("border-radius", "0.5em");  // Set the border radius
-
-        // Hide the text by setting rectangle fill to the background color
-        d3.select(this)
-            .style("color", "pink");  // Set the text fill color to transparent
+            .style("border-radius", "5px");  // Set the border radius
     });
-
 
 
 
