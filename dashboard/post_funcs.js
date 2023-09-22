@@ -208,7 +208,7 @@ isPinned = false;
 
   // Replace URLs with clickable links
 //  const contentWithLinks = checkPostForMedia(post.content);
-const contentWithLinks = xxx.content.replace(
+const contentWithLinks = post.content.replace(
         /(https?:\/\/[^\s]+)/g,
         '<a href="$1" target="_blank">$1</a>'
     );
