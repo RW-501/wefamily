@@ -155,13 +155,15 @@ chartGroup.selectAll("text")
             .attr("y", bbox.y - 2)  // Adjust y to have some padding
             .attr("width", bbox.width + 10)  // Adjust width to have some padding
             .attr("height", bbox.height + 4)  // Adjust height to have some padding
-            .style("fill", "black")  // Set the box fill color
-            .style("opacity", 1)  // Set the box opacity
-            .style("border-radius", "5px")  // Set the border radius
+    .attr("rx", 5)  // Horizontal radius for rounded corners
+    .attr("ry", 5)  // Vertical radius for rounded corners
+    .style("fill", "black")            .style("opacity", 1)  // Set the box opacity
          .on("click", function (event, d) {
                 console.log("Clicked text Data:", d.data);
                 showMemberPopup(d.data);
 	    });
+
+	    
 	    });
 
 	 }
