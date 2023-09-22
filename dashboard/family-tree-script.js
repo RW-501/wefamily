@@ -21,10 +21,11 @@ let imageHeight = 100;
 var nodeGroup;
 
 zoomOutButton.addEventListener('click', () => {
-            console.log('scale :', currentScale);
+            console.log('zoom.transform :', zoom.transform);
 	    const width = window.screen.width;
        console.log('width :', width);
        console.log('zoom :', zoom);
+       console.log('d3.zoomIdentity :', d3.zoomIdentity);
 
 
 	
@@ -63,7 +64,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
    // Generate the tree layout using the modified size
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * width + 60; // Adjust the width between nodes as needed
+    d.y = d.depth * width + 100; // Adjust the width between nodes as needed
     d.x = d.depth * 100; // Adjust the vertical spacing as needed
 })
 
@@ -240,7 +241,7 @@ const translateY = 100;
  const scale =  browserWidth / width;
 	
 // Calculate the middle position within the browser view width
-const middle = (browserWidth - width * currentScale) ;
+const middle = (browserWidth - width ) / 2;
 
 	
 	            console.log('middle :', middle);
@@ -260,6 +261,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${current
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
         updateImageAttributes();
+       console.log('zoomed(event)  :');
 
   chartGroup
     .selectAll('path.link')
@@ -270,11 +272,11 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${current
       return linkGenerator({ source, target });
     });
 }
-
+/*
      zoom = d3.zoom()
         .scaleExtent([0.1, 10]) // Define the zoom scale limits
         .on("zoom", zoomed);
-
+*/
 	
 
 	
@@ -286,6 +288,8 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${current
 	
 
 function updateImageAttributes() {
+	       console.log('updateImageAttributes :');
+
   nodeGroup.selectAll("image")
     .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
     .attr("y", d => -imageHeight / (2 * currentScale))
@@ -332,6 +336,7 @@ function handleCollisions(nodes) {
 
 function applyZoom(scale) {
   currentScale = scale;
+	       console.log('applyZoom(scale)  :');
 
   if (!chartGroup) {
     console.error('chartGroup is not defined. Ensure that it is properly initialized.');
