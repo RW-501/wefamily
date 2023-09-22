@@ -63,7 +63,7 @@ function generateFamilyTreeChart(familyData) {
 
     const root = d3.hierarchy(familyData).eachBefore(d => {
         d.y = d.depth * 10 + 60;
-        d.x = d.depth * 100;
+        d.x = d.depth * 5 + 50;
     });
 
     treeLayout(root);
@@ -106,7 +106,7 @@ chartGroup.selectAll("path")
 
     let memberData = root.descendants().children;
 
-    if (memberData === "undefined") {
+    if (memberData === "undefined" || memberData === "" || memberData === null ) {
         chartGroup.selectAll("text")
             .data(root.descendants())
             .enter()
@@ -205,6 +205,10 @@ const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as nee
 const translateX = (width - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
+	
+            console.log('translateX :', translateX);
+            console.log('scale :', scale);
+            console.log('treeWidth :', treeWidth);
 
     // Set the transform attribute
 chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${currentScale})`);
