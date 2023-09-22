@@ -51,6 +51,25 @@ margin: auto 0;
     font-weight: 400;
 
 }
+
+@media screen and (max-width: 900px) {
+
+#edit-family-member-popup .image-container {
+width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    padding: 2%;
+}
+
+#edit-family-member-popup  .grid{
+    width: 100%;
+    height: auto;
+    display: grid;
+    margin: auto;
+ }
+}
+
 #edit-family-member-popup .image-container {
 width: 40%;
     height: auto;
@@ -65,7 +84,6 @@ width: 40%;
     display: grid;
     margin: auto;
  }
-
 
 select , label,
     input[type="text"],
