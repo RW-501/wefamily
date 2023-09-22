@@ -93,7 +93,20 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
- 
+
+
+chartGroup.selectAll("path")
+  .data(links)
+  .enter()
+  .append("path")
+  .attr("class", "link")
+  .attr("d", curvedPath)  // Use the link generator function
+  .style("fill", "none")
+  .style("stroke", "gray")
+  .style("stroke-width", 2);
+
+
+	
     let memberData = root.descendants().children;
 
     if (memberData === "undefined" || memberData === "" || memberData === null ) {
@@ -258,16 +271,6 @@ chartGroup.attr("transform", `translate(${half},${translateY}) scale(${currentSc
 
 
 	
-chartGroup.selectAll("path")
-  .data(links)
-  .enter()
-  .append("path")
-  .attr("class", "link")
-  .attr("d", curvedPath)  // Use the link generator function
-  .style("fill", "none")
-  .style("stroke", "gray")
-  .style("stroke-width", 2);
-
 
  zoom = d3.zoom()
     .scaleExtent([0.5, 5]) // Define the zoom scale limits
