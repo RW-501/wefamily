@@ -245,22 +245,21 @@ function initializeFamilyTreeChart() {
  </div>
 <div id="join-familytree-section" class="tree-section hidden">
     <h2>Join Request</h2>
+		    <div class="space_J">
+    <div class="image-container w30">
+  
+        <img id="tree_photo_Join" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
 
+    </div>
+			    <div>
             <label for="join_tree_name">Family Tree:</label>
     <div id="join_tree_name">tree name</div>
     
             <label for="join_tree_location">Locations:</label>
     <div id="join_tree_location">family locations</div>
+			    </div></div>
 <hr>
    <form id="join-request-form">
-        <label for="request_first-name">First Name:</label>
-        <input type="text" id="request_first-name" required><br><br>
-        
-        <label for="request_last-name">Last Name:</label>
-        <input type="text" id="request_last-name" required><br><br>
-        
-        <label for="request_location">Location:</label>
-        <input type="text" id="request_location" required><br><br>
         
         <label for="request_note">Note:</label>
         <textarea id="request_note"></textarea><br><br>
@@ -485,55 +484,6 @@ var requestFamilyID = "";
 
 
 
-function getFamiliesFunc() {
-  // Get a reference to the user document in Firestore
-  const userDocRef = db.collection('users').doc(userID);
-
-  // Retrieve the user's data
-  userDocRef.get().then((doc) => {
-    if (doc.exists) {
-      const userTrees = doc.data().userTrees;
-
-      // Get the user_Families div from the DOM
-      const userFamiliesDiv = document.getElementById('user_Families');
-
-      // Iterate over the userTrees array
-      userTrees.forEach((tree) => {
-        // Create an 'Edit' button
-        const editButton = document.createElement('button');
-        editButton.innerText = `Edit ${tree.name}`;
-        editButton.addEventListener('click', () => {
-          console.log(`Edit button clicked for family tree: ${tree.name}`);
-
-          // Navigate to the edit URL for the selected tree
-          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
-          window.location.href = editUrl;
-        });
-
-        // Create a 'View' button
-        const viewButton = document.createElement('button');
-        viewButton.innerText = `View ${tree.name}`;
-        viewButton.addEventListener('click', () => {
-          console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
-
-          // Navigate to the view URL for the selected tree
-          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
-          window.location.href = viewUrl;
-        });
-
-        // Append buttons to the UI
-        userFamiliesDiv.appendChild(editButton);
-        userFamiliesDiv.appendChild(viewButton);
-      });
-    } else {
-      console.log('User document not found');
-    }
-  }).catch((error) => {
-    console.error('Error getting user document:', error);
-  });
-}
-
-
 	  
 
 	    
@@ -561,7 +511,7 @@ function setupEnterKeyNavigation(inputIdArray) {
 }
 
 // Call the function and provide an array of input IDs to navigate
-const inputIdsToNavigate = ['post-content','editFamilyTreeName', 'editFamilyTreeDescription', 'editFamilyTreeLocation','edit-first-name','edit-last-name','edit-birthdate','member-first_name','member-last_name','member-birthdate','member-contact','member-note','tree_name','tree_location','tree_code','tree_description','family-tree-search','family-tree-code'];
+const inputIdsToNavigate = ['post-content','editFamilyTreeName', 'editFamilyTreeDescription', 'editFamilyTreeLocation','edit-first-name','edit-last-name','edit-birthdate','member-first_name','member-last_name','member-birthdate','member-contact','member-note','tree_name','tree_location','tree_code','tree_description','request_note','family-tree-search','family-tree-code'];
 setupEnterKeyNavigation(inputIdsToNavigate);
 
 
@@ -798,20 +748,93 @@ function handleResizeAndCrop(image, resizableCropBox) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    
 	    
 
-function openJoinRequestPopup() {
-    document.getElementById('join-request-popup').style.display = 'block';
-    loadJoinRequests(); // Load join requests when the pop-up is opened
-}
 
-function closeJoinRequestPopup() {
-    document.getElementById('join-request-popup').style.display = 'none';
-}
 
 function getFamiliesFunc() {
   // Get a reference to the user document in Firestore
-  const userDocRef = db.collection('users').doc(userID);
+const userDocRef = db.collection('users').doc(userID);
+
+  // Retrieve the user's data
+  userDocRef.get().then((doc) => {
+    if (doc.exists) {
+      const userTrees = doc.data().userTrees;
+      // Get the user_Families div from the DOM
+      const userFamiliesDiv = document.getElementById('user_Families');
+
+      // Iterate over the userTrees array
+      userTrees.forEach((tree) => {
+        // Create an 'Edit' button
+        const editButton = document.createElement('button');
+        editButton.innerText = `Edit ${tree.name}`;
+        editButton.addEventListener('click', () => {
+          console.log(`Edit button clicked for family tree: ${tree.name}`);
+
+          // Navigate to the edit URL for the selected tree
+          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+          window.location.href = editUrl;
+        });
+
+        // Create a 'View' button
+        const viewButton = document.createElement('button');
+        viewButton.innerText = `View ${tree.name}`;
+        viewButton.addEventListener('click', () => {
+          console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
+
+          // Navigate to the view URL for the selected tree
+          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
+          window.location.href = viewUrl;
+        });
+
+        // Append buttons to the UI
+        userFamiliesDiv.appendChild(editButton);
+        userFamiliesDiv.appendChild(viewButton);
+      });
+    } else {
+      console.log('User document not found');
+    }
+  }).catch((error) => {
+    console.error('Error getting user document:', error);
+  });
+}
+
+
+
+function getFamiliesFunc() {
+  // Get a reference to the user document in Firestore
+ // const userDocRef = db.collection('users').doc(userID);
 
   // Retrieve the user's data
   userDocRef.get().then((doc) => {
@@ -857,7 +880,64 @@ function getFamiliesFunc() {
   });
 }
 
+function openJoinRequestPopup() {
+    document.getElementById('join-request-popup').style.display = 'block';
+    loadJoinRequests(); // Load join requests when the pop-up is opened
+}
 
+function closeJoinRequestPopup() {
+    document.getElementById('join-request-popup').style.display = 'none';
+}
+
+function acceptJoinRequest(requestID, userID) {
+
+	if(!requestID && !userID){
+		return;
+	}
+	
+    // Update the user's document to add the currentFamilyID to the userTrees array
+    firestore.collection('users').doc(userID)
+        .update({
+            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+        })
+        .then(() => {
+		
+            // Get the document reference
+            const requestRef = firestore.collection('memberRequest').doc(requestID);
+            
+            // Get the field data before deleting the document
+            requestRef.get()
+                .then((doc) => {
+                    if (doc.exists) {
+                        const requestData = doc.data();
+                        
+                   
+                        // Delete the document
+                        requestRef.delete()
+                            .then(() => {
+                                console.log('Join request accepted and deleted.');
+                                loadJoinRequests(); // Reload the list of join requests
+				    
+newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family Tree`);
+
+                                // Now you can use 'requestData' to access the field data of the deleted document
+                                console.log('Field data of deleted document:', requestData);
+                            })
+                            .catch((error) => {
+                                console.error('Error deleting join request:', error);
+                            });
+                    } else {
+                        console.log('Document does not exist.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error getting join request document:', error);
+                });
+        })
+        .catch((error) => {
+            console.error('Error updating user document:', error);
+        });
+}
 function declineJoinRequest(requestID) {
     // Delete the join request from the memberRequest collection
     firestore.collection('memberRequest').doc(requestID).delete()
@@ -891,9 +971,20 @@ function loadJoinRequests() {
                     const data = doc.data();
                     const listItem = document.createElement('li');
                     listItem.innerHTML = `
-                        <span>${data.firstName} ${data.lastName}</span>
+		    <div class="space_J">
+      <div class="image-container">
+		         <img id="reqImage"  class="uploaded-image" src="${data.photo || '/wefamily/images/memberPlaceholder.jpg'}" alt="Member Image">
+                </div>
+		    <div class="grid">
+                        <span>${data.userName}</span>
+			        <textarea id="reqNote" placeholder="Note">${data.note}</textarea>
+	    </div>
+     </div>
+<div class="flex">
+
                         <button onclick="acceptJoinRequest('${doc.id}', '${data.userID}')">Accept</button>
                         <button onclick="declineJoinRequest('${doc.id}')">Decline</button>
+			</div>
                     `;
                     joinRequestList.appendChild(listItem);
                 });
@@ -904,27 +995,27 @@ function loadJoinRequests() {
         });
 }
 
-
-
+      
 
 
 
         
 function joinRequestFunc() {
     // Get input values
-    const firstName = document.getElementById('request_first-name').value;
-    const lastName = document.getElementById('request_last-name').value;
-    const location = document.getElementById('request_location').value;
+		let userInfo =  userDocRef.data();
+
+    const userName = userInfo.userName;
+    const location = userInfo.city", "+userInfo.state,", "+userInfo.country ;
     const note = document.getElementById('request_note').value;
 
     // Validate input data if needed
 
     // Create an object to represent the join request data
     const joinRequestData = {
-        firstName: firstName,
-        lastName: lastName,
+        userName: userName,
         location: location,
         treeID: requestFamilyID,
+        photo: userInfo.photo,
         userID: userID,
         note: note,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -940,9 +1031,6 @@ function joinRequestFunc() {
             // Clear form fields if needed
 newsPost(`${joinRequestData.firstName} ${joinRequestData.lastName} request to join Family Tree`);
 
-            document.getElementById('request_first-name').value = '';
-            document.getElementById('request_last-name').value = '';
-            document.getElementById('request_location').value = '';
             document.getElementById('request_note').value = '';
         })
         .catch((error) => {
@@ -996,9 +1084,10 @@ function searchFamilyTrees() {
                     // Display more information as needed
     const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
+    const tree_photo_Join = document.getElementById("tree_photo_Join");
  join_tree_name.innerHTML = data.name;                   
 join_tree_location.innerHTML = data.location;
-
+tree_photo_Join.src = data.photo || "";
                 });
                                     toggleJoinTree();
 
@@ -1038,8 +1127,10 @@ function getFamilyTreeWithCode() {
 
    const join_tree_name = document.getElementById("join_tree_name");
     const join_tree_location = document.getElementById("join_tree_location");
- join_tree_name.innerHTML = familyTreeData.name;                   
-join_tree_location.innerHTML = familyTreeData.location; 
+    const tree_photo_Join = document.getElementById("tree_photo_Join");
+ join_tree_name.innerHTML = data.name;                   
+join_tree_location.innerHTML = data.location;
+tree_photo_Join.src = data.photo || "";
                     toggleJoinTree();
 
     
@@ -1171,7 +1262,7 @@ async function getFamilyTree(userID) {
     }
 
     // Reference to the user document in Firestore
-    const userDocRef = firestore.collection('users').doc(userID);
+     userDocRef = firestore.collection('users').doc(userID);
 
     try {
         const doc = await userDocRef.get();
