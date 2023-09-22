@@ -952,7 +952,7 @@ function loadJoinRequests() {
 
         
 function joinRequestFunc() {
-    // Get input values
+    const userDocRef = firestore.collection('users').doc(userID);
 		let userInfo =  userDocRef.data();
 
 const userName = userInfo.userName;
