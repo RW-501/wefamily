@@ -520,18 +520,24 @@ function fetchFamilyMemberData(collectionName, treeID) {
               querySnapshot.forEach((doc) => {
                     const docData = doc.data();
                     const id = doc.id;
-                    const memberID = docData.memberID;
-                    const bio = docData.bio;
-                    const userID = docData.userID;
-                    const privateInfo = docData.private;
-                    const location = docData.location;
-                    const birthdate = docData.birthdate;
-                    const deceaseddate = docData.deceaseddate;
-                    const contact = docData.contact;
-                    const middle_name = docData.middle_name;
-                    const note = docData.note;
-                    const name = `${docData.first_name} ${docData.last_name} ${docData.nameSuffix}`;
-                    const photo = docData.photo || '';
+const memberID = docData.memberID || '';
+const bio = docData.bio || '';
+const userID = docData.userID || '';
+const privateInfo = docData.private || '';
+const location = docData.location || '';
+const birthdate = docData.birthdate || '';
+const deceaseddate = docData.deceaseddate || '';
+const contact = docData.contact || '';
+const first_name = docData.first_name || '';
+const middle_name = docData.middle_name || '';
+const last_name = docData.last_name || '';
+const nameSuffix = docData.nameSuffix || '';
+const note = docData.note || '';
+
+const name = `${first_name} ${last_name} ${nameSuffix}`;
+
+		      
+                    const photo = docData.photo || "/wefamily/images/memberPlaceholder.jpg" ;
                     const children = docData.children || [];
                     const spouse = docData.spouse || [];
                     const parents = docData.parents || [];
