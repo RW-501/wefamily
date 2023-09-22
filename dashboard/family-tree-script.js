@@ -234,24 +234,23 @@ handleCollisions(nodes);
 
 console.log('Browser width:', browserWidth);
 	
-const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as needed
 const translateX = (browserWidth - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
-	let half = treeWidth / width;
-	let middle = translateX + half;
-
 	
+// Calculate the middle position within the browser view width
+const middle = (browserWidth - width * currentScale) / 2;
+
 	
 	            console.log('half :', half);
 	            console.log('middle :', middle);
-	            console.log('treeWidth :', treeWidth);
             console.log('width :', width);
 
             console.log('translateX :', translateX);
             console.log('scale :', scale);
 
-    // Set the transform attribute   ${translateX}
+
+// Set the transform attribute
 chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${currentScale})`);
 
 
