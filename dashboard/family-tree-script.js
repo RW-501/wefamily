@@ -175,17 +175,11 @@ chartGroup.selectAll("text")
     
 
 
+   let memberData = root.descendants();
+console.log('memberData :', memberData);
+console.log('memberData id:', memberData.id);
 
-	/*
-nodeGroup.append("circle")
-    .attr("class", "circle")
-    .attr("r", 20) // Radius of circles
-    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .on("click", function (event, d) {
-        // 'd' contains the data associated with the clicked node
-        console.log("Clicked circle Data:", d.data);
-    });
-*/
+    if (memberData.id === userID) {
 
 
 // Update the clipPath to create a circular clip
@@ -211,6 +205,39 @@ nodeGroup.append("image")
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
+    .style("object-fit", "#f2fd90" )
+.style("width", imageWidth)
+.style("height", imageHeight)
+	.on("click", function (event, d) {
+        console.log("Clicked image Data:", d.data);
+        showMemberPopup(d.data);
+    });
+
+    }else{
+
+// Update the clipPath to create a circular clip
+nodeGroup.append("defs").append("clipPath")
+    .attr("id", "clipCircle")
+    .append("circle")
+    .attr("cx", 0)  // Center X at 0
+    .attr("cy", 0)  // Center Y at 0
+    .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
+
+// Update the image elements to use the circular clip path
+nodeGroup.append("circle")
+    .attr("class", "circle")
+    .attr("r", imageWidth / 2) // Radius of circles, half of the image width
+    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
+    .style("stroke", "black")  // Border color
+    .style("stroke-width", "5px");  // Border width
+
+nodeGroup.append("image")
+    .attr("xlink:href", d => d.data.photo)
+    .attr("x", d => -imageWidth / 2)
+    .attr("y", d => -imageHeight / 2)
+    .attr("width", imageWidth)
+    .attr("height", imageHeight)
+    .attr("clip-path", "url(#clipCircle)")
     .style("object-fit", "cover")
 .style("width", imageWidth)
 .style("height", imageHeight)
@@ -220,6 +247,14 @@ nodeGroup.append("image")
     });
 
 
+
+
+    }
+
+
+
+
+	
 // After appending the images to nodeGroup
 const nodes = root.descendants();
 handleCollisions(nodes);
