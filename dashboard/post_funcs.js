@@ -123,6 +123,56 @@ const jsDate = post.timestamp ? new Date(post.timestamp.seconds * 1000 + (post.t
 }
 
 
+
+async function fetchPageMetadata(url) {
+  try {
+    const response = await fetch(url);
+    const html = await response.text();
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    return {
+      title: doc.querySelector('title')?.innerText,
+      image: doc.querySelector('meta[property="og:image"]')?.getAttribute('content'),
+      description: doc.querySelector('meta[name="description"]')?.getAttribute('content')
+    };
+  } catch (error) {
+    console.error('Error fetching page metadata:', error);
+    return null;
+  }
+}
+
+
+function replaceURLsWithLinks(content, url) {
+  const contentWithLinks = content.replace(
+    /(https?:\/\/[^\s]+)/g,
+    '<a href="$1" target="_blank">$1</a>'
+  );
+
+  const metadata = fetchPageMetadata(url);
+
+  // You can now use the metadata (title, image, description) and contentWithLinks as needed.
+  return { contentWithLinks, metadata };
+}
+
+function checkPostForMedia(xxx) {
+  if (/(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/[^\s]+/g.test(xxx)) {
+    const videoIdMatch = xxx.match(/[?&]v=([^&]+)/);
+    if (videoIdMatch) {
+      const videoId = videoIdMatch[1];
+      const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+      return xxx + `<iframe src="${embedUrl}" width="560" height="315" class="video_iframe"></iframe>`;
+    }
+  } else {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const url = xxx.match(urlRegex);
+    const { contentWithLinks, metadata } = replaceURLsWithLinks(xxx, url);
+    return `${contentWithLinks}<div class="post_link_meta">${metadata}</div>`;
+  }
+}
+
+const contentWithLinks = checkPostForMedia(post.content);
+
+
 	    
 
 function loadPosts() {
@@ -157,10 +207,7 @@ isPinned = false;
 
 
   // Replace URLs with clickable links
-    const contentWithLinks = post.content.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-    );
+  const contentWithLinks = checkPostForMedia(post.content);
 
 		    
                 if (post.postType === 'news') {
