@@ -162,10 +162,11 @@ chartGroup.selectAll("text")
                 console.log("Clicked text Data:", d.data);
                 showMemberPopup(d.data);
 	    });
+	    });
 
 	 }
 	    
-    }
+    
 
   nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
