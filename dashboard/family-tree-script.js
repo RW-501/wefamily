@@ -74,10 +74,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
         .y(d => d.y);
 
 	
-     zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
-	
+
     const links = root.links();
 
 
@@ -232,9 +229,13 @@ const treeWidth = 300 * maxHierarchyDepth; // Adjust the node width (300) as nee
 const translateX = (browserWidth - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
-	let half = width / 2;
+	let half = treeWidth / width;
+	let middle = translateX - half;
+
+	
 	
 	            console.log('half :', half);
+	            console.log('middle :', middle);
 	            console.log('treeWidth :', treeWidth);
             console.log('width :', width);
 
@@ -259,12 +260,11 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
     });
 }
 
+     zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
 
 	
-
- zoom = d3.zoom()
-    .scaleExtent([0.5, 5]) // Define the zoom scale limits
-    .on("zoom", zoomed);
 
 	
   updateImageAttributes();
@@ -272,7 +272,7 @@ chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${cur
 }
 
 
-
+	
 
 function updateImageAttributes() {
   nodeGroup.selectAll("image")
@@ -329,7 +329,7 @@ function applyZoom(scale) {
 
   // Update circle radius, text font size, image dimensions, stroke width
   chartGroup.selectAll('.circle').attr('r', imageWidth / (2 * currentScale));
-  chartGroup.selectAll('text').attr('font-size', 14 / currentScale);
+  chartGroup.selectAll('text').attr('font-size', 1.2em / currentScale);
   chartGroup
     .selectAll('image')
     .attr('x', d => -imageWidth / (2 * currentScale))
@@ -361,7 +361,7 @@ function applyZoom(scale) {
 
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bioX || "";
+          document.getElementById('memberInfo').value = member.bio || "";
 
 
 //let children = displayChildrenNames(member.id, displayChildrenCallback);
@@ -448,7 +448,7 @@ function hideMemberPopup() {
 const exportButton = document.getElementById('export-button');
 exportButton.addEventListener('click', () => {
     // Select the SVG element containing your family tree
-    const svgElement = document.querySelector('#family-tree-area svg');
+    const svgElement = document.querySelector('transform g'); /// family-tree-area
 
     // Use html2canvas to capture the SVG as an image
     html2canvas(svgElement).then(canvas => {
@@ -464,7 +464,6 @@ exportButton.addEventListener('click', () => {
 
 function setRootValue(rootValue) {
     const db = firebase.firestore();
-			                    console.log(' rootValue.'+rootValue);
     // Reference to the document in the collection
     const docRef = db.collection("familyTrees").doc(treeData.treeID);
 
