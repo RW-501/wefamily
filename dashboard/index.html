@@ -1491,7 +1491,7 @@ let formattedBirthdate = formatDateToMonthDay(data.birthdate);
  <button class="add-parent">Add Parent</button>
             <div id="${data.memberID}" class="member-details">
                 <!-- Member details go here -->
-               <p class="member-name">${data.first_name} ${data.last_name} ${data.nameSuffix}</p>
+               <p class="member-name">${data.first_name} ${data.last_name} ${data.nameSuffix || ""}</p>
                 <p class="member-birthday">Birthdate: ${formattedBirthdate}</p>
             ${claim_Div}
                 <!-- Add other fields as needed -->
