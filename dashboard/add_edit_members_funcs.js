@@ -47,13 +47,20 @@ closeEditFamilyMemberPopup();
 
 async function saveEditedFamilyMember() {
   try {
-    const editedFirstName = document.getElementById('edit-first-name').value;
-    const editedLastName = document.getElementById('edit-last-name').value;
-    const editedBirthdate = document.getElementById('edit-birthdate').value;
-    const editedNote = document.getElementById('edit-note').value;
+    const editedFirstName = document.getElementById('edit-first-name').value || '';
+    const editedLastName = document.getElementById('edit-last-name').value || '';
+    const editedMiddleName = document.getElementById('edit-middle-name').value || '';
+    const nameSuffix = document.getElementById('nameSuffix').value || '';
+    const editedBirthdate = document.getElementById('edit-birthdate').value || '';
+    const editedBio = document.getElementById('edit-bio').value || '';
+    const editedDeceasedDate = document.getElementById('edit-deceaseddate').value || '';
+    const editedContact = document.getElementById('edit-contact').value || '';
+    const editedPrivate = document.getElementById('edit-private').value || '';
+    const editedNote = document.getElementById('edit-note').value || '';
+    const memberID = document.getElementById('userID_edit_Member').innerText || '';
 
     // Use appropriate method to get photo data
-    const memberID = document.getElementById('userID_edit_Member').innerText;
+    const selectedFile = document.getElementById('edit-photo-file').files[0];
 
     // Check if memberID is empty or undefined
     if (!memberID) {
@@ -61,9 +68,7 @@ async function saveEditedFamilyMember() {
       return;
     }
 
-
     const memberRef = firebase.firestore().collection('familyMembers').doc(memberID);
- const selectedFile = document.getElementById('edit-photo-file').files[0];
 
     if (selectedFile) {
       // Handle uploading the edited photo and get the download URL
@@ -72,9 +77,15 @@ async function saveEditedFamilyMember() {
         await memberRef.update({
           first_name: editedFirstName,
           last_name: editedLastName,
+          middle_name: editedMiddleName,
+          nameSuffix: nameSuffix,
           birthdate: editedBirthdate,
+          bio: editedBio,
+          deceaseddate: editedDeceasedDate,
+          contact: editedContact,
+          private: editedPrivate,
           note: editedNote,
-          photo: downloadURL
+          photo: downloadURL,
           // Add other fields as needed
         });
 
@@ -89,8 +100,14 @@ async function saveEditedFamilyMember() {
       await memberRef.update({
         first_name: editedFirstName,
         last_name: editedLastName,
+        middle_name: editedMiddleName,
+        nameSuffix: nameSuffix,
         birthdate: editedBirthdate,
-        note: editedNote
+        bio: editedBio,
+        deceaseddate: editedDeceasedDate,
+        contact: editedContact,
+        private: editedPrivate,
+        note: editedNote,
         // Add other fields as needed
       });
 
@@ -103,7 +120,9 @@ async function saveEditedFamilyMember() {
   }
 }
 
-	    
+
+
+
 function closeEditFamilyMemberPopup() {
 
     document.getElementById('edit-family-member-popup').style.display = 'none';
