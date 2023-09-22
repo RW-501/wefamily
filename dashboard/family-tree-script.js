@@ -158,12 +158,12 @@ chartGroup.selectAll("text")
             .style("fill", "black")  // Set the box fill color
             .style("opacity", 1)  // Set the box opacity
             .style("border-radius", "5px")  // Set the border radius
-     .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    });
+         .on("click", function (event, d) {
+                console.log("Clicked text Data:", d.data);
+                showMemberPopup(d.data);
+	 }
 
-
+	 }
 	    
     }
 
