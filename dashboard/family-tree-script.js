@@ -55,7 +55,9 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
         .attr("width", width)
         .attr("height", height_Layout);
 
-    const svg = d3.select("#family-tree-area").append("svg");
+    const svg = d3.select("#family-tree-area").append("svg")        .append("svg")
+        .attr("width", width)
+        .attr("height", height_Layout);
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
@@ -97,7 +99,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
         .scaleExtent([0.1, 10]) // Define the zoom scale limits
         .on("zoom", zoomed);
 
-	
+	/*
 chartGroup.selectAll("path")
   .data(links)
   .enter()
@@ -105,9 +107,9 @@ chartGroup.selectAll("path")
   .attr("class", "link")
   .attr("d", curvedPath)  // Use the link generator function
   .style("fill", "none")
-  .style("stroke", "gray")
+  .style("stroke", "darkgrey")
   .style("stroke-width", 2);
-
+*/
   nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
@@ -194,8 +196,8 @@ nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .style("stroke", "#8e9399")  // Border color
-    .style("stroke-width", "5px");  // Border width
+    .style("stroke", "#f2fd90")  // Border color
+    .style("stroke-width", "10px");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -204,9 +206,9 @@ nodeGroup.append("image")
     .attr("width", imageWidth)
     .attr("height", imageHeight)
     .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "#f2fd90" )
+    .style("object-fit", "cover" )
 .style("width", imageWidth)
-.style("height", imageHeight)
+.style("height", "auto")
 	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
@@ -228,7 +230,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "black")  // Border color
-    .style("stroke-width", "5px");  // Border width
+    .style("stroke-width", "10px");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -239,7 +241,7 @@ nodeGroup.append("image")
     .attr("clip-path", "url(#clipCircle)")
     .style("object-fit", "cover")
 .style("width", imageWidth)
-.style("height", imageHeight)
+.style("height", "auto")
 	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
@@ -288,6 +290,16 @@ const middle = (browserWidth - width ) / (scale * 10);
 // Set the transform attribute
 chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
+	
+chartGroup.selectAll("path")
+  .data(links)
+  .enter()
+  .append("path")
+  .attr("class", "link")
+  .attr("d", curvedPath)  // Use the link generator function
+  .style("fill", "none")
+  .style("stroke", "darkgrey")
+  .style("stroke-width", 2);
 
 
 	
