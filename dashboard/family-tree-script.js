@@ -403,11 +403,10 @@ if (member) {
 
 let formattedBirthdate = formatDateToMonthDay(member.birthdate);
 
-		 
+		
     // Populate member details
     const memberDetails = {
-        'Member ID': member.id,
-        'Member Name': `${member.name}`,
+        'Name': `${member.name}`,
         'Location': member.location,
         'Birthdate': formattedBirthdate,
         'Deceased Date': member.deceaseddate,
@@ -516,7 +515,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
             .then((querySnapshot) => {
                 const querySnapshotCount = querySnapshot.size;
 
- 
+   
 
               querySnapshot.forEach((doc) => {
                     const docData = doc.data();
@@ -529,8 +528,9 @@ function fetchFamilyMemberData(collectionName, treeID) {
                     const birthdate = docData.birthdate;
                     const deceaseddate = docData.deceaseddate;
                     const contact = docData.contact;
+                    const middle_name = docData.middle_name;
                     const note = docData.note;
-                    const name = `${docData.first_name} ${docData.last_name}`;
+                    const name = `${docData.first_name} ${docData.last_name} ${docData.nameSuffix}`;
                     const photo = docData.photo || '';
                     const children = docData.children || [];
                     const spouse = docData.spouse || [];
@@ -545,6 +545,7 @@ function fetchFamilyMemberData(collectionName, treeID) {
                             userID: userID,
                             memberID: memberID,
                             name: name,
+                            middle_name: middle_name,
                             private: privateInfo,
                             location: location,
                             birthdate: birthdate,
