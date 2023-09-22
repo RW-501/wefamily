@@ -117,9 +117,9 @@ chartGroup.selectAll("path")
 
 
 	
-    let memberData = root.descendants().children;
+    let memberData = root.descendants();
 
-    if (memberData === "undefined" || memberData === "" || memberData === null ) {
+    if (memberData.children === "undefined" || memberData.children === "" || memberData.children === null ) {
         chartGroup.selectAll("text")
             .data(root.descendants())
             .enter()
@@ -175,7 +175,6 @@ chartGroup.selectAll("text")
     
 
 
-   let memberData = root.descendants();
 console.log('memberData :', memberData);
 console.log('memberData id:', memberData.id);
 
