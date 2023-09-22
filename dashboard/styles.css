@@ -68,6 +68,12 @@ width: 100%;
     display: grid;
     margin: auto;
  }
+
+#edit-family-member-popup .flex {
+    display: grid !important;
+    grid-auto-flow: row;
+}
+	
 }
 
 #edit-family-member-popup .image-container {
