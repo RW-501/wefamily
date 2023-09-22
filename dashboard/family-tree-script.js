@@ -248,11 +248,11 @@ const middle = (browserWidth - width ) / 2;
             console.log('width :', width);
 
             console.log('translateX :', translateX);
-            console.log('scale :', currentScale);
+            console.log('scale :', scale);
 
 
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${currentScale})`);
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
 
 
