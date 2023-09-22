@@ -135,23 +135,26 @@ chartGroup.selectAll("text")
             .attr("y", bbox.y)
             .attr("width", bbox.width)
             .attr("height", bbox.height)
-    .style("border", "black solid 1em")        
             .style("fill", "black")  // Set the box fill color
-            .style("opacity", 0.7)  // Set the box opacity
+            .style("opacity", 1)  // Set the box opacity
             .style("border-radius", "5px");  // Set the border radius
+
+        // Hide the text by setting rectangle fill to the background color
+        d3.select(this)
+            .style("fill", "black");  // Set the text fill color
     });
 
-
+// Rest of your existing code for adding the text
 chartGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
-    .attr("dy", 60)
+    .attr("dy", 65)
     .attr("text-anchor", "middle")
     .style("font-weight", "900")  // Set font weight to bold
-    .style("font-size", "1.5em")     // Set font size to 1em
+    .style("font-size", "1.2em")     // Set font size to 1em
     .style("fill", "white")        // Set font color to white
     .style("pointer-events", "none")  // Prevent text from blocking click events
     .text(d => d.data.name)
