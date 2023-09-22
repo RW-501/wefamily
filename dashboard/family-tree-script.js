@@ -235,7 +235,7 @@ const translateX = (browserWidth - treeWidth) / 2;
 const translateY = 100;
  const scale = width / treeWidth;
 	let half = treeWidth / width;
-	let middle = translateX - half;
+	let middle = translateX + half;
 
 	
 	
@@ -276,7 +276,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${current
 
 	
   updateImageAttributes();
-
+applyZoom(scale);
 }
 
 
