@@ -15,6 +15,7 @@
     width: 100% !important;
     display: block;
     margin: auto !important;
+    padding: 2%;
 }
 .flex{
     display: grid !important;
