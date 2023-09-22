@@ -658,6 +658,12 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
           name: treeData.name,
           children: [], // Set the member with the most children as the root
           data: treeData,
+          photo: treeData.photo,
+          location: treeData.location,
+          description: treeData.description,
+          public: treeData.public,
+          adminID: treeData.adminID,
+          familyCode: treeData.familyCode,
         };
     console.log("treeID   " + treeID);
     console.log("maxChildrenCount   " + maxChildrenCount);
@@ -673,7 +679,13 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
           name: treeData.name,
           children: [memberIDWithMaxDepth], // Set the member with the most children as the root
           data: memberDataMap,
-        }; 
+            photo: treeData.photo,
+          location: treeData.location,
+          description: treeData.description,
+          public: treeData.public,
+          adminID: treeData.adminID,
+          familyCode: treeData.familyCode,
+        };
     console.log("maxChildrenCount root   " + root);
 console.log('memberDataMap:', memberDataMap);
 	 setRootValue(memberIDWithMaxDepth);
@@ -684,6 +696,12 @@ console.log('memberDataMap:', memberDataMap);
           name: treeData.name,
           children: [treeData.root], // Set the member with the most children as the root
           data: treeData,
+             photo: treeData.photo,
+          location: treeData.location,
+          description: treeData.description,
+          public: treeData.public,
+          adminID: treeData.adminID,
+          familyCode: treeData.familyCode,
         };
 		    console.log("treeData root   " + root);
 	  
@@ -693,7 +711,13 @@ console.log('memberDataMap:', memberDataMap);
           name: treeData.name,
           children: [rootID], // Set the member with the most children as the root
           data: memberDataMap,
-        };    
+              photo: treeData.photo,
+          location: treeData.location,
+          description: treeData.description,
+          public: treeData.public,
+          adminID: treeData.adminID,
+          familyCode: treeData.familyCode,
+        }; 
 	 		    console.log("else root   " + root);
 
                     }	
