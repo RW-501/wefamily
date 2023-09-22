@@ -29,6 +29,25 @@
 	
 }
 
+
+.post_link_meta{
+width: 100%;
+    height: auto;
+    display: block;
+	    margin: auto;
+    padding: 5%;
+}
+
+
+.video_iframe{
+width: 100%;
+    height: auto;
+    display: block;
+	    margin: auto;
+    padding: 5%;
+}
+
+
 html{
     scroll-snap-type: y mandatory;
 	 scroll-padding: 1em; 
