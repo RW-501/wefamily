@@ -781,7 +781,7 @@ function handleResizeAndCrop(image, resizableCropBox) {
 	    
 	    
 
-
+/*
 
 function getFamiliesFunc() {
   // Get a reference to the user document in Firestore
@@ -828,57 +828,8 @@ const userDocRef = db.collection('users').doc(userID);
   }).catch((error) => {
     console.error('Error getting user document:', error);
   });
-}
+}*/
 
-
-
-function getFamiliesFunc() {
-  // Get a reference to the user document in Firestore
- // const userDocRef = db.collection('users').doc(userID);
-
-  // Retrieve the user's data
-  userDocRef.get().then((doc) => {
-    if (doc.exists) {
-      const userTrees = doc.data().userTrees;
-
-      // Get the user_Families div from the DOM
-      const userFamiliesDiv = document.getElementById('user_Families');
-
-      // Iterate over the userTrees array
-      userTrees.forEach((tree) => {
-        // Create an 'Edit' button
-        const editButton = document.createElement('button');
-        editButton.innerText = `Edit ${tree.name}`;
-        editButton.addEventListener('click', () => {
-          console.log(`Edit button clicked for family tree: ${tree.name}`);
-
-          // Navigate to the edit URL for the selected tree
-          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
-          window.location.href = editUrl;
-        });
-
-        // Create a 'View' button
-        const viewButton = document.createElement('button');
-        viewButton.innerText = `View ${tree.name}`;
-        viewButton.addEventListener('click', () => {
-          console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
-
-          // Navigate to the view URL for the selected tree
-          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
-          window.location.href = viewUrl;
-        });
-
-        // Append buttons to the UI
-        userFamiliesDiv.appendChild(editButton);
-        userFamiliesDiv.appendChild(viewButton);
-      });
-    } else {
-      console.log('User document not found');
-    }
-  }).catch((error) => {
-    console.error('Error getting user document:', error);
-  });
-}
 
 function openJoinRequestPopup() {
     document.getElementById('join-request-popup').style.display = 'block';
@@ -1262,12 +1213,14 @@ async function getFamilyTree(userID) {
     }
 
     // Reference to the user document in Firestore
-     userDocRef = firestore.collection('users').doc(userID);
-
+    const userDocRef = firestore.collection('users').doc(userID);
+	
     try {
         const doc = await userDocRef.get();
 
         if (doc.exists) {
+		getFamiliesFunc(userDocRef);
+
             // Check if the user document has a "userTrees" field (an array of family tree IDs)
             if (doc.data().userTrees && doc.data().userTrees.length > 0) {
                 // Get the first family tree ID from the user's array of family tree IDs
@@ -1350,6 +1303,57 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
         console.error('Error checking user login:', error);
         // Handle errors here, e.g., display an error message to the user.
     }
+}
+
+
+	    
+
+function getFamiliesFunc(userDocRef) {
+  // Get a reference to the user document in Firestore
+ // const userDocRef = db.collection('users').doc(userID);
+
+  // Retrieve the user's data
+  userDocRef.get().then((doc) => {
+    if (doc.exists) {
+      const userTrees = doc.data().userTrees;
+
+      // Get the user_Families div from the DOM
+      const userFamiliesDiv = document.getElementById('user_Families');
+
+      // Iterate over the userTrees array
+      userTrees.forEach((tree) => {
+        // Create an 'Edit' button
+        const editButton = document.createElement('button');
+        editButton.innerText = `Edit ${tree.name}`;
+        editButton.addEventListener('click', () => {
+          console.log(`Edit button clicked for family tree: ${tree.name}`);
+
+          // Navigate to the edit URL for the selected tree
+          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+          window.location.href = editUrl;
+        });
+
+        // Create a 'View' button
+        const viewButton = document.createElement('button');
+        viewButton.innerText = `View ${tree.name}`;
+        viewButton.addEventListener('click', () => {
+          console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
+
+          // Navigate to the view URL for the selected tree
+          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
+          window.location.href = viewUrl;
+        });
+
+        // Append buttons to the UI
+        userFamiliesDiv.appendChild(editButton);
+        userFamiliesDiv.appendChild(viewButton);
+      });
+    } else {
+      console.log('User document not found');
+    }
+  }).catch((error) => {
+    console.error('Error getting user document:', error);
+  });
 }
 
 
