@@ -44,6 +44,8 @@ function generateFamilyTreeChart(familyData) {
     const height_Layout = 200 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
+	            console.log('width :', width);
+	            console.log('height_Layout :', height_Layout);
 
     document.getElementById('family-tree-area').innerHTML = "";
     
@@ -281,7 +283,7 @@ const translateY = 100;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
 const middle = (browserWidth - width ) / (scale * 10);
-		currentScale = newScale;
+		//currentScale = newScale;
 
 	/*
 	            console.log('newScale :', newScale);
