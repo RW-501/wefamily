@@ -9,11 +9,11 @@ async function createFamilyTree() {
     const createBTN = document.getElementById('createBTN');
     createBTN.disabled = true;
 	  
-    const treeName = document.getElementById("tree_name").value;
-    const treeLocation = document.getElementById("tree_location").value;
-    const treeDescription = document.getElementById("tree_description").value;
-    const familyCode = document.getElementById("tree_code").value;
-    const publicBool = document.getElementById("tree_public").checked;  // Use checked property for boolean
+  const treeName = input(document.getElementById('tree_name').value || '');
+const treeLocation = input(document.getElementById('tree_location').value || '');
+const treeDescription = input(document.getElementById('tree_description').value || '');
+const familyCode = input(document.getElementById('tree_code').value || '');
+const publicBool = input(document.getElementById('tree_public').checked);
 
     if (!treeName || !treeLocation || !familyCode || !userID) {
       showMainMessage("Please fill in all required fields.");
@@ -143,9 +143,10 @@ await userDocRef.update({
 
 async function saveEditedFamilyTree() {
   try {
-    const newName = document.getElementById('editFamilyTreeName').value;
-    const newDescription = document.getElementById('editFamilyTreeDescription').value;
-    const newLocation = document.getElementById('editFamilyTreeLocation').value;
+  const newName = input(document.getElementById('editFamilyTreeName').value || '');
+const newDescription = input(document.getElementById('editFamilyTreeDescription').value || '');
+const newLocation = input(document.getElementById('editFamilyTreeLocation').value || '');
+
 
     if (!newName) {
       console.error('Name is empty or undefined.');
