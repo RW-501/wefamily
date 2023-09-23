@@ -207,7 +207,7 @@ handleCollisions(nodes);
 
 
 	// Add text for each node
-nodeGroup.selectAll("text")
+chartGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
