@@ -126,7 +126,6 @@ chartGroup.selectAll("path")
 
 	
     let memberData = familyData;
-console.log('memberData :', memberData);
 console.log('memberData data:', memberData.data);
 memberData = memberData.data;
 //let memberDataX = memberData();
@@ -142,7 +141,8 @@ console.log('memberData.id :', memberData.id);
 
 	
     if (memberData.id === userID) {
-
+console.log('?????????????????????????????????????????????????????????????????????????      userID :');
+    }
 
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
@@ -175,49 +175,14 @@ nodeGroup.append("image")
         showMemberPopup(d.data);
     });
 
-    }else{
-
-// Update the clipPath to create a circular clip
-nodeGroup.append("defs").append("clipPath")
-    .attr("id", "clipCircle")
-    .append("circle")
-    .attr("cx", 0)  // Center X at 0
-    .attr("cy", 0)  // Center Y at 0
-    .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
-
-// Update the image elements to use the circular clip path
-nodeGroup.append("circle")
-    .attr("class", "circle")
-    .attr("r", imageWidth / 2) // Radius of circles, half of the image width
-    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .style("stroke", "black")  // Border color
-    .style("stroke-width", "20px");  // Border width
-
-nodeGroup.append("image")
-    .attr("xlink:href", d => d.data.photo)
-    .attr("x", d => -imageWidth / 2)
-    .attr("y", d => -imageHeight / 2)
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
-    .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "cover")
-.style("width", imageWidth)
-.style("height",'auto')
-	.on("click", function (event, d) {
-        console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
-    });
 
 
-
-
-    }
   
               console.log('memberData.children :', memberData.children);
    if (memberData.children === "X"  ) {
 
 	    
-
+   }
 nodeGroup.selectAll("text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
@@ -245,44 +210,6 @@ nodeGroup.selectAll("text")
             .style("fill", "black")
             .style("opacity", 1);
     });
-
-    } else {
-	    
-
-nodeGroup.selectAll("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dy", 70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")
-    .style("font-size", "1.2em")
-    .style("fill", "white")
-    .style("pointer-events", "none")
-    .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    })
-    .each(function () {
-        const bbox = this.getBBox();
-        d3.select(this.parentNode)
-            .insert("rect", ":first-child")
-            .attr("x", bbox.x - 5)
-            .attr("y", bbox.y - 2)
-            .attr("width", bbox.width + 10)
-            .attr("height", bbox.height + 4)
-            .attr("rx", 10)
-            .attr("ry", 10)
-            .style("fill", "black")
-            .style("opacity", 1);
-    });
-
-
-	    
-
-	 }
-	    
-
 
 	
 // After appending the images to nodeGroup
