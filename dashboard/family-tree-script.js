@@ -190,7 +190,6 @@ nodeGroup.selectAll("text")
 
 
 	    
-	    });
 
 	 }
 	    
