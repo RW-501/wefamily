@@ -185,7 +185,8 @@ nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-    .style("stroke", "#f2fd90")  // Border color
+.style("height", 'auto')
+    .style("stroke", "black")  // Border color
     .style("stroke-width", "20px");  // Border width
 
 nodeGroup.append("image")
