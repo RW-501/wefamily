@@ -195,6 +195,14 @@ chartGroup.selectAll("text")
 
 
 
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+
 
 
 	
@@ -242,14 +250,6 @@ handleCollisions(nodes);
 
 
 
-
-
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
 
