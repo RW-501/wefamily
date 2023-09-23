@@ -856,28 +856,35 @@ function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
 }
 
 function getParentsOfParents(nodeID) {
-  const parentsOfParents = []; // Array to store parents of parents
+ const membersNotListedAsChild = [];
 
-  const getNodeParents = (nodeID) => {
-    const node = memberDataMap[nodeID];
-    if (!node) return; // Node not found
+  for (const [memberID, member] of Object.entries(memberDataMap)) {
+    let isChild = false;
 
-    const parentIDs = node.parents;
-
-    // Traverse each parent and gather their parents
-    for (const parentID of parentIDs) {
-      const parentNode = memberDataMap[parentID];
-      if (parentNode) {
-        parentsOfParents.push(parentNode);
-        // Recursively get parents of this parent
-        getNodeParents(parentID);
+    // Check if the current member is listed as a child in any other member
+    for (const [, otherMember] of Object.entries(memberDataMap)) {
+      const children = otherMember.children;
+      if (children && children.includes(memberID)) {
+        isChild = true;
+        break;
       }
     }
-  };
 
-  getNodeParents(nodeID);
-  return parentsOfParents;
+    // If the member is not a child, add them to the list
+    if (!isChild) {
+      membersNotListedAsChild.push({
+        id: memberID,
+        name: member.name || '',
+      });
+    }
+  }
+
+  return membersNotListedAsChild;
 }
+
+
+
+
 
 
 
