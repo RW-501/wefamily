@@ -1577,20 +1577,19 @@ function sortByName(members) {
 // Helper function to sort data by birthday
 function sortByBirthday(members) {
   return members.sort((a, b) => {
-    const dateA = new Date(a.birthdate);
-    const dateB = new Date(b.birthdate);
-    return dateA - dateB;
+    const [aMonth, aDay] = a.birthdate.split('-').slice(1);
+    const [bMonth, bDay] = b.birthdate.split('-').slice(1);
+
+    // Convert the date parts to numbers for comparison
+    const aMonthDay = parseInt(aMonth, 10) * 100 + parseInt(aDay, 10);
+    const bMonthDay = parseInt(bMonth, 10) * 100 + parseInt(bDay, 10);
+
+    return aMonthDay - bMonthDay;
   });
 }
-/*
-// Collect member data into an array
-//const familyMembers = [];
-querySnapshot.forEach((member) => {
-  const data = member.data();
-  familyMembers.push(data);
-});
 
-*/
+
+	    
 
 // Sort by name
 function sortedByNameFunc(){
