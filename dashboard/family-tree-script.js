@@ -786,26 +786,21 @@ function displayChildrenNames(parentID, callback) {
         return;
     }
 
-    const childrenIDs = parent.children;
-              console.log('parent.children :', childrenIDs);
+    const childrenData = parent.children;
 
-    if (childrenIDs.length === 0) {
+    if (childrenData.length === 0) {
         console.log(`Parent ${parent.name} has no children.`);
         return;
     }
 
- const childrenNames = childrenIDs.map((childID) => {
-    const child = memberDataMap[childID];
-    if (!child) {
-        console.log(`Child with ID ${childID} not found.`);
-        return null;  // Or handle it appropriately in your application
-    }
-
-    return {
-        id: child.id || '',  // Handle the case where 'child.id' is undefined
+    // Extract names and ids for each child
+    const childrenNames = childrenData.map((child) => ({
+        id: child.id || '',
         name: child.name || '',
-    };
-});
+    }));
+
+    callback(parent.name, childrenNames);
+}
 
 
     callback(parent.name, childrenNames);
