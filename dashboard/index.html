@@ -1552,8 +1552,6 @@ document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members"
 querySnapshot.forEach((member) => {
   const data = member.data();
   familyMembers.push(data);
-  console.log("first_name    ." + data.first_name);
-  console.log("birthdate    ." + data.birthdate);
 
   populateFamilyMemberDetails(data, userID);
 });
