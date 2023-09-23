@@ -131,6 +131,9 @@ select , label,
     input[type="date"],
     textarea {
     width: 100%;
+    font-size: 1.5em !important;
+    color: #7f7f7f;
+    font-weight: 600 !important;
     }
 
 /* Style for the image container */
