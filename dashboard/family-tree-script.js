@@ -445,9 +445,9 @@ let children = displayChildrenNames(memberID, displayChildrenCallback);
 
 		 
 
-if (parentNames.length > 0) {
+if (parentNames) {
   // Initialize an array to store parent names
-  memberDetails['Parent'] = [];
+  memberDetails['Parent: '] = [];
   parentNames.forEach((parent, index) => {
     // Push each parent's name to the array
     memberDetails['Parent: '].push(parent.name || '');
@@ -455,7 +455,7 @@ if (parentNames.length > 0) {
 }
 
 // Other properties can be added similarly based on your logic
-if (children.length > 0) {
+if (children) {
   let childrenList = '';
 
   children.forEach((child, index) => {
