@@ -548,18 +548,15 @@ if (Array.isArray(children)) {
 }
 
 function showMemberPopup(member) {
+    const scrollTo = document.getElementById('scrollTo');
+    
+    if (scrollTo) {
+        scrollTo.addEventListener('click', () => {
+            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+            hideMemberPopup();
+        });
+    }
 
-const scrollTo = document.getElementById('scrollTo');
-
-scrollTo.addEventListener('click', () => {
-	
-document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
-
-	hideMemberPopup();
-});
-	
-
-	
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
