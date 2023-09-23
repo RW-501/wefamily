@@ -55,7 +55,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
         .attr("width", width)
         .attr("height", height_Layout);
 
-    const svg = d3.select("#family-tree-area").append("svg")        .append("svg")
+    const svg = d3.select("#family-tree-area").append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
 
@@ -178,16 +178,16 @@ nodeGroup.append("image")
     });
 
 
-
+/*
 // After appending the images to nodeGroup
 const nodes = root.descendants();
 handleCollisions(nodes);
 
 
+*/
 
 
 
-/*
 // Add text for each node
 nodeGroup.selectAll("text")
     .attr("x", 0)  // Adjust the x position as needed
@@ -212,61 +212,23 @@ nodeGroup.selectAll("text")
             .style("fill", "black")
             .style("opacity", 1);  // Adjust the opacity as needed
     });
-*/
+
+
 
 	
-nodeGroup.selectAll("text")
-  .data(yourDataArray) // Make sure data is bound correctly
-  .enter().append("text")
-  .attr("x", 0)
-  .attr("y", -10)
-  .attr("dy", 70)
-  .attr("text-anchor", "middle")
-  .style("font-weight", "900")
-  .style("font-size", "1.2em")
-  .style("fill", "white")
-  .style("pointer-events", "none")
-  .text(d => d.data.name);
-
-// For rectangles
-nodeGroup.selectAll("rect")
-  .data(yourDataArray) // Make sure data is bound correctly
-  .enter().append("rect")
-  .attr("x", d => {
-    const bbox = nodeGroup.select(`text-${d.data.name}`).node().getBBox();
-    return bbox.x - 5;
-  })
-  .attr("y", d => {
-    const bbox = nodeGroup.select(`text-${d.data.name}`).node().getBBox();
-    return bbox.y - 2;
-  })
-  .attr("width", d => {
-    const bbox = nodeGroup.select(`text-${d.data.name}`).node().getBBox();
-    return bbox.width + 10;
-  })
-  .attr("height", d => {
-    const bbox = nodeGroup.select(`text-${d.data.name}`).node().getBBox();
-    return bbox.height + 4;
-  })
-  .attr("rx", 10)
-  .attr("ry", 10)
-  .style("fill", "black")
-  .style("opacity", 1);
 
 
 
 
 
-
-
-
+/*
 	
 	// Adjust the position of the text elements
 nodeGroup.selectAll("text")
     .attr("x", d => d.x)  // Adjust the x position as needed
     .attr("y", d => d.y - 20);  // Adjust the y position as needed
 
-
+*/
 
 
 
