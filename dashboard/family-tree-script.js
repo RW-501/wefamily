@@ -785,7 +785,7 @@ function displayChildrenNames(parentID, callback) {
         id: child.id || '',
         name: child.name || '',
     }));
-        console.log(`childrenData  ${childrenData}  found.`);
+        console.log(`childrenData  ${parent.name, childrenNames}  found.`);
 
     callback(parent.name, childrenNames);
 }
