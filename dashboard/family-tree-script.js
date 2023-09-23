@@ -110,36 +110,10 @@ chartGroup.selectAll("path")
   .attr("class", "link")
   .attr("d", curvedPath)  // Use the curved path generator function
   .style("fill", "none")
-  .style("stroke", "darkgrey")
+  .style("stroke", "gray")
   .style("stroke-width", 2);
 
 
-
-
-	// Add text for each node
-nodeGroup.selectAll("text")
-    .attr("x", 0)  // Adjust the x position as needed
-    .attr("y", -10)  // Adjust the y position as needed
-    .attr("dy", 70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")
-    .style("font-size", "1.2em")
-    .style("fill", "white")
-    .style("pointer-events", "none")
-    .text(d => d.data.name)
-    .each(function () {
-        const bbox = this.getBBox();
-        d3.select(this.parentNode)
-            .insert("rect", ":first-child")
-            .attr("x", bbox.x - 5)
-            .attr("y", bbox.y - 2)
-            .attr("width", bbox.width + 10)
-            .attr("height", bbox.height + 4)
-            .attr("rx", 10)
-            .attr("ry", 10)
-            .style("fill", "black")
-            .style("opacity", 1);  // Adjust the opacity as needed
-    });
 
 
 
@@ -171,6 +145,48 @@ console.log('userID :', userID);
 console.log('memberData.id :', memberData.id);
 
 
+  
+	
+    if (memberData.id === userID) {
+console.log('?????????????????????????????????????????????????????????????????????????      userID :');
+    }
+              console.log('memberData.children :', memberData.children);
+
+
+
+
+
+
+	// Add text for each node
+chartGroup.selectAll("text")
+    .attr("x", 0)  // Adjust the x position as needed
+    .attr("y", -10)  // Adjust the y position as needed
+    .attr("dy", 70)
+    .attr("text-anchor", "middle")
+    .style("font-weight", "900")
+    .style("font-size", "1.2em")
+    .style("fill", "white")
+    .style("pointer-events", "none")
+    .text(d => d.data.name)
+    .each(function () {
+        const bbox = this.getBBox();
+        d3.select(this.parentNode)
+            .insert("rect", ":first-child")
+            .attr("x", bbox.x - 5)
+            .attr("y", bbox.y - 2)
+            .attr("width", bbox.width + 10)
+            .attr("height", bbox.height + 4)
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .style("fill", "black")
+            .style("opacity", 1);  // Adjust the opacity as needed
+    });
+
+
+
+
+
+
 nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
@@ -180,13 +196,10 @@ nodeGroup = chartGroup.selectAll(".node")
 
 
 
-  
-	
-    if (memberData.id === userID) {
-console.log('?????????????????????????????????????????????????????????????????????????      userID :');
-    }
-              console.log('memberData.children :', memberData.children);
 
+
+
+	
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
     .attr("id", "clipCircle")
