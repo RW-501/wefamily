@@ -102,8 +102,16 @@ function initializeFamilyTreeChart() {
 
 		
             <div id="tree-details" class="SECTION">
-                <h2>Tree Details</h2><button onclick="openEditFamilyTreePopup()">Edit</button>
+		    
+                <h2>Tree Details</h2>
+		    
+		    		    <div class="space_J">
 
+		    <button onclick="openEditFamilyTreePopup()">Edit</button>
+		    		    <h4 id="famCode"></h4>
+
+
+				    </div>
 		    <div class="space_J">
     <div class="image-container w30">
   
@@ -1450,6 +1458,7 @@ var Current_USERPHOTO = '';
             document.getElementById("tree-name").value = tree.name;
             document.getElementById("tree-location").value = tree.location;
             document.getElementById("tree-description").value = tree.description;
+            document.getElementById("famCode").value = tree.familyCode;
             document.getElementById("tree-photo").src = tree.photo || "/wefamily/images/imgPlacehoder.png";
 
         }
