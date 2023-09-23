@@ -70,7 +70,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
    // Generate the tree layout using the modified size
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * width * 500; // Adjust the width between nodes as needed
+    d.y = d.depth * width + 70; // Adjust the width between nodes as needed
     d.x = d.depth * 100; // Adjust the vertical spacing as needed
 })
 
@@ -142,7 +142,7 @@ nodeGroup = chartGroup.selectAll(".node")
 nodeGroup.selectAll("text")
     .attr("x", 0)  // Adjust the x position as needed
     .attr("y", -10)  // Adjust the y position as needed
-    .attr("dy", -70)
+    .attr("dy", 70)
     .attr("text-anchor", "middle")
     .style("font-weight", "900")
     .style("font-size", "1.2em")
@@ -160,7 +160,7 @@ nodeGroup.selectAll("text")
             .attr("rx", 10)
             .attr("ry", 10)
             .style("fill", "black")
-            .style("opacity", 0.7);  // Adjust the opacity as needed
+            .style("opacity", 1);  // Adjust the opacity as needed
     });
 
 	// Adjust the position of the text elements
