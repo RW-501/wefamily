@@ -780,6 +780,8 @@ function resetFamilyTree() {
 
 function displayChildrenNames(parentID, callback) {
     const parent = memberDataMap[parentID];
+              console.log('parent. :', parent);
+                  console.log('memberDataMap[parentID].children :',  memberDataMap[parentID]);
 
     if (!parent) {
         console.log(`Parent with ID ${parentID} not found.`);
@@ -787,6 +789,7 @@ function displayChildrenNames(parentID, callback) {
     }
 
     const childrenIDs = parent.children;
+              console.log('parent.children :', childrenIDs);
 
     if (childrenIDs.length === 0) {
         console.log(`Parent ${parent.name} has no children.`);
@@ -823,11 +826,13 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 function getParentNames(parentIDs) {
     const parentNames = [];
-    
+                  console.log('memberDataMap[parentID].children :',  memberDataMap[parentID]);
+
     for (const parentID of parentIDs) {
         const parent = memberDataMap[parentID];
         if (parent) {
             parentNames.push({
+		    
                 id: parent.id,
                 name: parent.name
             });
