@@ -281,7 +281,6 @@ const translateY = 100;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
 const middle = (browserWidth - width ) / (scale * 10);
-//currentScale = scale;
 	/*
 	            console.log('newScale :', newScale);
 	            console.log('middle :', middle);
@@ -318,7 +317,8 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 */
 	
 
-	
+	currentScale = scale;
+
   updateImageAttributes();
 //applyZoom(scale);
 }
