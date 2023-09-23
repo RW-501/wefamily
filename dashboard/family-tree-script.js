@@ -126,7 +126,7 @@ chartGroup.selectAll("path")
 console.log('memberData :', memberData);
 console.log('memberData data:', memberData.data);
 memberData = memberData.data;
-let memberDataX = memberData.();
+let memberDataX = memberData();
  	console.log('memberDataX :', memberDataX);
 
 
