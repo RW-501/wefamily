@@ -652,13 +652,13 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
 const parentsOfParents = getParentsOfParents();
 
 // Log the parents of parents
-console.log('Parents of Parents:', parentsOfParents);
+console.log('ID of the first Parent of Parents:', parentsOfParents[0].id);
 		    
         // Update the root to use the member with the most children as the root
         let root = {
   id: treeID,
   name: treeData.name,
-  children: maxChildrenCount > 0 ? [memberIDWithMaxDepth] : [treeData.root || rootID],
+  children: parentsOfParents[0].id || maxChildrenCount > 0 ? [memberIDWithMaxDepth] : [treeData.root || rootID],
   data: maxChildrenCount > 0 ? memberDataMap : treeData,
           photo: treeData.photo,
           location: treeData.location,
