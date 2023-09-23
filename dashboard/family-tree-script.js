@@ -210,7 +210,7 @@ nodeGroup.append("image")
 
 
     }
-
+            console.log('memberData.children :', memberData.children);
    if (memberData.children === "X"  ) {
 
 	    
