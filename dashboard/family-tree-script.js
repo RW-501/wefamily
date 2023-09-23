@@ -163,14 +163,7 @@ nodeGroup.selectAll("text")
 
 
 
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
-  
   
 	
     if (memberData.id === userID) {
@@ -217,7 +210,14 @@ const nodes = root.descendants();
 handleCollisions(nodes);
 
 
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
 
+  
 
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
