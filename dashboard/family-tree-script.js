@@ -687,7 +687,7 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
 
 		    
 // Example usage: Count children at each depth for a specific node
-const nodeID = treeID; // Replace with the actual node ID
+const nodeID = memberIDWithMaxDepth; // Replace with the actual node ID
 const depthCounts = {}; // Object to store counts at each depth
 countChildrenAtEachDepth(nodeID, 0, depthCounts);
 
