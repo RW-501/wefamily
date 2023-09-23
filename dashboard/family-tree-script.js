@@ -419,24 +419,8 @@ function applyZoom(scale) {
           document.getElementById('memberInfo').value = member.bio || "";
 
 
-let children = displayChildrenNames(member.id, displayChildrenCallback);
-
-		 
-	 let parentNames = "";
-	 
 const memberID = member.id;
  const memberData = memberDataMap[memberID];
-
-    console.log(memberData+`  Member with ID ${memberID} not found.`);
-		 
-
-if (member) {
-   parentNames = getParentNames(memberID);
-    console.log('Parent Names:', parentNames);
-} else {
-    console.log(`Member with ID ${memberID} not found.`);
-}
-		 
 
 let formattedBirthdate = formatDateToMonthDay(member.birthdate);
 const memberDetails = {
@@ -446,11 +430,20 @@ const memberDetails = {
     'Contact': member.contact,
     'Note': member.note,
 };
-
-// Check if 'Deceased Date' is not blank before adding it to memberDetails
 if (member.deceaseddate) {
     memberDetails['Deceased Date'] = member.deceaseddate;
 }
+
+let children = displayChildrenNames(memberID, displayChildrenCallback);
+
+    console.log('children Names:', children);
+		 
+	 let parentNames = getParentNames(memberID);
+	 
+    console.log('parentNames Names:', parentNames);
+		 
+
+		 
 
 if (parentNames) {
 
@@ -468,7 +461,7 @@ if (children) {
 	children.forEach((child, index) => {
       // console.log(`Child ${index + 1}:`);
 		memberDetails['children  '] = child.name || '';
-       // console.log(`Name: ${child.name || 'N/A'})`;
+        console.log(`Name: ${child.name || 'N/A'})`;
     });
     
  }
@@ -489,7 +482,6 @@ if (children) {
 }
 
 function showMemberPopup(member) {
-		    console.log("member   " + member.id);
 
 const scrollTo = document.getElementById('scrollTo');
 
@@ -497,7 +489,6 @@ scrollTo.addEventListener('click', () => {
 	
 document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
 
-  console.log('Div clicked!');
 	hideMemberPopup();
 });
 	
@@ -696,8 +687,8 @@ for (const depth in depthCounts) {
   }
 }
 
-console.log('Highest count of children:', maxCount);
-console.log('Corresponding depth:', maxDepth);
+//console.log('Highest count of children:', maxCount);
+//console.log('Corresponding depth:', maxDepth);
 		    maxGenerationWidth = maxCount;
 		    
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
@@ -818,24 +809,30 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 
 
-function getParentNames(parentIDs) {
-    const parentNames = [];
-                  console.log('memberDataMap[parentID].children :',  memberDataMap[parentIDs]);
+function getParentNames(childID) {
+   const child = memberDataMap[childID];
+    if (!child) {
+        console.log(`Child with ID ${childID} not found.`);
+        return [];
+    }
 
-    for (const parentID of parentIDs) {
+    const parentIDs = child.parents;
+    const parentNames = [];
+
+    parentIDs.forEach((parentID) => {
         const parent = memberDataMap[parentID];
         if (parent) {
-            parentNames.push({
-		    
-                id: parent.id,
-                name: parent.name
-            });
+            const parentName = `${parent.first_name} ${parent.last_name}`;
+            parentNames.push(parentName);
+        } else {
+            console.log(`Parent with ID ${parentID} not found.`);
         }
+    });
+
+    return parentNames;
     }
     
-    return parentNames;
-}
-
+  
 
 
 function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
