@@ -66,9 +66,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
 
 
-     zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
+ 
 
    // Generate the tree layout using the modified size
 const root = d3.hierarchy(familyData).eachBefore(d => {
@@ -98,7 +96,12 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
 
+    zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
 
+
+	
 chartGroup.selectAll("path")
   .data(links)
   .enter()
@@ -156,7 +159,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "#f2fd90")  // Border color
-    .style("stroke-width", "20");  // Border width
+    .style("stroke-width", "20px");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -342,9 +345,13 @@ chartGroup
     });
 }
 
+	/*
+    zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+*/
 
-
-	  updateImageAttributes();
+	 updateImageAttributes();
 
 }
 
