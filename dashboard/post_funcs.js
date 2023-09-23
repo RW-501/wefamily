@@ -282,7 +282,7 @@ familyNewsArea.appendChild(postElement);
 
 
 function addPost() {
-    const postContent = document.getElementById('post-content').value;
+const postContent = input(document.getElementById('post-content').value || '');
     const currentUser = auth.currentUser;
 	
 	
