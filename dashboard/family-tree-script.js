@@ -831,26 +831,23 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 
 function getParentNames(childID) {
-   const child = memberDataMap[childID];
-    if (!child) {
-        console.log(`Child with ID ${childID} not found.`);
-        return [];
-    }
+  const childWithNoParents = [];
 
-    const parentIDs = child.parents;
-    const parentNames = [];
+  Object.values(memberDataMap).forEach((member) => {
+    const memberID = member.id;
 
-    parentIDs.forEach((parentID) => {
-        const parent = memberDataMap[parentID];
-        if (parent) {
-            const parentName = `${parent.first_name} ${parent.last_name}`;
-            parentNames.push(parentName);
-        } else {
-            console.log(`Parent with ID ${parentID} not found.`);
-        }
+    // Check if this member is not a parent for any other member
+    const isChild = Object.values(memberDataMap).every((otherMember) => {
+      const parents = otherMember.parents || [];
+      return !parents.includes(memberID);
     });
 
-    return parentNames;
+    if (isChild) {
+      childWithNoParents.push(member);
+    }
+  });
+
+  return childWithNoParents;
     }
     
   
