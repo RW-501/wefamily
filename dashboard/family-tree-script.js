@@ -129,6 +129,13 @@ console.log('userID :', userID);
 console.log('memberData.id :', memberData.id);
 
 
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
 
 
 // Add text for each node
@@ -209,13 +216,6 @@ nodeGroup.append("image")
 const nodes = root.descendants();
 handleCollisions(nodes);
 
-
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
   
 
