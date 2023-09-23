@@ -41,7 +41,7 @@ var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
     const width = window.screen.width;
-    const height_Layout = 150 * maxHierarchyDepth;
+    const height_Layout = 200 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
 
@@ -201,7 +201,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "#f2fd90")  // Border color
-    .style("stroke-width", "2em");  // Border width
+    .style("stroke-width", "20");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
@@ -234,7 +234,7 @@ nodeGroup.append("circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
     .style("stroke", "black")  // Border color
-    .style("stroke-width", "2em");  // Border width
+    .style("stroke-width", "20px");  // Border width
 
 nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
