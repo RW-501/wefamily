@@ -4,7 +4,7 @@
 
 
 /// works
-const zoomControls = document.getElementById("familyCount");
+const familyCount = document.getElementById("familyCount");
 
 function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
   const node = memberDataMap[nodeID];
