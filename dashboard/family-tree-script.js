@@ -64,6 +64,12 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
     chartGroup = svg.append("g").style("transform-origin", "center top");
 
+
+
+     zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+
    // Generate the tree layout using the modified size
 const root = d3.hierarchy(familyData).eachBefore(d => {
     d.y = d.depth * width * 500; // Adjust the width between nodes as needed
@@ -75,8 +81,6 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
      linkGenerator = d3.linkHorizontal()
         .x(d => d.x) // Swap x and y due to vertical tree layout
         .y(d => d.y);
-
-	
 
     const links = root.links();
 
@@ -95,30 +99,26 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 };
 
 
-     zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
-
-	
 chartGroup.selectAll("path")
   .data(links)
   .enter()
   .append("path")
   .attr("class", "link")
-  .attr("d", curvedPath)  // Use the link generator function
+  .attr("d", curvedPath)  // Use the curved path generator function
   .style("fill", "none")
   .style("stroke", "darkgrey")
   .style("stroke-width", 2);
 
 
 
-	
   nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
     .attr("class", "node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
+	
+
 
 
 	
