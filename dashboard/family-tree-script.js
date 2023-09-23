@@ -308,17 +308,19 @@ function zoomed(event) {
     console.log('No zoom change');
     return;
   } else {
-  //  currentScale = event.transform.k;
+    currentScale = event.transform.k;
   }
 
   chartGroup.attr('transform', event.transform);
 
   updateImageAttributes();
 
-  chartGroup.selectAll('path.link')
+chartGroup
+    .selectAll('path.link')
     .attr('d', (d) => {
-      const source = { x: d.source.x * currentScale, y: d.source.y };
-      const target = { x: d.target.x * currentScale, y: d.target.y };
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
       return linkGenerator({ source, target });
     });
 }
