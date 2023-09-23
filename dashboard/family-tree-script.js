@@ -324,7 +324,6 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 	
 
 function updateImageAttributes() {
-	       console.log('updateImageAttributes :');
 
   nodeGroup.selectAll("image")
     .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
