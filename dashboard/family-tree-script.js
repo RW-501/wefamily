@@ -130,8 +130,9 @@ console.log('memberData data:', memberData.data);
 
 
 console.log('userID :', userID);
+console.log('memberData.id :', memberData.data.id);
 
-    if (memberData.id === userID) {
+    if (memberData.data.id === userID) {
 
 
 // Update the clipPath to create a circular clip
@@ -204,7 +205,7 @@ nodeGroup.append("image")
     }
 
 
-   if (memberData.children === []  ) {
+   if (memberData.data.children === []  ) {
 
 	    
         chartGroup.selectAll("text")
