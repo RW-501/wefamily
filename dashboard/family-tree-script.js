@@ -420,8 +420,7 @@ function applyZoom(scale) {
 
 
 let children = displayChildrenNames(member.id, displayChildrenCallback);
-    console.log(`member of ${member}:`);
-   console.log(`Children of ${children}:`);
+
 		 
 	 let parentNames = "";
 	 
@@ -432,10 +431,10 @@ const memberID = member.id;
 		 
 
 if (member) {
-   //  parentNames = getParentNames(memberData.parents);
-   // console.log('Parent Names:', parentNames);
+   parentNames = getParentNames(memberID);
+    console.log('Parent Names:', parentNames);
 } else {
- //   console.log(`Member with ID ${memberID} not found.`);
+    console.log(`Member with ID ${memberID} not found.`);
 }
 		 
 
@@ -453,40 +452,30 @@ if (member.deceaseddate) {
     memberDetails['Deceased Date'] = member.deceaseddate;
 }
 
+if (parentNames) {
+
+	parentNames.forEach((parent, index) => {
+      // console.log(`Child ${index + 1}:`);
+		memberDetails['*  '] = ${parent.name || ''});
+        console.log(`Name: ${parent.name || 'N/A'})`;
+    });
+    
+ }
+		 
 // Other properties can be added similarly based on your logic
-if (member.children) {
+if (children) {
 
 	children.forEach((child, index) => {
       // console.log(`Child ${index + 1}:`);
-		memberDetails['***  '] = ${child.name || ''}`);
-        console.log(`Name: ${child.name || 'N/A'}`);
-      //  console.log(`ID: ${child.id || 'N/A'}`);
-//        console.log('---');
+		memberDetails['***  '] = ${child.name || ''});
+       // console.log(`Name: ${child.name || 'N/A'})`;
     });
-    // memberDetails['Children'] = children;
+    
  }
-// ...
 
-// Example of adding 'Spouse' property if it's not blank
-// if (member.spouse && member.spouse.length > 0) {
-//     memberDetails['Spouse'] = member.spouse.join(', ');
-// }
 
-		/*
-    // Populate member details
-    const memberDetails = {
-        'Name': `${member.name}`,
-        'Location': member.location,
-        'Birthdate': formattedBirthdate,
-        'Deceased Date': member.deceaseddate,
-        'Contact': member.contact,
-        'Note': member.note,
-     //   'Children': children,
-       // 'Spouse': member.spouse.join(', '),
-    //    'Parent': parentNames,
-     //   'Siblings': member.siblings.join(', ')
-    };
-*/
+	
+  
        // 'Children': member.children.join(', '),
 
     const detailsList = document.getElementById('memberDetails');
@@ -814,10 +803,10 @@ function displayChildrenNames(parentID, callback) {
 
 // Example callback function to display children names
 function displayChildrenCallback(parentName, childrenNames) {
-    console.log(`Children of ${parentName}:`);
+   // console.log(`Children of ${parentName}:`);
 	let children = "";
     childrenNames.forEach((child) => {
-        console.log(`- ${child.name} (ID: ${child.id})`);
+//        console.log(`- ${child.name} (ID: ${child.id})`);
 	    children = children + child.name+", ";
     });
 	return children;
