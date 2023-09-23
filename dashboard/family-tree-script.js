@@ -461,8 +461,10 @@ const memberDetails = {
     'Location': member.location,
 };
 		 
-if (formattedBirthdate) {
+if (!formattedBirthdate) {
+}else{
     memberDetails['Birthdate '] = formattedBirthdate;
+
 }
 		 
 if (member.deceaseddate) {
