@@ -445,18 +445,17 @@ let children = displayChildrenNames(memberID, displayChildrenCallback);
 
 		 
 
-if (parentNames) {
+if (parentNames.length > 0) {
+  // Initialize an array to store parent names
+  memberDetails['Parent'] = [];
+  parentNames.forEach((parent, index) => {
+    // Push each parent's name to the array
+    memberDetails['Parent: '].push(parent.name || '');
+  });
+}
 
-	parentNames.forEach((parent, index) => {
-      // console.log(`Child ${index + 1}:`);
-		memberDetails['Parent '] = parent.name || '';
-        console.log(`Name: parent.name || 'N/A'`);
-    });
-    
- }
-		 
 // Other properties can be added similarly based on your logic
-if (children) {
+if (children.length > 0) {
   let childrenList = '';
 
   children.forEach((child, index) => {
@@ -466,6 +465,7 @@ if (children) {
   // Assign the children list to memberDetails
   memberDetails['Children: '] = childrenList;
 }
+
 	
   
        // 'Children': member.children.join(', '),
