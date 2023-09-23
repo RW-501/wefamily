@@ -436,11 +436,11 @@ if (member.deceaseddate) {
 
 let children = displayChildrenNames(memberID, displayChildrenCallback);
 
-    console.log('children Names:', children);
+  //  console.log('children Names:', children);
 		 
 	 let parentNames = getParentNames(memberID);
 	 
-    console.log('parentNames Names:', parentNames);
+  //  console.log('parentNames Names:', parentNames);
 		 
 
 		 
@@ -457,16 +457,15 @@ if (parentNames) {
 		 
 // Other properties can be added similarly based on your logic
 if (children) {
+  let childrenList = '';
 
-	children.forEach((child, index) => {
-      // console.log(`Child ${index + 1}:`);
-		memberDetails['children  '] = child.name || '';
-        console.log(`Name: child.name || 'N/A'`);
-    });
-    
- }
+  children.forEach((child, index) => {
+    childrenList += child.name + '<br>' || '';
+  });
 
-
+  // Assign the children list to memberDetails
+  memberDetails['children'] = childrenList;
+}
 	
   
        // 'Children': member.children.join(', '),
@@ -784,9 +783,9 @@ function displayChildrenNames(parentID, callback) {
         id: child.id || '',
         name: child.name || '',
     }));
-        console.log(`parent.name, childrenNames ${parent.name, childrenNames} `);
+  //      console.log(`parent.name, childrenNames ${parent.name, childrenNames} `);
 
-    callback(parent.name, childrenNames);
+    //callback(parent.name, childrenNames);
 
 	return childrenNames;
 }
