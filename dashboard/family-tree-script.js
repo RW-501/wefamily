@@ -324,6 +324,8 @@ function zoomed(event) {
     return;
   } else {
   //  currentScale = event.transform.k;
+
+	      console.log(`currentScale of ${currentScale}:`);
   }
 
   chartGroup.attr('transform', event.transform);
