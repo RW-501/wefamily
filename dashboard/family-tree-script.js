@@ -128,12 +128,7 @@ console.log('userID :', userID);
 console.log('memberData.id :', memberData.id);
 
 
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
+
 
 // Add text for each node
 nodeGroup.selectAll("text")
@@ -206,7 +201,12 @@ nodeGroup.append("image")
         showMemberPopup(d.data);
     });
 
-
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
 
   
   
