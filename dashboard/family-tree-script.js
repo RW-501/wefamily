@@ -10,13 +10,6 @@ const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 
-// Define zoom behavior and initial scale
-const initialScale = 1;
-let currentScale = initialScale;
-
-let imageWidth = 100;
-let imageHeight = 100;
-var nodeGroup;
 
 zoomOutButton.addEventListener('click', () => {
             console.log('zoom.transform :', zoom.transform);
@@ -38,6 +31,13 @@ zoomInButton.addEventListener('click', () => {
 var chartGroup; 
 var linkGenerator;
 var zoom ;
+// Define zoom behavior and initial scale
+const initialScale = 1;
+let currentScale = initialScale;
+
+let imageWidth = 100;
+let imageHeight = 100;
+var nodeGroup;
 	
 function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
@@ -126,74 +126,7 @@ chartGroup.selectAll("path")
 console.log('memberData :', memberData);
 console.log('memberData data:', memberData.data);
 
-    if (memberData.children === []  ) {
-
-	    
-        chartGroup.selectAll("text")
-            .data(root.descendants())
-            .enter()
-            .append("text")
-            .attr("x", d => d.x)
-            .attr("y", d => d.y)
-            .attr("dy", -60)
-            .attr("text-anchor", "middle")
-            .text(d => d.data.name)
-            .on("click", function (event, d) {
-                console.log("Clicked text Data:", d.data);
-                showMemberPopup(d.data);
-            });
-    } else {
-	    
-
-nodeGroup.selectAll("image")
-    .attr("xlink:href", d => d.data.photo)
-    .attr("x", d => -imageWidth / 2)
-    .attr("y", d => -imageHeight / 2)
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
-    .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "cover")
-    .style("width", imageWidth)
-    .style("height",'auto')
-    .on("click", function (event, d) {
-        console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
-    });
-
-nodeGroup.selectAll("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dy", 70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")
-    .style("font-size", "1.2em")
-    .style("fill", "white")
-    .style("pointer-events", "none")
-    .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    })
-    .each(function () {
-        const bbox = this.getBBox();
-        d3.select(this.parentNode)
-            .insert("rect", ":first-child")
-            .attr("x", bbox.x - 5)
-            .attr("y", bbox.y - 2)
-            .attr("width", bbox.width + 10)
-            .attr("height", bbox.height + 4)
-            .attr("rx", 10)
-            .attr("ry", 10)
-            .style("fill", "black")
-            .style("opacity", 1);
-    });
-
-
-	    
-
-	 }
-	    
-    
+ 
 
 
 console.log('userID :', userID);
@@ -271,7 +204,59 @@ nodeGroup.append("image")
     }
 
 
+   if (memberData.children === []  ) {
 
+	    
+        chartGroup.selectAll("text")
+            .data(root.descendants())
+            .enter()
+            .append("text")
+            .attr("x", d => d.x)
+            .attr("y", d => d.y)
+            .attr("dy", -60)
+            .attr("text-anchor", "middle")
+            .text(d => d.data.name)
+            .on("click", function (event, d) {
+                console.log("Clicked text Data:", d.data);
+                showMemberPopup(d.data);
+            });
+    } else {
+	    
+
+nodeGroup.selectAll("text")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr("dy", 70)
+    .attr("text-anchor", "middle")
+    .style("font-weight", "900")
+    .style("font-size", "1.2em")
+    .style("fill", "white")
+    .style("pointer-events", "none")
+    .text(d => d.data.name)
+    .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    })
+    .each(function () {
+        const bbox = this.getBBox();
+        d3.select(this.parentNode)
+            .insert("rect", ":first-child")
+            .attr("x", bbox.x - 5)
+            .attr("y", bbox.y - 2)
+            .attr("width", bbox.width + 10)
+            .attr("height", bbox.height + 4)
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .style("fill", "black")
+            .style("opacity", 1);
+    });
+
+
+	    
+
+	 }
+	    
+    
 
 	
 // After appending the images to nodeGroup
@@ -297,7 +282,11 @@ const translateY = 100;
 const middle = (browserWidth - width ) / (scale * 10);
 		//currentScale = newScale;
 
-	/*
+	
+// Set the transform attribute
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
+
+/*
 	            console.log('newScale :', newScale);
 	            console.log('middle :', middle);
             console.log('width :', width);
@@ -306,42 +295,27 @@ const middle = (browserWidth - width ) / (scale * 10);
             console.log('scale :', scale);
 
 */
-// Set the transform attribute
-chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
-
-
 	
- // Apply the same zoom transformation to the link lines
-  function zoomed(event) {
-	  if(event.transform === ":translate(0,0) scale(1)"){
-		  	       console.log('zoomed(scale) retuned:');
+function zoomed(event) {
+  if (event.transform.k === currentScale) {
+    console.log('No zoom change');
+    return;
+  } else {
+    currentScale = event.transform.k;
+  }
 
-return;
-	  }else{
-        chartGroup.attr('transform', event.transform);
-	  }
-        updateImageAttributes();
-       console.log('zoomed(event)  :'+event.transform);
+  chartGroup.attr('transform', event.transform);
 
-  chartGroup
-    .selectAll('path.link')
+  updateImageAttributes();
+
+  chartGroup.selectAll('path.link')
     .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+      const source = { x: d.source.x * currentScale, y: d.source.y };
+      const target = { x: d.target.x * currentScale, y: d.target.y };
       return linkGenerator({ source, target });
     });
 }
-/*
-     zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
-*/
-	
 
-
-  updateImageAttributes();
-//applyZoom(scale);
 }
 
 
