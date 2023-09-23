@@ -625,6 +625,8 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
                             spouse: spouse,
                             parents: parents,
                             siblings: siblings,
+    depth: 0, // Initialize depth to 0 for each member
+
                         };
 
                         // Store member data in the map
@@ -640,6 +642,13 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
                             memberDataMap[id].parents.push(parentsID);
                         }
                     });
+
+ if (parents.length > 0) {
+    memberData.depth = Math.max(...parents.map(parentID => memberDataMap[parentID].depth)) + 1;
+  }
+
+
+		      
 
     });
 
@@ -749,12 +758,6 @@ console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     const uniqueChildren = {}; // Declare uniqueChildren as an empty object
 
-const childResults = node.children
-  .map((childID) => {
-    const childNode = memberDataMap[childID];
-    return childNode ? buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1) : null;
-  })
-  .filter((result) => result !== null);
 	
 /*
   const childResults = node.children
@@ -769,6 +772,17 @@ const childResults = node.children
     })
     .filter((result) => result !== null);  // Remove null results
 */
+  const childResults = node.children.map((childID) => {
+    const childNode = memberDataMap[childID];
+    if (childNode) {
+      // Update the child node's depth
+      childNode.depth = currentDepth + 1;
+      return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
+    }
+    return null;
+  }).filter((result) => result !== null);
+
+  // Update the maxHierarchyDepth for this depth
   if (childResults.length === 0) {
     maxHierarchyDepth = currentDepth;
   } else {
