@@ -649,7 +649,7 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
           }
         });
 
-const parentsOfParents = getParentsOfParents(memberIDWithMaxDepth);
+const parentsOfParents = getParentsOfParents();
 
 // Log the parents of parents
 console.log('Parents of Parents:', parentsOfParents);
