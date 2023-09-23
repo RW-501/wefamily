@@ -124,7 +124,9 @@ chartGroup.selectAll("path")
 console.log('memberData :', memberData);
 console.log('memberData data:', memberData.data);
 
-    if (memberData.id === "undefined" || memberData.id === "" || memberData.id === null ) {
+    if (memberData.children === []  ) {
+
+	    
         chartGroup.selectAll("text")
             .data(root.descendants())
             .enter()
@@ -180,6 +182,7 @@ chartGroup.selectAll("text")
     
 
 
+console.log('userID :', userID);
 
     if (memberData.id === userID) {
 
@@ -209,7 +212,7 @@ nodeGroup.append("image")
     .attr("clip-path", "url(#clipCircle)")
     .style("object-fit", "cover" )
 .style("width", imageWidth)
-.style("height", imageHeight)
+.style("height", 'auto')
 	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
@@ -242,7 +245,7 @@ nodeGroup.append("image")
     .attr("clip-path", "url(#clipCircle)")
     .style("object-fit", "cover")
 .style("width", imageWidth)
-.style("height",imageHeight)
+.style("height",'auto')
 	.on("click", function (event, d) {
         console.log("Clicked image Data:", d.data);
         showMemberPopup(d.data);
@@ -297,7 +300,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
         updateImageAttributes();
-       console.log('zoomed(event)  :'+event);
+       console.log('zoomed(event)  :'+event.transform);
 
   chartGroup
     .selectAll('path.link')
