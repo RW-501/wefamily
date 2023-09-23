@@ -803,8 +803,6 @@ function displayChildrenNames(parentID, callback) {
 }
 
 
-    callback(parent.name, childrenNames);
-}
 
 // Example callback function to display children names
 function displayChildrenCallback(parentName, childrenNames) {
