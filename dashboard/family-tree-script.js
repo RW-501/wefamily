@@ -445,13 +445,13 @@ let children = displayChildrenNames(memberID, displayChildrenCallback);
 
 		 
 
-if (Array.isArray(parentNames)) {
+if (parentNames) {
   // Initialize an array to store parent names
-  memberDetails['Parent: '] = [];
-  parentNames.forEach((parent, index) => {
+//  memberDetails['Parent: '] = [];
+//  parentNames.forEach((parent, index) => {
     // Push each parent's name to the array
-    memberDetails['Parent: '].push(parent.name || '');
-  });
+    memberDetails['Parent: '] = parentNames.name || '');
+  //});
 }
 
 // Other properties can be added similarly based on your logic
@@ -818,14 +818,14 @@ function getParentNames(childID) {
   // Iterate through each member in the map
   for (const [memberID, member] of Object.entries(memberDataMap)) {
     const children = member.children;
-    console.log(`children for memberID ${memberID}: ${children}`);
+//    console.log(`children for memberID ${memberID}: ${children}`);
 
     if (children) {
       // Check if the childID exists in the member's children
       const childIDs = children.map(child => child.id);
       if (childIDs.includes(childID)) {
         parentName = member.name;
-        console.log(`Parent name ${parentName} found for childID ${childID}`);
+      //  console.log(`Parent name ${parentName} found for childID ${childID}`);
         // Break the loop as we found the parent
         break;
       }
