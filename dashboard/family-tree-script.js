@@ -114,15 +114,6 @@ chartGroup.selectAll("path")
 
 
 
-  nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
-	
-
-
 
 	
     let memberData = familyData;
@@ -136,9 +127,18 @@ memberData = memberData.data;
 console.log('userID :', userID);
 console.log('memberData.id :', memberData.id);
 
+
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+// Add text for each node
 nodeGroup.selectAll("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
+    .attr("x", 0)  // Adjust the x position as needed
+    .attr("y", -10)  // Adjust the y position as needed
     .attr("dy", -70)
     .attr("text-anchor", "middle")
     .style("font-weight", "900")
@@ -146,10 +146,6 @@ nodeGroup.selectAll("text")
     .style("fill", "white")
     .style("pointer-events", "none")
     .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    })
     .each(function () {
         const bbox = this.getBBox();
         d3.select(this.parentNode)
@@ -161,16 +157,22 @@ nodeGroup.selectAll("text")
             .attr("rx", 10)
             .attr("ry", 10)
             .style("fill", "black")
-            .style("opacity", 1);
+            .style("opacity", 0.7);  // Adjust the opacity as needed
     });
 
-	
+	// Adjust the position of the text elements
+nodeGroup.selectAll("text")
+    .attr("x", d => d.x)  // Adjust the x position as needed
+    .attr("y", d => d.y - 20);  // Adjust the y position as needed
+
+
 
 
 	
     if (memberData.id === userID) {
 console.log('?????????????????????????????????????????????????????????????????????????      userID :');
     }
+              console.log('memberData.children :', memberData.children);
 
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
@@ -207,7 +209,6 @@ nodeGroup.append("image")
 
 
   
-              console.log('memberData.children :', memberData.children);
   
 
 // After appending the images to nodeGroup
@@ -285,6 +286,9 @@ chartGroup
 	
 
 function updateImageAttributes() {
+  nodeGroup.selectAll("text")
+        .attr("x", d => d.x)  // Adjust the x position as needed
+        .attr("y", d => d.y - 20);  // Adjust the y position as needed
 
   nodeGroup.selectAll("image")
     .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
