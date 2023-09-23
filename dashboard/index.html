@@ -129,10 +129,17 @@ function initializeFamilyTreeChart() {
             <div id="tree-content" class="SECTION">
              			    <div class="space_J">
   <h2>Family Members</h2>
-					    <div class="grid">
+					    <div class="grid"> 
+ <button id="sortByNameBtn" onclick="sortedByNameFunc()">Sort by Name</button>
+<button id="sortByBirthdayBtn" onclick="sortByBirthdayFunc()">Sort by Birthday</button>
+				    </div>
+
+					    <div class="grid"> 
 					    <h5 id="familyCount"></h5>
 					    <h4 ><small id="familyDepth"></small></h4>
 					    </div>
+
+
 				    </div>
                 <div id="family-members">
                     <!-- Family member details will be added here dynamically -->
@@ -1447,6 +1454,68 @@ var Current_USERPHOTO = '';
 
         }
 
+
+
+
+
+function populateFamilyMemberDetails(data, userID) {
+  const formattedBirthdate = formatDateToMonthDay(data.birthdate);
+  let claim_Div = "";
+  
+  if (data.memberID === userID || data.addByID === userID) {
+    claim_Div += "<button class='edit-member'>Edit Member</button>";
+
+    if (data.userID === userID) {
+      Current_USERNAME = data.first_name;
+      Current_USERPHOTO = data.photo;
+    }
+  } else {
+    if (data.userID === "") {
+      claim_Div += "<button class='claim-member'>Claim Member</button>";
+    }
+  }
+
+  const memberDiv = document.createElement("div");
+  memberDiv.className = 'family-member';
+  memberDiv.innerHTML = `
+    <button class="add-parent">Add Parent</button>
+    <div id="${data.memberID}" class="member-details">
+      <!-- Member details go here -->
+      <p class="member-name">${data.first_name} ${data.last_name} ${data.nameSuffix || ""}</p>
+      <p class="member-birthday">Birthdate: ${formattedBirthdate}</p>
+      ${claim_Div}
+      <!-- Add other fields as needed -->
+    </div>
+    <button class="add-child">Add Child</button>
+  `;
+
+  const addParentBtn = memberDiv.querySelector('.add-parent');
+  addParentBtn.addEventListener('click', () => addParent(data));
+
+  const addChildBtn = memberDiv.querySelector('.add-child');
+  addChildBtn.addEventListener('click', () => addChild(data));
+
+  if (data.memberID === userID || data.addByID === userID) {
+    const editMemberBTN = memberDiv.querySelector('.edit-member');
+    editMemberBTN.addEventListener('click', () => editMemberFunc(data));
+  } else {
+    if (data.userID === "") {
+      const claimMemberBTN = memberDiv.querySelector('.claim-member');
+      claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
+    }
+  }
+
+  familyMembersContainer.appendChild(memberDiv);
+  initializeFamilyTreeChart();
+}
+
+
+
+	    
+
+
+
+	    const familyMembers = [];
         // Function to display family members
   async function displayFamilyMembers(treeID) {
 	  		loadPosts();
@@ -1478,78 +1547,87 @@ document.getElementById("add-member").style.display = "none";
 	//console.log('querySnapshot.size  ID:', querySnapshot.size );
 document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members";
 	    
-        querySnapshot.forEach((member) => {
-            const data = member.data();
-            console.log("first_name    ."+data.first_name);
-            console.log("birthdate    ."+data.birthdate);
-
-	   
-		
-            // Implement dynamic population of family member details here
-let claim_Div = "";	
-if (data.memberID === userID || data.addByID === userID) {
-claim_Div += "<button class='edit-member'>Edit Member</button>";
-
-		
-if (data.userID === userID) {
- Current_USERNAME = data.first_name;
- Current_USERPHOTO = data.photo;
-}
-}else{
-if(data.userID === "" ){
-claim_Div += "<button class='claim-member'>Claim Member</button>";
-}
-	
-}
-let formattedBirthdate = formatDateToMonthDay(data.birthdate);
-	
-            const memberDiv = document.createElement("div");
-        memberDiv.className = 'family-member';
-            memberDiv.innerHTML = `
- <button class="add-parent">Add Parent</button>
-            <div id="${data.memberID}" class="member-details">
-                <!-- Member details go here -->
-               <p class="member-name">${data.first_name} ${data.last_name} ${data.nameSuffix || ""}</p>
-                <p class="member-birthday">Birthdate: ${formattedBirthdate}</p>
-            ${claim_Div}
-                <!-- Add other fields as needed -->
-       
-            </div>
-            <button class="add-child">Add Child</button>
-        `;
-
-        // Add event listeners for each button in the new family member
-   const addParentBtn = memberDiv.querySelector('.add-parent');
-addParentBtn.addEventListener('click', () => addParent(data));
 
 
-const addChildBtn = memberDiv.querySelector('.add-child');
-addChildBtn.addEventListener('click', () => addChild(data));
+querySnapshot.forEach((member) => {
+  const data = member.data();
+  familyMembers.push(data);
+  console.log("first_name    ." + data.first_name);
+  console.log("birthdate    ." + data.birthdate);
+
+  populateFamilyMemberDetails(data, userID);
+});
 
 
-
-		
-
-if (data.memberID === userID || data.addByID === userID) {
-    const editMemberBTN = memberDiv.querySelector('.edit-member');
-    editMemberBTN.addEventListener('click', () => editMemberFunc(data));
-} else {
-    if (data.userID === "") {
-        const claimMemberBTN = memberDiv.querySelector('.claim-member');
-        claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
-    }
-}
-
-    
-            familyMembersContainer.appendChild(memberDiv);
-
-		initializeFamilyTreeChart();
-        });
+	    
     } catch (error) {
         console.error('Error displaying family members:', error);
     }
 }
 
+// Helper function to sort data by member name
+function sortByName(members) {
+  return members.sort((a, b) => {
+    const nameA = a.first_name.toUpperCase();
+    const nameB = b.first_name.toUpperCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
+}
+
+// Helper function to sort data by birthday
+function sortByBirthday(members) {
+  return members.sort((a, b) => {
+    const dateA = new Date(a.birthdate);
+    const dateB = new Date(b.birthdate);
+    return dateA - dateB;
+  });
+}
+
+// Collect member data into an array
+const familyMembers = [];
+querySnapshot.forEach((member) => {
+  const data = member.data();
+  familyMembers.push(data);
+});
+
+
+
+// Sort by name
+function sortedByNameFunc(){
+  const sortedByName = sortByName([...familyMembers]);
+
+  // Clear the existing family members container
+  familyMembersContainer.innerHTML = '';
+
+  // Populate family member details for the sorted data
+  sortedByName.forEach((data) => {
+    populateFamilyMemberDetails(data, userID);
+  });	
+	
+	
+}
+	    
+
+// Sort by birthday
+function sortedByBirthdayFunc(){
+const sortedByBirthday = sortByBirthday([...familyMembers]);
+
+  // Clear the existing family members container
+  familyMembersContainer.innerHTML = '';
+
+  // Populate family member details for the sorted data
+  sortedByBirthday.forEach((data) => {
+    populateFamilyMemberDetails(data, userID);
+  });
+	
+	
+}
+	    
+	
+
+	    
 	    function claimMemberFunc(member){
 //showMainMessage("claim "+member.memberID);
 
