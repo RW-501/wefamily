@@ -650,6 +650,11 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
           }
         });
 
+const parentsOfParents = getParentsOfParents(memberIDWithMaxDepth);
+
+// Log the parents of parents
+console.log('Parents of Parents:', parentsOfParents);
+		    
         // Update the root to use the member with the most children as the root
         let root = {
   id: treeID,
@@ -676,10 +681,6 @@ countChildrenAtEachDepth(nodeID, 0, depthCounts);
 console.log('Children count at each depth:', depthCounts);
 
 
-const parentsOfParents = getParentsOfParents(memberIDWithMaxDepth);
-
-// Log the parents of parents
-console.log('Parents of Parents:', parentsOfParents);
 
 
 
@@ -720,20 +721,7 @@ const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
 function buildTree(node, depthLimit, processedNodes, currentDepth) {
     const uniqueChildren = {}; // Declare uniqueChildren as an empty object
 
-	
-/*
-  const childResults = node.children
-    .map((childID) => {
-      const childNode = memberDataMap[childID];
-      if (childNode) {
-        if (!uniqueChildren[childID]) {
-          return buildTree(childNode, depthLimit - 1, processedNodes, currentDepth + 1);
-        }
-      }
-      return null;
-    })
-    .filter((result) => result !== null);  // Remove null results
-*/
+
   const childResults = node.children.map((childID) => {
     const childNode = memberDataMap[childID];
     if (childNode) {
