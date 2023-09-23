@@ -273,11 +273,10 @@ handleCollisions(nodes);
 
 
 
-
-    // Apply the zoom behavior to the SVG
+/*    // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-
+*/
 
 console.log('Browser width:', browserWidth);
 	
@@ -308,7 +307,7 @@ function zoomed(event) {
     console.log('No zoom change');
     return;
   } else {
-    currentScale = event.transform.k;
+  //  currentScale = event.transform.k;
   }
 
   chartGroup.attr('transform', event.transform);
