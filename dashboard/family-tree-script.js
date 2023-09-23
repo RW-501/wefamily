@@ -80,10 +80,6 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
         .x(d => d.x) // Swap x and y due to vertical tree layout
         .y(d => d.y);
 
-    zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
-	
     const links = root.links();
 
 
@@ -102,6 +98,10 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 
 
 
+    zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+	
 	
 chartGroup.selectAll("path")
   .data(links)
@@ -118,6 +118,17 @@ chartGroup.selectAll("path")
 
 
 	
+
+
+	
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+
 
 
 
@@ -159,15 +170,22 @@ console.log('???????????????????????????????????????????????????????????????????
 
 	// Add text for each node
 chartGroup.selectAll("text")
-    .attr("x", 0)  // Adjust the x position as needed
-    .attr("y", -10)  // Adjust the y position as needed
+    .data(root.descendants())
+    .enter()
+    .append("text")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
     .attr("dy", 70)
     .attr("text-anchor", "middle")
-    .style("font-weight", "900")
-    .style("font-size", "1.2em")
-    .style("fill", "white")
-    .style("pointer-events", "none")
+    .style("font-weight", "900")  // Set font weight to bold
+    .style("font-size", "1.2em")     // Set font size to 1em
+    .style("fill", "white")        // Set font color to white
+    .style("pointer-events", "none")  // Prevent text from blocking click events
     .text(d => d.data.name)
+    .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    })
     .each(function () {
         const bbox = this.getBBox();
         d3.select(this.parentNode)
@@ -184,15 +202,6 @@ chartGroup.selectAll("text")
 
 
 
-
-
-
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
 
@@ -233,13 +242,12 @@ nodeGroup.append("image")
     });
 
 
-/*
+
 // After appending the images to nodeGroup
 const nodes = root.descendants();
 handleCollisions(nodes);
 
 
-*/
 
 
 
@@ -247,7 +255,6 @@ handleCollisions(nodes);
 
 
 
-	
 
   
 
