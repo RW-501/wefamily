@@ -685,56 +685,13 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
     console.log("treeData.name   " + treeData.name);
     console.log("treeData.children   " + treeData.children);
 
-/*
- if(maxChildrenCount > 0){
-			  
-		  root = {
-          id: treeID,
-          name: treeData.name,
-          children: [memberIDWithMaxDepth], // Set the member with the most children as the root
-          data: memberDataMap,
-            photo: treeData.photo,
-          location: treeData.location,
-          description: treeData.description,
-          public: treeData.public,
-          adminID: treeData.adminID,
-          familyCode: treeData.familyCode,
-        };
-    console.log("maxChildrenCount root   " + root);
-console.log('memberDataMap:', memberDataMap);
-	 setRootValue(memberIDWithMaxDepth);
+		    
+// Example usage: Count children at each depth for a specific node
+const nodeID = treeID; // Replace with the actual node ID
+const depthCounts = {}; // Object to store counts at each depth
+countChildrenAtEachDepth(nodeID, 0, depthCounts);
 
-		  }else if (treeData.root ) {
- root = {
-          id: treeID,
-          name: treeData.name,
-          children: [treeData.root], // Set the member with the most children as the root
-          data: treeData,
-             photo: treeData.photo,
-          location: treeData.location,
-          description: treeData.description,
-          public: treeData.public,
-          adminID: treeData.adminID,
-          familyCode: treeData.familyCode,
-        };
-		    console.log("treeData root   " + root);
-	  
-                    } else {
-                      root = {
-          id: treeID,
-          name: treeData.name,
-          children: [rootID], // Set the member with the most children as the root
-          data: memberDataMap,
-              photo: treeData.photo,
-          location: treeData.location,
-          description: treeData.description,
-          public: treeData.public,
-          adminID: treeData.adminID,
-          familyCode: treeData.familyCode,
-        }; 
-
-                    }	
-*/
+console.log('Children count at each depth:', depthCounts);
 
 	 		    console.log("else root   " + root);
 
@@ -878,7 +835,6 @@ function getParentNames(parentIDs) {
 }
 
 
-const familyCount = document.getElementById("familyCount");
 
 function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
   const node = memberDataMap[nodeID];
@@ -897,12 +853,6 @@ function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
   });
 }
 
-// Example usage: Count children at each depth for a specific node
-const nodeID = 'someNodeID'; // Replace with the actual node ID
-const depthCounts = {}; // Object to store counts at each depth
-countChildrenAtEachDepth(nodeID, 0, depthCounts);
-
-console.log('Children count at each depth:', depthCounts);
 
 
 
