@@ -789,29 +789,6 @@ function displayChildrenNames(parentID, callback) {
 }
 
 
-function getParentsOfParents(nodeID) {
-  const parentsOfParents = []; // Array to store parents of parents
-
-  const getNodeParents = (nodeID) => {
-    const node = memberDataMap[nodeID];
-    if (!node) return; // Node not found
-
-    const parentIDs = node.parents;
-
-    // Traverse each parent and gather their parents
-    for (const parentID of parentIDs) {
-      const parentNode = memberDataMap[parentID];
-      if (parentNode) {
-        parentsOfParents.push(parentNode);
-        // Recursively get parents of this parent
-        getNodeParents(parentID);
-      }
-    }
-  };
-
-  getNodeParents(nodeID);
-  return parentsOfParents;
-}
 
 
 // Example callback function to display children names
@@ -837,19 +814,22 @@ function getParentNames(childID) {
         console.log(`Child with ID ${childID} not found.`);
         return [];
     }
+            console.log(`childID ${child}  found.`);
 
     const parentIDs = child.parents;
     const parentNames = [];
+            console.log(`parentIDs ${parentIDs}  found.`);
 
     parentIDs.forEach((parentID) => {
         const parent = memberDataMap[parentID];
         if (parent) {
-            const parentName = `${parent.first_name} ${parent.last_name}`;
+            const parentName = `${parent.name}`;
             parentNames.push(parentName);
         } else {
             console.log(`Parent with ID ${parentID} not found.`);
         }
     });
+            console.log(`parentNames ${parentNames}  found.`);
 
     return parentNames;
     }
@@ -874,6 +854,29 @@ function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
   });
 }
 
+function getParentsOfParents(nodeID) {
+  const parentsOfParents = []; // Array to store parents of parents
+
+  const getNodeParents = (nodeID) => {
+    const node = memberDataMap[nodeID];
+    if (!node) return; // Node not found
+
+    const parentIDs = node.parents;
+
+    // Traverse each parent and gather their parents
+    for (const parentID of parentIDs) {
+      const parentNode = memberDataMap[parentID];
+      if (parentNode) {
+        parentsOfParents.push(parentNode);
+        // Recursively get parents of this parent
+        getNodeParents(parentID);
+      }
+    }
+  };
+
+  getNodeParents(nodeID);
+  return parentsOfParents;
+}
 
 
 
