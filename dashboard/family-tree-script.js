@@ -299,7 +299,11 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 	
  // Apply the same zoom transformation to the link lines
   function zoomed(event) {
+	  if(event.transform === ":translate(0,0) scale(1)"){
+return;
+	  }else{
         chartGroup.attr('transform', event.transform);
+	  }
         updateImageAttributes();
        console.log('zoomed(event)  :'+event.transform);
 
