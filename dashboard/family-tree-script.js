@@ -449,7 +449,7 @@ if (parentNames) {
 
 	parentNames.forEach((parent, index) => {
       // console.log(`Child ${index + 1}:`);
-		memberDetails['parent '] = parent.name || '';
+		memberDetails['Parent '] = parent.name || '';
         console.log(`Name: parent.name || 'N/A'`);
     });
     
