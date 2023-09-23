@@ -461,7 +461,7 @@ if (children) {
 	children.forEach((child, index) => {
       // console.log(`Child ${index + 1}:`);
 		memberDetails['children  '] = child.name || '';
-        console.log(`Name: ${child.name || 'N/A'`);
+        console.log(`Name: child.name || 'N/A'`);
     });
     
  }
@@ -676,6 +676,16 @@ countChildrenAtEachDepth(nodeID, 0, depthCounts);
 console.log('Children count at each depth:', depthCounts);
 
 
+const parentsOfParents = getParentsOfParents(memberIDWithMaxDepth);
+
+// Log the parents of parents
+console.log('Parents of Parents:', parentsOfParents);
+
+
+
+
+		    
+
 let maxCount = 0;
 let maxDepth = 0;
 
@@ -790,6 +800,29 @@ function displayChildrenNames(parentID, callback) {
     callback(parent.name, childrenNames);
 }
 
+function getParentsOfParents(nodeID) {
+  const parentsOfParents = []; // Array to store parents of parents
+
+  const getNodeParents = (nodeID) => {
+    const node = memberDataMap[nodeID];
+    if (!node) return; // Node not found
+
+    const parentIDs = node.parents;
+
+    // Traverse each parent and gather their parents
+    for (const parentID of parentIDs) {
+      const parentNode = memberDataMap[parentID];
+      if (parentNode) {
+        parentsOfParents.push(parentNode);
+        // Recursively get parents of this parent
+        getNodeParents(parentID);
+      }
+    }
+  };
+
+  getNodeParents(nodeID);
+  return parentsOfParents;
+}
 
 
 // Example callback function to display children names
