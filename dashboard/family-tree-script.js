@@ -297,7 +297,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
   function zoomed(event) {
         chartGroup.attr('transform', event.transform);
         updateImageAttributes();
-       console.log('zoomed(event)  :');
+       console.log('zoomed(event)  :'+event);
 
   chartGroup
     .selectAll('path.link')
