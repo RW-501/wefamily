@@ -820,7 +820,7 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 function getParentNames(parentIDs) {
     const parentNames = [];
-                  console.log('memberDataMap[parentID].children :',  memberDataMap[parentID]);
+                  console.log('memberDataMap[parentID].children :',  memberDataMap[parentIDs]);
 
     for (const parentID of parentIDs) {
         const parent = memberDataMap[parentID];
