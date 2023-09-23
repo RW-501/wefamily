@@ -456,7 +456,7 @@ if (parentNames) {
 
 	parentNames.forEach((parent, index) => {
       // console.log(`Child ${index + 1}:`);
-		memberDetails['parent '] = parent.name || '');
+		memberDetails['parent '] = parent.name || '';
         console.log(`Name: parent.name || 'N/A')`;
     });
     
@@ -467,7 +467,7 @@ if (children) {
 
 	children.forEach((child, index) => {
       // console.log(`Child ${index + 1}:`);
-		memberDetails['children  '] = child.name || '');
+		memberDetails['children  '] = child.name || '';
        // console.log(`Name: ${child.name || 'N/A'})`;
     });
     
