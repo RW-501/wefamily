@@ -820,19 +820,20 @@ function getParentNames(childID) {
     const children = member.children;
     console.log(`children for memberID ${memberID}: ${children}`);
 
-    // Check if the childID exists in the member's children
-    if (children && children.includes(childID)) {
-      parentName = member.name;
-      console.log(`Parent name ${parentName} found for childID ${childID}`);
-      // Break the loop as we found the parent
-      break;
+    if (children) {
+      // Check if the childID exists in the member's children
+      const childIDs = children.map(child => child.id);
+      if (childIDs.includes(childID)) {
+        parentName = member.name;
+        console.log(`Parent name ${parentName} found for childID ${childID}`);
+        // Break the loop as we found the parent
+        break;
+      }
     }
   }
 
   return parentName;
 }
-
-
 
 
 
