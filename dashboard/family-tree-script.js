@@ -822,15 +822,15 @@ function getParentNames(childID) {
     const parentNames = [];
             console.log(`parentIDs ${parentIDs}  found.`);
 
-    parentIDs.forEach((parentID) => {
-        const parent = memberDataMap[parentID];
+    //parentIDs.forEach((parentID) => {
+        const parent = memberDataMap[parentIDs];
         if (parent) {
             const parentName = `${parent.name}`;
             parentNames.push(parentName);
         } else {
             console.log(`Parent with ID ${parentID} not found.`);
         }
-    });
+   // });
             console.log(`parentNames ${parentNames}  found.`);
 
     return parentNames;
