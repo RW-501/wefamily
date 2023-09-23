@@ -613,7 +613,7 @@ function setRootValue(rootValue) {
 let maxHierarchyDepth = 0;
 let memberIDWithMaxDepth = null;
 
-const memberDataMap = {};
+var memberDataMap = {};
 let rootID = "";
 
 function fetchFamilyMemberData(collectionName, treeID) {
