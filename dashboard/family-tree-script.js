@@ -3,7 +3,31 @@
 
 
 
-/// works
+function centerLayersOnScreen() {
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Get the dimensions of the layers
+  const nodeGroupWidth = nodeGroup.node().getBBox().width;
+  const nodeGroupHeight = nodeGroup.node().getBBox().height;
+
+  const chartGroupWidth = chartGroup.node().getBBox().width;
+  const chartGroupHeight = chartGroup.node().getBBox().height;
+
+  // Calculate the translation for nodeGroup to center horizontally
+  const nodeGroupTranslateX = (screenWidth - nodeGroupWidth) / 2;
+  const nodeGroupTranslateY = (screenHeight - nodeGroupHeight) / 2;
+
+  // Calculate the translation for chartGroup to center horizontally
+  const chartGroupTranslateX = (screenWidth - chartGroupWidth) / 2;
+  const chartGroupTranslateY = (screenHeight - chartGroupHeight) / 2;
+
+  // Apply the translation to center the layers
+  nodeGroup.attr('transform', `translate(${nodeGroupTranslateX},${nodeGroupTranslateY})`);
+  chartGroup.attr('transform', `translate(${chartGroupTranslateX},${chartGroupTranslateY})`);
+}
+
+// Call this function to center the layers
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
@@ -17,12 +41,21 @@ zoomOutButton.addEventListener('click', () => {
        console.log('width :', width);
        console.log('zoom :', zoom);
        console.log('d3.zoomIdentity :', d3.zoomIdentity);
+const nodeGroupWidth = nodeGroup.node().clientWidth;
+const nodeGroupHeight = nodeGroup.node().clientHeight;
+
+const chartGroupWidth = chartGroup.node().clientWidth;
+const chartGroupHeight = chartGroup.node().clientHeight;
+
+console.log('nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
+console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
 
 
 	
 });
 
 zoomInButton.addEventListener('click', () => {
+centerLayersOnScreen();
 
 	
 });
