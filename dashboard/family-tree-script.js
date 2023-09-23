@@ -450,7 +450,7 @@ if (parentNames) {
 //  memberDetails['Parent: '] = [];
 //  parentNames.forEach((parent, index) => {
     // Push each parent's name to the array
-    memberDetails['Parent: '] = parentNames.name || '');
+    memberDetails['Parent: '] = parentNames.name || '';
   //});
 }
 
