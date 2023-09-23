@@ -41,7 +41,7 @@ var nodeGroup;
 	
 function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
-    const height_Layout = 200 * maxHierarchyDepth;
+    const height_Layout = 200 * maxHierarchyDepth + 250;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
 	            console.log('width :', width);
@@ -275,7 +275,7 @@ handleCollisions(nodes);
 console.log('Browser width:', browserWidth);
 	
 const translateX = (browserWidth - width) / 2;
-const translateY = 100;
+const translateY = 250;
  const scale =  browserWidth / width;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
