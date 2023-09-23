@@ -40,7 +40,7 @@ var linkGenerator;
 var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
-    const width = 250 * maxGenerationWidth; //window.screen.width;
+    const width = 300 * maxGenerationWidth; //window.screen.width;
     const height_Layout = 200 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
@@ -66,7 +66,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 
    // Generate the tree layout using the modified size
 const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * width * 100; // Adjust the width between nodes as needed
+    d.y = d.depth * width * 500; // Adjust the width between nodes as needed
     d.x = d.depth * 100; // Adjust the vertical spacing as needed
 })
 
@@ -145,36 +145,49 @@ console.log('memberData data:', memberData.data);
     } else {
 	    
 
-// Rest of your existing code for adding the text
-chartGroup.selectAll("text")
-    .data(root.descendants())
-    .enter()
-    .append("text")
+nodeGroup.selectAll("image")
+    .attr("xlink:href", d => d.data.photo)
+    .attr("x", d => -imageWidth / 2)
+    .attr("y", d => -imageHeight / 2)
+    .attr("width", imageWidth)
+    .attr("height", imageHeight)
+    .attr("clip-path", "url(#clipCircle)")
+    .style("object-fit", "cover")
+    .style("width", imageWidth)
+    .style("height",'auto')
+    .on("click", function (event, d) {
+        console.log("Clicked image Data:", d.data);
+        showMemberPopup(d.data);
+    });
+
+nodeGroup.selectAll("text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
     .attr("dy", 70)
     .attr("text-anchor", "middle")
-    .style("font-weight", "900")  // Set font weight to bold
-    .style("font-size", "1.2em")     // Set font size to 1em
-    .style("fill", "white")        // Set font color to white
-    .style("pointer-events", "none")  // Prevent text from blocking click events
+    .style("font-weight", "900")
+    .style("font-size", "1.2em")
+    .style("fill", "white")
+    .style("pointer-events", "none")
     .text(d => d.data.name)
     .on("click", function (event, d) {
         console.log("Clicked text Data:", d.data);
         showMemberPopup(d.data);
     })
     .each(function () {
-        const bbox = this.getBBox();  // Get the bounding box of the text
-        d3.select(this.parentNode)  // Select the parent (g) element
-            .insert("rect", ":first-child")  // Insert a rectangle as the first child
-            .attr("x", bbox.x - 5)  // Adjust x to have some padding
-            .attr("y", bbox.y - 2)  // Adjust y to have some padding
-            .attr("width", bbox.width + 10)  // Adjust width to have some padding
-            .attr("height", bbox.height + 4)  // Adjust height to have some padding
-    .attr("rx", 10)  // Horizontal radius for rounded corners
-    .attr("ry", 10)  // Vertical radius for rounded corners
-    .style("fill", "black")       
-		.style("opacity", 1);
+        const bbox = this.getBBox();
+        d3.select(this.parentNode)
+            .insert("rect", ":first-child")
+            .attr("x", bbox.x - 5)
+            .attr("y", bbox.y - 2)
+            .attr("width", bbox.width + 10)
+            .attr("height", bbox.height + 4)
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .style("fill", "black")
+            .style("opacity", 1);
+    });
+
 
 	    
 	    });
