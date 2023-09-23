@@ -565,6 +565,7 @@ function showMemberPopup(member) {
 }
 
 
+
 function hideMemberPopup() {
 
     const popup = document.getElementById('memberDetailPopup');
