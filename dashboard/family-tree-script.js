@@ -136,7 +136,35 @@ memberData = memberData.data;
 console.log('userID :', userID);
 console.log('memberData.id :', memberData.id);
 
+nodeGroup.selectAll("text")
+    .attr("x", d => d.x)
+    .attr("y", d => d.y)
+    .attr("dy", -70)
+    .attr("text-anchor", "middle")
+    .style("font-weight", "900")
+    .style("font-size", "1.2em")
+    .style("fill", "white")
+    .style("pointer-events", "none")
+    .text(d => d.data.name)
+    .on("click", function (event, d) {
+        console.log("Clicked text Data:", d.data);
+        showMemberPopup(d.data);
+    })
+    .each(function () {
+        const bbox = this.getBBox();
+        d3.select(this.parentNode)
+            .insert("rect", ":first-child")
+            .attr("x", bbox.x - 5)
+            .attr("y", bbox.y - 2)
+            .attr("width", bbox.width + 10)
+            .attr("height", bbox.height + 4)
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .style("fill", "black")
+            .style("opacity", 1);
+    });
 
+	
 
 
 	
@@ -179,39 +207,8 @@ nodeGroup.append("image")
 
   
               console.log('memberData.children :', memberData.children);
-   if (memberData.children === "X"  ) {
+  
 
-	    
-   }
-nodeGroup.selectAll("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dy", -70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")
-    .style("font-size", "1.2em")
-    .style("fill", "white")
-    .style("pointer-events", "none")
-    .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    })
-    .each(function () {
-        const bbox = this.getBBox();
-        d3.select(this.parentNode)
-            .insert("rect", ":first-child")
-            .attr("x", bbox.x - 5)
-            .attr("y", bbox.y - 2)
-            .attr("width", bbox.width + 10)
-            .attr("height", bbox.height + 4)
-            .attr("rx", 10)
-            .attr("ry", 10)
-            .style("fill", "black")
-            .style("opacity", 1);
-    });
-
-	
 // After appending the images to nodeGroup
 const nodes = root.descendants();
 handleCollisions(nodes);
