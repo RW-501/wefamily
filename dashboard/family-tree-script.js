@@ -371,7 +371,6 @@ function applyZoom(scale) {
 
          function populateMemberInfo(member) {
     // Populate image and text
-		 			                    console.log(' populateMemberInfo.'+member);
 
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
@@ -389,14 +388,14 @@ const memberID = member.id;
 
     console.log(memberData+`  Member with ID ${memberID} not found.`);
 		 
-/*
+
 if (member) {
      parentNames = getParentNames(memberData.parents);
     console.log('Parent Names:', parentNames);
 } else {
     console.log(`Member with ID ${memberID} not found.`);
 }
-	*/	 
+		 
 
 let formattedBirthdate = formatDateToMonthDay(member.birthdate);
 const memberDetails = {
