@@ -1513,6 +1513,7 @@ function populateFamilyMemberDetails(data, userID) {
 
 	    
 
+    const familyMembersContainer = document.getElementById("family-members");
 
 
 	    const familyMembers = [];
@@ -1522,7 +1523,6 @@ function populateFamilyMemberDetails(data, userID) {
 if(!treeID){
 		return;
 	}
-    const familyMembersContainer = document.getElementById("family-members");
     familyMembersContainer.innerHTML = ""; // Clear existing members
 
     const familyMembersCollection = firestore.collection('familyMembers');
