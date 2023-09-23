@@ -80,6 +80,10 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
         .x(d => d.x) // Swap x and y due to vertical tree layout
         .y(d => d.y);
 
+    zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+	
     const links = root.links();
 
 
@@ -96,9 +100,6 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
 
-    zoom = d3.zoom()
-        .scaleExtent([0.1, 10]) // Define the zoom scale limits
-        .on("zoom", zoomed);
 
 
 	
@@ -162,7 +163,15 @@ nodeGroup.selectAll("text")
 
 
 
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
 
+  
+  
 	
     if (memberData.id === userID) {
 console.log('?????????????????????????????????????????????????????????????????????????      userID :');
@@ -201,15 +210,7 @@ nodeGroup.append("image")
         showMemberPopup(d.data);
     });
 
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
 
-  
-  
 
 // After appending the images to nodeGroup
 const nodes = root.descendants();
@@ -278,7 +279,7 @@ chartGroup
         .on("zoom", zoomed);
 */
 
-	 updateImageAttributes();
+	// updateImageAttributes();
 
 }
 
