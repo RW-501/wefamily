@@ -322,6 +322,7 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 */
 	
 function zoomed(event) {
+	/*
   if (event.transform.k === currentScale) {
     console.log('No zoom change');
     return;
@@ -330,7 +331,7 @@ function zoomed(event) {
 
 	      console.log(`currentScale of ${currentScale}:`);
   }
-
+*/
   chartGroup.attr('transform', event.transform);
 
   updateImageAttributes();
