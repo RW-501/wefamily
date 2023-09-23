@@ -4,32 +4,6 @@
 
 
 /// works
-const familyCount = document.getElementById("familyCount");
-
-function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
-  const node = memberDataMap[nodeID];
-  if (!node) return;  // Node not found or invalid ID
-
-  // Increment the count for the current depth
-  if (!depthCounts[currentDepth]) {
-    depthCounts[currentDepth] = 1;
-  } else {
-    depthCounts[currentDepth]++;
-  }
-
-  // Recur for each child with increased depth
-  node.children.forEach((childID) => {
-    countChildrenAtEachDepth(childID, currentDepth + 1, depthCounts);
-  });
-}
-
-// Example usage: Count children at each depth for a specific node
-const nodeID = 'someNodeID'; // Replace with the actual node ID
-const depthCounts = {}; // Object to store counts at each depth
-countChildrenAtEachDepth(nodeID, 0, depthCounts);
-
-console.log('Children count at each depth:', depthCounts);
-
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
@@ -896,6 +870,32 @@ function getParentNames(parentIDs) {
     return parentNames;
 }
 
+
+const familyCount = document.getElementById("familyCount");
+
+function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
+  const node = memberDataMap[nodeID];
+  if (!node) return;  // Node not found or invalid ID
+
+  // Increment the count for the current depth
+  if (!depthCounts[currentDepth]) {
+    depthCounts[currentDepth] = 1;
+  } else {
+    depthCounts[currentDepth]++;
+  }
+
+  // Recur for each child with increased depth
+  node.children.forEach((childID) => {
+    countChildrenAtEachDepth(childID, currentDepth + 1, depthCounts);
+  });
+}
+
+// Example usage: Count children at each depth for a specific node
+const nodeID = 'someNodeID'; // Replace with the actual node ID
+const depthCounts = {}; // Object to store counts at each depth
+countChildrenAtEachDepth(nodeID, 0, depthCounts);
+
+console.log('Children count at each depth:', depthCounts);
 
 
 
