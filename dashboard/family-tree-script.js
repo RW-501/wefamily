@@ -836,11 +836,6 @@ function getParentNames(childID) {
 
 
 
-  return parentName;
-    }
-    
-  
-
 
 function countChildrenAtEachDepth(nodeID, currentDepth, depthCounts) {
   const node = memberDataMap[nodeID];
