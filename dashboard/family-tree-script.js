@@ -819,13 +819,15 @@ function getParentNames(childID) {
   Object.values(memberDataMap).forEach((parent) => {
     const children = parent.children;
 	  
-            console.log(`children ${children}  found.`);
 
     // Check if the childID exists in the parent's children
     if (children && children.includes(childID)) {
       parentName = parent.name;
       // Break the loop as we found the parent
-      return;
+
+	                console.log(`parentName ${parentName}  found.`);
+
+      return parentName;
     }
   });
 
