@@ -1480,6 +1480,9 @@ document.getElementById("familyCount").innerHTML = querySnapshot.size+" Members"
 	    
         querySnapshot.forEach((member) => {
             const data = member.data();
+            console.log("data    ."+data);
+
+	    
             // Implement dynamic population of family member details here
 let claim_Div = "";	
 if (data.memberID === userID || data.addByID === userID) {
