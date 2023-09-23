@@ -449,7 +449,7 @@ function applyZoom(scale) {
 
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bio || "";
+          document.getElementById('memberInfo').value = member.bio || treeData.description;
 
 
 const memberID = member.id;
@@ -459,13 +459,47 @@ let formattedBirthdate = formatDateToMonthDay(member.birthdate);
 const memberDetails = {
     'Name': `${member.name}`,
     'Location': member.location,
-    'Birthdate': formattedBirthdate,
-    'Contact': member.contact,
-    'Note': member.note,
 };
-if (member.deceaseddate) {
-    memberDetails['Deceased Date'] = member.deceaseddate;
+		 
+if (formattedBirthdate) {
+    memberDetails['Birthdate '] = formattedBirthdate;
 }
+		 
+if (member.deceaseddate) {
+    memberDetails['Deceased Date '] = member.deceaseddate;
+}
+		 
+if (member.contact) {
+    memberDetails['Contact '] = member.contact;
+}
+		 
+if (member.note) {
+    memberDetails['Note '] = member.note;
+}
+if (member.familyCode) {
+    memberDetails['Family Code '] = member.familyCode;
+}
+if (member.familyCode) {
+    memberDetails['Gallery '] =`<button>See Gallery</button>`;
+const noScrollElement = document.getElementById('scrollTo');
+  noScrollElement.id = 'noScroll';
+noScrollElement.addEventListener('click', () => {
+  openEditFamilyTreePopup();
+});
+}else{
+const noScrollElement = document.getElementById('noScroll');
+
+// Check if the element with ID 'noScroll' exists
+if (noScrollElement) {
+  // Remove the event listener
+  noScrollElement.removeEventListener('click', openEditFamilyTreePopup);
+
+  // Change the ID to 'scrollTo'
+  noScrollElement.id = 'scrollTo';
+}
+
+}
+		 
 
 let children = displayChildrenNames(memberID, displayChildrenCallback);
 
@@ -695,7 +729,7 @@ console.log('ID of the first Parent of Parents:', parentsOfParents[0].id);
   data: maxChildrenCount > 0 ? memberDataMap : treeData,
           photo: treeData.photo,
           location: treeData.location,
-          description: treeData.description,
+          description: treeData.description ,
           public: treeData.public,
           adminID: treeData.adminID,
           familyCode: treeData.familyCode,
