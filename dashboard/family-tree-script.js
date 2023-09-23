@@ -419,9 +419,9 @@ function applyZoom(scale) {
           document.getElementById('memberInfo').value = member.bio || "";
 
 
-//let children = displayChildrenNames(member.id, displayChildrenCallback);
+let children = displayChildrenNames(member.id, displayChildrenCallback);
     console.log(`member of ${member}:`);
-  //  console.log(`Children of ${children}:`);
+   console.log(`Children of ${children}:`);
 		 
 	 let parentNames = "";
 	 
@@ -432,10 +432,10 @@ const memberID = member.id;
 		 
 
 if (member) {
-     parentNames = getParentNames(memberData.parents);
-    console.log('Parent Names:', parentNames);
+   //  parentNames = getParentNames(memberData.parents);
+   // console.log('Parent Names:', parentNames);
 } else {
-    console.log(`Member with ID ${memberID} not found.`);
+ //   console.log(`Member with ID ${memberID} not found.`);
 }
 		 
 
@@ -796,7 +796,7 @@ function displayChildrenNames(parentID, callback) {
     const childrenNames = childrenIDs.map((childID) => {
         const child = memberDataMap[childID];
         return {
-           // id: child.id,
+            id: child.id,
             name: child.name,
         };
     });
