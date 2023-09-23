@@ -787,6 +787,8 @@ function displayChildrenNames(parentID, callback) {
         console.log(`parent.name, childrenNames ${parent.name, childrenNames} `);
 
     callback(parent.name, childrenNames);
+
+	return childrenNames;
 }
 
 
