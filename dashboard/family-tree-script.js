@@ -121,15 +121,6 @@ chartGroup.selectAll("path")
 
 
 	
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
-
-
-
 
 
 
@@ -216,7 +207,7 @@ handleCollisions(nodes);
 
 
 	// Add text for each node
-chartGroup.selectAll("text")
+nodeGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
@@ -250,6 +241,15 @@ chartGroup.selectAll("text")
 
 
 
+
+
+
+nodeGroup = chartGroup.selectAll(".node")
+    .data(root.descendants())
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
 
