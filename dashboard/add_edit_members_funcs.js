@@ -47,17 +47,30 @@ closeEditFamilyMemberPopup();
 
 async function saveEditedFamilyMember() {
   try {
-    const editedFirstName = document.getElementById('edit-first-name').value || '';
-    const editedLastName = document.getElementById('edit-last-name').value || '';
-    const editedMiddleName = document.getElementById('edit-middle-name').value || '';
-    const nameSuffix = document.getElementById('nameSuffix').value || '';
-    const editedBirthdate = document.getElementById('edit-birthdate').value || '';
-    const editedBio = document.getElementById('edit-bio').value || '';
-    const editedDeceasedDate = document.getElementById('edit-deceaseddate').value || '';
-    const editedContact = document.getElementById('edit-contact').value || '';
-    const editedPrivate = document.getElementById('edit-private').value || '';
-    const editedNote = document.getElementById('edit-note').value || '';
-    const memberID = document.getElementById('userID_edit_Member').innerText || '';
+const editedFirstNameBefore = document.getElementById('edit-first-name').value || '';
+const editedLastNameBefore = document.getElementById('edit-last-name').value || '';
+const editedMiddleNameBefore = document.getElementById('edit-middle-name').value || '';
+const nameSuffixBefore = document.getElementById('nameSuffix').value || '';
+const editedBirthdateBefore = document.getElementById('edit-birthdate').value || '';
+const editedBioBefore = document.getElementById('edit-bio').value || '';
+const editedDeceasedDateBefore = document.getElementById('edit-deceaseddate').value || '';
+const editedContactBefore = document.getElementById('edit-contact').value || '';
+const editedPrivateBefore = document.getElementById('edit-private').value || '';
+const editedNoteBefore = document.getElementById('edit-note').value || '';
+const memberIDBefore = document.getElementById('userID_edit_Member').innerText || '';
+
+// Assuming input is a function that processes the input in a certain way
+const editedFirstName = input(editedFirstNameBefore);
+const editedLastName = input(editedLastNameBefore);
+const editedMiddleName = input(editedMiddleNameBefore);
+const nameSuffix = input(nameSuffixBefore);
+const editedBirthdate = input(editedBirthdateBefore);
+const editedBio = input(editedBioBefore);
+const editedDeceasedDate = input(editedDeceasedDateBefore);
+const editedContact = input(editedContactBefore);
+const editedPrivate = input(editedPrivateBefore);
+const editedNote = input(editedNoteBefore);
+const memberID = input(memberIDBefore);
 
     // Use appropriate method to get photo data
     const selectedFile = document.getElementById('edit-photo-file').files[0];
@@ -133,11 +146,12 @@ function closeEditFamilyMemberPopup() {
 
 function addNewFamilyMember() {
     // Get input values
-    const first_name = document.getElementById('member-first_name_type').value;
-    const last_name = document.getElementById('member-last_name_type').value;
-    const birthdate = document.getElementById('member-birthdate_type').value;
-    const deceaseddate = document.getElementById('member-deceaseddate_type').value;
-    const note = document.getElementById('member-note_type').value;
+const first_name = input(document.getElementById('member-first_name_type').value || '');
+const last_name = input(document.getElementById('member-last_name_type').value || '');
+const birthdate = input(document.getElementById('member-birthdate_type').value || '');
+const deceaseddate = input(document.getElementById('member-deceaseddate_type').value || '');
+const note = input(document.getElementById('member-note_type').value || '');
+
 
     if (!first_name && !last_name) {
         return;
@@ -402,12 +416,13 @@ function addFamilyMember() {
 	                    console.log('Added Member.');
 
     // Get input values
-    const first_name = document.getElementById('member-first_name').value;
-    const last_name = document.getElementById('member-last_name').value;
-    const birthdate = document.getElementById('member-birthdate').value;
-    const isPrivate = document.getElementById('member-private').checked;
-    const contact = document.getElementById('member-contact').value;
-    const note = document.getElementById('member-note').value;
+const first_name = input(document.getElementById('member-first_name').value || '');
+const last_name = input(document.getElementById('member-last_name').value || '');
+const birthdate = input(document.getElementById('member-birthdate').value || '');
+const isPrivate = input(document.getElementById('member-private').checked);
+const contact = input(document.getElementById('member-contact').value || '');
+const note = input(document.getElementById('member-note').value || '');
+
 
 if(!first_name && !last_name){
 		return;
