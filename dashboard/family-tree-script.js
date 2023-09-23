@@ -771,7 +771,6 @@ function displayChildrenNames(parentID, callback) {
         console.log(`Parent with ID ${parentID} not found.`);
         return;
     }
-        console.log(`parent  ${parent}  found.`);
 
     const childrenData = parent.children;
 
@@ -785,10 +784,10 @@ function displayChildrenNames(parentID, callback) {
         id: child.id || '',
         name: child.name || '',
     }));
-        console.log(`childrenData  ${parent.name, childrenNames}  found.`);
 
     callback(parent.name, childrenNames);
 }
+
 
 function getParentsOfParents(nodeID) {
   const parentsOfParents = []; // Array to store parents of parents
