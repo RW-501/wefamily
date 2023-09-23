@@ -819,7 +819,7 @@ function getParentNames(childID) {
     }
             console.log(`childID ${child}  found.`);
 
-    const parentIDs = child.parents;
+    const parentIDs = child.id;
     const parentNames = [];
             console.log(`parentIDs ${parentIDs}  found.`);
 
