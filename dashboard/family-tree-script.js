@@ -211,7 +211,7 @@ nodeGroup.append("image")
 
     }
 
-   if (memberData.children === []  ) {
+   if (memberData.children === "X"  ) {
 
 	    
         chartGroup.selectAll("text")
@@ -273,10 +273,10 @@ handleCollisions(nodes);
 
 
 
-/*    // Apply the zoom behavior to the SVG
+    // Apply the zoom behavior to the SVG
     svg.call(zoom)
         .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
-*/
+
 
 console.log('Browser width:', browserWidth);
 	
