@@ -619,7 +619,7 @@ let rootID = "";
 function fetchFamilyMemberData(collectionName, treeID) {
     return new Promise((resolve, reject) => {
         const db = firebase.firestore();
-	    
+	    memberDataMap = {};
     /*
     console.log("treeID   " + treeID);
     console.log("treeData.name   " + treeData.name);
@@ -744,7 +744,7 @@ const nodeID = memberIDWithMaxDepth; // Replace with the actual node ID
 const depthCounts = {}; // Object to store counts at each depth
 countChildrenAtEachDepth(nodeID, 0, depthCounts);
 
-console.log('Children count at each depth:', depthCounts);
+//console.log('Children count at each depth:', depthCounts);
 
 
 
@@ -767,7 +767,8 @@ for (const depth in depthCounts) {
 //console.log('Highest count of children:', maxCount);
 //console.log('Corresponding depth:', maxDepth);
 		    maxGenerationWidth = maxCount;
-		    
+		    console.log('root:', root);
+
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
 const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
 
