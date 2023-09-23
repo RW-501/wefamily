@@ -460,11 +460,11 @@ if (children) {
   let childrenList = '';
 
   children.forEach((child, index) => {
-    childrenList += child.name + '<br>' || '';
+    childrenList += '<br>' + child.name + '<br>' || '';
   });
 
   // Assign the children list to memberDetails
-  memberDetails['children'] = childrenList;
+  memberDetails['Children: '] = childrenList;
 }
 	
   
@@ -810,30 +810,26 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 
 
+
 function getParentNames(childID) {
-   const child = memberDataMap[childID];
-    if (!child) {
-        console.log(`Child with ID ${childID} not found.`);
-        return [];
+  let parentName = null;
+            console.log(`childID ${childID}  found.`);
+
+  // Iterate through each parent
+  Object.values(memberDataMap).forEach((parent) => {
+    const children = parent.children;
+	  
+            console.log(`children ${children}  found.`);
+
+    // Check if the childID exists in the parent's children
+    if (children && children.includes(childID)) {
+      parentName = parent.name;
+      // Break the loop as we found the parent
+      return;
     }
-            console.log(`childID ${child}  found.`);
+  });
 
-    const parentIDs = child.id;
-    const parentNames = [];
-            console.log(`parentIDs ${parentIDs}  found.`);
-
-    //parentIDs.forEach((parentID) => {
-        const parent = memberDataMap[parentIDs];
-        if (parent) {
-            const parentName = `${parent.name}`;
-            parentNames.push(parentName);
-        } else {
-            console.log(`Parent with ID ${parentID} not found.`);
-        }
-   // });
-            console.log(`parentNames ${parentNames}  found.`);
-
-    return parentNames;
+  return parentName;
     }
     
   
