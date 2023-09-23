@@ -454,9 +454,17 @@ if (member.deceaseddate) {
 }
 
 // Other properties can be added similarly based on your logic
-// if (member.children) {
-//     memberDetails['Children'] = children;
-// }
+if (member.children) {
+
+	children.forEach((child, index) => {
+      // console.log(`Child ${index + 1}:`);
+		memberDetails['***  '] = ${child.name || ''}`);
+        console.log(`Name: ${child.name || 'N/A'}`);
+      //  console.log(`ID: ${child.id || 'N/A'}`);
+//        console.log('---');
+    });
+    // memberDetails['Children'] = children;
+ }
 // ...
 
 // Example of adding 'Spouse' property if it's not blank
