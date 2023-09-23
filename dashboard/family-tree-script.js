@@ -40,7 +40,7 @@ var linkGenerator;
 var zoom ;
 	
 function generateFamilyTreeChart(familyData) {
-    const width = window.screen.width;
+    const width = 250 * maxGenerationWidth; //window.screen.width;
     const height_Layout = 200 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 
@@ -300,6 +300,8 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
  // Apply the same zoom transformation to the link lines
   function zoomed(event) {
 	  if(event.transform === ":translate(0,0) scale(1)"){
+		  	       console.log('zoomed(scale) retuned:');
+
 return;
 	  }else{
         chartGroup.attr('transform', event.transform);
@@ -683,25 +685,32 @@ const name = `${first_name} ${last_name} ${nameSuffix}`;
     console.log("maxChildrenCount   " + maxChildrenCount);
     console.log("memberIDWithMaxDepth   " + memberIDWithMaxDepth);
     console.log("treeData.name   " + treeData.name);
-    console.log("treeData.children   " + treeData.children);
 
 		    
-// Example usage: Count children at each depth for a specific node
 const nodeID = memberIDWithMaxDepth; // Replace with the actual node ID
 const depthCounts = {}; // Object to store counts at each depth
 countChildrenAtEachDepth(nodeID, 0, depthCounts);
 
 console.log('Children count at each depth:', depthCounts);
 
-	 		    console.log("else root   " + root);
 
+let maxCount = 0;
+let maxDepth = 0;
+
+for (const depth in depthCounts) {
+  const count = depthCounts[depth];
+  if (count > maxCount) {
+    maxCount = count;
+    maxDepth = parseInt(depth); // Convert depth to a number
+  }
+}
+
+console.log('Highest count of children:', maxCount);
+console.log('Corresponding depth:', maxDepth);
+		    maxGenerationWidth = maxCount;
 		    
 // Call buildTree to populate memberDataMap and calculate hierarchy depth
 const hierarchicalTree = buildTree(root, querySnapshotCount, new Set(), 0, 0);
-
-console.log('Member ID with the greatest HierarchyDepth:', memberIDWithMaxDepth);
-console.log('Maximum HierarchyDepth:', maxHierarchyDepth);
-
 
 
 		    
