@@ -317,6 +317,10 @@ function zoomed(event) {
     });
 }
 
+
+
+	  updateImageAttributes();
+
 }
 
 
