@@ -28,7 +28,12 @@
 
 	
 }
-
+.flex_w{
+    margin: auto;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
 
 .post_link_meta{
 width: 100%;
