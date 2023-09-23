@@ -658,7 +658,7 @@ console.log('ID of the first Parent of Parents:', parentsOfParents[0].id);
         let root = {
   id: treeID,
   name: treeData.name,
-  children: parentsOfParents[0].id, // || maxChildrenCount > 0 ? [memberIDWithMaxDepth] : [treeData.root || rootID],
+  children: maxChildrenCount > 0 ? [memberIDWithMaxDepth] : [treeData.root || rootID],
   data: maxChildrenCount > 0 ? memberDataMap : treeData,
           photo: treeData.photo,
           location: treeData.location,
