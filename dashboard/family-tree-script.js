@@ -877,7 +877,7 @@ function loadFamilyTreeChart(treeData) {
 
     fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
         .then((hierarchicalTree) => {
-            console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
+         //   console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
 
 		let data = hierarchicalTree.node;
 
