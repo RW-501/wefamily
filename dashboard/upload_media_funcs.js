@@ -1,9 +1,11 @@
 // Assume you have an HTML element with id "event-date-input" for event date input
 const eventDateInput = document.getElementById('event-date-input');
+  const timelinePopup = document.getElementById('timelinePopup');
 
+const fileInput = document.getElementById('familyTimelineFiles');
+const progressBar = document.getElementById('progress-bar');
 // Function to save event details to Firestore
-function saveEventDetailsFromPopup() {
-  const downloadURL = document.getElementById('download-url-input').value;
+function saveEventDetailsFromPopup(downloadURL) {
   const eventDate = document.getElementById('event-date-input').value;
   const eventLocation = document.getElementById('event-location-input').value;
   const eventCaption = document.getElementById('event-caption-input').value;
@@ -31,22 +33,16 @@ function saveEventDetailsFromPopup() {
 
 
 
-function openMediaPopup(downloadURL) {
-  // Display media preview
-  const mediaPreview = document.getElementById('media-preview');
-  mediaPreview.innerHTML = `<img src="${downloadURL}" alt="Media Preview">`;
+function openMediaPopup() {
 
-  // Set the downloadURL in a hidden input field for later use
-  const downloadURLInput = document.getElementById('download-url-input');
-  downloadURLInput.value = downloadURL;
 
   // Show the popup
-  const popup = document.getElementById('timelinePopup');
-  popup.style.display = 'block';
+  timelinePopup.style.display = 'block';
+
+	  // Simulate a click on the file input
+  fileInput.click();
 }
-	  
-const fileInput = document.getElementById('familyTimelineFiles');
-const progressBar = document.getElementById('progress-bar');
+
 
 function uploadFileToStorage(file) {
   const storageRef = firebase.storage().ref();
@@ -57,7 +53,7 @@ function uploadFileToStorage(file) {
       console.log('Download URL:', downloadURL); // Check downloadURL
 
       // Call the function to save event details with the downloadURL
-      saveEventDetails(downloadURL);
+      saveEventDetailsFromPopup(downloadURL);
 
       // Display preview of the uploaded image
       const previewImage = document.createElement('img');
