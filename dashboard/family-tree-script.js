@@ -878,27 +878,19 @@ function displayChildrenCallback(parentName, childrenNames) {
 
 
 
-
 function getParentNames(childID) {
   let parentName = null;
-//  console.log(`childID ${childID} found.`);
 
-  // Iterate through each member in the map
   for (const [memberID, member] of Object.entries(memberDataMap)) {
     const children = member.children;
-//    console.log(`children for memberID ${memberID}: ${children}`);
 
     if (children) {
-      // Check if the childID exists in the member's children
       const childIDs = children.map(child => child.id);
+
       if (childIDs.includes(childID)) {
         parentName = member.name;
-      //  console.log(`Parent name ${parentName} found for childID ${childID}`);
-        // Break the loop as we found the parent
         break;
       }
-    }else{
-return null;
     }
   }
 
