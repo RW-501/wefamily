@@ -1581,7 +1581,7 @@ function populateFamilyMemberDetails(data, userID) {
   const formattedBirthdate = formatDateToMonthDay(data.birthdate);
   let claim_Div = "";
   
- if (data.userID === userID) || data.addByID === userID) {
+ if (data.userID === userID || data.addByID === userID) {
     claim_Div += "<button class='edit-member'>Edit Member</button>";
 
 if (data.userID === userID) {
