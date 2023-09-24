@@ -978,7 +978,7 @@ function acceptJoinRequest(requestID, userID) {
     userDocRef.update({
         userTrees: firebase.firestore.FieldValue.arrayUnion({
             id: currentFamilyID,
-            name: treeName
+            name: Current_FAMNAME
         })
     })
     .then(() => {
@@ -1555,6 +1555,7 @@ setRootValue(memberID);
 var Current_USERNAME = '';
 var Current_USERPHOTO = '';
 var Current_MEMBERID = '';
+var Current_FAMNAME = '';
         // Function to display tree details
         function displayTreeDetails(tree) {
             document.getElementById("tree-name").value = tree.name;
@@ -1562,10 +1563,10 @@ var Current_MEMBERID = '';
             document.getElementById("tree-description").value = tree.description;
             document.getElementById("famCode").innerHTML = "Family Code "+ tree.familyCode;
             document.getElementById("tree-photo").src = tree.photo || "/wefamily/images/imgPlacehoder.png";
-
+Current_FAMNAME = tree.name;
         }
 
-
+ 
 
 
 
