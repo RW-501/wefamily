@@ -407,7 +407,7 @@ function newsPost(xxx) {
         content: xxx,
         photo: "",
         memberPhoto: "",
-        author: "Family Tree Update",
+        author: "Family Ties Update",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
