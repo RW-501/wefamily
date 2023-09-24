@@ -45,6 +45,8 @@ function uploadFileToStorage(file) {
 
   uploadTask.then((snapshot) => {
     snapshot.ref.getDownloadURL().then((downloadURL) => {
+      console.log('Download URL:', downloadURL); // Check downloadURL
+
       // Call the function to save event details with the downloadURL
       saveEventDetails(downloadURL);
 
@@ -57,6 +59,7 @@ function uploadFileToStorage(file) {
 
   return uploadTask;
 }
+
 
 
 
