@@ -1085,7 +1085,7 @@ function joinRequestFunc() {
     const userDocRef = firestore.collection('users').doc(userID);
  //   const userDoc =  firestore.collection('users').doc(userID).get();
    
-	const userData = userDoc.data();
+	const userData = userDocRef.data();
 
 	if (userData.exists) {
     }else{
