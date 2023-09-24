@@ -1,11 +1,75 @@
 // Assume you have an HTML element with id "event-date-input" for event date input
-const eventDateInput = document.getElementById('event-date-input');
   const timelinePopup = document.getElementById('timelinePopup');
-
+var downloadURL = "";
 const fileInput = document.getElementById('familyTimelineFiles');
 const progressBar = document.getElementById('progress-bar');
-// Function to save event details to Firestore
-function saveEventDetailsFromPopup(downloadURL) {
+  var metadata = '';
+      var exifData = '';
+
+fileInput.addEventListener('change', async (event) => {
+  const files = event.target.files;
+  if (files.length === 0) return;
+
+  const totalSize = Array.from(files).reduce((acc, file) => acc + file.size, 0);
+  let uploadedSize = 0;
+
+  for (const file of files) {
+    try {
+      // Step 1: Extract metadata
+       metadata = await getPictureMetadata(file);
+
+      // Step 2: Extract Exif data
+       exifData = await extractExifData(file);
+
+      // Display extracted metadata and Exif data (optional)
+      console.log('Metadata:', metadata);
+      console.log('Exif Data:', exifData);
+
+      // Step 2: Upload file to storage and get download URL
+       downloadURL = await uploadFileToStorage(file);
+openMediaPopup();
+	    
+const mediaPreview = document.getElementById('media-preview');
+  
+      // Step 2: Display preview of the uploaded image
+      const previewImage = document.createElement('img');
+      previewImage.src = downloadURL;
+      mediaPreview.appendChild(previewImage);
+
+      // Step 3: Save event details
+     // saveEventDetailsFromPopup(downloadURL);
+
+      // Step 2: Update progress bar
+      uploadedSize += file.size;
+      const overallProgress = (uploadedSize / totalSize) * 100;
+      progressBar.style.width = `${overallProgress}%`;
+    } catch (error) {
+      console.error('Error processing file:', error);
+    }
+  }
+});
+
+function uploadFileToStorage(file) {
+  return new Promise((resolve, reject) => {
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child('uploads/' + file.name).put(file);
+
+    uploadTask.on('state_changed', (snapshot) => {
+      // Handle upload progress if needed
+    });
+
+    uploadTask.then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((downloadURL) => {
+        resolve(downloadURL);
+      });
+    }).catch((error) => {
+      reject(error);
+    });
+  });
+}
+
+function saveEventDetailsFromPopup() {
+  // Step 3: Collect event details
   const eventDate = document.getElementById('event-date-input').value;
   const eventLocation = document.getElementById('event-location-input').value;
   const eventCaption = document.getElementById('event-caption-input').value;
@@ -13,57 +77,51 @@ function saveEventDetailsFromPopup(downloadURL) {
 
   // Prepare the data to be saved to Firestore
   const eventData = {
+    metaData: metadata,
+    exifData: exifData,
+    downloadURL: downloadURL,
+    group: "",
+    meditaType: downloadURL,
+    memberName: Current_USERNAME,
+    familyID: currentFamilyID,
+    memberID: userID,
     downloadURL: downloadURL,
     eventDate: eventDate,
     eventLocation: eventLocation,
     eventCaption: eventCaption,
-    familyMembers: selectedFamilyMembers,
+    familyMembers: [selectedFamilyMembers],
   };
 
   // Add the data to the "familyTimeline" collection
   const db = firebase.firestore();
   db.collection('familyTimeline').add(eventData)
     .then((docRef) => {
-      console.log('Event data added with ID: ', docRef.id);
+      console.log('Event data added with ID:', docRef.id);
     })
     .catch((error) => {
-      console.error('Error adding event data: ', error);
+      console.error('Error adding event data:', error);
     });
 }
 
+// Other functions remain the same...
 
+function closeMediaPopup() {
+  timelinePopup.style.display = 'none';
 
+}
+function openMediaFile() {
+  fileInput.click();
+}
 function openMediaPopup() {
-
 
   // Show the popup
   timelinePopup.style.display = 'block';
 
 	  // Simulate a click on the file input
-  fileInput.click();
 }
 
 
-function uploadFileToStorage(file) {
-  const storageRef = firebase.storage().ref();
-  const uploadTask = storageRef.child('uploads/' + file.name).put(file);
 
-  uploadTask.then((snapshot) => {
-    snapshot.ref.getDownloadURL().then((downloadURL) => {
-      console.log('Download URL:', downloadURL); // Check downloadURL
-
-      // Call the function to save event details with the downloadURL
-      saveEventDetailsFromPopup(downloadURL);
-
-      // Display preview of the uploaded image
-      const previewImage = document.createElement('img');
-      previewImage.src = downloadURL;
-      document.body.appendChild(previewImage);
-    });
-  });
-
-  return uploadTask;
-}
 
 
 
@@ -147,46 +205,6 @@ function extractExifData(file) {
     reader.readAsArrayBuffer(file);
   });
 }
-
-//handleFileSelectTimeline 
-fileInput.addEventListener('change', async (event) => {
-  const files = event.target.files;
-  if (files.length === 0) return;
-
-  const totalSize = Array.from(files).reduce((acc, file) => acc + file.size, 0);
-  let uploadedSize = 0;
-
-  for (const file of files) {
-    try {
-      const metadata = await getPictureMetadata(file);
-      console.log('Metadata:', metadata);
-
-      // Extract Exif data for time taken and location
-      const exifData = await extractExifData(file);
-      console.log('Exif Data:', exifData);
-
-      const timeTaken = exifData.DateTimeOriginal || exifData.DateTime;
-      const location = exifData.GPSLatitude && exifData.GPSLongitude
-        ? `${exifData.GPSLatitude} ${exifData.GPSLongitude}`
-        : 'Location data not available';
-
-      console.log('Time taken:', timeTaken);
-      console.log('Location:', location);
-    } catch (error) {
-      console.error('Error getting metadata or extracting Exif data:', error);
-    }
-
-    const uploadTask = uploadFileToStorage(file);
-
-    uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      uploadedSize += snapshot.bytesTransferred;
-      const overallProgress = (uploadedSize / totalSize) * 100;
-
-      progressBar.style.width = `${overallProgress}%`;
-    });
-  }
-});
 
 
 	    
