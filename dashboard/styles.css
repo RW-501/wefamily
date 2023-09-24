@@ -698,8 +698,8 @@ padding-top: 15px;
 .space_J {
     display: flex;
     justify-content: space-between;
-	    width: 100%;
-    margin: 2%;
+    width: auto;
+	margin: 2%;
 }
 .flex {
 display: flex;
