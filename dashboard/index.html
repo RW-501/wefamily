@@ -975,10 +975,11 @@ function acceptJoinRequest(requestID, userID) {
 
     const userDocRef = firestore.collection('users').doc(userID);
 
- userDocRef.update({
-    userTrees: firebase.firestore.FieldValue.arrayUnion({
-        id: currentFamilyID,
-        name: treeName
+    userDocRef.update({
+        userTrees: firebase.firestore.FieldValue.arrayUnion({
+            id: currentFamilyID,
+            name: treeName
+        })
     })
     .then(() => {
         // Get the document reference for the join request
@@ -1014,6 +1015,7 @@ function acceptJoinRequest(requestID, userID) {
         showMainMessage('Error updating user document: ' + error.message);
     });
 }
+
 
 	    
 function declineJoinRequest(requestID) {
