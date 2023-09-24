@@ -968,55 +968,51 @@ function closeJoinRequestPopup() {
 }
 
 function acceptJoinRequest(requestID, userID) {
+    if (!requestID || !userID) {
+        showMainMessage('Invalid requestID or userID.');
+        return;
+    }
 
-	if(!requestID && !userID){
-		return;
-	}
-	
+    const userDocRef = firestore.collection('users').doc(userID);
+
     // Update the user's document to add the currentFamilyID to the userTrees array
-    firestore.collection('users').doc(userID)
-        .update({
-            userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
-        })
-        .then(() => {
-		
-            // Get the document reference
-            const requestRef = firestore.collection('memberRequest').doc(requestID);
-            
-            // Get the field data before deleting the document
-            requestRef.get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const requestData = doc.data();
-                        
-                   
-                        // Delete the document
-                        requestRef.delete()
-                            .then(() => {
-                                console.log('Join request accepted and deleted.');
-                                loadJoinRequests(); // Reload the list of join requests
-				    
-newsPost(`${requestData.first_name} ${requestData.last_name} added to the Family Tree`);
+    userDocRef.update({
+        userTrees: firebase.firestore.FieldValue.arrayUnion(currentFamilyID)
+    })
+    .then(() => {
+        // Get the document reference for the join request
+        const requestRef = firestore.collection('memberRequest').doc(requestID);
 
-                                // Now you can use 'requestData' to access the field data of the deleted document
-                                console.log('Field data of deleted document:', requestData);
-                            })
-                            .catch((error) => {
-                                console.error('Error deleting join request:', error);
-                            });
-                    } else {
-                        console.log('Document does not exist.');
-                    }
+        // Get the field data before deleting the document
+        requestRef.get()
+        .then((doc) => {
+            if (doc.exists) {
+                const requestData = doc.data();
+
+                // Delete the join request document
+                requestRef.delete()
+                .then(() => {
+                    newsPost(`${requestData.first_name} ${requestData.last_name} joined to the Family Ties.`);
+                    loadJoinRequests(); // Reload the list of join requests
+
+                    // Now you can use 'requestData' to access the field data of the deleted document
+                    console.log('Field data of deleted document:', requestData);
                 })
                 .catch((error) => {
-                    console.error('Error getting join request document:', error);
+                    showMainMessage('Error deleting join request: ' + error.message);
                 });
+            } else {
+                showMainMessage('Join request document does not exist.');
+            }
         })
         .catch((error) => {
-            console.error('Error updating user document:', error);
+            showMainMessage('Error getting join request document: ' + error.message);
         });
+    })
+    .catch((error) => {
+        showMainMessage('Error updating user document: ' + error.message);
+    });
 }
-
 
 	    
 function declineJoinRequest(requestID) {
