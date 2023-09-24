@@ -1773,13 +1773,11 @@ function populateFamilyMemberDetails(data, userID) {
       <!-- Add other fields as needed -->
     </div>
     <button class="add-child">Add Child</button>
-  `;
-if(getParentNames(data.memberID) == null){
+  `;			                   
+
   const addParentBtn = memberDiv.querySelector('.add-parent');
   addParentBtn.addEventListener('click', () => addParent(data));
-}else{
-openCreateTreePopup();
-}
+
   const addChildBtn = memberDiv.querySelector('.add-child');
   addChildBtn.addEventListener('click', () => addChild(data));
 
