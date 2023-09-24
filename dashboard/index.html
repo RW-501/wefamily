@@ -268,7 +268,15 @@ function initializeFamilyTreeChart() {
 		<!-- Media and editing options go here -->
   <div id="media-preview"></div>
   <input type="text" id="event-date-input" placeholder="Event Date"><br>
-  <input type="text" id="event-location-input" placeholder="Event Location"><br>
+		
+<select id="event-Group-input">
+  <option value="family-events">Family Events</option>
+  <option value="classic">Classic</option>
+  <option value="special-occasions">Special Occasions</option>
+  <option value="daily-life">Daily Life</option>
+  <option value="travel-adventures">Travel Adventures</option>
+</select>
+		<input type="text" id="event-location-input" placeholder="Event Location"><br>
   <input type="text" id="event-caption-input" placeholder="Caption"><br>
   <button onclick="saveEventDetailsFromPopup()">Save Event Details</button>
 </div>
