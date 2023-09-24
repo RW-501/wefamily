@@ -92,6 +92,32 @@ function getPictureMetadata(file) {
 
     reader.readAsDataURL(file);
   });
+
+
+// Assume you have an HTML element with id "event-date-input" for event date input
+
+const familyMemberCheckboxContainer = document.getElementById('family-member-checkbox-container');
+//window.onload = function () {
+
+// Populate the family member checkboxes
+memberDataMap.forEach((member) => {
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.value = member.memberID;
+  checkbox.id = `checkbox-${member.memberID}`;
+  
+  const label = document.createElement('label');
+  label.htmlFor = `checkbox-${member.memberID}`;
+  label.textContent = member.name;
+
+  familyMemberCheckboxContainer.appendChild(checkbox);
+  familyMemberCheckboxContainer.appendChild(label);
+});
+//};
+
+
+
+	
 }
 
 
@@ -154,26 +180,6 @@ fileInput.addEventListener('change', async (event) => {
   }
 });
 
-// Assume you have an HTML element with id "event-date-input" for event date input
-
-const familyMemberCheckboxContainer = document.getElementById('family-member-checkbox-container');
-window.onload = function () {
-
-// Populate the family member checkboxes
-memberDataMap.forEach((member) => {
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.value = member.memberID;
-  checkbox.id = `checkbox-${member.memberID}`;
-  
-  const label = document.createElement('label');
-  label.htmlFor = `checkbox-${member.memberID}`;
-  label.textContent = member.name;
-
-  familyMemberCheckboxContainer.appendChild(checkbox);
-  familyMemberCheckboxContainer.appendChild(label);
-});
-};
 
 	    
 // Function to get selected family members
