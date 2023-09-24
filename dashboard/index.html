@@ -241,7 +241,7 @@ function initializeFamilyTreeChart() {
 
   <div class="grid">
     <!-- Example media item (image) -->
-    <img src="/wefamily/images/imgPlacehoder.png" alt="Example Image" onclick="openMediaPopup()">
+    <img src="/wefamily/images/imgPlacehoder.png" alt="Example Image" onclick="openMediaFile()">
   </div>
 </div>
 
@@ -263,12 +263,15 @@ function initializeFamilyTreeChart() {
 
 <!-- Popup for uploaded media -->
 <div class="popup-container" id="timelinePopup">
-  <!-- Media and editing options go here -->
+        <div class="popup">
+            <span onclick="closeMediaPopup()" class="close-button">&times;</span>
+		<!-- Media and editing options go here -->
   <div id="media-preview"></div>
   <input type="text" id="event-date-input" placeholder="Event Date"><br>
   <input type="text" id="event-location-input" placeholder="Event Location"><br>
   <input type="text" id="event-caption-input" placeholder="Caption"><br>
-  <button onclick="saveEventDetails()">Save Event Details</button>
+  <button onclick="saveEventDetailsFromPopup()">Save Event Details</button>
+</div>
 </div>
 
 
