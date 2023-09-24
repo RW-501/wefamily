@@ -4,189 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
-    <script src="familytree.js"></script>
-    <title>Family Tree Management</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
+
+
+	
+      <!-- Firebase SDK -->
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+	
+    <script src="../auth.js"></script>
+    <script src="../firebase.js"></script>
+
+	    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <title>Linkedup</title>
+
+	
+
+
+<script>
+
+
+</script>
 </head>
 <body>
+    <!-- Navigation Bar -->
+   <nav class="navbar">
     <div class="container">
-        <h1>Family Tree Management</h1>
-        <div id="family-tree-container">
-            <div id="tree-details">
-                <h2>Tree Details</h2>
-                <label for="tree-name">Name:</label>
-                <input type="text" id="tree-name" placeholder="Family Tree Name" required>
-                <label for="tree-location">Location:</label>
-                <input type="text" id="tree-location" placeholder="Location">
-                <label for="tree-description">Description:</label>
-                <textarea id="tree-description" placeholder="Brief Description"></textarea>
-                <button id="save-details" onclick="saveTreeDetails()">Save Tree Details</button>
-            </div>
-            <div id="tree-content">
-                <h2>Family Tree</h2>
-                <div id="family-members">
-                    <!-- Family member details will be added here dynamically -->
-                </div>
-                <button id="add-member" onclick="addFamilyMember()">Add Family Member</button>
-                <button id="toggle-mode" onclick="toggleEditMode()">Toggle Edit Mode</button>
+        <div class="logo">
+            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
+        </div>
+        <div class="navbar-toggler">
+            <div class="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
+        <ul class="nav-links">
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+        <div class="user-actions">
+            <button id="logout-button" onclick="logoutUser()">Logout</button>
+        </div>
     </div>
+    <div class="dropdown-menu">
+        <ul>
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+    </div>
+</nav>
 
 
-<!-- Add this code inside your HTML body, typically at the top -->
-<div id="notification" class="notification">
-    <span id="notification-text"></span>
-</div>
-
-    
-    <script>
-        // JavaScript functions for family tree management
-let editMode = false;
-
-// Function to fetch and display family tree details and members
-async function fetchFamilyTree() {
-    try {
-        const treeId = getTreeIdFromQueryParams(); // Get treeId from URL (similar to previous examples)
-        if (treeId) {
-            // Fetch tree details and members from Firestore
-            const treeDoc = await firestore.collection('familyTrees').doc(treeId).get();
-            if (treeDoc.exists) {
-                const treeData = treeDoc.data();
-                // Populate tree details
-                document.getElementById('tree-name').value = treeData.name || '';
-                document.getElementById('tree-location').value = treeData.location || '';
-                document.getElementById('tree-description').value = treeData.description || '';
-                // Populate family members
-                displayFamilyMembers(treeData.members);
-            } else {
-                // Handle tree not found
-            }
-        } else {
-            // Handle missing treeId parameter
-        }
-    } catch (error) {
-        console.error('Error fetching family tree:', error);
-    }
-}
-
-// Function to save tree details
-async function saveTreeDetails() {
-    try {
-        const treeId = getTreeIdFromQueryParams();
-        const treeRef = firestore.collection('familyTrees').doc(treeId);
-        const treeData = {
-            name: document.getElementById('tree-name').value,
-            location: document.getElementById('tree-location').value,
-            description: document.getElementById('tree-description').value,
-        };
-        await treeRef.set(treeData, { merge: true });
-        // Inform the user that details are saved (e.g., display a notification)
-        showNotification('Tree details saved successfully.');
-    } catch (error) {
-        console.error('Error saving tree details:', error);
-    }
-}
-
-// Function to add a family member
-async function addFamilyMember() {
-    try {
-        const treeId = getTreeIdFromQueryParams();
-        const treeRef = firestore.collection('familyTrees').doc(treeId);
-
-        // Collect member details from the form (you can customize this form as needed)
-        const memberName = document.getElementById('member-name').value;
-        const memberBirthday = document.getElementById('member-birthday').value;
-        const memberDeceased = document.getElementById('member-deceased').checked;
-
-        // Create a new member object
-        const newMember = {
-            name: memberName,
-            birthday: memberBirthday,
-            deceased: memberDeceased,
-        };
-
-        // Add the new member to the family tree's "members" array
-        await treeRef.update({
-            members: firebase.firestore.FieldValue.arrayUnion(newMember),
-        });
-
-        // Inform the user that the member has been added (e.g., display a notification)
-        showNotification('Family member added successfully.');
-
-        // Clear the form fields
-        document.getElementById('member-name').value = '';
-        document.getElementById('member-birthday').value = '';
-        document.getElementById('member-deceased').checked = false;
-
-        // Refresh the displayed family members
-        fetchFamilyTree();
-    } catch (error) {
-        console.error('Error adding family member:', error);
-    }
-}
-
-// Function to toggle edit mode
-function toggleEditMode() {
-    editMode = !editMode;
-    const elementsToToggle = document.querySelectorAll('.editable'); // Add a class to editable elements
-    elementsToToggle.forEach((element) => {
-        element.contentEditable = editMode; // Make elements editable in edit mode
-    });
-    const saveButton = document.getElementById('save-details');
-    saveButton.style.display = editMode ? 'block' : 'none'; // Show/hide save button in edit mode
-}
-
-// Helper function to display family members
-// Function to display family members
-function displayFamilyMembers(members) {
-    const familyMembersContainer = document.getElementById('family-members');
-    familyMembersContainer.innerHTML = ''; // Clear existing members
-
-    members.forEach((member) => {
-        // Create a div element for each family member
-        const memberDiv = document.createElement('div');
-        memberDiv.classList.add('family-member');
-
-        // Populate member details (customize this part according to your data structure)
-        memberDiv.innerHTML = `
-            <h3>${member.name}</h3>
-            <p>Birthday: ${member.birthday || 'N/A'}</p>
-            <p>Deceased: ${member.deceased ? 'Yes' : 'No'}</p>
-            <!-- Add more member details as needed -->
-        `;
-
-        // Append the member div to the familyMembersContainer
-        familyMembersContainer.appendChild(memberDiv);
-    });
-}
 
 
-// Helper function to get the treeId from query parameters
-function getTreeIdFromQueryParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('treeId');
-}
 
-// Helper function to show notifications (you can implement this)
-// Function to show a notification that disappears after 3 seconds
-function showNotification(message) {
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notification-text');
-    notificationText.textContent = message;
+	
 
-    // Show the notification
-    notification.classList.add('show');
+    <script defer src="family-tree-script.js"></script>
+    <script defer src="add_edit_family_tree_funcs.js"></script>
+    <script defer src="post_funcs.js"></script>
+    <script defer src="add_edit_members_funcs.js"></script>
 
-    // Set a timeout to hide the notification after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
-}
+	</body>
+  <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 WeFamily. All rights reserved.<a id="LRP" href='https://rw-501.github.io/Portfolio/'>Dev Portfolio</a> </p>
+		<p>version: v1.92</p>
+        </div>
+    </footer>
 
-
-        // Call the fetchFamilyTree function on page load
-        window.onload = fetchFamilyTree;
-    </script>
-</body>
+	
 </html>
