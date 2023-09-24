@@ -724,6 +724,7 @@ fileInput.addEventListener('change', async (event) => {
 // Assume you have an HTML element with id "event-date-input" for event date input
 
 const familyMemberCheckboxContainer = document.getElementById('family-member-checkbox-container');
+window.onload = function () {
 
 // Populate the family member checkboxes
 memberDataMap.forEach((member) => {
@@ -739,7 +740,9 @@ memberDataMap.forEach((member) => {
   familyMemberCheckboxContainer.appendChild(checkbox);
   familyMemberCheckboxContainer.appendChild(label);
 });
+};
 
+	    
 // Function to get selected family members
 function getSelectedFamilyMembers() {
   const selectedMembers = [];
