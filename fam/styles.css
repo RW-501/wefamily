@@ -1,4 +1,106 @@
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+.logo{
+	    list-style: none;
+}
+	.logo a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 2em;
+    font-weight: 700;
+}
+	#LRP{
+     text-decoration: none;
+    color: #858585;
+    font-weight: 600;
+    font-size: 1.5em;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: block;
+    margin: 1%;
 
+
+}
+    /* Apply basic styles to the header and navigation */
+    header {
+        background-color: #222;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+    }
+
+    .logo h1 {
+        font-size: 2rem;
+    }
+
+    nav ul {
+        list-style: none;
+        text-align: center;
+    }
+
+    nav ul li {
+        display: inline;
+        margin: 0 1rem;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    /* Style the main content area */
+main {
+    padding: 2rem;
+    min-height: 700px;
+}
+
+    .about {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /* Apply styles to the footer */
+    footer {
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    /* Style the text in the main section */
+    main p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    main h2 {
+        font-size: 1.5rem;
+        color: #a1a3a5; /* Blue color for headings */
+    }
+
+    /* Add a background color to even-numbered list items */
+    main ol li:nth-child(even) {
+        background-color: #f5f5f5;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+
+    /* Style the "Discover, Connect, and Celebrate Your Family Today!" section */
+    main p:last-child {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #858687; /* Blue color for emphasis */
+    }
 {
     box-sizing: border-box;
 }
