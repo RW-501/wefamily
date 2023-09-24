@@ -68,10 +68,17 @@ function saveEventDetailsFromPopup() {
 const publicBool = input(document.getElementById('event-Pubic-input').checked);
 
   const selectedFamilyMembers = getSelectedFamilyMembers();
-const reactions = {
-  likes: 0,
-  loves: 0
-};
+const reactions = [
+  {
+    type: 'likes',
+    count: 0
+  },
+  {
+    type: 'loves',
+    count: 0
+  }
+];
+
   // Prepare the data to be saved to Firestore
   const eventData = {
     metaData: metadata,
@@ -91,8 +98,10 @@ const reactions = {
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     reactions: [reactions],
   };
-//reactions.likes += 1;
-// reactions.loves += 1;
+//reactions.find(reaction => reaction.type === 'likes').count += 1;
+
+// reactions.find(reaction => reaction.type === 'loves').count += 1;
+
 
 	
 
