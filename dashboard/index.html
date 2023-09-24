@@ -1083,7 +1083,15 @@ function loadJoinRequests() {
         
 function joinRequestFunc() {
     const userDocRef = firestore.collection('users').doc(userID);
-		let userInfo =  userDocRef.data();
+    const userDoc = await firestore.collection('users').doc(userID).get();
+    if (userDoc.exists) {
+      const userInfo = userDoc.data();
+    }else{
+return;
+    }
+
+
+	    
 
 const userName = userInfo.userName;
 const location = userInfo.city + ', ' + userInfo.state + ', ' + userInfo.country;
