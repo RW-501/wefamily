@@ -1416,8 +1416,17 @@ logoLink.href = `/wefamily/dashboard/?user=${userID}`;
 			const treeID = tree.treeID;
 			currentFamilyID = treeID;
                     displayFamilyMembers(treeID);
+			    const userDocRef = firestore.collection('users').doc(userID);
+
+		getFamiliesFunc(userDocRef);
 
                 } else {
+			                document.getElementById("tree-details").style.display = "none";
+                document.getElementById("family-tree").style.display = "none";
+                document.getElementById("family-news").style.display = "none";
+                document.getElementById("member_Request").style.display = "none";
+                document.getElementById("tree-uploader").style.display = "none";
+                document.getElementById("tree-content").style.display = "none";
                     console.log('Family tree not found.');
                     // Handle the case when the family tree is not found.
                             getFamilyTree(userID);
