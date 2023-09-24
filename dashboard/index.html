@@ -1543,6 +1543,7 @@ setRootValue(memberID);
         }
 var Current_USERNAME = '';
 var Current_USERPHOTO = '';
+var Current_MEMBERID = '';
         // Function to display tree details
         function displayTreeDetails(tree) {
             document.getElementById("tree-name").value = tree.name;
@@ -1561,12 +1562,13 @@ function populateFamilyMemberDetails(data, userID) {
   const formattedBirthdate = formatDateToMonthDay(data.birthdate);
   let claim_Div = "";
   
-  if (data.memberID === userID || data.addByID === userID) {
+ if (data.userID === userID) || data.addByID === userID) {
     claim_Div += "<button class='edit-member'>Edit Member</button>";
 
-    if (data.userID === userID) {
-      Current_USERNAME = data.first_name;
+if (data.userID === userID) {
+	Current_USERNAME = data.first_name;
       Current_USERPHOTO = data.photo;
+      Current_MEMBERID = data.memberID;
     }
   } else {
     if (data.userID === "") {
