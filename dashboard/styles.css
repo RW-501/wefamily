@@ -39,7 +39,9 @@
 
 }
 
-
+#user_Families .space_J {
+    margin: 2%;
+}
 .post_link_meta{
 width: 100%;
     height: auto;
