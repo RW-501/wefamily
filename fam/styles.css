@@ -3,28 +3,7 @@
         padding: 0;
         box-sizing: border-box;
     }
-.logo{
-	    list-style: none;
-}
-	.logo a{
-    text-decoration: none;
-    color: #fff;
-    font-size: 2em;
-    font-weight: 700;
-}
-	#LRP{
-     text-decoration: none;
-    color: #858585;
-    font-weight: 600;
-    font-size: 1.5em;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    display: block;
-    margin: 1%;
 
-
-}
   html, body{
     overflow: hidden;
     overflow-y: auto;
@@ -215,4 +194,55 @@ select , label,
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+	  button {
+    background-color: #8e9399;
+    color: #fff;
+    border: #5d5d5d solid;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    font-weight: 800;
+    box-sizing: border-box;
+    width: fit-content;
+}
+
+    button:hover {
+        background-color: #4d4d4d;
+    }
+
+
+
+    label {
+        font-weight: 700;
+        margin-right: 10px;
+    }
+
+	
+.logo{
+	    list-style: none;
+}
+	.logo a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 2em;
+    font-weight: 700;
+}
+	#LRP{
+     text-decoration: none;
+    color: #858585;
+    font-weight: 600;
+    font-size: 1.5em;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: block;
+    margin: 1%;
+
+
 }
