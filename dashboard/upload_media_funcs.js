@@ -1,10 +1,10 @@
-// Assume you have an HTML element with id "event-date-input" for event date input
-  const timelinePopup = document.getElementById('timelinePopup');
-var downloadURL = "";
+const timelinePopup = document.getElementById('timelinePopup');
+let downloadURL = "";
 const fileInput = document.getElementById('familyTimelineFiles');
 const progressBar = document.getElementById('progress-bar');
-  var metadata = '';
-      var exifData = '';
+let metadata = '';
+let exifData = '';
+let fileType = '';
 
 fileInput.addEventListener('change', async (event) => {
   const files = event.target.files;
@@ -16,28 +16,36 @@ fileInput.addEventListener('change', async (event) => {
   for (const file of files) {
     try {
       // Step 1: Extract metadata
-       metadata = await getPictureMetadata(file);
+      metadata = await getPictureMetadata(file);
+      fileType = file.type;
 
       // Step 2: Extract Exif data
-       exifData = await extractExifData(file);
+      exifData = await extractExifData(file);
 
       // Display extracted metadata and Exif data (optional)
       console.log('Metadata:', metadata);
       console.log('Exif Data:', exifData);
 
       // Step 2: Upload file to storage and get download URL
-       downloadURL = await uploadFileToStorage(file);
-openMediaPopup();
-	    
-const mediaPreview = document.getElementById('media-preview');
-  
-      // Step 2: Display preview of the uploaded image
-      const previewImage = document.createElement('img');
-      previewImage.src = downloadURL;
-      mediaPreview.appendChild(previewImage);
+      downloadURL = await uploadFileToStorage(file);
+      openMediaPopup();
+
+      const mediaPreview = document.getElementById('media-preview');
+
+      // Step 2: Display preview of the uploaded file
+      let previewElement;
+      if (fileType.startsWith('image')) {
+        previewElement = document.createElement('img');
+      } else if (fileType.startsWith('video')) {
+        previewElement = document.createElement('video');
+        previewElement.controls = true; // Add controls for video playback
+      }
+
+      previewElement.src = downloadURL;
+      mediaPreview.appendChild(previewElement);
 
       // Step 3: Save event details
-     // saveEventDetailsFromPopup(downloadURL);
+      saveEventDetailsFromPopup();
 
       // Step 2: Update progress bar
       uploadedSize += file.size;
@@ -49,31 +57,16 @@ const mediaPreview = document.getElementById('media-preview');
   }
 });
 
-function uploadFileToStorage(file) {
-  return new Promise((resolve, reject) => {
-    const storageRef = firebase.storage().ref();
-    const uploadTask = storageRef.child('uploads/' + file.name).put(file);
-
-    uploadTask.on('state_changed', (snapshot) => {
-      // Handle upload progress if needed
-    });
-
-    uploadTask.then((snapshot) => {
-      snapshot.ref.getDownloadURL().then((downloadURL) => {
-        resolve(downloadURL);
-      });
-    }).catch((error) => {
-      reject(error);
-    });
-  });
-}
+// Rest of the functions remain the same...
 
 function saveEventDetailsFromPopup() {
   // Step 3: Collect event details
-  const eventDate = document.getElementById('event-date-input').value;
-  const eventLocation = document.getElementById('event-location-input').value;
-  const eventCaption = document.getElementById('event-caption-input').value;
-  const eventGroup = document.getElementById('event-Group-input').value;
+  const eventDate = input(document.getElementById('event-date-input').value);
+  const eventLocation = input(document.getElementById('event-location-input').value);
+  const eventCaption = input(document.getElementById('event-caption-input').value);
+  const eventGroup = input(document.getElementById('event-Group-input').value);
+const publicBool = input(document.getElementById('event-Pubic-input').checked);
+
   const selectedFamilyMembers = getSelectedFamilyMembers();
 
   // Prepare the data to be saved to Firestore
@@ -82,15 +75,18 @@ function saveEventDetailsFromPopup() {
     exifData: exifData,
     downloadURL: downloadURL,
     group: eventGroup,
-    meditaType: downloadURL,
+    mediaType: fileType,
     memberName: Current_USERNAME,
     familyID: currentFamilyID,
     memberID: Current_MEMBERID,
-    downloadURL: downloadURL,
     eventDate: eventDate,
     eventLocation: eventLocation,
     eventCaption: eventCaption,
-    familyMembers: [selectedFamilyMembers],
+    familyMembers: selectedFamilyMembers,
+    viewed: 0,
+    public: publicBool,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    reactions: [likes:0,Loves:0],
   };
 
   // Add the data to the "familyTimeline" collection
