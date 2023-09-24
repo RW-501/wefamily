@@ -699,7 +699,7 @@ padding-top: 15px;
     display: flex;
     justify-content: space-between;
 	    width: 100%;
-
+    margin: 2%;
 }
 .flex {
 display: flex;
