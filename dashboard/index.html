@@ -1080,56 +1080,47 @@ function loadJoinRequests() {
 
 
 
-        
-function joinRequestFunc() {
-    const userDocRef = firestore.collection('users').doc(userID);
- //   const userDoc =  firestore.collection('users').doc(userID).get();
-   
-	const userData = userDocRef.data();
+async function joinRequestFunc() {
+    try {
+        // Get user info
+        const userInfoSnapshot = await firestore.collection('users').doc(userID).get();
 
-	if (userData.exists) {
-    }else{
-return;
+        if (!userInfoSnapshot.exists) {
+            console.log('User info not found.');
+            return;
+        }
+
+        const userInfo = userInfoSnapshot.data();
+        const userName = userInfo.userName;
+        const location = `${userInfo.city}, ${userInfo.state}, ${userInfo.country}`;
+        const note = document.getElementById('request_note').value;
+
+        // Validate input data if needed
+
+        // Create an object to represent the join request data
+        const joinRequestData = {
+            userName,
+            location,
+            treeID: requestFamilyID,
+            photo: userInfo.photo,
+            userID,
+            note,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            // Add more fields as needed
+        };
+
+        // Add the join request to the Firestore collection
+        await firestore.collection('memberRequest').add(joinRequestData);
+
+        console.log('Join request added.');
+        // You can perform further actions or provide feedback to the user
+        // Clear form fields if needed
+        newsPost(`${joinRequestData.firstName} ${joinRequestData.lastName} request to join Family Tree`);
+        document.getElementById('request_note').value = '';
+    } catch (error) {
+        console.error('Error adding join request:', error);
     }
-
-
-	    
-
-const userName = userInfo.userName;
-const location = userInfo.city + ', ' + userInfo.state + ', ' + userInfo.country;
-const note = document.getElementById('request_note').value;
-
-// Validate input data if needed
-
-// Create an object to represent the join request data
-const joinRequestData = {
-    userName: userName,
-    location: location,
-    treeID: requestFamilyID,
-    photo: userInfo.photo,
-    userID: userID,
-    note: note,
-    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-
-    // Add more fields as needed
-};
-
-
-    // Add the join request to the Firestore collection
-    firestore.collection('memberRequest').add(joinRequestData)
-        .then((docRef) => {
-            console.log('Join request added with ID:', docRef.id);
-            // You can perform further actions or provide feedback to the user
-            // Clear form fields if needed
-newsPost(`${joinRequestData.firstName} ${joinRequestData.lastName} request to join Family Tree`);
-
-            document.getElementById('request_note').value = '';
-        })
-        .catch((error) => {
-            console.error('Error adding join request:', error);
-        });
 }
-
 
 
         
