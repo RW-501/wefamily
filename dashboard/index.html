@@ -231,7 +231,7 @@ function initializeFamilyTreeChart() {
 </div>
 
 
-<div id="tree-content" class="SECTION">
+<div id="tree-uploader" class="SECTION">
   <div class="space_J"></div>
   <h2>Family Timeline Gallery</h2>
   <div class="flex_w">
@@ -1376,6 +1376,7 @@ currentFamilyID = familyTreeId;
                 document.getElementById("family-tree").style.display = "none";
                 document.getElementById("family-news").style.display = "none";
                 document.getElementById("member_Request").style.display = "none";
+                document.getElementById("tree-uploader").style.display = "none";
                 console.log('User does not have any family trees.');
                 openCreateTreePopup();
             }
