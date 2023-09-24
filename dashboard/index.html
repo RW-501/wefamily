@@ -114,7 +114,8 @@ function initializeFamilyTreeChart() {
 
             <div id="user_Families_area" class="SECTION">
 	<h2>Your Families</h2>
-            <div id="user_Families">
+            <div id="user_Families" class="space_J">
+
 	    </div>
 		
             <button onclick="openCreateTreePopup()">Join / Create Family Tree</button>
@@ -1463,7 +1464,7 @@ function getFamiliesFunc(userDocRef) {
           console.log(`Edit button clicked for family tree: ${tree.name}`);
 
           // Navigate to the edit URL for the selected tree
-          const editUrl = `/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
+          const editUrl = `/wefamily/dashboard?tree=${tree.id}`; // Replace with the actual edit URL
           window.location.href = editUrl;
         });
 
@@ -1474,7 +1475,7 @@ function getFamiliesFunc(userDocRef) {
           console.log(`View button clicked for family tree: ${tree.name}, ID: ${tree.id}`);
 
           // Navigate to the view URL for the selected tree
-          const viewUrl = `/?tree=${tree.id}`; // Replace with the actual view URL
+          const viewUrl = `/wefamily/?tree=${tree.id}`; // Replace with the actual view URL
           window.location.href = viewUrl;
         });
 
