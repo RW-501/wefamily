@@ -694,12 +694,16 @@ padding-top: 15px;
 	display:block;
 	width: 400px;
 }
-	
-.space_J {
+#user_Families_area .space_J {
     display: flex;
     justify-content: space-between;
     width: auto;
 	margin: 2%;
+}
+.space_J {
+    display: flex;
+    justify-content: space-between;
+    width: auto;
 }
 .flex {
 display: flex;
