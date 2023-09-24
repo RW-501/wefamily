@@ -45,7 +45,45 @@
 
 	
 </style>
-	
+	</head>
+<body>
+    <!-- Navigation Bar -->
+   <nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
+        </div>
+        <div class="navbar-toggler">
+            <div class="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+        <div class="user-actions">
+            <button id="logout-button" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+    <div class="dropdown-menu">
+        <ul>
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+    </div>
+</nav>
+
       <!-- Firebase SDK -->
   <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -80,6 +118,32 @@
   </div>
 </div>
 
+
+<div id="memberDetailPopup" class="popup-container">
+    <div class="popup">
+        <span class="close-button" onclick="hideMemberPopup()">&times;</span>
+        <h2 id="memberName">Add Family Member</h2>
+        <div class="popup-content">
+            <div class="popup-left">
+                <div class="popup-image">
+                    <img id="memberImage" src="/wefamily/images/memberPlaceholder.jpg" alt="Member Image">
+                </div>
+                <div class="popup-text">
+                    <textarea id="memberInfo" placeholder="Member Info"></textarea>
+                </div>
+            </div>
+            <div class="popup-right">
+                <ul id="memberDetails">
+                    <!-- Member details will be populated here -->
+                </ul>
+		      <button id="joinBTN">Joim</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+	    
 <script>
 
 
@@ -164,10 +228,10 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
 	            console.log('width :', width);
 	            console.log('height_Layout :', height_Layout);
 
-    document.getElementById('family-tree-area').innerHTML = "";
+    document.getElementById('the_Tree').innerHTML = "";
     
     // Create an SVG element to contain the chart
-    const svgMain = d3.select("#family-tree-area")
+    const svgMain = d3.select("#the_Tree")
         .append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
@@ -634,18 +698,21 @@ if (Array.isArray(children)) {
 }
 
 function showMemberPopup(member) {
-    const scrollTo = document.getElementById('scrollTo');
+    const joinBTN = document.getElementById('joinBTN');
     
-    if (scrollTo) {
-        scrollTo.addEventListener('click', () => {
-            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+    if (joinBTN) {
+        joinBTN.addEventListener('click', () => {
             hideMemberPopup();
+  window.location.href = 'https://rw-501.github.io/wefamily/'; // Replace with your actual home page URL
+
+		
         });
     }
 
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
+    
 }
 
 
@@ -1099,7 +1166,7 @@ function closePopup() {
 }
 
 function redirectToHomePage() {
-  window.location.href = 'https://yourhomepageurl.com'; // Replace with your actual home page URL
+  window.location.href = 'https://rw-501.github.io/wefamily/'; // Replace with your actual home page URL
 }
 
 
@@ -1117,44 +1184,6 @@ if (retrievedFamilyTreeCode) {
 }
 */
 </script>
-</head>
-<body>
-    <!-- Navigation Bar -->
-   <nav class="navbar">
-    <div class="container">
-        <div class="logo">
-            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
-        </div>
-        <div class="navbar-toggler">
-            <div class="menu-icon">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
-        <div class="user-actions">
-            <button id="logout-button" onclick="logoutUser()">Logout</button>
-        </div>
-    </div>
-    <div class="dropdown-menu">
-        <ul>
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
-    </div>
-</nav>
 
 
 
