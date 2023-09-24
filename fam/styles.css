@@ -8,7 +8,12 @@
     overflow: hidden;
     overflow-y: auto;
 }
-	
+	#the_Tree_Container{
+    width: 100%;
+    display: block;
+	}
+
+
 /* Navigation Bar styles */
 .navbar {
     background-color: #333;
