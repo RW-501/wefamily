@@ -73,6 +73,7 @@ function saveEventDetailsFromPopup() {
   const eventDate = document.getElementById('event-date-input').value;
   const eventLocation = document.getElementById('event-location-input').value;
   const eventCaption = document.getElementById('event-caption-input').value;
+  const eventGroup = document.getElementById('event-Group-input').value;
   const selectedFamilyMembers = getSelectedFamilyMembers();
 
   // Prepare the data to be saved to Firestore
@@ -80,11 +81,11 @@ function saveEventDetailsFromPopup() {
     metaData: metadata,
     exifData: exifData,
     downloadURL: downloadURL,
-    group: "",
+    group: eventGroup,
     meditaType: downloadURL,
     memberName: Current_USERNAME,
     familyID: currentFamilyID,
-    memberID: userID,
+    memberID: Current_MEMBERID,
     downloadURL: downloadURL,
     eventDate: eventDate,
     eventLocation: eventLocation,
