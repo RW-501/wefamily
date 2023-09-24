@@ -975,7 +975,7 @@ function acceptJoinRequest(requestID, userID) {
 
     const userDocRef = firestore.collection('users').doc(userID);
 
-await userDocRef.update({
+ userDocRef.update({
     userTrees: firebase.firestore.FieldValue.arrayUnion({
         id: currentFamilyID,
         name: treeName
