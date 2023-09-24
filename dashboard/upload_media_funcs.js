@@ -39,21 +39,19 @@ function openMediaPopup(downloadURL) {
 const fileInput = document.getElementById('familyTimelineFiles');
 const progressBar = document.getElementById('progress-bar');
 
-	    
 function uploadFileToStorage(file) {
   const storageRef = firebase.storage().ref();
   const uploadTask = storageRef.child('uploads/' + file.name).put(file);
 
   uploadTask.then((snapshot) => {
-    // Handle successful upload
     snapshot.ref.getDownloadURL().then((downloadURL) => {
+      // Call the function to save event details with the downloadURL
+      saveEventDetails(downloadURL);
+
       // Display preview of the uploaded image
       const previewImage = document.createElement('img');
       previewImage.src = downloadURL;
       document.body.appendChild(previewImage);
-
-      // Open a scrollable pop-up with media and editing options
-      openMediaPopup(downloadURL);
     });
   });
 
