@@ -303,11 +303,9 @@ document.getElementById('add-member-type').addEventListener('submit', function (
 	    
     function addParent(member) {
 
-	    	if(getParentNames(member.memberID) !== null){
+	    	if(getParentNames(member.memberID) === null){
 // console.log('setRootValue memberID.',memberID);
 
-                  //  console.log('member:'+ member);
-        // Add parent logic here
 showAddMemberTypePopup("Parent");
 	    addFamily_MemberID = member.memberID;
 	    addFamily_Type = 'Parent';
