@@ -2,8 +2,9 @@
 const eventDateInput = document.getElementById('event-date-input');
 
 // Function to save event details to Firestore
-function saveEventDetails(downloadURL) {
-  const eventDate = eventDateInput.value;
+function saveEventDetailsFromPopup() {
+  const downloadURL = document.getElementById('download-url-input').value;
+  const eventDate = document.getElementById('event-date-input').value;
   const eventLocation = document.getElementById('event-location-input').value;
   const eventCaption = document.getElementById('event-caption-input').value;
   const selectedFamilyMembers = getSelectedFamilyMembers();
@@ -28,13 +29,21 @@ function saveEventDetails(downloadURL) {
     });
 }
 
-// Modify the openMediaPopup function to call saveEventDetails
-function openMediaPopup(downloadURL) {
-  // Implement logic for displaying a popup with media and editing options
-  // After the user interacts with the popup and clicks save, call saveEventDetails
-  saveEventDetails(downloadURL);
-}
 
+
+function openMediaPopup(downloadURL) {
+  // Display media preview
+  const mediaPreview = document.getElementById('media-preview');
+  mediaPreview.innerHTML = `<img src="${downloadURL}" alt="Media Preview">`;
+
+  // Set the downloadURL in a hidden input field for later use
+  const downloadURLInput = document.getElementById('download-url-input');
+  downloadURLInput.value = downloadURL;
+
+  // Show the popup
+  const popup = document.getElementById('timelinePopup');
+  popup.style.display = 'block';
+}
 	  
 const fileInput = document.getElementById('familyTimelineFiles');
 const progressBar = document.getElementById('progress-bar');
