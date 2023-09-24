@@ -1119,7 +1119,7 @@ if (treeId) {
 const db = firebase.firestore();
 
 // Reference to the document in the collection
-const docRef = db.collection("familyTrees").doc(treeData.treeID);
+const docRef = db.collection("familyTrees").doc(treeId);
 
 docRef.get().then((doc) => {
   if (doc.exists) {
