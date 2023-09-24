@@ -68,7 +68,10 @@ function saveEventDetailsFromPopup() {
 const publicBool = input(document.getElementById('event-Pubic-input').checked);
 
   const selectedFamilyMembers = getSelectedFamilyMembers();
-
+const reactions = {
+  likes: 0,
+  loves: 0
+};
   // Prepare the data to be saved to Firestore
   const eventData = {
     metaData: metadata,
@@ -86,8 +89,12 @@ const publicBool = input(document.getElementById('event-Pubic-input').checked);
     viewed: 0,
     public: publicBool,
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    reactions: [likes:0,Loves:0],
+    reactions: [reactions],
   };
+//reactions.likes += 1;
+// reactions.loves += 1;
+
+	
 
   // Add the data to the "familyTimeline" collection
   const db = firebase.firestore();
