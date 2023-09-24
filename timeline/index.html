@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
+
+
+	
+      <!-- Firebase SDK -->
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+	
+    <script src="../auth.js"></script>
+    <script src="../firebase.js"></script>
+
+	    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <title>Linkedup</title>
+
+	
+
+
+<script>
+
+
+</script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+   <nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
+        </div>
+        <div class="navbar-toggler">
+            <div class="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+        <div class="user-actions">
+            <button id="logout-button" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+    <div class="dropdown-menu">
+        <ul>
+            <li><a href="#tree-details">Tree Details</a></li>
+            <li><a href="#tree-content">Family Members</a></li>
+            <li><a href="#family-tree">Family Tree</a></li>
+            <li><a href="#family-news">Family Chat</a></li>
+            <li><a href="#member_request">Member Request</a></li>
+            <li><a href="/wefamily/about/">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
+
+	
+
+    <script defer src="family-tree-script.js"></script>
+    <script defer src="add_edit_family_tree_funcs.js"></script>
+    <script defer src="post_funcs.js"></script>
+    <script defer src="add_edit_members_funcs.js"></script>
+
+	</body>
+  <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 WeFamily. All rights reserved.<a id="LRP" href='https://rw-501.github.io/Portfolio/'>Dev Portfolio</a> </p>
+		<p>version: v1.92</p>
+        </div>
+    </footer>
+
+	
+</html>
