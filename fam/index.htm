@@ -19,7 +19,7 @@
    <nav class="navbar">
     <div class="container">
         <div class="logo">
-            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
+            <a id="logo-link" href="/wefamily/dashboard/">Family Ties</a>
         </div>
         <div class="navbar-toggler">
             <div class="menu-icon">
@@ -126,7 +126,7 @@
 
 
 /// works
-
+var treeData = '';
 
 
 function centerLayersOnScreen() {
@@ -1116,9 +1116,27 @@ const treeId = urlParams.get('tree');
 if (treeId) {
   // Use treeId as needed
   console.log('Tree ID:', treeId);
+const db = firebase.firestore();
+
+// Reference to the document in the collection
+const docRef = db.collection("familyTrees").doc(treeData.treeID);
+
+docRef.get().then((doc) => {
+  if (doc.exists) {
+    // Document data is available in doc.data()
+     treeData = doc.data();
+    console.log("Tree data:", treeData);
+	  
+	  loadFamilyTreeChart(treeData.id);
+
+  } else {
+    console.log("No such document!");
+  }
+}).catch((error) => {
+  console.log("Error getting document:", error);
+});
 
 
-loadFamilyTreeChart(treeId);
 
 	
 // Assuming familyTreeCode is the code you want to save
