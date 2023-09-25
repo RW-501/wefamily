@@ -636,7 +636,11 @@ text-align: end;
     display: none;
 }
 
-
+#family-news{
+    width: 100%;
+   max-height: 1000px;	
+    overflow: hidden;
+}
 
 .post .post-content {
     padding: 10px;
@@ -656,10 +660,11 @@ text-align: end;
     border-radius: 5px;
 padding-top: 15px;
 	 width: 100%;
+    max-height: 700px;
+    height: fit-content;
 }
 	
 #family-news-area, #pinnedFamily-news-area {
-    max-height: 700px;
     resize: vertical;
     position: absolute;
     display: block;
@@ -667,7 +672,7 @@ padding-top: 15px;
     width: 100%;
     z-index: 1;
 	    overflow: hidden;
-
+    height: fit-content;
 }
 
 	
@@ -857,7 +862,7 @@ html, body{
 
 
 }
-	#family-news, #family-tree, #family-tree-area{
+ #family-tree, #family-tree-area{
     width: 100%;
     height: 800px;	
     overflow: hidden;
