@@ -10,7 +10,7 @@
 
 <style>
 	svg{
-      width: 150%;
+      width: 100%;
 		
 }
 
@@ -205,7 +205,7 @@ function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
     const height_Layout = 200 * maxHierarchyDepth // + 250;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
-
+const widthX = window.screen.width;
 	            console.log('width :', width);
 	            console.log('height_Layout :', height_Layout);
 
@@ -225,7 +225,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
     const treeLayout = d3.tree().size([width, height_Layout]);
 //    const treeLayout = d3.tree().size([width, height_Layout]);
 
-    chartGroup = svg.append("g").style("transform-origin", "center top");
+    chartGroup = svg.append("g").style("transform-origin", "right top");
 
 
 
