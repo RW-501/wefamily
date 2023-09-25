@@ -1638,9 +1638,10 @@ if (data.userID === userID || data.addByID === userID) {
   const addChildBtn = memberDiv.querySelector('.add-child');
   addChildBtn.addEventListener('click', () => addChild(data));
 
-  if (data.memberID === userID || data.addByID === userID) {
+  if (data.userID === userID || data.addByID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
     editMemberBTN.addEventListener('click', () => editMemberFunc(data));
+	  
 	     if ( data.addByID === userID) {
       const claimMemberBTN = memberDiv.querySelector('.claim-member');
       claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
