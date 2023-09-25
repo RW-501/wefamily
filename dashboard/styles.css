@@ -661,7 +661,7 @@ text-align: end;
 padding-top: 15px;
 	 width: 100%;
     max-height: 700px;
-    height: fit-content;
+    height: 700px;
 }
 	
 #family-news-area, #pinnedFamily-news-area {
