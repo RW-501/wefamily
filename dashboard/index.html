@@ -1614,7 +1614,6 @@ if (data.userID === userID || data.addByID === userID) {
 } else {
   if (data.userID === '' || data.userID === undefined || data.userID === null) {
     claim_Div += "<button class='claim-member'>Claim Member</button>";
-    console.log(data.userID + '   claim??');
   }
 }
 
@@ -1643,7 +1642,7 @@ if (data.userID === userID || data.addByID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
     editMemberBTN.addEventListener('click', () => editMemberFunc(data));
   } else {
-    if (data.userID === "") {
+    if (data.userID === ""  || data.addByID === userID) {
       const claimMemberBTN = memberDiv.querySelector('.claim-member');
       claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
     }
