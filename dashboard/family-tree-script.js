@@ -76,6 +76,7 @@ function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
     const height_Layout = 200 * maxHierarchyDepth // + 250;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
+const widthX = window.screen.width;
 
 	            console.log('width :', width);
 	            console.log('height_Layout :', height_Layout);
@@ -321,16 +322,16 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 */
 	
 function zoomed(event) {
-	/*
+	
   if (event.transform.k === currentScale) {
     console.log('No zoom change');
     return;
   } else {
-  //  currentScale = event.transform.k;
+ currentScale = event.transform.k;
 
 	      console.log(`currentScale of ${currentScale}:`);
   }
-*/
+
   chartGroup.attr('transform', event.transform);
 
   updateImageAttributes();
