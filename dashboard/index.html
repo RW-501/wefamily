@@ -1607,7 +1607,7 @@ if (data.userID === userID) {
       Current_MEMBERID = data.memberID;
     }
   } else {
-    if (!data.userID) {
+    if (data.userID = '' ||data.userID = undefined   ||data.userID = null ) {
       claim_Div += "<button class='claim-member'>Claim Member</button>";
     }
   }
