@@ -216,8 +216,9 @@ const widthX = window.screen.width;
     const treeLayout = d3.tree().size([width, height_Layout]);
 //    const treeLayout = d3.tree().size([width, height_Layout]);
 
-    chartGroup = svg.append("g").style("transform-origin", "right top");
-
+const chartGroup = svg.append("g")
+    .style("display", "block")
+    .style("transform-origin", "right top");
 
 
  
