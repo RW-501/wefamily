@@ -163,10 +163,18 @@ function checkPostForMedia(xxx) {
       return xxx + `<iframe src="${embedUrl}" width="560" height="315" class="video_iframe"></iframe>`;
     }
   } else {
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+   /*
+	  const urlRegex = /(https?:\/\/[^\s]+)/g;
     const url = xxx.match(urlRegex);
     const { contentWithLinks, metadata } = replaceURLsWithLinks(xxx, url);
     return `${contentWithLinks}<div class="post_link_meta">${metadata}</div>`;
+
+    */
+const contentWithLinks = xxx.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank">$1</a>'
+    );
+	  return contentWithLinks;
   }
 }
 
@@ -208,10 +216,7 @@ isPinned = false;
 
   // Replace URLs with clickable links
 //  const contentWithLinks = checkPostForMedia(post.content);
-const contentWithLinks = post.content.replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank">$1</a>'
-    );
+const contentWithLinks = checkPostForMedia(post.content);
 		    
                 if (post.postType === 'news') {
                     const postContent = `
