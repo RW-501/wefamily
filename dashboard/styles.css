@@ -27,7 +27,13 @@
 max-height: 800px  !important;
 }
 
-
+#postUserInputarea{
+    display: grid;
+width: 100%;
+    height: auto;
+    display: block;
+	    margin: auto;
+}
 	
 }
 .flex_w{
