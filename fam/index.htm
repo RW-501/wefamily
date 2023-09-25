@@ -434,7 +434,7 @@ const translateY = 100;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
 const middle = (browserWidth - width ) / (scale * 10);
-		//currentScale = newScale;
+		currentScale = scale;
 
 	
 // Set the transform attribute
@@ -451,16 +451,16 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 */
 	
 function zoomed(event) {
-	/*
+	
   if (event.transform.k === currentScale) {
     console.log('No zoom change');
     return;
   } else {
-  //  currentScale = event.transform.k;
+ currentScale = event.transform.k;
 
 	      console.log(`currentScale of ${currentScale}:`);
   }
-*/
+
   chartGroup.attr('transform', event.transform);
 
   updateImageAttributes();
