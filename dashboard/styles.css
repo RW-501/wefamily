@@ -844,7 +844,7 @@ html, body{
 
 
 }
-	#family-tree, #family-tree-area{
+	#family-news, #family-tree, #family-tree-area{
     width: 100%;
     height: 800px;	
     overflow: hidden;
