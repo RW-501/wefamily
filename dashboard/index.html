@@ -1596,7 +1596,8 @@ Current_FAMNAME = tree.name;
 function populateFamilyMemberDetails(data, userID) {
   const formattedBirthdate = formatDateToMonthDay(data.birthdate);
   let claim_Div = "";
-  
+    	                    console.log(data.userID  +'   data.userID === userID '+userID);
+
  if (data.userID === userID || data.addByID === userID) {
     claim_Div += "<button class='edit-member'>Edit Member</button>";
 
