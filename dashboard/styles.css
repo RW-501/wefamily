@@ -23,7 +23,9 @@
 }
 
 
-
+#family-news{
+max-height: 800px  !important;
+}
 
 
 	
@@ -641,7 +643,6 @@ text-align: end;
 /* CSS for pinned posts */
 
 #mainFamily-news-area {
-    max-height: 700px;
     resize: vertical;
     position: relative;
     display: block;
