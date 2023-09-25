@@ -96,8 +96,9 @@ const widthX = window.screen.width;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
 
-    chartGroup = svg.append("g").style("transform-origin", "right top");
-
+const chartGroup = svg.append("g")
+    .style("display", "block")
+    .style("transform-origin", "right top");
 
 
  
@@ -311,15 +312,22 @@ const middle = (browserWidth - width ) / (scale * 10);
 // Set the transform attribute
 chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
-/*
-	            console.log('newScale :', newScale);
+
+
+            console.log('browserWidth :', browserWidth);
+            console.log('width :', width);
+            console.log('scale :', scale);
+
+	
+           console.log('newScale :', newScale);
 	            console.log('middle :', middle);
             console.log('width :', width);
 
             console.log('translateX :', translateX);
             console.log('scale :', scale);
 
-*/
+
+
 	
 function zoomed(event) {
 	
@@ -344,6 +352,10 @@ chartGroup
       const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
       return linkGenerator({ source, target });
     });
+
+            console.log('currentScale :', currentScale);
+
+	
 }
 
 	/*
