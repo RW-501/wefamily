@@ -1005,7 +1005,7 @@ function acceptJoinRequest(requestID, userID) {
                 // Delete the join request document
                 requestRef.delete()
                 .then(() => {
-                    newsPost(`${requestData.userName} joined Family Ties as ${requestUserData.first_name} ${requestUserData.last_name}.`);
+                    newsPost(`${requestData.userName} joined ${Current_FAMNAME} .`);
                     loadJoinRequests(); // Reload the list of join requests
 
                     // Now you can use 'requestData' to access the field data of the deleted document
