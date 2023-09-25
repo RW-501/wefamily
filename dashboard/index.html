@@ -1596,7 +1596,7 @@ Current_FAMNAME = tree.name;
 function populateFamilyMemberDetails(data, userID) {
   const formattedBirthdate = formatDateToMonthDay(data.birthdate);
   let claim_Div = "";
-    	                    console.log(data.userID  +'   data.userID === userID '+userID);
+    	                    console.log(data.id  +'   data.userID === userID '+userID);
 
  if (data.userID === userID || data.addByID === userID) {
     claim_Div += "<button class='edit-member'>Edit Member</button>";
@@ -1770,7 +1770,7 @@ let memberID = member.memberID;
 
                         // Update the user document to add the family tree ID to the "userTrees" array field
                         userDocRef.update({
-                            userID: firebase.firestore.FieldValue.arrayUnion(userID)
+                            userID: userID
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
