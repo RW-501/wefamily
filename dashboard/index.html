@@ -1641,8 +1641,12 @@ if (data.userID === userID || data.addByID === userID) {
   if (data.memberID === userID || data.addByID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
     editMemberBTN.addEventListener('click', () => editMemberFunc(data));
+	     if ( data.addByID === userID) {
+      const claimMemberBTN = memberDiv.querySelector('.claim-member');
+      claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
+    }
   } else {
-    if (data.userID === ""  || data.addByID === userID) {
+    if (data.userID === "" ) {
       const claimMemberBTN = memberDiv.querySelector('.claim-member');
       claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
     }
