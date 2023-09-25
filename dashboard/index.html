@@ -1606,10 +1606,9 @@ if (data.userID === userID || data.addByID === userID) {
     Current_USERPHOTO = data.photo;
     Current_MEMBERID = data.memberID;
   }
-  if (data.userID === '' || data.userID === undefined || data.userID === null || data.addByID === userID) {
+/*  if (data.userID === '' || data.userID === undefined || data.userID === null || data.addByID === userID) {
     claim_Div += "<button class='claim-member'>Claim Member</button>";
-    console.log(data.userID + '   claim??');
-  } 
+  } */
 	
 } else {
   if (data.userID === '' || data.userID === undefined || data.userID === null) {
@@ -1641,11 +1640,12 @@ if (data.userID === userID || data.addByID === userID) {
   if (data.userID === userID || data.addByID === userID) {
     const editMemberBTN = memberDiv.querySelector('.edit-member');
     editMemberBTN.addEventListener('click', () => editMemberFunc(data));
-	  
+/*	  
 	     if ( data.addByID === userID) {
       const claimMemberBTN = memberDiv.querySelector('.claim-member');
       claimMemberBTN.addEventListener('click', () => claimMemberFunc(data));
     }
+*/	  
   } else {
     if (data.userID === "" ) {
       const claimMemberBTN = memberDiv.querySelector('.claim-member');
@@ -1785,7 +1785,8 @@ let memberID = member.memberID;
                         })
                             .then(() => {
                                 console.log('Family tree ID added to user document successfully.');
-			newsPost(`Admin ID ${memberID} created ${member.name} on ${member.timestamp} `);
+				    	newsPost(`${userID} claimed ${member.first_name} ${member.last_name} `);
+
                // loadFamilyTreeChart(treeData);
                 fetchFamilyTree();
 
@@ -1797,7 +1798,6 @@ let memberID = member.memberID;
 
 
 	    
-	newsPost(`${userID} claimed ${member.first_name} ${member.last_name} `);
 
 	    }	    
 	
