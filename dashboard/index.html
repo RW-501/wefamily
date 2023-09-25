@@ -990,9 +990,11 @@ function acceptJoinRequest(requestID, userID) {
             name: Current_FAMNAME
         })
     })
-    .then(() => {
+    .then((doc) => {
         // Get the document reference for the join request
         const requestRef = firestore.collection('memberRequest').doc(requestID);
+	    
+                const requestUserData = doc.data();
 
         // Get the field data before deleting the document
         requestRef.get()
@@ -1003,7 +1005,7 @@ function acceptJoinRequest(requestID, userID) {
                 // Delete the join request document
                 requestRef.delete()
                 .then(() => {
-                    newsPost(`${requestData.first_name} ${requestData.last_name} joined to the Family Ties.`);
+                    newsPost(`${requestData.userName} joined Family Ties as ${requestUserData.first_name} ${requestUserData.last_name}.`);
                     loadJoinRequests(); // Reload the list of join requests
 
                     // Now you can use 'requestData' to access the field data of the deleted document
