@@ -214,7 +214,7 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
         .attr("width", width)
         .attr("height", height_Layout);
 
-    const svg = d3.select("#family-tree-area").append("svg")
+    const svg = d3.select("#the_Tree").append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
 
@@ -295,7 +295,7 @@ nodeGroup.selectAll("text")
 
 
     let memberData = familyData;
-//console.log('memberData data:', memberData.data);
+console.log('memberData data:', memberData.data);
 memberData = memberData.data;
 //let memberDataX = memberData();
  	//console.log('memberDataX :', memberDataX);
