@@ -310,8 +310,8 @@ width: 50px;
 	.image-container {
             width: 150px;
             height: 150px;
-            border-radius: 50%;
-            overflow: hidden;
+    border-radius: 10px;
+		overflow: hidden;
             background-color: lightgray;
             display: flex;
             justify-content: center;
