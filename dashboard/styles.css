@@ -648,6 +648,7 @@ text-align: end;
     overflow: hidden;
     border-radius: 5px;
 padding-top: 15px;
+	 width: 100%;
 }
 	
 #pinnedFamily-news-area {
