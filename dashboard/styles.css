@@ -671,8 +671,9 @@ padding-top: 15px;
     top: 0;
     width: 100%;
     z-index: 1;
-	    overflow: hidden;
-    height: fit-content;
+    overflow-x: hidden;
+    height: 700px;
+    overflow-y: auto;
 }
 
 	
