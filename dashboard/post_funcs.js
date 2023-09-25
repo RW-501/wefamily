@@ -304,7 +304,7 @@ const postContent = input(document.getElementById('post-content').value || '');
         content: postContent,
         photo: "",
         memberPhoto: Current_USERPHOTO,
-        author: currentUser.displayName || Current_USERNAME || 'Anonymous',
+        author: currentUser.displayName || Current_USERNAME ,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
