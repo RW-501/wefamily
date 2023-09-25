@@ -1595,24 +1595,24 @@ Current_FAMNAME = tree.name;
 
 function populateFamilyMemberDetails(data, userID) {
   const formattedBirthdate = formatDateToMonthDay(data.birthdate);
-  let claim_Div = "";
-    	                    console.log(data.userID  +'   data.userID === userID '+userID);
+ let claim_Div = "";
+console.log(data.userID + '   data.userID === userID ' + userID);
 
- if (data.userID === userID || data.addByID === userID) {
-    claim_Div += "<button class='edit-member'>Edit Member</button>";
+if (data.userID === userID || data.addByID === userID) {
+  claim_Div += "<button class='edit-member'>Edit Member</button>";
 
-if (data.userID === userID) {
-	Current_USERNAME = data.first_name;
-      Current_USERPHOTO = data.photo;
-      Current_MEMBERID = data.memberID;
-    }
-  } else {
-if (data.userID === '' || data.userID === undefined || data.userID === null) {
-  claim_Div += "<button class='claim-member'>Claim Member</button>";
-	console.log(data.user  +'   clam??'); 
+  if (data.userID === userID) {
+    Current_USERNAME = data.first_name;
+    Current_USERPHOTO = data.photo;
+    Current_MEMBERID = data.memberID;
+  }
+} else {
+  if (data.userID === '' || data.userID === undefined || data.userID === null) {
+    claim_Div += "<button class='claim-member'>Claim Member</button>";
+    console.log(data.userID + '   claim??');
+  }
 }
 
-  }
 
   const memberDiv = document.createElement("div");
   memberDiv.className = 'family-member';
