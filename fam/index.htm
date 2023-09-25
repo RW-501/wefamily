@@ -10,11 +10,8 @@
 
 <style>
 	svg{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  
+		
 }
 
 	
@@ -215,17 +212,18 @@ const browserWidth = window.innerWidth;   // Width of the browser window in pixe
     document.getElementById('the_Tree').innerHTML = "";
     
     // Create an SVG element to contain the chart
-    const svgMain = d3.select("#the_Tree")
+/*    const svgMain = d3.select("#the_Tree")
         .append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
-
+*/
     const svg = d3.select("#the_Tree").append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
+//    const treeLayout = d3.tree().size([width, height_Layout]);
 
     chartGroup = svg.append("g").style("transform-origin", "center top");
 
