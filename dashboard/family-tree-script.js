@@ -347,51 +347,42 @@ console.log('chartGroup transform:', chartGroup.attr('transform'));
 
             console.log('translateX :', translateX);
 
-
-
-	
 function zoomed(event) {
-  if (event.transform.k === currentScale) {
-    console.log('No zoom change');
-    return;
-  } else {
-    currentScale = event.transform.k;
-    console.log(`currentScale of ${currentScale}:`);
-  }
+    if (event.transform.k === currentScale) {
+        console.log('No zoom change');
+        return;
+    } else {
+        currentScale = event.transform.k;
+        console.log(`currentScale of ${currentScale}:`);
+    }
 
-  // Update the 'd' attribute of the paths to create curved links
-  chartGroup
-    .selectAll('path.link')
-    .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y };
-      const target = { x: d.target.x * currentScale, y: d.target.y };
-      // Update the 'd' attribute with the updated path data
-      const updatedPathData = linkGenerator({ source, target });
-      return updatedPathData;  // Return the updated path data
-    });
+    // Update nodes (images, text, and rectangles) based on the current zoom scale
+    nodeElements.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
 
-  // Update the positions and font size of the text elements
-  chartGroup
-    .selectAll('text')
-    .attr('x', d => d.x * currentScale)
-    .attr('y', d => d.y)
-    .style('font-size', 1.2 / currentScale + 'em');
+    nodeElements.select('image')
+        .attr('width', imageWidth * currentScale)
+        .attr('height', imageHeight * currentScale);
 
-  // Update the positions and dimensions of the rectangles
-  chartGroup
-    .selectAll('rect')
-.attr('x', d => d.x * currentScale - 5)
-    .attr('y', d => d.y - 2)  // Adjust as needed
-    .attr('width', bbox.width * (1 / currentScale) + 10)  // Adjust as needed
-    .attr('height', bbox.height * (1 / currentScale) + 4);  // Adjust as needed
+    nodeElements.select('text')
+        .style('font-size', 1.2 / currentScale + 'em');
 
-  // Update the positions of the nodes
-  nodeGroup.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
+    nodeElements.select('rect')
+        .attr('x', -(imageWidth / 2 + 5) * currentScale)
+        .attr('y', -(imageHeight / 2 + 2) * currentScale)
+        .attr('width', imageWidth * currentScale + 10)
+        .attr('height', imageHeight * currentScale + 4);
 
-  updateImageAttributes();
+    // Update the 'd' attribute of the paths to create curved links
+    chartGroup.selectAll('path.link')
+        .attr('d', (d) => {
+            const source = { x: d.source.x * currentScale, y: d.source.y };
+            const target = { x: d.target.x * currentScale, y: d.target.y };
+            const updatedPathData = linkGenerator({ source, target });
+            return updatedPathData;
+        });
+
+    updateImageAttributes();
 }
-
 
 
 }
