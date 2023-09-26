@@ -123,7 +123,7 @@ const svg = d3.select("#family-tree-area").append("svg")
 var mid;
 	
 if(browserWidth < 900){
-mid = 1000;
+mid = -1000;
 }else{
 mid = width  - chartWidth; 
 }
