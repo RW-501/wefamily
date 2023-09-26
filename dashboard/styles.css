@@ -3,7 +3,7 @@ body, html {
   margin: 0;
 }
 
-#family-tree {
+.expandable-div {
   display: none;
   background-color: lightgray;
   position: fixed;
@@ -15,10 +15,9 @@ body, html {
   box-sizing: border-box;
 }
 
-#family-tree .show {
+.expandable-div.show {
   display: block;
 }
-
 
 
 @media screen and (max-width: 900px) {
