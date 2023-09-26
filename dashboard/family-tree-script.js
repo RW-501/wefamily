@@ -421,6 +421,8 @@ function updateImageAttributes() {
     .attr("y", d => -imageHeight / 2)
     .attr("width", imageWidth)
     .attr("height", imageHeight);
+
+	applyZoom(currentScale);
 }
 
 // Collision detection to prevent overlapping
