@@ -123,7 +123,9 @@ const width = window.screen.width;
 
 const scale = browserWidth / chartWidth;
 let currentScale = scale;
+ document.getElementById('family-tree').innerHTML += "  browserWidth  "+browserWidth;
 
+	
 const translation = (width - chartWidth * scale) / 2;
 console.log('Translation:', translation);
        console.log('maxHierarchyDepth :', maxHierarchyDepth);
