@@ -110,9 +110,10 @@ let currentScale = scale;
 
 const translation = (width - chartWidth * scale) / 2;
 console.log('Translation:', translation);
+       console.log('maxHierarchyDepth :', maxHierarchyDepth);
+console.log('chartHeight:', chartHeight);
 
 console.log('chartWidth:', chartWidth);
-console.log('chartHeight:', chartHeight);
 console.log('browserWidth:', browserWidth);
 console.log('width:', width);
 console.log('currentScale:', currentScale);
