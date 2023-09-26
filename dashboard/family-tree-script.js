@@ -127,7 +127,7 @@ var translateY = 100; // Adjust chartHeight as needed
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
-  .style("transform-origin", "center");
+  .style("transform-origin", "left center");
 
 /*
 	 chartGroup = svg.append("g")
