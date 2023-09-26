@@ -121,13 +121,13 @@ const svg = d3.select("#family-tree-area").append("svg")
   .attr("height", chartHeight);
 
 // Calculate the translation to center the chartGroup in the SVG
-var translateX = (chartWidth - browserWidth ) / 2; // Adjust chartWidth as needed
+var translateX = (chartWidth - width ) / 2; // Adjust chartWidth as needed
 var translateY = 100; // Adjust chartHeight as needed
 	
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
-  .style("transform-origin", "center");
+  .style("transform-origin", "center top");
 
 /*
 	 chartGroup = svg.append("g")
@@ -346,7 +346,7 @@ setTimeout(() => {
 
 console.log('Browser width:', browserWidth);
 	
- translateX = (chartWidth - browserWidth ) / 2; // Adjust chartWidth as needed
+ translateX = (chartWidth - width ) / 2; // Adjust chartWidth as needed
 	translateY = 100;
  const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
