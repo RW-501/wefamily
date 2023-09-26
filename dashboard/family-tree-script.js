@@ -119,9 +119,16 @@ const width = window.screen.width;
 const svg = d3.select("#family-tree-area").append("svg")
   .attr("width", chartWidth)
   .attr("height", chartHeight);
+	
+var mid;
+	
+if(browserWidth < 900){
+mid = 1000;
+}else{
+mid = width  - chartWidth; 
+}
 
-// Calculate the translation to center the chartGroup in the SVG
-	var mid = width  - chartWidth; 
+	
 var  translateX =  mid; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
 
