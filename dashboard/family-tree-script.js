@@ -226,7 +226,7 @@ const memberIDs = Object.keys(memberData);
 
   
 //nodeGroup	// Add text for each node
-chartGroup.selectAll("text")
+nodeGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
