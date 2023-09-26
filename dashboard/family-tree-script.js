@@ -258,7 +258,7 @@ const memberIDs = Object.keys(memberData);
 
 
 
-console.log('chartGroup transform:', nodeGroup.attr('transform'));
+//console.log('chartGroup transform:', nodeGroup.attr('transform'));
 
 
 
