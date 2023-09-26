@@ -230,7 +230,7 @@ nodeGroup.selectAll("text")
 
 
 
-nodeGroup = chartGroup.selectAll(".node")
+nodeGroup = nodeGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
