@@ -1,20 +1,23 @@
 
 /// works
-
 function centerElementInSVG(element) {
-  const svgWidth = parseInt(d3.select("#family-tree-area").attr("width"));
-  const svgHeight = parseInt(d3.select("#family-tree-area").attr("height"));
+  // Delay to allow rendering to complete
+  setTimeout(() => {
+    const svgWidth = parseInt(d3.select("#family-tree-area").attr("width"));
+    const svgHeight = parseInt(d3.select("#family-tree-area").attr("height"));
 
-  const elementWidth = element.node().getBBox().width;
-  const elementHeight = element.node().getBBox().height;
+    const elementWidth = element.node().getBBox().width;
+    const elementHeight = element.node().getBBox().height;
 
-  const translateX = (svgWidth - elementWidth) / 2;
-  const translateY = (svgHeight - elementHeight) / 2;
+    const translateX = (svgWidth - elementWidth) / 2;
+    const translateY = (svgHeight - elementHeight) / 2;
 
-  element.attr("transform", `translate(${translateX},${translateY})`);
+    element.attr("transform", `translate(${translateX},${translateY})`);
+  }, 0);
 }
 
 // Usage example for centering nodeGroup
+//centerElementInSVG(nodeGroup);
 
 
 function centerLayersOnScreen() {
@@ -35,7 +38,6 @@ function centerLayersOnScreen() {
   // Calculate the translation for chartGroup to center horizontally
   const chartGroupTranslateX = (screenWidth - chartGroupWidth) / 2;
   const chartGroupTranslateY = (screenHeight - chartGroupHeight) / 2;
-	centerElementInSVG(nodeGroup);
 
 	updateImageAttributes();
 
@@ -72,7 +74,8 @@ console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
 });
 
 zoomInButton.addEventListener('click', () => {
-centerLayersOnScreen();
+//centerLayersOnScreen();
+	centerElementInSVG(nodeGroup);
 
 	
 });
