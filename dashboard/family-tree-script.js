@@ -348,7 +348,7 @@ setTimeout(() => {
 console.log('Browser width:', browserWidth);
 	
 //translateX = (width - chartWidth ); // Adjust chartWidth as needed
-translateX = (browserWidth * 2 ) - browserWidth; // Adjust chartWidth as needed
+translateX = (-browserWidth * 2 ) - browserWidth; // Adjust chartWidth as needed
 	
 	translateY = 100;
  const scale =  browserWidth / chartWidth ;
