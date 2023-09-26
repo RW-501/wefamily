@@ -100,7 +100,7 @@ var nodes;
 
 function generateFamilyTreeChart(familyData) {
 const chartWidth = 300 * maxGenerationWidth;
-const chartHeight = 200 * maxHierarchyDepth;
+const chartHeight = 150 * maxHierarchyDepth;
 
 const browserWidth = window.innerWidth;
 const width = window.screen.width;
