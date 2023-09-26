@@ -137,17 +137,19 @@ var middle;
 	
 if(browserWidth < 900){
 	
-middle =  currentScale * -1000;
+middle =   -1000;
 }else{
-middle = width  - chartWidth * currentScale; 
+middle = width  - chartWidth ; 
 }
+ 	            console.log('middle  :', middle );
 
-	
+middle	= middle * currentScale;
+
 var  translateX =  middle; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
 
 	
-		            console.log('middle  :', middle );
+		            console.log('translateX  :', translateX );
 
 
  chartGroup = svg.append("g")
