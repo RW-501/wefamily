@@ -120,7 +120,7 @@ console.log('currentScale:', currentScale);
 document.getElementById('family-tree-area').innerHTML = "";
 
 const svg = d3.select("#family-tree-area").append("svg")
-  .attr("width", chartWidth)
+  .attr("width", width)
   .attr("height", chartHeight);
 
 let middle;
