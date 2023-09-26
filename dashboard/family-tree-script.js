@@ -72,7 +72,7 @@ let imageWidth = 100;
 let imageHeight = 100;
 var nodeGroup;
    var bbox;
-const nodes;
+var nodes;
 
 function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
