@@ -61,14 +61,9 @@ zoomOutButton.addEventListener('click', () => {
        console.log('width :', width);
        console.log('zoom :', zoom);
        console.log('d3.zoomIdentity :', d3.zoomIdentity);
-const nodeGroupWidth = nodeGroup.node().clientWidth;
-const nodeGroupHeight = nodeGroup.node().clientHeight;
 
-const chartGroupWidth = chartGroup.node().clientWidth;
-const chartGroupHeight = chartGroup.node().clientHeight;
 
-console.log('nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
-console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
+	closeFullscreen();
 
 
 	
@@ -83,6 +78,27 @@ console.log('chartGroup width:   ', chartGroup);
 
 console.log('nodeGroup width:   ', nodeGroup);
 });
+
+const familyTree = document.getElementById('family-tree-area');
+
+
+familyTree.addEventListener('click', () => {
+
+toggleFullscreen();
+	
+});
+
+function toggleFullscreen() {
+  var expandableDiv = document.getElementById("expandableDiv");
+  expandableDiv.classList.toggle("show");
+}
+
+function closeFullscreen() {
+  var expandableDiv = document.getElementById("expandableDiv");
+  expandableDiv.classList.remove("show");
+}
+
+
 
     // Create a group element to hold the links
 var chartGroup; 
@@ -120,6 +136,7 @@ console.log('currentScale:', currentScale);
 
 document.getElementById('family-tree-area').innerHTML = "";
  document.getElementById("family-tree").style.height = chartHeight +"px";
+ document.getElementById('family-tree-area').style.height = chartHeight +"px";
 
 const svg = d3.select("#family-tree-area").append("svg")
   .attr("width", chartWidth)
