@@ -107,6 +107,8 @@ const width = window.screen.width;
 
 	            console.log('chartWidth :', chartWidth);
 	            console.log('chartHeight  :', chartHeight );
+	            console.log('browserWidth  :', browserWidth );
+	            console.log('width  :', width );
 
     document.getElementById('family-tree-area').innerHTML = "";
 
