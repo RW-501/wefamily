@@ -3,7 +3,7 @@ body, html {
   margin: 0;
 }
 
-.expandable-div {
+.expandable-div .show{
   display: none;
   background-color: lightgray;
   position: fixed;
@@ -15,9 +15,6 @@ body, html {
   box-sizing: border-box;
 }
 
-.expandable-div.show {
-  display: block;
-}
 
 
 @media screen and (max-width: 900px) {
