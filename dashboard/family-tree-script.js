@@ -143,7 +143,7 @@ middle = width  - chartWidth ;
 }
  	            console.log('middle  :', middle );
 
-middle	= middle * -currentScale;
+middle	= middle + -currentScale;
 
 var  translateX =  middle; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
