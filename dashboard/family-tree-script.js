@@ -61,83 +61,135 @@ centerLayersOnScreen();
 });
 
     // Create a group element to hold the links
-let chartGroup;
-let linkGenerator;
-let zoom;
+var chartGroup; 
+var linkGenerator;
+var zoom ;
+// Define zoom behavior and initial scale
 const initialScale = 1;
 let currentScale = initialScale;
-const imageWidth = 100;
-const imageHeight = 100;
-let nodeGroup;
 
+let imageWidth = 100;
+let imageHeight = 100;
+var nodeGroup;
+	
 function generateFamilyTreeChart(familyData) {
-    const maxGenerationWidth = 2;  // Assume a default value for maxGenerationWidth
-    const maxHierarchyDepth = 2;  // Assume a default value for maxHierarchyDepth
-    const width = 300 * maxGenerationWidth;
-    const height_Layout = 200 * maxHierarchyDepth;
+    const width = 300 * maxGenerationWidth; //window.screen.width;
+    const height_Layout = 200 * maxHierarchyDepth // + 250;
+const browserWidth = window.innerWidth;   // Width of the browser window in pixels
+const widthX = window.screen.width;
 
-    console.log('width:', width);
-    console.log('height_Layout:', height_Layout);
+	            console.log('width :', width);
+	            console.log('height_Layout :', height_Layout);
 
-    document.getElementById('family-tree-area').innerHTML = '';
+    document.getElementById('family-tree-area').innerHTML = "";
+    
+    // Create an SVG element to contain the chart
+    const svgMain = d3.select("#family-tree-area")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height_Layout);
 
-    const svgMain = d3.select('#family-tree-area')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height_Layout);
+    const svg = d3.select("#family-tree-area").append("svg")
+        .attr("width", width)
+        .attr("height", height_Layout);
 
-    const svg = d3.select('#family-tree-area').append('svg')
-        .attr('width', width)
-        .attr('height', height_Layout);
-
+    // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
 
-    chartGroup = svg.append('g')
-        .style('display', 'block')
-        .style('transform-origin', 'left top');
+const chartGroup = svg.append("g")
+    .style("display", "block")
+    .style("transform-origin", "left top");
 
-    const root = d3.hierarchy(familyData).eachBefore(d => {
-        d.y = d.depth * width + 70;
-        d.x = d.depth * 100;
-    });
+
+ 
+
+   // Generate the tree layout using the modified size
+const root = d3.hierarchy(familyData).eachBefore(d => {
+    d.y = d.depth * width + 70; // Adjust the width between nodes as needed
+    d.x = d.depth * 100; // Adjust the vertical spacing as needed
+})
 
     treeLayout(root);
-
-    linkGenerator = d3.linkHorizontal()
-        .x(d => d.x)
+	
+     linkGenerator = d3.linkHorizontal()
+        .x(d => d.x) // Swap x and y due to vertical tree layout
         .y(d => d.y);
 
     const links = root.links();
 
-    const curvedPath = (d) => {
-        const sourceX = d.source.x;
-        const sourceY = d.source.y;
-        const targetX = d.target.x;
-        const targetY = d.target.y;
 
-        const controlX = (sourceX + targetX) / 2;
-        const controlY = (sourceY + targetY) / 2;
+	const curvedPath = (d) => {
+    const sourceX = d.source.x;
+    const sourceY = d.source.y;
+    const targetX = d.target.x;
+    const targetY = d.target.y;
 
-        return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
-    };
+    // Calculate control point coordinates for a curved link
+    const controlX = (sourceX + targetX) / 2;
+    const controlY = (sourceY + targetY) / 2;
+
+    return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
+};
+
+
 
     zoom = d3.zoom()
-        .scaleExtent([0.1, 10])
-        .on('zoom', zoomed);
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+	
+	
+chartGroup.selectAll("path")
+  .data(links)
+  .enter()
+  .append("path")
+  .attr("class", "link")
+  .attr("d", curvedPath)  // Use the curved path generator function
+  .style("fill", "none")
+  .style("stroke", "gray")
+  .style("stroke-width", 2);
 
-    chartGroup.selectAll('path')
-        .data(links)
-        .enter()
-        .append('path')
-        .attr('class', 'link')
-        .attr('d', curvedPath)
-        .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', 2);
 
-    let memberData = familyData.data;
-    const memberIDs = Object.keys(memberData);
 
+
+
+	
+
+
+	
+
+
+
+
+/*
+	
+	// Adjust the position of the text elements
+nodeGroup.selectAll("text")
+    .attr("x", d => d.x)  // Adjust the x position as needed
+    .attr("y", d => d.y - 20);  // Adjust the y position as needed
+
+*/
+
+
+    let memberData = familyData;
+//console.log('memberData data:', memberData.data);
+memberData = memberData.data;
+//let memberDataX = memberData();
+ 	//console.log('memberDataX :', memberDataX);
+
+
+
+//console.log('userID :', userID);
+const memberIDs = Object.keys(memberData);
+
+//console.log("Member IDs:", memberIDs);
+
+
+  
+	
+    if (memberIDs === userID) {
+//console.log('?????????????????????????????????????????????????????????????????????????      userID :');
+    }
+        
 
 
 	// Add text for each node
@@ -276,28 +328,48 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 
 
 
-    function zoomed(event) {
-        if (event.transform.k === currentScale) {
-            console.log('No zoom change');
-            return;
-        } else {
-            currentScale = event.transform.k;
-            console.log(`Current scale: ${currentScale}`);
-        }
+	
+function zoomed(event) {
+	
+  if (event.transform.k === currentScale) {
+    console.log('No zoom change');
+    return;
+  } else {
+ currentScale = event.transform.k;
 
-        chartGroup.attr('transform', event.transform);
+	      console.log(`currentScale of ${currentScale}:`);
+  }
 
-        updateImageAttributes();
+  chartGroup.attr('transform', event.transform);
 
-        chartGroup.selectAll('path.link')
-            .attr('d', (d) => {
-                const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-                const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-                return linkGenerator({ source, target });
-            });
-    }
+  updateImageAttributes();
+
+chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+      return linkGenerator({ source, target });
+    });
+
+            console.log('currentScale :', currentScale);
+
+	
+}
+
+	/*
+    zoom = d3.zoom()
+        .scaleExtent([0.1, 10]) // Define the zoom scale limits
+        .on("zoom", zoomed);
+*/
+
+	// updateImageAttributes();
 
 }
+
+
+	
 
 function updateImageAttributes() {
   nodeGroup.selectAll("text")
