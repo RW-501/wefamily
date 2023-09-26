@@ -274,7 +274,7 @@ chartGroup = chartGroup.selectAll(".node")
 console.log('nodeGroup transform:', chartGroup.attr('transform'));
 
 // Update the clipPath to create a circular clip
-nodeGroup.append("defs").append("clipPath")
+chartGroup.append("defs").append("clipPath")
     .attr("id", "clipCircle")
     .append("circle")
     .attr("cx", 0)  // Center X at 0
@@ -282,7 +282,7 @@ nodeGroup.append("defs").append("clipPath")
     .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
 
 // Update the image elements to use the circular clip path
-nodeGroup.append("circle")
+chartGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
@@ -290,7 +290,7 @@ nodeGroup.append("circle")
     .style("stroke", "black")  // Border color
     .style("stroke-width", "20px");  // Border width
 
-nodeGroup.append("image")
+chartGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
     .attr("x", d => -imageWidth / 2)
     .attr("y", d => -imageHeight / 2)
