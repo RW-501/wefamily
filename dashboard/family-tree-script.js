@@ -399,8 +399,16 @@ function zoomed(event) {
       return updatedPathData;  // Return the updated path data
     });
 
+ // Update the positions of the nodes
+  nodeGroup.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
+
   updateImageAttributes();
 }
+
+
+
+
+
 
 
 //centerElementInSVG(nodeGroup);
@@ -422,7 +430,6 @@ function updateImageAttributes() {
     .attr("width", imageWidth)
     .attr("height", imageHeight);
 
-	applyZoom(currentScale);
 }
 
 // Collision detection to prevent overlapping
