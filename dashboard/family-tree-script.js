@@ -132,7 +132,7 @@ if (browserWidth < 900) {
 }
 console.log('middle:', middle);
 
-middle -= currentScale * 10;
+//middle -= currentScale * 10;
 
 const translateX = middle;
 const translateY = 100;
