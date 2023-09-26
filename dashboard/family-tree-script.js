@@ -129,11 +129,15 @@ const svg = d3.select("#family-tree-area").append("svg")
 // Calculate the translation to center the chartGroup in the SVG
 const translateX = (width - chartWidth) / 2; // Adjust chartWidth as needed
 const translateY = (chartHeight - chartHeight) / 2; // Adjust chartHeight as needed
-
+/*
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
   .style("transform-origin", "center");
+*/
 
+	 chartGroup = svg.append("g")
+    .style("display", "block")
+    .style("transform-origin", "left top");
 
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([chartWidth , chartHeight]);
