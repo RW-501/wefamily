@@ -153,7 +153,7 @@ centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
 
    // Generate the tree layout using the modified size
   const root = d3.hierarchy(familyData).eachBefore(d => {
-        d.y = d.depth * width + 70; // Adjust the width between nodes as needed
+        d.y = d.depth * chartWidth + 70; // Adjust the width between nodes as needed
         d.x = d.depth * 100; // Adjust the vertical spacing as needed
     });
 
