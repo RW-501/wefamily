@@ -99,13 +99,14 @@ var nodeGroup;
 var nodes;
 
 function generateFamilyTreeChart(familyData) {
-    const width = 300 * maxGenerationWidth; //window.screen.width;
-    const height_Layout = 200 * maxHierarchyDepth;
+    const chartWidth  = 300 * maxGenerationWidth; //window.screen.width;
+    const chartHeight  = 200 * maxHierarchyDepth;
+	
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
-const widthX = window.screen.width;
+const width = window.screen.width;
 
-	            console.log('width :', width);
-	            console.log('height_Layout :', height_Layout);
+	            console.log('chartWidth :', chartWidth);
+	            console.log('chartHeight  :', chartHeight );
 
     document.getElementById('family-tree-area').innerHTML = "";
 
@@ -116,17 +117,26 @@ const widthX = window.screen.width;
         .attr("width", width)
         .attr("height", height_Layout);
 */
-    const svg = d3.select("#family-tree-area").append("svg")
-        .attr("width", width)
-        .attr("height", height_Layout);
+
+
+	
+const svg = d3.select("#family-tree-area").append("svg")
+  .attr("width", chartWidth)
+  .attr("height", chartHeight);
+
+// Calculate the translation to center the chartGroup in the SVG
+const translateX = (width - chartWidth) / 2; // Adjust chartWidth as needed
+const translateY = (height_Layout - chartHeight) / 2; // Adjust chartHeight as needed
+
+ chartGroup = svg.append("g")
+  .attr("transform", `translate(${translateX},${translateY})`)
+  .style("transform-origin", "center");
+
 
     // Create a hierarchical tree layout
-    const treeLayout = d3.tree().size([width, height_Layout]);
+    const treeLayout = d3.tree().size([chartWidth , height_Layout]);
 
-// After creating the chartGroup
-chartGroup = svg.append("g")
-  .style("display", "block")
-  .style("transform-origin", "left top");
+
 
 // Call the function to center chartGroup within the SVG
 centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
@@ -335,12 +345,12 @@ setTimeout(() => {
 
 console.log('Browser width:', browserWidth);
 	
-const translateX = (browserWidth - width) / 2;
-const translateY = 100;
- const scale =  browserWidth / width;
+ translateX = (browserWidth - chartWidth ) / 2;
+ translateY = 100;
+ const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
-const middle = ((browserWidth * 2) - width) / (scale * 10);
+const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 		//currentScale = newScale;
 
 	
@@ -350,17 +360,16 @@ chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
-            console.log('browserWidth :', browserWidth);
             console.log('width :', width);
+            console.log('browserWidth :', browserWidth);
+            console.log('chartWidth  :', chartWidth );
             console.log('scale :', scale);
 
 	
            console.log('newScale :', newScale);
 	            console.log('middle :', middle);
-            console.log('width :', width);
 
             console.log('translateX :', translateX);
-            console.log('scale :', scale);
 
 
 
@@ -400,7 +409,6 @@ console.log('Generated Path:', linkGenerator({ source, target }));
         return updatedPathData;  // Return the updated path data
     });
 
-            console.log('currentScale :', currentScale);
 
 	
 }
