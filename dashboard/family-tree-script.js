@@ -346,7 +346,7 @@ setTimeout(() => {
 
 console.log('Browser width:', browserWidth);
 	
- translateX = (browserWidth - chartWidth ) / 2;
+ translateX =  -chartWidth;
  translateY = 100;
  const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
@@ -356,7 +356,7 @@ const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
