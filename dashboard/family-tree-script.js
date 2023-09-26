@@ -137,7 +137,7 @@ console.log('width:', width);
 console.log('currentScale:', currentScale);
 
 document.getElementById('family-tree-area').innerHTML = "";
- document.getElementById("family-tree").style.height = chartHeight +"px";
+// document.getElementById("family-tree").style.height = chartHeight +"px";
  document.getElementById('family-tree-area').style.height = chartHeight +"px";
 
 const svg = d3.select("#family-tree-area").append("svg")
