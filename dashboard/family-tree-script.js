@@ -120,12 +120,12 @@ const svg = d3.select("#family-tree-area").append("svg")
   .attr("width", chartWidth)
   .attr("height", chartHeight);
 	
-var mid;
+var middle;
 	
 if(browserWidth < 900){
-mid = -1000;
+middle = -1000;
 }else{
-mid = width  - chartWidth; 
+middle = width  - chartWidth; 
 }
 
 	
@@ -362,12 +362,12 @@ console.log('Browser width:', browserWidth);
  const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
-const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
+ //middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 		//currentScale = newScale;
 
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${mid},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
