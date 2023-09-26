@@ -89,12 +89,12 @@ toggleFullscreen();
 });
 
 function toggleFullscreen() {
-  var expandableDiv = document.getElementById("expandableDiv");
+  var expandableDiv = document.getElementById("family-tree");
   expandableDiv.classList.toggle("show");
 }
 
 function closeFullscreen() {
-  var expandableDiv = document.getElementById("expandableDiv");
+  var expandableDiv = document.getElementById("family-tree");
   expandableDiv.classList.remove("show");
 }
 
