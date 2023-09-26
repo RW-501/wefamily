@@ -670,7 +670,6 @@ padding-top: 15px;
     display: block;
     top: 0;
     width: 100%;
-    z-index: 1;
     overflow-x: hidden;
     height: 700px;
     overflow-y: auto;
