@@ -84,7 +84,7 @@ console.log('chartGroup width:   ', chartGroup);
 console.log('nodeGroup width:   ', nodeGroup);
 });
 
-    // Create a group element to hold the links
+var chartGroup;
 var linkGenerator;
 var zoom ;
 // Define zoom behavior and initial scale
