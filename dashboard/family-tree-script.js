@@ -248,6 +248,7 @@ chartGroup.selectAll("text")
 
 
 
+console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
 
@@ -258,7 +259,6 @@ nodeGroup = chartGroup.selectAll(".node")
     .append("g")
     .attr("class", "node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
-
 
 
 
@@ -340,6 +340,7 @@ const middle = ((browserWidth * 2) - width) / (scale * 10);
 // Set the transform attribute
 chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
+console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
             console.log('browserWidth :', browserWidth);
