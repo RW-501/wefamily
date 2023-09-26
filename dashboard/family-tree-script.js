@@ -1,21 +1,24 @@
 
 /// works
 function centerElementInSVG(element) {
-  // Delay to allow rendering to complete
-  setTimeout(() => {
-    const svgWidth = parseInt(d3.select("#family-tree-area").attr("width"));
-    const svgHeight = parseInt(d3.select("#family-tree-area").attr("height"));
+  const svgWidth = parseInt(d3.select("#family-tree-area").attr("width"));
+  const svgHeight = parseInt(d3.select("#family-tree-area").attr("height"));
 
+  // Ensure valid dimensions
+  if (!isNaN(svgWidth) && !isNaN(svgHeight)) {
     const elementWidth = element.node().getBBox().width;
     const elementHeight = element.node().getBBox().height;
 
+    // Calculate valid translation values
     const translateX = (svgWidth - elementWidth) / 2;
     const translateY = (svgHeight - elementHeight) / 2;
 
-    element.attr("transform", `translate(${translateX},${translateY})`);
-  }, 0);
+    // Check for valid translation values
+    if (!isNaN(translateX) && !isNaN(translateY)) {
+      element.attr("transform", `translate(${translateX},${translateY})`);
+    }
+  }
 }
-
 // Usage example for centering nodeGroup
 //centerElementInSVG(nodeGroup);
 
