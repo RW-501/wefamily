@@ -885,7 +885,7 @@ html, body{
 
 }
  #family-tree, #family-tree-area{
-    width: 100%;
+    width: auto;
     height: 800px;	
     overflow: hidden;
 }
