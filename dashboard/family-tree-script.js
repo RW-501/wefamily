@@ -272,7 +272,7 @@ chartGroup = chartGroup.selectAll(".node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
-console.log('nodeGroup transform:', nodeGroup.attr('transform'));
+console.log('nodeGroup transform:', chartGroup.attr('transform'));
 
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
