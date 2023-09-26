@@ -187,7 +187,7 @@ const curvedPath = (d) => {
         .on("zoom", zoomed);
 	
 	
-chartGroup.selectAll("path")
+nodeGroup.selectAll("path")
   .data(links)
   .enter()
   .append("path")
@@ -225,7 +225,7 @@ const memberIDs = Object.keys(memberData);
 
 
   
-	// Add text for each node
+//nodeGroup	// Add text for each node
 nodeGroup.selectAll("text")
     .data(root.descendants())
     .enter()
@@ -259,11 +259,11 @@ nodeGroup.selectAll("text")
 
 
 
-console.log('chartGroup transform:', chartGroup.attr('transform'));
+console.log('chartGroup transform:', nodeGroup.attr('transform'));
 
 
 
-
+//nodeGroup
 nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
@@ -353,8 +353,8 @@ const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
-
+nodeGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+//nodeGroup
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
