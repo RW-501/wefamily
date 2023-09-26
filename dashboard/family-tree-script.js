@@ -269,11 +269,17 @@ nodeGroup.append("image")
     });
 
 
-
 // After appending the images to nodeGroup
- nodes = root.descendants();
-handleCollisions(nodes);
+nodes = root.descendants();
 
+// Wait for rendering to complete, then get the bounding boxes
+setTimeout(() => {
+  bbox = nodeGroup.node().getBBox();  // Correct way to get the bounding box
+  console.log('NodeGroup BBox:', bbox);
+  
+  // Call the handleCollisions function after obtaining the correct bbox
+  handleCollisions(nodes);
+}, 0);
 
 
 
