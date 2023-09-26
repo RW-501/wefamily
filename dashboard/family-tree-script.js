@@ -320,7 +320,7 @@ setTimeout(() => {
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
-console.log('nodeGroup transform:', nodeGroup.attr('transform'));
+//console.log('nodeGroup transform:', nodeGroup.attr('transform'));
 
 	
 
