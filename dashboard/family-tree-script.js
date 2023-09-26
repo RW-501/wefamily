@@ -79,7 +79,7 @@ console.log('chartGroup width:   ', chartGroup);
 console.log('nodeGroup width:   ', nodeGroup);
 });
 
-const familyTree = document.getElementById('family-tree-area');
+const familyTree = document.getElementById('family-tree');
 
 
 familyTree.addEventListener('click', () => {
