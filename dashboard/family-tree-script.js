@@ -484,7 +484,6 @@ function handleCollisions(nodes) {
 
 function applyZoom(scale) {
   currentScale = scale;
-	       console.log('applyZoom(scale)  :');
 
   if (!chartGroup) {
     console.error('chartGroup is not defined. Ensure that it is properly initialized.');
@@ -506,16 +505,17 @@ function applyZoom(scale) {
   chartGroup
     .selectAll('path.link')
     .attr('d', (d) => {
-      const source = { x: d.source.x, y: d.source.y * scale };
-      const target = { x: d.target.x, y: d.target.y * scale };
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
       return linkGenerator({ source, target });
     });
 
-	
   updateImageAttributes();
-
-	
 }
+
+
+
 
 
 
