@@ -130,7 +130,8 @@ let middle;
 if (browserWidth < 900) {
   middle = -800;
 } else {
-  middle = width - chartWidth;
+//  middle = width - chartWidth;
+  middle = browserWidth - width;
 }
 console.log('middle:', middle);
 
@@ -146,6 +147,7 @@ const translateY = 100;
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
+  .style("transform-box", "fill-box")
   .style("transform-origin", "top center");
 
 /*
