@@ -85,7 +85,6 @@ console.log('nodeGroup width:   ', nodeGroup);
 });
 
     // Create a group element to hold the links
-var chartGroup; 
 var linkGenerator;
 var zoom ;
 // Define zoom behavior and initial scale
@@ -94,7 +93,7 @@ let currentScale = initialScale;
 
 let imageWidth = 100;
 let imageHeight = 100;
-var nodeGroup;
+var nodeGroup = chartGroup.append('g'); 
    var bbox;
 var nodes;
 
@@ -226,10 +225,10 @@ const memberIDs = Object.keys(memberData);
 
   
 //nodeGroup	// Add text for each node
-nodeGroup.selectAll("text")
-    .data(root.descendants())
-    .enter()
-    .append("text")
+   chartGroup.selectAll("text")
+        .data(root.descendants())
+        .enter()
+        .append("text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
     .attr("dy", 70)
