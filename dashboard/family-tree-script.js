@@ -374,7 +374,7 @@ chartGroup
 	
 }
 
-centerElementInSVG(nodeGroup);
+//centerElementInSVG(nodeGroup);
 
 
 }
