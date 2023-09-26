@@ -84,7 +84,8 @@ console.log('chartGroup width:   ', chartGroup);
 console.log('nodeGroup width:   ', nodeGroup);
 });
 
-var chartGroup;
+    // Create a group element to hold the links
+var chartGroup; 
 var linkGenerator;
 var zoom ;
 // Define zoom behavior and initial scale
@@ -93,7 +94,7 @@ let currentScale = initialScale;
 
 let imageWidth = 100;
 let imageHeight = 100;
-var nodeGroup; // = chartGroup.append('g'); 
+var nodeGroup;
    var bbox;
 var nodes;
 
@@ -120,14 +121,13 @@ const svg = d3.select("#family-tree-area").append("svg")
   .attr("height", chartHeight);
 
 // Calculate the translation to center the chartGroup in the SVG
-var translateX = (width - chartWidth ) ; // Adjust chartWidth as needed
+var translateX = (width - chartWidth) / 2; // Adjust chartWidth as needed
 var translateY = 100; // Adjust chartHeight as needed
-		            console.log('translateX :', translateX);
-
+	
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
-  .style("transform-origin", "center top");
+  .style("transform-origin", "center");
 
 /*
 	 chartGroup = svg.append("g")
@@ -166,15 +166,15 @@ const curvedPath = (d) => {
     const sourceY = d.source.y;
     const targetX = d.target.x;
     const targetY = d.target.y;
-/*
+
     console.log('Source:', sourceX, sourceY);
     console.log('Target:', targetX, targetY);
-*/
+
     // Calculate control point coordinates for a curved link
     const controlX = (sourceX + targetX) / 2;
     const controlY = sourceY;// + targetY) / 2;
 
-  //  console.log('Control:', controlX, controlY);
+    console.log('Control:', controlX, controlY);
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
@@ -224,11 +224,18 @@ const memberIDs = Object.keys(memberData);
 
 
   
-//nodeGroup	// Add text for each node
-   chartGroup.selectAll("text")
-        .data(root.descendants())
-        .enter()
-        .append("text")
+	
+    if (memberIDs === userID) {
+//console.log('?????????????????????????????????????????????????????????????????????????      userID :');
+    }
+        
+
+
+	// Add text for each node
+chartGroup.selectAll("text")
+    .data(root.descendants())
+    .enter()
+    .append("text")
     .attr("x", d => d.x)
     .attr("y", d => d.y)
     .attr("dy", 70)
@@ -258,12 +265,12 @@ const memberIDs = Object.keys(memberData);
 
 
 
-//console.log('chartGroup transform:', nodeGroup.attr('transform'));
+console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
 
-//nodeGroup
-chartGroup = chartGroup.selectAll(".node")
+
+nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
@@ -271,10 +278,11 @@ chartGroup = chartGroup.selectAll(".node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
-console.log('nodeGroup transform:', chartGroup.attr('transform'));
+console.log('nodeGroup transform:', nodeGroup.attr('transform'));
 
+	
 // Update the clipPath to create a circular clip
-chartGroup.append("defs").append("clipPath")
+nodeGroup.append("defs").append("clipPath")
     .attr("id", "clipCircle")
     .append("circle")
     .attr("cx", 0)  // Center X at 0
@@ -282,7 +290,7 @@ chartGroup.append("defs").append("clipPath")
     .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
 
 // Update the image elements to use the circular clip path
-chartGroup.append("circle")
+nodeGroup.append("circle")
     .attr("class", "circle")
     .attr("r", imageWidth / 2) // Radius of circles, half of the image width
     .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
@@ -290,7 +298,7 @@ chartGroup.append("circle")
     .style("stroke", "black")  // Border color
     .style("stroke-width", "20px");  // Border width
 
-chartGroup.append("image")
+nodeGroup.append("image")
     .attr("xlink:href", d => d.data.photo)
     .attr("x", d => -imageWidth / 2)
     .attr("y", d => -imageHeight / 2)
@@ -311,18 +319,16 @@ nodes = root.descendants();
 
 // Wait for rendering to complete, then get the bounding boxes
 setTimeout(() => {
-  bbox = chartGroup.node().getBBox();  // Correct way to get the bounding box
+  bbox = nodeGroup.node().getBBox();  // Correct way to get the bounding box
   console.log('NodeGroup BBox:', bbox);
   
   // Call the handleCollisions function after obtaining the correct bbox
   handleCollisions(nodes);
 }, 0);
 
-console.log('chartGroup transform:', chartGroup.attr('transform'));
 
-//console.log('nodeGroup transform:', nodeGroup.attr('transform'));
 
-	
+
 
 
 
@@ -340,10 +346,8 @@ console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 console.log('Browser width:', browserWidth);
 	
-//translateX = (width - chartWidth ); // Adjust chartWidth as needed
-translateX = -browserWidth ; // Adjust chartWidth as needed
-	
-	translateY = 100;
+ translateX = (browserWidth - chartWidth ) / 2;
+ translateY = 100;
  const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
@@ -352,8 +356,8 @@ const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
-//nodeGroup
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
+
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
@@ -368,47 +372,54 @@ console.log('chartGroup transform:', chartGroup.attr('transform'));
 
             console.log('translateX :', translateX);
 
-function zoomed(event) {
-    if (event.transform.k === currentScale) {
-        console.log('No zoom change');
-        return;
-    } else {
-        currentScale = event.transform.k;
-        console.log(`currentScale of ${currentScale}:`);
-    }
 
-    // Update nodes (images, text, and rectangles) based on the current zoom scale
-    nodeGroup.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
 
-    nodeGroup.select('image')
-        .attr('width', imageWidth * currentScale)
-        .attr('height', imageHeight * currentScale);
 	
-    nodeGroup.selectAll('text')
-        .attr('x', d => (d.x * currentScale) - bbox.width / 2)
-        .attr('y', d => d.y);
+function zoomed(event) {
+	
+  if (event.transform.k === currentScale) {
+    console.log('No zoom change');
+    return;
+  } else {
+ currentScale = event.transform.k;
 
-    nodeGroup.selectAll('rect')
-        .attr('x', d => -((imageWidth / 2 + 5) * currentScale))
-        .attr('y', d => -((imageHeight / 2 + 2) * currentScale))
-        .attr('width', d => imageWidth * currentScale + 10)
-        .attr('height', d => imageHeight * currentScale + 4);
+	      console.log(`currentScale of ${currentScale}:`);
+  }
+
+  chartGroup.attr('transform', event.transform);
+
+  updateImageAttributes();
+
+// Update the 'd' attribute of the paths to create curved links
+chartGroup
+    .selectAll('path.link')
+    .attr('d', (d) => {
+        // Generate the updated path data using the link generator
+        const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+        const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+        // Update the 'd' attribute with the updated path data
+        const updatedPathData = linkGenerator({ source, target });
+
+/*
+console.log('Source:', source);
+console.log('Target:', target);
+console.log('Generated Path:', linkGenerator({ source, target }));
+            console.log('updatedPathData :', updatedPathData);
+*/
+	    
+        return updatedPathData;  // Return the updated path data
+    });
 
 
-    // Update the 'd' attribute of the paths to create curved links
-    chartGroup.selectAll('path.link')
-        .attr('d', (d) => {
-            const source = { x: d.source.x * currentScale, y: d.source.y };
-            const target = { x: d.target.x * currentScale, y: d.target.y };
-            const updatedPathData = linkGenerator({ source, target });
-            return updatedPathData;
-        });
+	
+}
 
-    updateImageAttributes();
+//centerElementInSVG(nodeGroup);
+
+
 }
 
 
-}
 	
 
 function updateImageAttributes() {
@@ -421,7 +432,6 @@ function updateImageAttributes() {
     .attr("y", d => -imageHeight / 2)
     .attr("width", imageWidth)
     .attr("height", imageHeight);
-
 }
 
 // Collision detection to prevent overlapping
@@ -503,7 +513,7 @@ function applyZoom(scale) {
 
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bio || member.description;
+          document.getElementById('memberInfo').value = member.bio || treeData.description;
 
 
 const memberID = member.id;
