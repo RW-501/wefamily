@@ -155,7 +155,7 @@ const curvedPath = (d) => {
 
     // Calculate control point coordinates for a curved link
     const controlX = (sourceX + targetX) / 2;
-    const controlY = (sourceY + targetY) / 2;
+    const controlY = sourceY;// + targetY) / 2;
 
     console.log('Control:', controlX, controlY);
 
@@ -374,13 +374,24 @@ function zoomed(event) {
 
   updateImageAttributes();
 
+// Update the 'd' attribute of the paths to create curved links
 chartGroup
     .selectAll('path.link')
     .attr('d', (d) => {
-      // Generate the updated path data using the link generator
-      const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-      const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-      return linkGenerator({ source, target });
+        // Generate the updated path data using the link generator
+        const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
+        const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
+        // Update the 'd' attribute with the updated path data
+        const updatedPathData = linkGenerator({ source, target });
+
+
+console.log('Source:', source);
+console.log('Target:', target);
+console.log('Generated Path:', linkGenerator({ source, target }));
+            console.log('updatedPathData :', updatedPathData);
+
+	    
+        return updatedPathData;  // Return the updated path data
     });
 
             console.log('currentScale :', currentScale);
