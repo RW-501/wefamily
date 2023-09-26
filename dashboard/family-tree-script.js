@@ -629,7 +629,17 @@ function showMemberPopup(member) {
     
     if (scrollTo) {
         scrollTo.addEventListener('click', () => {
-            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+//            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+
+  if (member.userID === userID || member.addByID === userID) {
+     editMemberFunc(member);
+	  
+  } else {
+    if (member.userID === "" ) {
+       claimMemberFunc(member);
+    }
+  }
+		
             hideMemberPopup();
         });
     }
