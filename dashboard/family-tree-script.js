@@ -98,7 +98,7 @@ const widthX = window.screen.width;
 
 const chartGroup = svg.append("g")
     .style("display", "block")
-    .style("transform-origin", "right top");
+    .style("transform-origin", "left top");
 
 
  
