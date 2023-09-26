@@ -137,7 +137,7 @@ var middle;
 	
 if(browserWidth < 900){
 	
-middle = -1000 * currentScale;
+middle =  currentScale * -1000;
 }else{
 middle = width  - chartWidth * currentScale; 
 }
