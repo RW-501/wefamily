@@ -366,14 +366,14 @@ chartGroup
 
 function updateImageAttributes() {
   nodeGroup.selectAll("text")
-        .attr("x", d => d.x)  // Adjust the x position as needed
-        .attr("y", d => d.y - 20);  // Adjust the y position as needed
+    .attr("x", d => (d.x - bbox.x) * currentScale)  // Adjust the x position as needed
+    .attr("y", d => (d.y - bbox.y - 20) * currentScale);  // Adjust the y position as needed
 
   nodeGroup.selectAll("image")
-    .attr("x", d => -imageWidth / (2 * currentScale)) // Adjust positioning based on scale
-    .attr("y", d => -imageHeight / (2 * currentScale))
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale);
+    .attr("x", d => -imageWidth / 2) // Adjust positioning based on scale
+    .attr("y", d => -imageHeight / 2)
+    .attr("width", imageWidth)
+    .attr("height", imageHeight);
 }
 
 // Collision detection to prevent overlapping
