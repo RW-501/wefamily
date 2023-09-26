@@ -260,7 +260,6 @@ chartGroup.selectAll("text")
 
 
 
-console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 
 
@@ -273,9 +272,6 @@ nodeGroup = chartGroup.selectAll(".node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
 
 
-console.log('nodeGroup transform:', nodeGroup.attr('transform'));
-
-	
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
     .attr("id", "clipCircle")
@@ -321,22 +317,11 @@ setTimeout(() => {
   handleCollisions(nodes);
 }, 0);
 
+console.log('chartGroup transform:', chartGroup.attr('transform'));
 
-// After appending the images to nodeGroup
-nodes = root.descendants();
+console.log('nodeGroup transform:', nodeGroup.attr('transform'));
 
-// Wait for rendering to complete, then get the bounding boxes
-setTimeout(() => {
-  bbox = nodeGroup.node().getBBox();  // Correct way to get the bounding box
-  console.log('NodeGroup BBox:', bbox);
-  
-  // Call the handleCollisions function after obtaining the correct bbox
-  handleCollisions(nodes);
-}, 0);
-
-
-
-
+	
 
 
 
@@ -397,15 +382,17 @@ function zoomed(event) {
     nodeGroup.select('image')
         .attr('width', imageWidth * currentScale)
         .attr('height', imageHeight * currentScale);
+	
+    nodeGroup.selectAll('text')
+        .attr('x', d => (d.x * currentScale) - bbox.width / 2)
+        .attr('y', d => d.y);
 
-    nodeGroup.select('text')
-        .style('font-size', 1.2 / currentScale + 'em');
+    nodeGroup.selectAll('rect')
+        .attr('x', d => -((imageWidth / 2 + 5) * currentScale))
+        .attr('y', d => -((imageHeight / 2 + 2) * currentScale))
+        .attr('width', d => imageWidth * currentScale + 10)
+        .attr('height', d => imageHeight * currentScale + 4);
 
-    nodeGroup.select('rect')
-        .attr('x', -(imageWidth / 2 + 5) * currentScale)
-        .attr('y', -(imageHeight / 2 + 2) * currentScale)
-        .attr('width', imageWidth * currentScale + 10)
-        .attr('height', imageHeight * currentScale + 4);
 
     // Update the 'd' attribute of the paths to create curved links
     chartGroup.selectAll('path.link')
