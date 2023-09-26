@@ -93,7 +93,7 @@ let currentScale = initialScale;
 
 let imageWidth = 100;
 let imageHeight = 100;
-var nodeGroup = chartGroup.append('g'); 
+var nodeGroup; // = chartGroup.append('g'); 
    var bbox;
 var nodes;
 
