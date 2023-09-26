@@ -129,7 +129,7 @@ middle = width  - chartWidth;
 }
 
 	
-var  translateX =  mid; //-browserWidth;
+var  translateX =  middle; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
 
 	
