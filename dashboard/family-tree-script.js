@@ -264,7 +264,7 @@ nodeGroup.append("text")
 
 
 
-
+/*
 
 nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
@@ -272,7 +272,7 @@ nodeGroup = chartGroup.selectAll(".node")
     .append("g")
     .attr("class", "node")
     .attr("transform", d => `translate(${d.x},${d.y})`);
-
+*/
 
 // Update the clipPath to create a circular clip
 nodeGroup.append("defs").append("clipPath")
