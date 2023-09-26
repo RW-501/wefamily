@@ -171,14 +171,14 @@ const curvedPath = (d) => {
     const targetX = d.target.x;
     const targetY = d.target.y;
 
-    console.log('Source:', sourceX, sourceY);
-    console.log('Target:', targetX, targetY);
+  //  console.log('Source:', sourceX, sourceY);
+   // console.log('Target:', targetX, targetY);
 
     // Calculate control point coordinates for a curved link
     const controlX = (sourceX + targetX) / 2;
     const controlY = sourceY;// + targetY) / 2;
 
-    console.log('Control:', controlX, controlY);
+   // console.log('Control:', controlX, controlY);
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
