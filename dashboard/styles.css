@@ -15,7 +15,7 @@ body, html {
   box-sizing: border-box;
 }
 
-.expandable-div.show {
+.expandable-div .show {
   display: block;
 }
 
