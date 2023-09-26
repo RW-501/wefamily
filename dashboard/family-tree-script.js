@@ -124,7 +124,10 @@ const svg = d3.select("#family-tree-area").append("svg")
 	var mid = width  - chartWidth; 
 var  translateX =  mid; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
+
 	
+		            console.log('mid  :', mid );
+
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
@@ -357,7 +360,7 @@ const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${mid},${translateY}) scale(${scale})`);
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
