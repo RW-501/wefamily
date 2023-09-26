@@ -409,7 +409,7 @@ function zoomed(event) {
   // Update the positions and dimensions of the rectangles
   chartGroup
     .selectAll('rect')
-    .attr('x', d => d.x * currentScale - 5)  // Adjust as needed
+.attr('x', d => d.x * currentScale - 5)
     .attr('y', d => d.y - 2)  // Adjust as needed
     .attr('width', bbox.width * (1 / currentScale) + 10)  // Adjust as needed
     .attr('height', bbox.height * (1 / currentScale) + 4);  // Adjust as needed
