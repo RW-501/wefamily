@@ -1,19 +1,16 @@
 
 /// works
-function centerElementInSVG(element) {
-  const svgWidth = parseInt(d3.select("#family-tree-area").attr("width"));
-  const svgHeight = parseInt(d3.select("#family-tree-area").attr("height"));
+function centerElementInSVG(element, svg) {
+  const svgWidth = parseInt(svg.attr("width"));
+  const svgHeight = parseInt(svg.attr("height"));
 
-  // Ensure valid dimensions
   if (!isNaN(svgWidth) && !isNaN(svgHeight)) {
     const elementWidth = element.node().getBBox().width;
     const elementHeight = element.node().getBBox().height;
 
-    // Calculate valid translation values
     const translateX = (svgWidth - elementWidth) / 2;
     const translateY = (svgHeight - elementHeight) / 2;
 
-    // Check for valid translation values
     if (!isNaN(translateX) && !isNaN(translateY)) {
       element.attr("transform", `translate(${translateX},${translateY})`);
     }
@@ -79,7 +76,7 @@ console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
 
 zoomInButton.addEventListener('click', () => {
 //centerLayersOnScreen();
-	centerElementInSVG(nodeGroup);
+centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
 
 	
 });
@@ -122,9 +119,14 @@ const widthX = window.screen.width;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
 
- chartGroup = svg.append("g")
-    .style("display", "block")
-    .style("transform-origin", "left top");
+// After creating the chartGroup
+chartGroup = svg.append("g")
+  .style("display", "block")
+  .style("transform-origin", "left top");
+
+// Call the function to center chartGroup within the SVG
+centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+
 
 
  
@@ -384,12 +386,12 @@ chartGroup
         // Update the 'd' attribute with the updated path data
         const updatedPathData = linkGenerator({ source, target });
 
-
+/*
 console.log('Source:', source);
 console.log('Target:', target);
 console.log('Generated Path:', linkGenerator({ source, target }));
             console.log('updatedPathData :', updatedPathData);
-
+*/
 	    
         return updatedPathData;  // Return the updated path data
     });
