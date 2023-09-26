@@ -77,8 +77,11 @@ console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
 zoomInButton.addEventListener('click', () => {
 //centerLayersOnScreen();
 centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
-
+centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
 	
+console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
+
+console.log('nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
 });
 
     // Create a group element to hold the links
