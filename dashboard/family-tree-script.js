@@ -43,6 +43,7 @@ function centerLayersOnScreen() {
   const chartGroupTranslateY = (screenHeight - chartGroupHeight) / 2;
 
 	updateImageAttributes();
+console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
 
   // Apply the translation to center the layers
   nodeGroup.attr('transform', `translate(${nodeGroupTranslateX},${nodeGroupTranslateY})`);
