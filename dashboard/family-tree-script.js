@@ -399,24 +399,21 @@ function zoomed(event) {
       return updatedPathData;  // Return the updated path data
     });
 
- // Update the positions of the nodes
+  // Update the positions and font size of the text elements
+  chartGroup
+    .selectAll('text')
+    .attr('x', d => d.x * currentScale)
+    .attr('y', d => d.y)
+    .style('font-size', 1.2 / currentScale + 'em');
+
+  // Update the positions of the nodes
   nodeGroup.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
 
   updateImageAttributes();
 }
 
 
-
-
-
-
-
-//centerElementInSVG(nodeGroup);
-
-
 }
-
-
 	
 
 function updateImageAttributes() {
