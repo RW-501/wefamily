@@ -379,43 +379,29 @@ console.log('chartGroup transform:', chartGroup.attr('transform'));
 
 	
 function zoomed(event) {
-	
   if (event.transform.k === currentScale) {
     console.log('No zoom change');
     return;
   } else {
- currentScale = event.transform.k;
-
-	      console.log(`currentScale of ${currentScale}:`);
+    currentScale = event.transform.k;
+    console.log(`currentScale of ${currentScale}:`);
   }
 
-  chartGroup.attr('transform', event.transform);
-
-  updateImageAttributes();
-
-// Update the 'd' attribute of the paths to create curved links
-chartGroup
+  // Update the 'd' attribute of the paths to create curved links
+  chartGroup
     .selectAll('path.link')
     .attr('d', (d) => {
-        // Generate the updated path data using the link generator
-        const source = { x: d.source.x * currentScale, y: d.source.y * currentScale };
-        const target = { x: d.target.x * currentScale, y: d.target.y * currentScale };
-        // Update the 'd' attribute with the updated path data
-        const updatedPathData = linkGenerator({ source, target });
-
-/*
-console.log('Source:', source);
-console.log('Target:', target);
-console.log('Generated Path:', linkGenerator({ source, target }));
-            console.log('updatedPathData :', updatedPathData);
-*/
-	    
-        return updatedPathData;  // Return the updated path data
+      // Generate the updated path data using the link generator
+      const source = { x: d.source.x * currentScale, y: d.source.y };
+      const target = { x: d.target.x * currentScale, y: d.target.y };
+      // Update the 'd' attribute with the updated path data
+      const updatedPathData = linkGenerator({ source, target });
+      return updatedPathData;  // Return the updated path data
     });
 
-
-	
+  updateImageAttributes();
 }
+
 
 //centerElementInSVG(nodeGroup);
 
