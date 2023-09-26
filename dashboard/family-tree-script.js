@@ -406,11 +406,20 @@ function zoomed(event) {
     .attr('y', d => d.y)
     .style('font-size', 1.2 / currentScale + 'em');
 
+  // Update the positions and dimensions of the rectangles
+  chartGroup
+    .selectAll('rect')
+    .attr('x', d => d.x * currentScale - 5)  // Adjust as needed
+    .attr('y', d => d.y - 2)  // Adjust as needed
+    .attr('width', bbox.width * (1 / currentScale) + 10)  // Adjust as needed
+    .attr('height', bbox.height * (1 / currentScale) + 4);  // Adjust as needed
+
   // Update the positions of the nodes
   nodeGroup.attr('transform', d => `translate(${d.x * currentScale},${d.y})`);
 
   updateImageAttributes();
 }
+
 
 
 }
