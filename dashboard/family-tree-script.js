@@ -108,13 +108,14 @@ const widthX = window.screen.width;
 	            console.log('height_Layout :', height_Layout);
 
     document.getElementById('family-tree-area').innerHTML = "";
-    
+
+	/*
     // Create an SVG element to contain the chart
     const svgMain = d3.select("#family-tree-area")
         .append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
-
+*/
     const svg = d3.select("#family-tree-area").append("svg")
         .attr("width", width)
         .attr("height", height_Layout);
