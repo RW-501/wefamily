@@ -3,7 +3,7 @@ body, html {
   margin: 0;
 }
 
-.expandable-div {
+#family-tree {
   display: none;
   background-color: lightgray;
   position: fixed;
@@ -15,7 +15,7 @@ body, html {
   box-sizing: border-box;
 }
 
-.expandable-div .show {
+#family-tree .show {
   display: block;
 }
 
