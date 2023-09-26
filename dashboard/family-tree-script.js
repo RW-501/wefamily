@@ -346,8 +346,8 @@ setTimeout(() => {
 
 console.log('Browser width:', browserWidth);
 	
- translateX = (browserWidth - chartWidth ) / 2;
- translateY = 100;
+ translateX = (chartWidth - browserWidth ) / 2; // Adjust chartWidth as needed
+	translateY = 100;
  const scale =  browserWidth / chartWidth ;
 	let newScale = (scale * 10);
 // Calculate the middle position within the browser view width
