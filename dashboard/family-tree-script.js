@@ -79,9 +79,9 @@ zoomInButton.addEventListener('click', () => {
 centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
 centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
 	
-console.log('chartGroup width:', chartGroupWidth, 'height:', chartGroupHeight);
+console.log('chartGroup width:   ', chartGroup);
 
-console.log('nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
+console.log('nodeGroup width:   ', nodeGroup);
 });
 
     // Create a group element to hold the links
