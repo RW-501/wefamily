@@ -121,13 +121,13 @@ const svg = d3.select("#family-tree-area").append("svg")
   .attr("height", chartHeight);
 
 // Calculate the translation to center the chartGroup in the SVG
-var translateX = (width - chartWidth) / 2; // Adjust chartWidth as needed
+var  translateX =  -chartWidth;
 var translateY = 100; // Adjust chartHeight as needed
 	
 
  chartGroup = svg.append("g")
   .attr("transform", `translate(${translateX},${translateY})`)
-  .style("transform-origin", "left center");
+  .style("transform-origin", "top center");
 
 /*
 	 chartGroup = svg.append("g")
