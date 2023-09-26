@@ -96,7 +96,7 @@ const widthX = window.screen.width;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
 
- nodeGroup = svg.append("g")
+const chartGroup = svg.append("g")
     .style("display", "block")
     .style("transform-origin", "left top");
 
@@ -138,7 +138,7 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
         .on("zoom", zoomed);
 	
 	
-nodeGroup.selectAll("path")
+chartGroup.selectAll("path")
   .data(links)
   .enter()
   .append("path")
@@ -193,7 +193,7 @@ const memberIDs = Object.keys(memberData);
 
 
 	// Add text for each node
-nodeGroup.selectAll("text")
+chartGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
@@ -230,7 +230,7 @@ nodeGroup.selectAll("text")
 
 
 
-nodeGroup = nodeGroup.selectAll(".node")
+nodeGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
@@ -310,7 +310,7 @@ const middle = ((browserWidth * 2) - width) / (scale * 10);
 
 	
 // Set the transform attribute
-nodeGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
 
 
@@ -340,11 +340,11 @@ function zoomed(event) {
 	      console.log(`currentScale of ${currentScale}:`);
   }
 
-  nodeGroup.attr('transform', event.transform);
+  chartGroup.attr('transform', event.transform);
 
   updateImageAttributes();
 
-nodeGroup
+chartGroup
     .selectAll('path.link')
     .attr('d', (d) => {
       // Generate the updated path data using the link generator
@@ -424,24 +424,24 @@ function applyZoom(scale) {
   currentScale = scale;
 	       console.log('applyZoom(scale)  :');
 
-  if (!nodeGroup) {
+  if (!chartGroup) {
     console.error('chartGroup is not defined. Ensure that it is properly initialized.');
     return;
   }
 
   // Update circle radius, text font size, image dimensions, stroke width
-  nodeGroup.selectAll('.circle').attr('r', imageWidth / (2 * currentScale));
-  nodeGroup.selectAll('text').attr('font-size', "1.2em" / currentScale);
-  nodeGroup
+  chartGroup.selectAll('.circle').attr('r', imageWidth / (2 * currentScale));
+  chartGroup.selectAll('text').attr('font-size', "1.2em" / currentScale);
+  chartGroup
     .selectAll('image')
     .attr('x', d => -imageWidth / (2 * currentScale))
     .attr('y', d => -imageHeight / (2 * currentScale))
     .attr('width', imageWidth / currentScale)
     .attr('height', imageHeight / currentScale);
-  nodeGroup.selectAll('path.link').attr('stroke-width', 2 / currentScale);
+  chartGroup.selectAll('path.link').attr('stroke-width', 2 / currentScale);
 
   // Update path 'd' attribute
-  nodeGroup
+  chartGroup
     .selectAll('path.link')
     .attr('d', (d) => {
       const source = { x: d.source.x, y: d.source.y * scale };
