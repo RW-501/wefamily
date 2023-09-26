@@ -225,94 +225,66 @@ const memberIDs = Object.keys(memberData);
 
 
   
-	
-    if (memberIDs === userID) {
-//console.log('?????????????????????????????????????????????????????????????????????????      userID :');
-    }
-        
 
 
-	// Add text for each node
-chartGroup.selectAll("text")
-    .data(root.descendants())
-    .enter()
-    .append("text")
-    .attr("x", d => d.x)
-    .attr("y", d => d.y)
-    .attr("dy", 70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900")  // Set font weight to bold
-    .style("font-size", "1.2em")     // Set font size to 1em
-    .style("fill", "white")        // Set font color to white
-    .style("pointer-events", "none")  // Prevent text from blocking click events
-    .text(d => d.data.name)
-    .on("click", function (event, d) {
-        console.log("Clicked text Data:", d.data);
-        showMemberPopup(d.data);
-    })
-    .each(function () {
-         bbox = this.getBBox();
-        d3.select(this.parentNode)
-            .insert("rect", ":first-child")
-            .attr("x", bbox.x - 5)
-            .attr("y", bbox.y - 2)
-            .attr("width", bbox.width + 10)
-            .attr("height", bbox.height + 4)
-            .attr("rx", 10)
-            .attr("ry", 10)
-            .style("fill", "black")
-            .style("opacity", 1);  // Adjust the opacity as needed
-    });
+  const nodeElements = chartGroup.selectAll(".node")
+        .data(root.descendants())
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", d => `translate(${d.x},${d.y})`);
 
+    // Append the circle for clipping and border
+    nodeElements.append("circle")
+        .attr("class", "circle")
+        .attr("r", imageWidth / 2) // Radius of circles, half of the image width
+        .attr("clip-path", "url(#clipCircle)") // Apply the circular clip path
+        .style("height", 'auto')
+        .style("stroke", "black") // Border color
+        .style("stroke-width", "20px"); // Border width
 
+    // Append the image
+    nodeElements.append("image")
+        .attr("xlink:href", d => d.data.photo)
+        .attr("x", d => -imageWidth / 2)
+        .attr("y", d => -imageHeight / 2)
+        .attr("width", imageWidth)
+        .attr("height", imageHeight)
+        .attr("clip-path", "url(#clipCircle)")
+        .style("object-fit", "cover")
+        .style("width", imageWidth)
+        .style("height", 'auto')
+        .on("click", function (event, d) {
+            console.log("Clicked image Data:", d.data);
+            showMemberPopup(d.data);
+        });
 
-console.log('chartGroup transform:', chartGroup.attr('transform'));
+    // Append the text
+    nodeElements.append("text")
+        .attr("x", 0)
+        .attr("y", imageHeight / 2 + 20) // Adjust as needed for spacing
+        .attr("text-anchor", "middle")
+        .style("font-weight", "900") // Set font weight to bold
+        .style("font-size", "1.2em") // Set font size to 1.2em
+        .style("fill", "white") // Set font color to white
+        .style("pointer-events", "none") // Prevent text from blocking click events
+        .text(d => d.data.name)
+        .on("click", function (event, d) {
+            console.log("Clicked text Data:", d.data);
+            showMemberPopup(d.data);
+        });
 
+    // Append the rectangle (box)
+    nodeElements.append("rect")
+        .attr("x", d => -(imageWidth / 2 + 5))
+        .attr("y", d => -(imageHeight / 2 + 2)) // Adjust as needed for spacing
+        .attr("width", imageWidth + 10)
+        .attr("height", imageHeight + 4)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("fill", "black")
+        .style("opacity", 1); // Adjust the opacity as needed
 
-
-
-nodeGroup = chartGroup.selectAll(".node")
-    .data(root.descendants())
-    .enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.x},${d.y})`);
-
-
-console.log('nodeGroup transform:', nodeGroup.attr('transform'));
-
-	
-// Update the clipPath to create a circular clip
-nodeGroup.append("defs").append("clipPath")
-    .attr("id", "clipCircle")
-    .append("circle")
-    .attr("cx", 0)  // Center X at 0
-    .attr("cy", 0)  // Center Y at 0
-    .attr("r", imageWidth / 2);  // Radius of the circle, half of the image width
-
-// Update the image elements to use the circular clip path
-nodeGroup.append("circle")
-    .attr("class", "circle")
-    .attr("r", imageWidth / 2) // Radius of circles, half of the image width
-    .attr("clip-path", "url(#clipCircle)")  // Apply the circular clip path
-.style("height", 'auto')
-    .style("stroke", "black")  // Border color
-    .style("stroke-width", "20px");  // Border width
-
-nodeGroup.append("image")
-    .attr("xlink:href", d => d.data.photo)
-    .attr("x", d => -imageWidth / 2)
-    .attr("y", d => -imageHeight / 2)
-    .attr("width", imageWidth)
-    .attr("height", imageHeight)
-    .attr("clip-path", "url(#clipCircle)")
-    .style("object-fit", "cover" )
-.style("width", imageWidth)
-.style("height", 'auto')
-	.on("click", function (event, d) {
-        console.log("Clicked image Data:", d.data);
-        showMemberPopup(d.data);
-    });
 
 
 // After appending the images to nodeGroup
