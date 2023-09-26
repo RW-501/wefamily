@@ -130,12 +130,13 @@ const widthX = window.screen.width;
  
 
    // Generate the tree layout using the modified size
-const root = d3.hierarchy(familyData).eachBefore(d => {
-    d.y = d.depth * width + 70; // Adjust the width between nodes as needed
-    d.x = d.depth * 100; // Adjust the vertical spacing as needed
-})
+  const root = d3.hierarchy(familyData).eachBefore(d => {
+        d.y = d.depth * width + 70; // Adjust the width between nodes as needed
+        d.x = d.depth * 100; // Adjust the vertical spacing as needed
+    });
 
     treeLayout(root);
+
 	
      linkGenerator = d3.linkHorizontal()
         .x(d => d.x) // Swap x and y due to vertical tree layout
@@ -143,16 +144,20 @@ const root = d3.hierarchy(familyData).eachBefore(d => {
 
     const links = root.links();
 
-
-	const curvedPath = (d) => {
+const curvedPath = (d) => {
     const sourceX = d.source.x;
     const sourceY = d.source.y;
     const targetX = d.target.x;
     const targetY = d.target.y;
 
+    console.log('Source:', sourceX, sourceY);
+    console.log('Target:', targetX, targetY);
+
     // Calculate control point coordinates for a curved link
     const controlX = (sourceX + targetX) / 2;
     const controlY = (sourceY + targetY) / 2;
+
+    console.log('Control:', controlX, controlY);
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
 };
