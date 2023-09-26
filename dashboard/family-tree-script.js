@@ -187,7 +187,7 @@ const curvedPath = (d) => {
         .on("zoom", zoomed);
 	
 	
-nodeGroup.selectAll("path")
+chartGroup.selectAll("path")
   .data(links)
   .enter()
   .append("path")
@@ -226,7 +226,7 @@ const memberIDs = Object.keys(memberData);
 
   
 //nodeGroup	// Add text for each node
-nodeGroup.selectAll("text")
+chartGroup.selectAll("text")
     .data(root.descendants())
     .enter()
     .append("text")
@@ -264,7 +264,7 @@ console.log('chartGroup transform:', nodeGroup.attr('transform'));
 
 
 //nodeGroup
-nodeGroup = chartGroup.selectAll(".node")
+chartGroup = chartGroup.selectAll(".node")
     .data(root.descendants())
     .enter()
     .append("g")
@@ -312,7 +312,7 @@ nodes = root.descendants();
 
 // Wait for rendering to complete, then get the bounding boxes
 setTimeout(() => {
-  bbox = nodeGroup.node().getBBox();  // Correct way to get the bounding box
+  bbox = chartGroup.node().getBBox();  // Correct way to get the bounding box
   console.log('NodeGroup BBox:', bbox);
   
   // Call the handleCollisions function after obtaining the correct bbox
@@ -353,7 +353,7 @@ const middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 
 	
 // Set the transform attribute
-nodeGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${translateX},${translateY}) scale(${scale})`);
 //nodeGroup
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
