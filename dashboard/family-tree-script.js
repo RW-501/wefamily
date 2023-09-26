@@ -71,10 +71,12 @@ let currentScale = initialScale;
 let imageWidth = 100;
 let imageHeight = 100;
 var nodeGroup;
-	
+   var bbox;
+const nodes;
+
 function generateFamilyTreeChart(familyData) {
     const width = 300 * maxGenerationWidth; //window.screen.width;
-    const height_Layout = 200 * maxHierarchyDepth // + 250;
+    const height_Layout = 200 * maxHierarchyDepth;
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 const widthX = window.screen.width;
 
@@ -96,7 +98,7 @@ const widthX = window.screen.width;
     // Create a hierarchical tree layout
     const treeLayout = d3.tree().size([width, height_Layout]);
 
-const chartGroup = svg.append("g")
+ chartGroup = svg.append("g")
     .style("display", "block")
     .style("transform-origin", "left top");
 
@@ -160,15 +162,6 @@ chartGroup.selectAll("path")
 
 
 
-/*
-	
-	// Adjust the position of the text elements
-nodeGroup.selectAll("text")
-    .attr("x", d => d.x)  // Adjust the x position as needed
-    .attr("y", d => d.y - 20);  // Adjust the y position as needed
-
-*/
-
 
     let memberData = familyData;
 //console.log('memberData data:', memberData.data);
@@ -211,7 +204,7 @@ chartGroup.selectAll("text")
         showMemberPopup(d.data);
     })
     .each(function () {
-        const bbox = this.getBBox();
+         bbox = this.getBBox();
         d3.select(this.parentNode)
             .insert("rect", ":first-child")
             .attr("x", bbox.x - 5)
@@ -276,7 +269,7 @@ nodeGroup.append("image")
 
 
 // After appending the images to nodeGroup
-const nodes = root.descendants();
+ nodes = root.descendants();
 handleCollisions(nodes);
 
 
