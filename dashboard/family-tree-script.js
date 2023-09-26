@@ -99,54 +99,44 @@ var nodeGroup;
 var nodes;
 
 function generateFamilyTreeChart(familyData) {
-    const chartWidth  = 300 * maxGenerationWidth; //window.screen.width;
-    const chartHeight  = 200 * maxHierarchyDepth;
-	
-const browserWidth = window.innerWidth;   // Width of the browser window in pixels
+const chartWidth = 300 * maxGenerationWidth;
+const chartHeight = 200 * maxHierarchyDepth;
+
+const browserWidth = window.innerWidth;
 const width = window.screen.width;
-	
- const scale =  browserWidth / chartWidth ;
 
-
-		currentScale = scale;
+const scale = browserWidth / chartWidth;
+let currentScale = scale;
 
 const translation = (width - chartWidth * scale) / 2;
 console.log('Translation:', translation);
 
+console.log('chartWidth:', chartWidth);
+console.log('chartHeight:', chartHeight);
+console.log('browserWidth:', browserWidth);
+console.log('width:', width);
+console.log('currentScale:', currentScale);
 
+document.getElementById('family-tree-area').innerHTML = "";
 
-
-	
-	            console.log('chartWidth :', chartWidth);
-	            console.log('chartHeight  :', chartHeight );
-	            console.log('browserWidth  :', browserWidth );
-	            console.log('width  :', width );
-	            console.log('currentScale  :', currentScale );
-
-    document.getElementById('family-tree-area').innerHTML = "";
-
-
-
-
-	
 const svg = d3.select("#family-tree-area").append("svg")
   .attr("width", chartWidth)
   .attr("height", chartHeight);
-	
-var middle;
-	
-if(browserWidth < 900){
-	
-middle =   -1000;
-}else{
-middle = width  - chartWidth ; 
+
+let middle;
+
+if (browserWidth < 900) {
+  middle = -1000;
+} else {
+  middle = width - chartWidth;
 }
- 	            console.log('middle  :', middle );
+console.log('middle:', middle);
 
-middle	= middle + -currentScale;
+middle -= currentScale;
 
-var  translateX =  middle; //-browserWidth;
-var translateY = 100; // Adjust chartHeight as needed
+const translateX = middle;
+const translateY = 100;
+
 
 	
 		            console.log('translateX  :', translateX );
