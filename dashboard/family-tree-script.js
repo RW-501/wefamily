@@ -133,7 +133,7 @@ var  translateX =  middle; //-browserWidth;
 var translateY = 100; // Adjust chartHeight as needed
 
 	
-		            console.log('mid  :', mid );
+		            console.log('middle  :', middle );
 
 
  chartGroup = svg.append("g")
