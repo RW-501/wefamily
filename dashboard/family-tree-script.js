@@ -104,11 +104,24 @@ function generateFamilyTreeChart(familyData) {
 	
 const browserWidth = window.innerWidth;   // Width of the browser window in pixels
 const width = window.screen.width;
+	
+ const scale =  browserWidth / chartWidth ;
 
+
+		currentScale = scale;
+
+const translation = (width - chartWidth * scale) / 2;
+console.log('Translation:', translation);
+
+
+
+
+	
 	            console.log('chartWidth :', chartWidth);
 	            console.log('chartHeight  :', chartHeight );
 	            console.log('browserWidth  :', browserWidth );
 	            console.log('width  :', width );
+	            console.log('currentScale  :', currentScale );
 
     document.getElementById('family-tree-area').innerHTML = "";
 
@@ -123,6 +136,7 @@ const svg = d3.select("#family-tree-area").append("svg")
 var middle;
 	
 if(browserWidth < 900){
+	
 middle = -1000;
 }else{
 middle = width  - chartWidth; 
@@ -233,14 +247,7 @@ const memberIDs = Object.keys(memberData);
 
 //console.log("Member IDs:", memberIDs);
 
-
-  
 	
-    if (memberIDs === userID) {
-//console.log('?????????????????????????????????????????????????????????????????????????      userID :');
-    }
-        
-
 
 	// Add text for each node
 chartGroup.selectAll("text")
@@ -352,39 +359,15 @@ setTimeout(() => {
 
     // Apply the zoom behavior to the SVG
     svg.call(zoom)
-        .call(zoom.transform, d3.zoomIdentity.scale(initialScale)); // Apply initial scale
+        .call(zoom.transform, d3.zoomIdentity.scale(currentScale)); // Apply initial scale
 
 
-console.log('Browser width:', browserWidth);
-	
- translateX =  -browserWidth;
- translateY = 100;
- const scale =  browserWidth / chartWidth ;
-	let newScale = (scale * 10);
-// Calculate the middle position within the browser view width
- //middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
-		//currentScale = newScale;
 
-const translation = (width - chartWidth * scale) / 2;
-console.log('Translation:', translation);
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${translation},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
-
-
-            console.log('width :', width);
-            console.log('browserWidth :', browserWidth);
-            console.log('chartWidth  :', chartWidth );
-            console.log('scale :', scale);
-
-	
-           console.log('newScale :', newScale);
-	            console.log('middle :', middle);
-
-            console.log('translateX :', translateX);
-
 
 
 	
