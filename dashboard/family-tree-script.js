@@ -365,9 +365,11 @@ console.log('Browser width:', browserWidth);
  //middle = ((browserWidth * 2) - chartWidth ) / (scale * 10);
 		//currentScale = newScale;
 
+const translation = (width - chartWidth * scale) / 2;
+console.log('Translation:', translation);
 	
 // Set the transform attribute
-chartGroup.attr("transform", `translate(${middle},${translateY}) scale(${scale})`);
+chartGroup.attr("transform", `translate(${translation},${translateY}) scale(${scale})`);
 
 console.log('chartGroup transform:', chartGroup.attr('transform'));
 
