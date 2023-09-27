@@ -516,7 +516,11 @@ function applyZoom(scale) {
 }
 
 
+function seeGallery(fam){
 
+  window.location.href = 'https://rw-501.github.io/wefamily/timeline/?fam='+fam; 
+
+}
 
 
 
@@ -563,9 +567,9 @@ function applyZoom(scale) {
     }
 
     if (member.familyCode) {
-      memberDetails['Gallery'] = '<button id="scrollTo">See Gallery</button>';
-      const noScrollElement = document.getElementById('scrollTo');
-      noScrollElement.addEventListener('click', openEditFamilyTreePopup);
+      memberDetails['Gallery '] = '<button id="seeGallery">See Gallery</button>';
+      const noScrollElement = document.getElementById('seeGallery');
+      noScrollElement.addEventListener('click', seeGallery(member.familyCode));
     }
 
     const parentNames = getParentNames(memberID);
