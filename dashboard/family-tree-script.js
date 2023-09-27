@@ -571,7 +571,7 @@ function applyZoom(scale) {
     const parentNames = getParentNames(memberID);
 
     if (parentNames) {
-      memberDetails['Parent'] = parentNames.join(', ');
+      memberDetails['Parent'] = parentNames;
     }
 
     const children = displayChildrenNames(memberID, displayChildrenCallback);
