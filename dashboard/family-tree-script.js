@@ -612,7 +612,7 @@ function showMemberPopup(member) {
        claimMemberFunc(member);
     }
   }
-		
+	
             hideMemberPopup();
         });
     }
@@ -626,7 +626,7 @@ function showMemberPopup(member) {
     scrollTo.style.display = 'none';
     }
   }
-
+member.userID= "";
 				  
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
