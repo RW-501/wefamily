@@ -525,7 +525,7 @@ function applyZoom(scale) {
 
     document.getElementById('memberImage').src = member.photo;
     document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bio || treeData.description;
+          document.getElementById('memberInfo').value = member.bio || member.description;
 
 
 const memberID = member.id;
