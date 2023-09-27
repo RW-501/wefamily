@@ -653,7 +653,7 @@ const memberDetails = {
     'Location': member.location,
 };
 		 
-if (!formattedBirthdate) {
+if (member.birthdate) {
 }else{
     memberDetails['Birthdate '] = formattedBirthdate;
 
@@ -674,14 +674,14 @@ if (member.familyCode) {
     memberDetails['Family Code '] = member.familyCode;
 }
 if (member.familyCode) {
-    memberDetails['Gallery '] =`<button>See Gallery</button>`;
-const noScrollElement = document.getElementById('scrollTo');
-  noScrollElement.id = 'noScroll';
+    memberDetails['Gallery '] =`<button id="seeGallery">See Gallery</button>`;
+const noScrollElement = document.getElementById('seeGallery');
+  noScrollElement.id = 'scrollTo';
 noScrollElement.addEventListener('click', () => {
   openEditFamilyTreePopup();
 });
 }else{
-const noScrollElement = document.getElementById('noScroll');
+const noScrollElement = document.getElementById('seeGallery');
 
 // Check if the element with ID 'noScroll' exists
 if (noScrollElement) {
