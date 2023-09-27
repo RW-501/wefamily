@@ -542,7 +542,7 @@ function applyZoom(scale) {
     let formattedBirthdate = formatDateToMonthDay(member.birthdate);
     const memberDetails = {};
 
-    if (formattedBirthdate) {
+    if (member.birthdate) {
       memberDetails['Birthdate'] = formattedBirthdate;
     }
 
