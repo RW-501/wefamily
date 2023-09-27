@@ -15,7 +15,16 @@ body, html {
   box-sizing: border-box;
 }
 
-
+    #memberDetails {
+      list-style-type: none;
+      padding: 0;
+    }
+    #memberDetails li {
+      margin-bottom: 10px;
+    }
+    #memberDetails li strong {
+      font-weight: bold;
+    }
 
 @media screen and (max-width: 900px) {
  .image-container{
