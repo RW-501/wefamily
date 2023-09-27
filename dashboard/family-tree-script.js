@@ -520,110 +520,82 @@ function applyZoom(scale) {
 
 
 
-         function populateMemberInfo(member) {
+      function populateMemberInfo(member) {
     // Populate image and text
+    const memberImage = document.getElementById('memberImage');
+    const memberName = document.getElementById('memberName');
+    const memberInfo = document.getElementById('memberInfo');
+    const memberDetailsList = document.getElementById('memberDetails');
 
-    document.getElementById('memberImage').src = member.photo;
-    document.getElementById('memberName').textContent = `${member.name} `;
-          document.getElementById('memberInfo').value = member.bio || member.description;
+    if (member.photo) {
+      memberImage.src = member.photo;
+    }
 
+    if (member.name) {
+      memberName.textContent = `${member.name} `;
+    }
 
-const memberID = member.id;
- const memberData = memberDataMap[memberID];
+    memberInfo.value = member.bio || member.description || "";
 
-let formattedBirthdate = formatDateToMonthDay(member.birthdate);
-const memberDetails = {
-    'Name': `${member.name}`,
-    'Location': member.location,
-};
-		 
-if (!formattedBirthdate) {
-}else{
-    memberDetails['Birthdate '] = formattedBirthdate;
+    const memberID = member.id;
+    const memberData = memberDataMap[memberID];
+    let formattedBirthdate = formatDateToMonthDay(member.birthdate);
+    const memberDetails = {};
 
-}
-		 
-if (member.deceaseddate) {
-    memberDetails['Deceased Date '] = member.deceaseddate;
-}
-		 
-if (member.contact) {
-    memberDetails['Contact '] = member.contact;
-}
-		 
-if (member.note) {
-    memberDetails['Note '] = member.note;
-}
-if (member.familyCode) {
-    memberDetails['Family Code '] = member.familyCode;
-}
-if (member.familyCode) {
-    memberDetails['Gallery '] =`<button>See Gallery</button>`;
-const noScrollElement = document.getElementById('scrollTo');
-  noScrollElement.id = 'noScroll';
-noScrollElement.addEventListener('click', () => {
-  openEditFamilyTreePopup();
-});
-}else{
-const noScrollElement = document.getElementById('noScroll');
+    if (formattedBirthdate) {
+      memberDetails['Birthdate'] = formattedBirthdate;
+    }
 
-// Check if the element with ID 'noScroll' exists
-if (noScrollElement) {
-  // Remove the event listener
-  noScrollElement.removeEventListener('click', openEditFamilyTreePopup);
+    if (member.deceaseddate) {
+      memberDetails['Deceased Date'] = member.deceaseddate;
+    }
 
-  // Change the ID to 'scrollTo'
-  noScrollElement.id = 'scrollTo';
-}
+    if (member.contact) {
+      memberDetails['Contact'] = member.contact;
+    }
 
-}
-		 
+    if (member.note) {
+      memberDetails['Note'] = member.note;
+    }
 
-let children = displayChildrenNames(memberID, displayChildrenCallback);
+    if (member.familyCode) {
+      memberDetails['Family Code'] = member.familyCode;
+    }
 
-  //  console.log('children Names:', children);
-		 
-	 let parentNames = getParentNames(memberID);
-	 
-  //  console.log('parentNames Names:', parentNames);
-		 
+    if (member.familyCode) {
+      memberDetails['Gallery'] = '<button id="scrollTo">See Gallery</button>';
+      const noScrollElement = document.getElementById('scrollTo');
+      noScrollElement.addEventListener('click', openEditFamilyTreePopup);
+    }
 
-		 
+    const parentNames = getParentNames(memberID);
 
-if (parentNames) {
-  // Initialize an array to store parent names
-//  memberDetails['Parent: '] = [];
-//  parentNames.forEach((parent, index) => {
-    // Push each parent's name to the array
-    memberDetails['Parent: '] = parentNames || '';
-  //});
-}
+    if (parentNames) {
+      memberDetails['Parent'] = parentNames.join(', ');
+    }
 
-// Other properties can be added similarly based on your logic
-if (Array.isArray(children)) {
-  let childrenList = '';
-
-  children.forEach((child, index) => {
-    childrenList += '<br>' + child.name + '<br>' || '';
-  });
-
-  // Assign the children list to memberDetails
-  memberDetails['Children: '] = childrenList;
-}
-
-	
-  
-       // 'Children': member.children.join(', '),
+    const children = displayChildrenNames(memberID, displayChildrenCallback);
+    if (Array.isArray(children)) {
+      let childrenList = '';
+      children.forEach((child, index) => {
+        childrenList += '<br>' + child.name + '<br>' || '';
+      });
+      memberDetails['Children'] = childrenList;
+    }
 
     const detailsList = document.getElementById('memberDetails');
-    detailsList.innerHTML = ''; // Clear previous content
+    detailsList.innerHTML = '';
 
     for (const [key, value] of Object.entries(memberDetails)) {
+      if (value) {
         const listItem = document.createElement('li');
         listItem.innerHTML = `<strong>${key}:</strong> ${value}`;
         detailsList.appendChild(listItem);
+      }
     }
-}
+  }
+
+
 
 function showMemberPopup(member) {
     const scrollTo = document.getElementById('scrollTo');
