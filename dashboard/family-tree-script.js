@@ -144,6 +144,7 @@ const svg = d3.select("#family-tree-area").append("svg")
   .attr("height", chartHeight);
 
 let middle;
+ document.getElementById('family-tree-area').style.width = chartWidth +"px";
  document.getElementById('family-tree-area').style.height = chartHeight +"px";
 
 if (browserWidth < 900) {
