@@ -8,8 +8,114 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
 
+<style>
+	svg{
+      width: 100%;
+		
+}
+    /* Pop-up styles */
+    .popup-container {
+        display: none;
+        position: fixed;
+     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        max-width: 90%;
+        margin: auto;
+            position: fixed;
+        overflow-y: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: fit-content;
+            display: block;
+            height: fit-content;
+	        max-height: 90%;
+	    min-width: 60%;
+    }
+.popup-image{
+    padding: 2%;
+    background-color: #f1f3f4;
+    margin: auto;
+    width: 100%;
+overflow: hidden;
+}
+select, input[type="text"], input[type="date"], textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+    .close-button {
+text-align: end;
+        font-size: 20px;
+        cursor: pointer;
+            display: block;
+	        font-weight: 900;
+    }
+
+
+
+
+#memberDetails {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+
+
+
 
 	
+</style>
+	</head>
+<body>
+    <!-- Navigation Bar -->
+   <nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <a id="logo-link" href="/wefamily/dashboard/">Family Ties</a>
+        </div>
+        <div class="navbar-toggler">
+            <div class="menu-icon">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/wefamily/about/">About</a></li>
+            <li><a href="/wefamily/contact/">Contact</a></li>
+        </ul>
+        <div class="user-actions">
+            <button id="logout-button" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+    <div class="dropdown-menu">
+        <ul>
+            <li><a href="/wefamily/about/">About</a></li>
+            <li><a href="/wefamily/contact/">Contact</a></li>
+	</ul>
+    </div>
+</nav>
+
       <!-- Firebase SDK -->
   <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -22,53 +128,144 @@
 
 	    <script src="https://d3js.org/d3.v7.min.js"></script>
 
-    <title>Linkedup</title>
+    <title>Family Ties - Timeline Gallery</title>
+
 
 	
 
 
+
+	<div id="popup" class="popup-container">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h2>Tree ID not found</h2>
+    <p>Sorry, the Tree ID you entered was not found.</p>
+    <button onclick="redirectToHomePage()">Go to Home Page</button>
+  </div>
+</div>
+
+
+<div id="memberDetailPopup" class="popup-container">
+    <div class="popup">
+        <span class="close-button" onclick="hideMemberPopup()">&times;</span>
+        <h2 id="memberName">Add Family Member</h2>
+        <div class="popup-content">
+            <div class="popup-left">
+                <div class="popup-image">
+                    <img id="memberImage" src="/wefamily/images/memberPlaceholder.jpg" alt="Member Image">
+                </div>
+                <div class="popup-text">
+                    <textarea id="memberInfo" placeholder="Member Info"></textarea>
+                </div>
+            </div>
+            <div class="popup-right">
+                <ul id="memberDetails">
+                    <!-- Member details will be populated here -->
+                </ul>
+		      <button id="joinBTN">Joim</button>
+
+            </div>
+        </div>
+  
+    
+
+	    
 <script>
 
 
+	
+
+
+
+function loadFamilyTreeChart(currentFamilyID) {
+
+   
+}
+
+
+
+	
+
+
+
+
+
+	
+// Get the URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+
+// Get the value of the 'tree' parameter
+const treeId = urlParams.get('tree');
+
+if (treeId) {
+  // Use treeId as needed
+  console.log('Tree ID:', treeId);
+const db = firebase.firestore();
+
+// Reference to the document in the collection
+const docRef = db.collection("familyTrees").doc(treeId);
+
+docRef.get().then((doc) => {
+  if (doc.exists) {
+    // Document data is available in doc.data()
+     treeData = doc.data();
+    console.log("Tree data:", treeData);
+	  
+	  loadFamilyTreeChart(treeData.treeID);
+
+  } else {
+    console.log("No such document!");
+openPopup();
+
+  }
+}).catch((error) => {
+  console.log("Error getting document:", error);
+});
+
+
+
+	
+// Assuming familyTreeCode is the code you want to save
+const familyTreeCode = treeData.treeID;
+
+// Save to local storage
+localStorage.setItem('familyTreeCode', familyTreeCode);
+
+} else {
+openPopup();
+}
+
+
+
+
+
+function openPopup() {
+  document.getElementById('popup').style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('popup').style.display = 'none';
+}
+
+function redirectToHomePage() {
+  window.location.href = 'https://rw-501.github.io/wefamily/'; // Replace with your actual home page URL
+}
+
+
+
+	
+/*
+// Retrieve from local storage
+const retrievedFamilyTreeCode = localStorage.getItem('familyTreeCode');
+
+// Check if the code was retrieved successfully
+if (retrievedFamilyTreeCode) {
+  console.log('Retrieved Family Tree Code:', retrievedFamilyTreeCode);
+} else {
+  console.log('Family Tree Code not found in local storage.');
+}
+*/
 </script>
-</head>
-<body>
-    <!-- Navigation Bar -->
-   <nav class="navbar">
-    <div class="container">
-        <div class="logo">
-            <a id="logo-link" href="/wefamily/dashboard/">WeFamily</a>
-        </div>
-        <div class="navbar-toggler">
-            <div class="menu-icon">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
-        <div class="user-actions">
-            <button id="logout-button" onclick="logoutUser()">Logout</button>
-        </div>
-    </div>
-    <div class="dropdown-menu">
-        <ul>
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
-    </div>
-</nav>
 
 
 
@@ -76,16 +273,12 @@
 
 	
 
-    <script defer src="family-tree-script.js"></script>
-    <script defer src="add_edit_family_tree_funcs.js"></script>
-    <script defer src="post_funcs.js"></script>
-    <script defer src="add_edit_members_funcs.js"></script>
 
 	</body>
   <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2023 WeFamily. All rights reserved.<a id="LRP" href='https://rw-501.github.io/Portfolio/'>Dev Portfolio</a> </p>
+            <p>&copy; 2023 Family Ties All rights reserved.<a id="LRP" href='https://rw-501.github.io/Portfolio/'>Dev Portfolio</a> </p>
 		<p>version: v1.92</p>
         </div>
     </footer>
