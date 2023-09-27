@@ -676,10 +676,12 @@ if (member.familyCode) {
 if (member.familyCode) {
     memberDetails['Gallery '] =`<button id="seeGallery">See Gallery</button>`;
 const noScrollElement = document.getElementById('seeGallery');
-  noScrollElement.id = 'scrollTo';
 noScrollElement.addEventListener('click', () => {
-  openEditFamilyTreePopup();
+  goToTi();
 });
+  noScrollElement.id = 'scrollTo';
+
+	
 }else{
 const noScrollElement = document.getElementById('seeGallery');
 
