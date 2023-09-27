@@ -78,6 +78,29 @@ text-align: end;
     padding: 0;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.event {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.event-date {
+  padding-right: 20px;
+}
+
+.event-media img {
+  max-width: 100%;
+  height: auto;
+}
 
 
 
@@ -131,7 +154,9 @@ text-align: end;
     <title>Family Ties - Timeline Gallery</title>
 
 
-	
+	<div id="timelinePopup">
+  <!-- Timeline popup content -->
+</div>
 
 
 
@@ -177,7 +202,64 @@ text-align: end;
 
 
 
-function loadFamilyTreeChart(currentFamilyID) {
+function loadFamilyTimeLine(currentFamilyID) {
+const db = firebase.firestore();
+
+// Function to fetch events from Firestore
+function fetchEvents() {
+  return db.collection('familyTimeline').get()
+    .then(snapshot => {
+      const events = [];
+      snapshot.forEach(doc => {
+        const event = doc.data();
+        event.id = doc.id;
+        events.push(event);
+      });
+      return events;
+    })
+    .catch(error => {
+      console.error('Error fetching events:', error);
+      return [];
+    });
+}
+
+// Function to generate the timeline HTML
+function generateTimeline(events) {
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '';  // Clear existing content
+
+  events.forEach(event => {
+    const eventDiv = document.createElement('div');
+    eventDiv.classList.add('event');
+
+    const eventDateDiv = document.createElement('div');
+    eventDateDiv.classList.add('event-date');
+    eventDateDiv.textContent = event.eventDate;
+
+    const eventMediaDiv = document.createElement('div');
+    eventMediaDiv.classList.add('event-media');
+
+    // Depending on the media type, you can display appropriate content (images, videos, etc.)
+    if (event.mediaType.startsWith('image')) {
+      const img = document.createElement('img');
+      img.src = event.downloadURL;
+      img.alt = event.eventCaption;
+      eventMediaDiv.appendChild(img);
+    } else if (event.mediaType.startsWith('video')) {
+      const video = document.createElement('video');
+      video.src = event.downloadURL;
+      video.controls = true;
+      eventMediaDiv.appendChild(video);
+    }
+
+    eventDiv.appendChild(eventDateDiv);
+    eventDiv.appendChild(eventMediaDiv);
+    timeline.appendChild(eventDiv);
+  });
+}
+
+// Fetch events and generate the timeline
+fetchEvents().then(events => generateTimeline(events));
 
    
 }
@@ -211,7 +293,7 @@ docRef.get().then((doc) => {
      treeData = doc.data();
     console.log("Tree data:", treeData);
 	  
-	  loadFamilyTreeChart(treeData.treeID);
+	  loadFamilyTimeLine(treeData.treeID);
 
   } else {
     console.log("No such document!");
