@@ -198,15 +198,11 @@ body {
 <script>
 
 
-	
-
-
-
-function loadFamilyTimeLine(currentFamilyID) {
-const db = firebase.firestore();
 
 // Function to fetch events from Firestore
 function fetchEvents() {
+		const db = firebase.firestore();
+
   return db.collection('familyTimeline').get()
     .then(snapshot => {
       const events = [];
@@ -257,6 +253,12 @@ function generateTimeline(events) {
     timeline.appendChild(eventDiv);
   });
 }
+
+
+
+function loadFamilyTimeLine(currentFamilyID) {
+
+  console.log('currentFamilyID ID:', currentFamilyID);
 
 // Fetch events and generate the timeline
 fetchEvents().then(events => generateTimeline(events));
