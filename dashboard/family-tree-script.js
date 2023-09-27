@@ -645,6 +645,17 @@ function showMemberPopup(member) {
         });
     }
 
+  if (member.userID === userID || member.addByID === userID) {
+     scrollTo.innerHTML="Edit";
+  } else {
+    if (member.userID === "" ) {
+     scrollTo.innerHTML="Claim";
+    }else{
+    scrollTo.style.display = 'none';
+    }
+  }
+
+				  
     populateMemberInfo(member);
     const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
