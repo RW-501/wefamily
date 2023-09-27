@@ -244,3 +244,24 @@ select , label,
 
 
 }
+
+.popup-image {
+    padding: 2%;
+    background-color: #f1f3f4;
+    margin: auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+#memberImage {
+    margin: auto;
+    display: block;
+    width: inherit;
+}
+
+
+
+
+
+
+
