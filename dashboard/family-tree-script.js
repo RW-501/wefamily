@@ -613,7 +613,7 @@ function showMemberPopup(member) {
             // Check if the current user can edit or claim the member
             if (member.userID === userID || member.addByID === userID) {
                 editMemberFunc(member);
-            } else if (member.userID === "") {
+             if (member.userID === "") {
                 claimMemberFunc(member);
             }
 
@@ -624,8 +624,11 @@ function showMemberPopup(member) {
     // Set the button label based on the user's permission
     if (member.userID === userID || member.addByID === userID) {
         scrollTo.innerHTML = "Edit";
-    } else if (member.userID === "") {
+	    
+     if (member.userID === "") {
         scrollTo.innerHTML = "Claim";
+     }
+	    
     } else {
         // Hide the button if the user doesn't have the required permission
         scrollTo.style.display = 'none';
