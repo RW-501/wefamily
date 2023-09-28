@@ -567,7 +567,10 @@ function seeGallery(fam){
     }
 
     if (member.familyCode) {
-      memberDetails['Gallery'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+      memberDetails['<br>'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+
+    }else{
+      memberDetails['<br>'] = `<button onclick="" id="seeMember">Member</button>`;
 
     }
 
@@ -604,33 +607,31 @@ function seeGallery(fam){
 
 
 function showMemberPopup(member) {
-    const scrollTo = document.getElementById('scrollTo');
+    const seeMember = document.getElementById('seeMember');
 
     // Add event listener only if the element with ID 'scrollTo' exists
-    if (scrollTo) {
-        scrollTo.addEventListener('click', () => {
+    if (seeMember) {
+        seeMember.addEventListener('click', () => {
             // Check if the current user can edit or claim the member
             if (member.userID === userID) {
                 editMemberFunc(member);
-             if (member.userID === "") {
+	    }else if (member.userID === "") {
                 claimMemberFunc(member);
             }
-	    }
+	    
             hideMemberPopup();
         });
     }
 
     // Set the button label based on the user's permission
     if (member.userID === userID ) {
-        scrollTo.innerHTML = "Edit";
+        seeMember.innerHTML = "Edit";
 	    
-     if (member.userID === "") {
-        scrollTo.innerHTML = "Claim";
-     }
-	    
-    } else {
+    }else if (member.userID === "") {
+        seeMember.innerHTML = "Claim";
+     }  else {
         // Hide the button if the user doesn't have the required permission
-        scrollTo.style.display = 'none';
+        seeMember.style.display = 'none';
     }
 
     // Reset the member's userID to prevent unintentional behavior
