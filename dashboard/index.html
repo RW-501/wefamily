@@ -1770,12 +1770,22 @@ const sortedByBirthday = sortByBirthday([...familyMembers]);
 	
 }
 	    
-	
+	function findMemberById(memberId) {
+  // Function to find the member by their id
+  // Implement the logic to search for the member in your data
+  // For example, if your members are in an array:
+  return membersArray.find(member => member.id === memberId);
+}
 
 	    
-	    function claimMemberFunc(member){
+	    function claimMemberFunc(member,memberID){
 //showMainMessage("claim "+member.memberID);
 
+		    if(memberId){
+
+   member = findMemberById(memberId);
+
+		    }
 let memberID = member.memberID;
             const userDocRef = firestore.collection('familyMembers').doc(memberID);
 
