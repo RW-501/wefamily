@@ -594,10 +594,10 @@ function seeGallery(fam){
     }else{
 	            if (member.userID === userID) {
 
-     scrollTo.innerHTML = `<button onclick="editMemberFunc('',${member.userID});" id="seeMember">Edit</button>`;
+     scrollTo.innerHTML = `<button onclick="editMemberFunc('',"${member.userID}");" id="seeMember">Edit</button>`;
 
 	    }else if (member.userID === "") {
-      scrollTo.innerHTML =  `<button onclick="claimMemberFunc('',${member.userID});" id="seeMember">Claim</button>`;
+      scrollTo.innerHTML =  `<button onclick="claimMemberFunc('',"${member.userID}");" id="seeMember">Claim</button>`;
 
             }
 
