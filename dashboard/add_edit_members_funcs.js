@@ -6,7 +6,7 @@
 
 		    if(memberId && memberData === ""){
 
-   memberData = findMemberById(memberId);
+  memberData = currentMemberData;
 
 		    }
  document.getElementById('edit-first-name').value = memberData.first_name || '';
