@@ -108,12 +108,12 @@ const eventData = {
   metaData: metadata,
   exifData: {
     XResolution: xResolution, // Use the converted standard number here
-    imageCreationDate,
-    fileModifiedDate,
-    gpsLatitude,
-    gpsLongitude,
-    gpsAltitude,
-    orientation,
+    imageCreationDate:imageCreationDate,
+    fileModifiedDate:imageCreationDate,
+    gpsLatitude:fileModifiedDate,
+    gpsLongitude:gpsLongitude,
+    gpsAltitude:gpsAltitude,
+    orientation:orientation,
     // ... other exifData properties
   },
   downloadURL, 
