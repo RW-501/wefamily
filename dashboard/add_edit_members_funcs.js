@@ -2,8 +2,13 @@
 
 
 
-    function editMemberFunc(memberData){
+    function editMemberFunc(memberData,memberId){
 
+		    if(memberId && memberData === ""){
+
+   memberData = findMemberById(memberId);
+
+		    }
  document.getElementById('edit-first-name').value = memberData.first_name || '';
     document.getElementById('edit-last-name').value = memberData.last_name || '';
     document.getElementById('edit-middle-name').value = memberData.middle_name || '';
