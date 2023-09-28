@@ -566,29 +566,11 @@ function seeGallery(fam){
       memberDetails['Family Code'] = member.familyCode;
     }
 
-if (member.familyCode) {
-  const galleryButton = document.createElement('button');
-  galleryButton.id = 'seeGallery';
-  galleryButton.textContent = 'See Gallery';
-  galleryButton.addEventListener('click', () => {
-    seeGallery(member.familyCode);
-  });
-
-  memberDetailsList.appendChild(galleryButton);
-
-} else {
-  const noScrollElement = document.getElementById('seeGallery');
-
-  if (noScrollElement) {
-    // Remove the event listener
-    noScrollElement.removeEventListener('click', );
-
-    // Change the ID to 'scrollTo'
-    noScrollElement.id = 'scrollTo';
-  }
-
-	
-}
+    if (member.familyCode) {
+      memberDetails['Gallery'] = '<button id="scrollTo">See Gallery</button>';
+      const noScrollElement = document.getElementById('scrollTo');
+      noScrollElement.addEventListener('click', openEditFamilyTreePopup);
+    }
 
 
 
