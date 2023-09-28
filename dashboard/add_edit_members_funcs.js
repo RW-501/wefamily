@@ -6,7 +6,7 @@
 
 		    if(memberData === ""){
 
-  memberData = currentMemberData;
+			    memberData = memberDataMap.find(member => member.id === memberId);
             console.log('memberData.first_name    '+memberData.first_name);
 
 		    }
