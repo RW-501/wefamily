@@ -13,6 +13,267 @@
       width: 100%;
 		
 }
+
+	* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+  html, body{
+    overflow: hidden;
+    overflow-y: auto;
+}
+	#the_Tree_Container{
+    width: 100%;
+    display: block;
+	}
+
+
+/* Navigation Bar styles */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.navbar .logo {
+      font-size: 3em;
+    font-weight: 800;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-right: 10px;
+}
+
+.navbar .logout {
+    background-color: #fff;
+    color: #333;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.navbar .logout:hover {
+    background-color: #555;
+    color: #fff;
+    transition: 0.3s;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+
+    width: 100%;
+}
+
+/* Add this CSS in your stylesheet */
+.navbar .dropdown-menu {
+    display: none;
+    background-color: #333;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.navbar .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navbar .dropdown-menu ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar .dropdown-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+}
+
+/* Media query to show/hide the dropdown menu */
+@media screen and (max-width: 900px) {
+    .navbar .nav-links {
+        display: none;
+    }
+
+    .navbar .dropdown-menu {
+        display: block;
+    }
+
+
+}
+	#family-tree, #family-tree-area{
+    width: 100%;
+    height: 800px;	
+    overflow: hidden;
+}
+      .node {
+            cursor: pointer;
+        }
+@media screen and (max-width: 900px) {
+ .image-container{
+    width: 100%  !important;
+}
+
+
+.space_J {
+    display: grid !important;
+    justify-content: space-between !important;
+    width: 100%;
+    gap: 10px !important;
+}
+.w70{
+    width: 100% !important;
+    display: block;
+    margin: auto !important;
+    padding: 2%;
+}
+.flex{
+    display: grid !important;
+    grid-auto-flow: column;
+}
+
+
+
+select , label,
+    input[type="text"],
+    input[type="date"],
+    textarea {
+    width: 100%;
+    font-size: 1.5em !important;
+    color: #7f7f7f;
+    font-weight: 600 !important;
+    }
+
+
+	
+}
+.flex_w{
+    margin: auto;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+.grid{
+    display: grid;
+
+}
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+	  button {
+    background-color: #8e9399;
+    color: #fff;
+    border: #5d5d5d solid;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+    font-weight: 800;
+    box-sizing: border-box;
+    width: fit-content;
+}
+
+    button:hover {
+        background-color: #4d4d4d;
+    }
+
+
+
+    label {
+        font-weight: 700;
+        margin-right: 10px;
+    }
+
+	
+.logo{
+	    list-style: none;
+}
+	.logo a{
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+}
+	#LRP{
+     text-decoration: none;
+    color: #858585;
+    font-weight: 600;
+    font-size: 1.5em;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: block;
+    margin: 1%;
+
+
+}
+
+.popup-image {
+    padding: 2%;
+    background-color: #f1f3f4;
+    margin: auto;
+    width: 100%;
+    overflow: hidden;
+}
+
+#memberImage {
+    margin: auto;
+    display: block;
+    width: inherit;
+}
     /* Pop-up styles */
     .popup-container {
         display: none;
@@ -101,67 +362,6 @@ body {
   max-width: 100%;
   height: auto;
 }
-
-
-/* Styles for the navigation bar */
-.navbar {
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav-links li {
-  display: inline;
-  margin-left: 20px;
-}
-
-.nav-links li a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-.nav-links li a:hover {
-  color: #f9a825; /* Change to your desired hover color */
-}
-
-.user-actions {
-  display: flex;
-  align-items: center;
-}
-
-/* Styles for the footer */
-.footer {
-  background-color: #333;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-.footer a {
-  color: #f9a825; /* Change to your desired link color */
-  text-decoration: none;
-}
-
-.footer a:hover {
-  text-decoration: underline;
-}
-
-/* Styles for other UI elements if needed */
-/* Add your application-specific styles here */
-
-/* Additional custom styles as needed */
-
 
 
 	
