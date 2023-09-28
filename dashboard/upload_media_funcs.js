@@ -235,8 +235,15 @@ function extractExifData(file) {
     const reader = new FileReader();
 
     reader.onload = function (event) {
-      const exif = EXIF.readFromBinaryFile(new BinaryFile(event.target.result));
-      resolve(exif);
+      const arrayBuffer = event.target.result;
+
+      // Check if the result is ArrayBuffer
+      if (arrayBuffer instanceof ArrayBuffer) {
+        const exif = EXIF.readFromBinaryFile(new DataView(arrayBuffer));
+        resolve(exif);
+      } else {
+        reject(new Error('Result is not an ArrayBuffer.'));
+      }
     };
 
     reader.onerror = function () {
@@ -246,6 +253,7 @@ function extractExifData(file) {
     reader.readAsArrayBuffer(file);
   });
 }
+
 
 function findEXIFinJPEG(fileBuffer) {
   const dataView = new DataView(fileBuffer);
