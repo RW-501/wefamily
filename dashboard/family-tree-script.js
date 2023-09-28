@@ -612,11 +612,11 @@ function showMemberPopup(member) {
 //            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
 
   if (member.userID === userID || member.addByID === userID) {
-     editMemberFunc(member);
+     editMemberFunc(member.userID);
 	  
   } else {
     if (member.userID === "" ) {
-       claimMemberFunc(member);
+       claimMemberFunc(member.userID);
     }
   }
 	
