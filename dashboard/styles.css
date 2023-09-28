@@ -3,6 +3,13 @@ body, html {
   margin: 0;
 }
 
+
+
+#media-preview img {
+    object-fit: contain;
+    width: 100%;
+}
+
 .expandable-div .show{
   display: none;
   background-color: lightgray;
