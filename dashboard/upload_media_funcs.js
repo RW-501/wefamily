@@ -212,24 +212,6 @@ BinaryFile.prototype.readUint8 = function () {
   return this.data.getUint8(this.position++);
 };
 
-BinaryFile.prototype.readUint16 = function () {
-  const value = this.data.getUint16(this.position, true);
-  this.position += 2;
-  return value;
-};
-
-// Add more methods based on the structure of your binary data
-/*
-// Example usage:
-const arrayBuffer = new Uint8Array([0x48, 0x65, 0x6C, 0x6C, 0x6F]);
-const binaryFile = new BinaryFile(new DataView(arrayBuffer.buffer));
-
-console.log(binaryFile.readUint8()); // Outputs: 72
-console.log(binaryFile.readUint8()); // Outputs: 101
-// Continue reading as needed based on your binary data structure
-
-*/
-	    
 function extractExifData(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -237,10 +219,14 @@ function extractExifData(file) {
     reader.onload = function (event) {
       const arrayBuffer = event.target.result;
 
-      // Check if the result is ArrayBuffer
+      // Ensure that the result is ArrayBuffer
       if (arrayBuffer instanceof ArrayBuffer) {
-        const exif = EXIF.readFromBinaryFile(new DataView(arrayBuffer));
-        resolve(exif);
+        try {
+          const exif = EXIF.readFromBinaryFile(arrayBuffer);
+          resolve(exif);
+        } catch (error) {
+          reject(new Error('Error parsing EXIF data: ' + error.message));
+        }
       } else {
         reject(new Error('Result is not an ArrayBuffer.'));
       }
@@ -253,6 +239,7 @@ function extractExifData(file) {
     reader.readAsArrayBuffer(file);
   });
 }
+
 
 
 function findEXIFinJPEG(fileBuffer) {
