@@ -133,7 +133,7 @@ const eventData = {
     viewed: 0,
     public: publicBool,
     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    reactions: [reactions],
+    reactions: reactions,
   };
 //reactions.find(reaction => reaction.type === 'likes').count += 1;
 
