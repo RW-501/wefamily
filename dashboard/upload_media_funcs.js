@@ -6,6 +6,21 @@ let metadata = '';
 let exifData = '';
 let fileType = '';
 
+async function uploadFileToStorage(file) {
+  const storageRef = firebase.storage().ref();
+  const fileRef = storageRef.child(file.name);
+
+  try {
+    const snapshot = await fileRef.put(file);
+    const downloadURL = await snapshot.ref.getDownloadURL();
+    return downloadURL;
+  } catch (error) {
+    throw new Error('Error uploading file to storage: ' + error.message);
+  }
+}
+
+
+
 fileInput.addEventListener('change', async (event) => {
   const files = event.target.files;
   if (files.length === 0) return;
