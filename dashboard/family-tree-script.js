@@ -522,14 +522,8 @@ function seeGallery(fam){
 
 }
 
-
 function findMemberById(memberId) {
-  for (const [key, value] of memberDataMap) {
-    if (value.id === memberId) {
-      return value;
-    }
-  }
-  return null; // Return null if member is not found
+  return memberDataMap[memberId] || null;
 }
 
       function populateMemberInfo(member) {
