@@ -586,16 +586,20 @@ function seeGallery(fam){
       memberDetails['Children'] = childrenList;
     }
 
-	      
+	       const scrollTo = document.getElementById('scrollTo');
+   
     if (member.familyCode) {
-      memberDetails['<br>'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+      scrollTo.innerHTML = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
 
     }else{
 	            if (member.userID === userID) {
-      memberDetails['<br>'] = `<button onclick="editMemberFunc("${member}");" id="seeMember">Edit</button>`;
+
+
+			    
+     scrollTo.innerHTML = `<button onclick="editMemberFunc("${member}");" id="seeMember">Edit</button>`;
 
 	    }else if (member.userID === "") {
-      memberDetails['<br>'] = `<button onclick="claimMemberFunc("${member}");" id="seeMember">Claim</button>`;
+      scrollTo.innerHTML =  `<button onclick="claimMemberFunc("${member}");" id="seeMember">Claim</button>`;
 
             }
 
