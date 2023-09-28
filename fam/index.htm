@@ -178,7 +178,7 @@ text-align: end;
                 <ul id="memberDetails">
                     <!-- Member details will be populated here -->
                 </ul>
-		      <button id="joinBTN">Joim</button>
+		      <div id="joinBTN">Loading</div>
 
             </div>
         </div>
@@ -679,8 +679,14 @@ if (member.note) {
 if (member.familyCode) {
     memberDetails['Family Code '] = member.familyCode;
 }
+
+    const joinBTN = document.getElementById('joinBTN');
+
 if (member.familyCode) {
-      memberDetails['<br>'] = `<button onclick="seeGallery("${member.familyCode}");" id="seeGallery">See Gallery</button>`;
+     joinBTN.innerHTML = `<button onclick="seeGallery("${member.familyCode}");" id="seeGallery">See Gallery</button>`;
+}else{
+     joinBTN.innerHTML = `<button onclick="seeGallery("${window.location.href = 'https://rw-501.github.io/wefamily/'; }");" id="seeGallery">Join</button>`;
+
 }
 
 	 
@@ -740,7 +746,6 @@ function showMemberPopup(member) {
     if (joinBTN) {
         joinBTN.addEventListener('click', () => {
             hideMemberPopup();
-  window.location.href = 'https://rw-501.github.io/wefamily/'; // Replace with your actual home page URL
 
 		
         });
