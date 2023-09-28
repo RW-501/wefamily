@@ -611,7 +611,7 @@ function showMemberPopup(member) {
     if (scrollTo) {
         scrollTo.addEventListener('click', () => {
             // Check if the current user can edit or claim the member
-            if (member.userID === userID || member.addByID === userID) {
+            if (member.userID === userID) {
                 editMemberFunc(member);
              if (member.userID === "") {
                 claimMemberFunc(member);
@@ -622,7 +622,7 @@ function showMemberPopup(member) {
     }
 
     // Set the button label based on the user's permission
-    if (member.userID === userID || member.addByID === userID) {
+    if (member.userID === userID ) {
         scrollTo.innerHTML = "Edit";
 	    
      if (member.userID === "") {
@@ -635,7 +635,7 @@ function showMemberPopup(member) {
     }
 
     // Reset the member's userID to prevent unintentional behavior
-    member.userID = "";
+  //  member.userID = "";
 
     // Populate member information
     populateMemberInfo(member);
