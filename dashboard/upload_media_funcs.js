@@ -199,8 +199,36 @@ memberDataMap.forEach((member) => {
 	
 }
 
+function BinaryFile(data) {
+  this.data = data;
+  this.length = data.byteLength;
+  this.position = 0;
+}
 
+BinaryFile.prototype.readUint8 = function () {
+  if (this.position >= this.length) {
+    throw new Error('Attempt to read beyond end of file');
+  }
+  return this.data.getUint8(this.position++);
+};
 
+BinaryFile.prototype.readUint16 = function () {
+  const value = this.data.getUint16(this.position, true);
+  this.position += 2;
+  return value;
+};
+
+// Add more methods based on the structure of your binary data
+/*
+// Example usage:
+const arrayBuffer = new Uint8Array([0x48, 0x65, 0x6C, 0x6C, 0x6F]);
+const binaryFile = new BinaryFile(new DataView(arrayBuffer.buffer));
+
+console.log(binaryFile.readUint8()); // Outputs: 72
+console.log(binaryFile.readUint8()); // Outputs: 101
+// Continue reading as needed based on your binary data structure
+
+*/
 	    
 function extractExifData(file) {
   return new Promise((resolve, reject) => {
