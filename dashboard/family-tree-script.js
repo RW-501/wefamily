@@ -591,7 +591,7 @@ function findMemberById(memberId) {
 	       const scrollTo = document.getElementById('scrollTo');
    currentMemberData = member;
     if (member.familyCode) {
-      scrollTo.innerHTML = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+      scrollTo.innerHTML = `<button onclick="seeGallery('${member.familyCode}');" id="seeGallery">See Gallery</button>`;
 
     }else{
 	            if (member.userID === userID) {
