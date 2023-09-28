@@ -279,7 +279,7 @@ fetchEvents().then(events => generateTimeline(events));
 const urlParams = new URLSearchParams(window.location.search);
 
 // Get the value of the 'tree' parameter
-const treeId = urlParams.get('tree');
+const treeId = urlParams.get('fam');
 
 if (treeId) {
   // Use treeId as needed
