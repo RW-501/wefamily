@@ -1773,10 +1773,10 @@ const sortedByBirthday = sortByBirthday([...familyMembers]);
 	    
 	    function claimMemberFunc(member,memberID){
 //showMainMessage("claim "+member.memberID);
-     if(memberData === ""){
+     if(member === ""){
 
-			    memberData = memberDataMap.find(member => member.id === memberId);
-            console.log('memberData.first_name    '+memberData.first_name);
+   member = findMemberById(memberId);
+            console.log('memberData.first_name    '+member.first_name);
 
 		    }
  memberID = member.memberID;
