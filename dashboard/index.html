@@ -1770,20 +1770,13 @@ const sortedByBirthday = sortByBirthday([...familyMembers]);
 	
 }
 	    
-	function findMemberById(memberId) {
-  // Function to find the member by their id
-  // Implement the logic to search for the member in your data
-  // For example, if your members are in an array:
-  return membersArray.find(member => member.id === memberId);
-}
-
 	    
 	    function claimMemberFunc(member,memberID){
 //showMainMessage("claim "+member.memberID);
  
 		    if(memberId && member === ""){
 
-   member = findMemberById(memberId);
+  memberData = currentMemberData;
 
 		    }
  memberID = member.memberID;
