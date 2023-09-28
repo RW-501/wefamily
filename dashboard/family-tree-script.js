@@ -566,19 +566,7 @@ function seeGallery(fam){
       memberDetails['Family Code'] = member.familyCode;
     }
 
-    if (member.familyCode) {
-      memberDetails['<br>'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
 
-    }else{
-	            if (member.userID === userID) {
-      memberDetails['<br>'] = `<button onclick="editMemberFunc(${member});" id="seeMember">Edit</button>`;
-
-	    }else if (member.userID === "") {
-      memberDetails['<br>'] = `<button onclick="claimMemberFunc(${member});" id="seeMember">Claim</button>`;
-
-            }
-
-    }
 
 
 
@@ -598,6 +586,21 @@ function seeGallery(fam){
       memberDetails['Children'] = childrenList;
     }
 
+	      
+    if (member.familyCode) {
+      memberDetails['<br>'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+
+    }else{
+	            if (member.userID === userID) {
+      memberDetails['<br>'] = `<button onclick="editMemberFunc("${member}");" id="seeMember">Edit</button>`;
+
+	    }else if (member.userID === "") {
+      memberDetails['<br>'] = `<button onclick="claimMemberFunc("${member}");" id="seeMember">Claim</button>`;
+
+            }
+
+    }
+	      
     const detailsList = document.getElementById('memberDetails');
     detailsList.innerHTML = '';
 
