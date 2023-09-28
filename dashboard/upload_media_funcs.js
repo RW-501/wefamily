@@ -60,7 +60,7 @@ fileInput.addEventListener('change', async (event) => {
       mediaPreview.appendChild(previewElement);
 
       // Step 3: Save event details
-      saveEventDetailsFromPopup();
+   //   saveEventDetailsFromPopup();
 
       // Step 2: Update progress bar
       uploadedSize += file.size;
