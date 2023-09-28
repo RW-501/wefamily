@@ -567,9 +567,8 @@ function seeGallery(fam){
     }
 
     if (member.familyCode) {
-      memberDetails['Gallery'] = '<button id="scrollTo">See Gallery</button>';
-      const noScrollElement = document.getElementById('scrollTo');
-      noScrollElement.addEventListener('click', openEditFamilyTreePopup);
+      memberDetails['Gallery'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
+
     }
 
 
