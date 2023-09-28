@@ -616,7 +616,7 @@ function showMemberPopup(member) {
              if (member.userID === "") {
                 claimMemberFunc(member);
             }
-
+	    }
             hideMemberPopup();
         });
     }
