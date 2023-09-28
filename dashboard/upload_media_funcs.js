@@ -247,6 +247,35 @@ function extractExifData(file) {
   });
 }
 
+function findEXIFinJPEG(fileBuffer) {
+  const dataView = new DataView(fileBuffer);
+
+  if (dataView.getUint8(0) !== 0xFF || dataView.getUint8(1) !== 0xD8) {
+    console.error('Not a valid JPEG file'); // Check for valid JPEG header
+    return null;
+  }
+
+  const length = dataView.byteLength;
+  let offset = 2;
+
+  while (offset < length) {
+    if (dataView.getUint8(offset) !== 0xFF) {
+      console.error('Invalid marker found at offset ' + offset);
+      return null; // Not a valid marker, something is wrong
+    }
+
+    const marker = dataView.getUint8(offset + 1);
+
+    // Check for APP1 marker (where EXIF data is stored)
+    if (marker === 0xE1) {
+      return readEXIFData(dataView, offset + 4);
+    } else {
+      offset += 2 + dataView.getUint16(offset + 2);
+    }
+  }
+
+  return null; // No EXIF data found
+}
 
 	    
 // Function to get selected family members
