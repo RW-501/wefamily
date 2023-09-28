@@ -523,6 +523,7 @@ function seeGallery(fam){
 }
 
 
+var currentMemberData;
 
       function populateMemberInfo(member) {
     // Populate image and text
@@ -587,7 +588,7 @@ function seeGallery(fam){
     }
 
 	       const scrollTo = document.getElementById('scrollTo');
-   
+   currentMemberData = member;
     if (member.familyCode) {
       scrollTo.innerHTML = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
 
