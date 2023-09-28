@@ -1786,7 +1786,7 @@ const sortedByBirthday = sortByBirthday([...familyMembers]);
    member = findMemberById(memberId);
 
 		    }
-let memberID = member.memberID;
+ memberID = member.memberID;
             const userDocRef = firestore.collection('familyMembers').doc(memberID);
 
                         // Update the user document to add the family tree ID to the "userTrees" array field
