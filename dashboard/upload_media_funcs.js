@@ -93,12 +93,30 @@ const reactions = [
     count: 0
   }
 ];
+const xResolution = parseFloat(exifData.XResolution.toString());
 
-  // Prepare the data to be saved to Firestore
-  const eventData = {
-    metaData: metadata,
-    exifData: exifData,
-    downloadURL: downloadURL,
+// Extracted properties related to date, time, GPS, and orientation
+const imageCreationDate = exifData.DateTimeOriginal; // Date and Time of Image Creation
+const fileModifiedDate = exifData.FileModifyDate; // Date and Time when File was Modified
+const gpsLatitude = exifData.GPSLatitude; // GPS Latitude
+const gpsLongitude = exifData.GPSLongitude; // GPS Longitude
+const gpsAltitude = exifData.GPSAltitude; // GPS Altitude
+const orientation = exifData.Orientation; // Orientation of the image
+
+	
+const eventData = {
+  metaData: metadata,
+  exifData: {
+    XResolution: xResolution, // Use the converted standard number here
+    imageCreationDate,
+    fileModifiedDate,
+    gpsLatitude,
+    gpsLongitude,
+    gpsAltitude,
+    orientation,
+    // ... other exifData properties
+  },
+  downloadURL, 
     group: eventGroup,
     mediaType: fileType,
     memberName: Current_USERNAME,
