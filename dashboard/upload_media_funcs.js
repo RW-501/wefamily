@@ -93,15 +93,19 @@ const reactions = [
     count: 0
   }
 ];
-const xResolution = parseFloat(exifData.XResolution.toString());
 
-// Extracted properties related to date, time, GPS, and orientation
-const imageCreationDate = exifData.DateTimeOriginal; // Date and Time of Image Creation
-const fileModifiedDate = exifData.FileModifyDate; // Date and Time when File was Modified
-const gpsLatitude = exifData.GPSLatitude; // GPS Latitude
-const gpsLongitude = exifData.GPSLongitude; // GPS Longitude
-const gpsAltitude = exifData.GPSAltitude; // GPS Altitude
-const orientation = exifData.Orientation; // Orientation of the image
+const exifProperties = exifData || {}; // Ensure exifData is defined
+
+	
+const xResolution = parseFloat(exifProperties.XResolution.toString());
+
+const imageCreationDate = exifProperties.DateTimeOriginal || ''; // Date and Time of Image Creation
+const fileModifiedDate = exifProperties.FileModifyDate || ''; // Date and Time when File was Modified
+const gpsLatitude = exifProperties.GPSLatitude || ''; // GPS Latitude
+const gpsLongitude = exifProperties.GPSLongitude || ''; // GPS Longitude
+const gpsAltitude = exifProperties.GPSAltitude || ''; // GPS Altitude
+const orientation = exifProperties.Orientation || ''; // Orientation of the image
+
 
 	
 const eventData = {
