@@ -606,36 +606,38 @@ function seeGallery(fam){
 
 function showMemberPopup(member) {
     const scrollTo = document.getElementById('scrollTo');
-    
+
+    // Add event listener only if the element with ID 'scrollTo' exists
     if (scrollTo) {
         scrollTo.addEventListener('click', () => {
-//            document.getElementById(member.id).scrollIntoView({ behavior: 'smooth' });
+            // Check if the current user can edit or claim the member
+            if (member.userID === userID || member.addByID === userID) {
+                editMemberFunc(member);
+            } else if (member.userID === "") {
+                claimMemberFunc(member);
+            }
 
-  if (member.userID === userID || member.addByID === userID) {
-     editMemberFunc(member.userID);
-	  
-  } else {
-    if (member.userID === "" ) {
-       claimMemberFunc(member.userID);
-    }
-  }
-	
             hideMemberPopup();
         });
     }
 
-  if (member.userID === userID || member.addByID === userID) {
-     scrollTo.innerHTML="Edit";
-  } else {
-    if (member.userID === "" ) {
-     scrollTo.innerHTML="Claim";
-    }else{
-    scrollTo.style.display = 'none';
+    // Set the button label based on the user's permission
+    if (member.userID === userID || member.addByID === userID) {
+        scrollTo.innerHTML = "Edit";
+    } else if (member.userID === "") {
+        scrollTo.innerHTML = "Claim";
+    } else {
+        // Hide the button if the user doesn't have the required permission
+        scrollTo.style.display = 'none';
     }
-  }
-member.userID= "";
-				  
+
+    // Reset the member's userID to prevent unintentional behavior
+    member.userID = "";
+
+    // Populate member information
     populateMemberInfo(member);
+
+    // Show the member detail popup
     const popup = document.getElementById('memberDetailPopup');
     popup.style.display = 'block';
 }
