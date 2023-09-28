@@ -1780,8 +1780,8 @@ const sortedByBirthday = sortByBirthday([...familyMembers]);
 	    
 	    function claimMemberFunc(member,memberID){
 //showMainMessage("claim "+member.memberID);
-
-		    if(memberId){
+ 
+		    if(memberId && member === ""){
 
    member = findMemberById(memberId);
 
