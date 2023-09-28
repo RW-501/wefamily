@@ -570,7 +570,13 @@ function seeGallery(fam){
       memberDetails['<br>'] = `<button onclick="seeGallery(${member.familyCode});" id="seeGallery">See Gallery</button>`;
 
     }else{
-      memberDetails['<br>'] = `<button onclick="" id="seeMember">Member</button>`;
+	            if (member.userID === userID) {
+      memberDetails['<br>'] = `<button onclick="editMemberFunc(${member});" id="seeMember">Edit</button>`;
+
+	    }else if (member.userID === "") {
+      memberDetails['<br>'] = `<button onclick="claimMemberFunc(${member});" id="seeMember">Claim</button>`;
+
+            }
 
     }
 
@@ -613,11 +619,7 @@ function showMemberPopup(member) {
     if (seeMember) {
         seeMember.addEventListener('click', () => {
             // Check if the current user can edit or claim the member
-            if (member.userID === userID) {
-                editMemberFunc(member);
-	    }else if (member.userID === "") {
-                claimMemberFunc(member);
-            }
+   
 	    console.log('member.userID:', member.userID);
 
             hideMemberPopup();
@@ -625,15 +627,7 @@ function showMemberPopup(member) {
     }
 
     // Set the button label based on the user's permission
-    if (member.userID === userID ) {
-        seeMember.innerHTML = "Edit";
-	    
-    }else if (member.userID === "") {
-        seeMember.innerHTML = "Claim";
-     }  else {
-        // Hide the button if the user doesn't have the required permission
-        seeMember.style.display = 'none';
-    }
+ 
 
     // Reset the member's userID to prevent unintentional behavior
   //  member.userID = "";
