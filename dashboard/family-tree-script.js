@@ -523,7 +523,14 @@ function seeGallery(fam){
 }
 
 
-var currentMemberData;
+function findMemberById(memberId) {
+  for (const [key, value] of memberDataMap) {
+    if (value.id === memberId) {
+      return value;
+    }
+  }
+  return null; // Return null if member is not found
+}
 
       function populateMemberInfo(member) {
     // Populate image and text
