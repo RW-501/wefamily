@@ -4,9 +4,10 @@
 
     function editMemberFunc(memberData,memberId){
 
-		    if(memberId && memberData === ""){
+		    if(memberData === ""){
 
   memberData = currentMemberData;
+            console.log('memberData.first_name    '+memberData.first_name);
 
 		    }
  document.getElementById('edit-first-name').value = memberData.first_name || '';
