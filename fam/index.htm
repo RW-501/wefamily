@@ -685,13 +685,11 @@ if (member.familyCode) {
 if (member.familyCode) {
      joinBTN.innerHTML = `<button onclick="seeGallery("${member.familyCode}");" id="seeGallery">See Gallery</button>`;
 }else{
-     joinBTN.innerHTML = `<button onclick="seeGallery("${window.location.href = 'https://rw-501.github.io/wefamily/'; }");" id="seeGallery">Join</button>`;
+     joinBTN.innerHTML = `<button onclick="" id="seeGallery">Join</button>`;
 
 }
 
 	 
-
-
 		 
 
 let children = displayChildrenNames(memberID, displayChildrenCallback);
@@ -743,11 +741,18 @@ if (Array.isArray(children)) {
 function showMemberPopup(member) {
     const joinBTN = document.getElementById('joinBTN');
     
+
+
+	 
+
+
     if (joinBTN) {
         joinBTN.addEventListener('click', () => {
+if (member.familyCode) {
+}else{
+window.location.href = 'https://rw-501.github.io/wefamily/'; 
+}
             hideMemberPopup();
-
-		
         });
     }
 
