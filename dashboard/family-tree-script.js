@@ -618,7 +618,8 @@ function showMemberPopup(member) {
 	    }else if (member.userID === "") {
                 claimMemberFunc(member);
             }
-	    
+	    console.log('member.userID:', member.userID);
+
             hideMemberPopup();
         });
     }
