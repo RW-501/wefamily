@@ -305,6 +305,21 @@ select , label,
 
 	
 </style>
+
+      <!-- Firebase SDK -->
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+	
+    <script src="../auth.js"></script>
+    <script src="../firebase.js"></script>
+
+	    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <title>Family Ties - Timeline Gallery</title>
+	
 	</head>
 <body>
     <!-- Navigation Bar -->
@@ -336,19 +351,7 @@ select , label,
     </div>
 </nav>
 
-      <!-- Firebase SDK -->
-  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script  src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-	
-    <script src="../auth.js"></script>
-    <script src="../firebase.js"></script>
-
-	    <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <title>Family Ties - Timeline Gallery</title>
 	<div id="timeline">
 	</div>
 
@@ -398,72 +401,70 @@ select , label,
 
 
 // Function to fetch events from Firestore
-function fetchEvents() {
-		const db = firebase.firestore();
-
-  return db.collection('familyTimeline').get()
-    .then(snapshot => {
-      const events = [];
-      snapshot.forEach(doc => {
-        const event = doc.data();
-        event.id = doc.id;
-        events.push(event);
-      });
-      return events;
-    })
-    .catch(error => {
-      console.error('Error fetching events:', error);
-      return [];
-    });
-}
-
-// Function to generate the timeline HTML
-function generateTimeline(events) {
-  const timeline = document.getElementById('timeline');
-  timeline.innerHTML = '';  // Clear existing content
-
-  events.forEach(event => {
-    const eventDiv = document.createElement('div');
-    eventDiv.classList.add('event');
-
-    const eventDateDiv = document.createElement('div');
-    eventDateDiv.classList.add('event-date');
-    eventDateDiv.textContent = event.eventDate;
-
-    const eventMediaDiv = document.createElement('div');
-    eventMediaDiv.classList.add('event-media');
-
-    // Depending on the media type, you can display appropriate content (images, videos, etc.)
-    if (event.mediaType.startsWith('image')) {
-      const img = document.createElement('img');
-      img.src = event.downloadURL;
-      img.alt = event.eventCaption;
-      eventMediaDiv.appendChild(img);
-    } else if (event.mediaType.startsWith('video')) {
-      const video = document.createElement('video');
-      video.src = event.downloadURL;
-      video.controls = true;
-      eventMediaDiv.appendChild(video);
+ function fetchEventsByFamilyID(familyID) {
+      const db = firebase.firestore();
+      return db.collection('familyTimeline')
+        .where('familyID', '==', familyID)
+        .get()
+        .then(snapshot => {
+          const events = [];
+          snapshot.forEach(doc => {
+            const event = doc.data();
+            event.id = doc.id;
+            events.push(event);
+          });
+          return events;
+        })
+        .catch(error => {
+          console.error('Error fetching events:', error);
+          return [];
+        });
     }
 
-    eventDiv.appendChild(eventDateDiv);
-    eventDiv.appendChild(eventMediaDiv);
-    timeline.appendChild(eventDiv);
-  });
-}
+    // Function to generate the timeline HTML
+    function generateTimeline(events) {
+      const timeline = document.getElementById('timeline');
+      timeline.innerHTML = '';  // Clear existing content
 
+      events.forEach(event => {
+        const eventDiv = document.createElement('div');
+        eventDiv.classList.add('event');
 
+        const eventDateDiv = document.createElement('div');
+        eventDateDiv.classList.add('event-date');
+        eventDateDiv.textContent = event.eventDate;
 
-function loadFamilyTimeLine(currentFamilyID) {
+        const eventMediaDiv = document.createElement('div');
+        eventMediaDiv.classList.add('event-media');
 
-  console.log('currentFamilyID ID:', currentFamilyID);
+        // Depending on the media type, you can display appropriate content (images, videos, etc.)
+        if (event.mediaType.startsWith('image')) {
+          const img = document.createElement('img');
+          img.src = event.downloadURL;
+          img.alt = event.eventCaption;
+          eventMediaDiv.appendChild(img);
+        } else if (event.mediaType.startsWith('video')) {
+          const video = document.createElement('video');
+          video.src = event.downloadURL;
+          video.controls = true;
+          eventMediaDiv.appendChild(video);
+        }
 
-// Fetch events and generate the timeline
-fetchEvents().then(events => generateTimeline(events));
+        eventDiv.appendChild(eventDateDiv);
+        eventDiv.appendChild(eventMediaDiv);
+        timeline.appendChild(eventDiv);
+      });
+    }
 
-   
-}
+    // Function to load the family timeline
+    function loadFamilyTimeline(currentFamilyID) {
+      console.log('Current Family ID:', currentFamilyID);
 
+      // Fetch events based on the familyID and generate the timeline
+      fetchEventsByFamilyID(currentFamilyID).then(events => {
+        generateTimeline(events);
+      });
+    }
 
 
 	
@@ -502,12 +503,13 @@ if (treeId) {
   }).catch((error) => {
     console.log("Error getting document:", error);
   });
-
+/*
   // Assuming familyTreeCode is the code you want to save
   const familyTreeCode = treeData.treeID;
 
   // Save to local storage
   localStorage.setItem('familyTreeCode', familyTreeCode);
+  */
 } else {
   openPopup();
 }
