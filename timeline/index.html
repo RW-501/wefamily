@@ -558,13 +558,12 @@ function convertTimestampToFormattedDate(timestamp) {
 function openPopup(event) {
   const popup = document.getElementById('popup');
 
-const timestamp = { event.eventDate };
-const firebaseTimestamp = new firebase.firestore.Timestamp(
-  timestamp.seconds,
-  timestamp.nanoseconds
+const timestamp = new firebase.firestore.Timestamp(
+  event.eventDate.seconds,
+  event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(firebaseTimestamp);
+const formattedDate = convertTimestampToFormattedDate(timestamp);
 	
   const eventDetails = `
     <div>
@@ -630,13 +629,12 @@ const formattedDate = convertTimestampToFormattedDate(firebaseTimestamp);
         const eventDateDiv = document.createElement('div');
         eventDateDiv.classList.add('event-date');
 	      
-const timestamp = { event.eventDate };
-const firebaseTimestamp = new firebase.firestore.Timestamp(
-  timestamp.seconds,
-  timestamp.nanoseconds
+const timestamp = new firebase.firestore.Timestamp(
+  event.eventDate.seconds,
+  event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(firebaseTimestamp);
+const formattedDate = convertTimestampToFormattedDate(timestamp);
 	
         const dateButton = document.createElement('button');
         dateButton.textContent = event.eventDate || formattedDate;
