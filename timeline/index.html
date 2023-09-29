@@ -494,8 +494,10 @@ if (treeId) {
       // Document data is available in doc.data()
       treeData = doc.data();
       console.log("Tree data:", treeData);
-
-      loadFamilyTimeLine(treeData.treeID);
+      console.log("Tree treeData.treeID   :", treeData.treeID);
+	    
+  loadFamilyTimeline("tUzyKhIXdLhCwxaxGbpx");
+   //   loadFamilyTimeLine(treeData.treeID);
     } else {
       console.log("No such document!");
       openPopup();
