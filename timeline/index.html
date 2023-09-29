@@ -538,7 +538,7 @@ padding: 1%;
         eventDateDiv.classList.add('event-date');
 
         const dateButton = document.createElement('button');
-        dateButton.textContent = event.eventDate;
+        dateButton.textContent = event.eventDate || event.timestamp;
         dateButton.addEventListener('click', () => {
           // Scroll to the corresponding media element
           const eventMediaElement = document.getElementById(`event-media-${event.id}`);
