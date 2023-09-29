@@ -456,7 +456,6 @@ padding: 1%;
 <div id="eventPopup" class="popup-container">
   <div class="popup-content">
     <span class="close" onclick="closePopup('eventPopup')">&times;</span>
-    <h2 id="eventTitle"></h2>
     <div id="eventDetails"></div>
   </div>
 </div>
@@ -511,59 +510,27 @@ padding: 1%;
 
 	    
 <script>
+
 function convertTimestampToFormattedDate(timestamp) {
-  // Convert Firebase timestamp to JavaScript Date object
-  const date = timestamp.toDate();
-
-  // Check if the date is valid
-  if (isNaN(date.getTime())) {
-    return 'Invalid date';
-  }
-
-  // Function to add ordinal suffix to the day (e.g., 1st, 2nd, 3rd)
-  const addOrdinalSuffix = (day) => {
-    if (day >= 11 && day <= 13) {
-      return day + 'th';
-    }
-    switch (day % 10) {
-      case 1:
-        return day + 'st';
-      case 2:
-        return day + 'nd';
-      case 3:
-        return day + 'rd';
-      default:
-        return day + 'th';
-    }
-  };
-
-  // Get the day, month, and year
-  const day = date.getDate();
-  const month = date.toLocaleString('en-US', { month: 'short' });
-  const year = date.getFullYear();
-
-  // Add ordinal suffix to the day
-  const formattedDay = addOrdinalSuffix(day);
-
-  // Construct the formatted date
-  const formattedDate = `${month} ${formattedDay} ${year}`;
-
-  return formattedDate;
+  const date = new Date(timestamp.toMillis()); // Convert Firebase Timestamp to JavaScript Date object
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
 }
 
+  
 
 	
 	///      <img src="${event.downloadURL}" alt="Event Media">
 
-function openPopup(event) {
-  const popup = document.getElementById('popup');
+function openEventPopup(event) {
+  const popup = document.getElementById('eventPopup');
 
 const timestamp = new firebase.firestore.Timestamp(
   event.eventDate.seconds,
   event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(timestamp);
+const formattedDate = convertTimestampToFormattedDate(eventTimestamp);
 	
   const eventDetails = `
     <div>
@@ -634,7 +601,7 @@ const timestamp = new firebase.firestore.Timestamp(
   event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(timestamp);
+const formattedDate = convertTimestampToFormattedDate(eventTimestamp);
 	
         const dateButton = document.createElement('button');
         dateButton.textContent = event.eventDate || formattedDate;
@@ -652,7 +619,7 @@ const formattedDate = convertTimestampToFormattedDate(timestamp);
 
        eventMediaDiv.addEventListener('click', () => {
 
-	  openPopup(event);     
+	  openEventPopup(event);     
         });
 	      
 	if (event.mediaType.startsWith('image')) {
