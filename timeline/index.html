@@ -453,10 +453,20 @@ padding: 1%;
 </div>
 
 
+<div id="eventPopup" class="popup-container">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup('eventPopup')">&times;</span>
+    <h2 id="eventTitle"></h2>
+    <div id="eventDetails"></div>
+  </div>
+</div>
+
+
+	
 
 	<div id="popup" class="popup-container">
   <div class="popup-content">
-    <span class="close" onclick="closePopup()">&times;</span>
+    <span class="close" onclick="closePopup('popup')">&times;</span>
     <h2>Tree ID not found</h2>
     <p>Sorry, the Tree ID you entered was not found.</p>
     <button onclick="redirectToHomePage()">Go to Home Page</button>
@@ -466,7 +476,7 @@ padding: 1%;
 
 <div id="memberDetailPopup" class="popup-container">
     <div class="popup">
-        <span class="close-button" onclick="hideMemberPopup()">&times;</span>
+        <span class="close-button" onclick="closePopup('memberDetailPopup')">&times;</span>
         <h2 id="memberName">Add Family Member</h2>
         <div class="popup-content">
             <div class="popup-left">
@@ -501,6 +511,38 @@ padding: 1%;
 
 	    
 <script>
+	///      <img src="${event.downloadURL}" alt="Event Media">
+
+function openPopup(event) {
+  const popup = document.getElementById('popup');
+  const eventDetails = `
+    <div>
+
+    </div>
+    <div>
+      <h3>Event Caption: ${event.eventCaption}</h3>
+      <p>Event Date: ${event.eventDate}</p>
+      <p>Event Location: ${event.eventLocation}</p>
+      <p>Event Type: ${event.mediaType}</p>
+      <p>Member Name: ${event.memberName}</p>
+      <p>Event Size: ${event.width}x${event.height}</p>
+      <p>Event ID: ${event.id}</p>
+      <p>Timestamp: ${event.timestamp}</p>
+      <p>Viewed Count: ${event.viewed}</p>
+      <p>Reactions:</p>
+      <ul>
+        <li>Likes: ${event.reactions[0].count}</li>
+        <li>Loves: ${event.reactions[1].count}</li>
+      </ul>
+    </div>
+  `;
+
+  // Set the event details in the popup
+  document.getElementById('eventDetails').innerHTML = eventDetails;
+
+  // Display the popup
+  popup.style.display = 'block';
+}
 
 
 
@@ -551,8 +593,12 @@ padding: 1%;
         eventMediaDiv.classList.add('event-media');
         eventMediaDiv.id = `event-media-${event.id}`;
 
-        // Depending on the media type, you can display appropriate content (images, videos, etc.)
-        if (event.mediaType.startsWith('image')) {
+       eventMediaDiv.addEventListener('click', () => {
+
+	  openPopup(event);     
+        });
+	      
+	if (event.mediaType.startsWith('image')) {
           const img = document.createElement('img');
           img.src = event.downloadURL;
           img.alt = event.eventCaption;
@@ -641,8 +687,8 @@ function openPopup() {
   document.getElementById('popup').style.display = 'block';
 }
 
-function closePopup() {
-  document.getElementById('popup').style.display = 'none';
+function closePopup(xxx) {
+  document.getElementById(xxx).style.display = 'none';
 }
 
 function redirectToHomePage() {
