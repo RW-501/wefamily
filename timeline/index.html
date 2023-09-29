@@ -9,7 +9,46 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
 
 <style>
-
+  #timelineMainContainer {
+      display: flex;
+      justify-content: space-between;
+    }
+    #timeline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 2px solid #ccc; /* Add border to create the "dial" effect */
+      padding: 20px;
+      height: 100vh; /* Set height to full viewport height */
+      overflow-y: auto; /* Enable scrolling for the dial */
+    }
+    .event {
+      margin-bottom: 20px;
+    }
+    .event-date {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .event-date button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-size: 16px;
+      color: blue;
+      text-decoration: underline;
+    }
+    #media-container {
+      width: 70%; /* Adjust the width of the media container */
+      padding: 20px;
+      height: 100vh; /* Set height to full viewport height */
+      overflow-y: auto; /* Enable scrolling for the media container */
+    }
+    .event-media img,
+    .event-media video {
+      max-width: 100%;
+      height: auto;
+    }
 
 .event-date {
     width: 10%;
@@ -402,7 +441,11 @@ padding: 1%;
 </nav>
 
 
-	<div id="timeline">
+	<div id="timelineMainContainer">
+
+  <div id="timeline"></div>
+  <div id="media-container"></div>
+		
 	</div>
 
 	<div id="timelinePopup">
@@ -462,7 +505,7 @@ padding: 1%;
 
 
 // Function to fetch events from Firestore
- function fetchEventsByFamilyID(familyID) {
+  function fetchEventsByFamilyID(familyID) {
       const db = firebase.firestore();
       return db.collection('familyTimeline')
         .where('familyID', '==', familyID)
@@ -485,7 +528,7 @@ padding: 1%;
     // Function to generate the timeline HTML
     function generateTimeline(events) {
       const timeline = document.getElementById('timeline');
-      timeline.innerHTML = '';  // Clear existing content
+      const mediaContainer = document.getElementById('media-container');
 
       events.forEach(event => {
         const eventDiv = document.createElement('div');
@@ -493,10 +536,20 @@ padding: 1%;
 
         const eventDateDiv = document.createElement('div');
         eventDateDiv.classList.add('event-date');
-        eventDateDiv.textContent = event.eventDate;
+
+        const dateButton = document.createElement('button');
+        dateButton.textContent = event.eventDate;
+        dateButton.addEventListener('click', () => {
+          // Scroll to the corresponding media element
+          const eventMediaElement = document.getElementById(`event-media-${event.id}`);
+          eventMediaElement.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        eventDateDiv.appendChild(dateButton);
 
         const eventMediaDiv = document.createElement('div');
         eventMediaDiv.classList.add('event-media');
+        eventMediaDiv.id = `event-media-${event.id}`;
 
         // Depending on the media type, you can display appropriate content (images, videos, etc.)
         if (event.mediaType.startsWith('image')) {
@@ -526,7 +579,6 @@ padding: 1%;
         generateTimeline(events);
       });
     }
-
 
 	
 
@@ -558,7 +610,7 @@ if (treeId) {
       console.log("Tree treeData.treeID   :", treeData.treeID);
 	    
   loadFamilyTimeline("tUzyKhIXdLhCwxaxGbpx");
-   //   loadFamilyTimeLine(treeData.treeID);
+   //   loadFamilyTimeline(treeData.treeID);
     } else {
       console.log("No such document!");
       openPopup();
