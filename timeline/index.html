@@ -511,13 +511,47 @@ padding: 1%;
 	    
 <script>
 
-function convertTimestampToFormattedDate(timestamp) {
-  const date = new Date(timestamp.toMillis()); // Convert Firebase Timestamp to JavaScript Date object
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return date.toLocaleDateString('en-US', options);
+function isTimestampConvertible(timestamp) {
+  return timestamp instanceof firebase.firestore.Timestamp;
 }
 
-  
+function convertTimestampToReadableDate(timestamp) {
+  if (!isTimestampConvertible(timestamp)) {
+    return 'Invalid timestamp';
+  }
+
+  const months = [
+    'January', 'February', 'March', 'April',
+    'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'
+  ];
+
+  const date = timestamp.toDate();
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  const formattedDate = `${month} ${day}${getDaySuffix(day)}, ${year}`;
+
+  return formattedDate;
+}
+
+function getDaySuffix(day) {
+  if (day >= 11 && day <= 13) {
+    return 'th';
+  }
+  switch (day % 10) {
+    case 1:
+      return 'st';
+    case 2:
+      return 'nd';
+    case 3:
+      return 'rd';
+    default:
+      return 'th';
+  }
+}
+
 
 	
 	///      <img src="${event.downloadURL}" alt="Event Media">
@@ -530,10 +564,12 @@ const eventTimestamp = new firebase.firestore.Timestamp(
   event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(eventTimestamp);
+const formattedDate = convertTimestampToReadableDate(eventTimestamp);
+
 	
   const eventDetails = `
     <div>
+      <h3>Event Details:</h3>
 
     </div>
     <div>
@@ -601,7 +637,7 @@ const eventTimestamp = new firebase.firestore.Timestamp(
   event.eventDate.nanoseconds
 );
 
-const formattedDate = convertTimestampToFormattedDate(eventTimestamp);
+const formattedDate = convertTimestampToReadableDate(eventTimestamp);
 	
         const dateButton = document.createElement('button');
         dateButton.textContent = event.eventDate || formattedDate;
