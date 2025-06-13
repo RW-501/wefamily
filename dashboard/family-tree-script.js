@@ -86,6 +86,7 @@ const familyTree = document.getElementById('family-tree');
 
 
 familyTree.addEventListener('click', () => {
+  console.log('!!!!!!!!!!!!!!?   ');
 
 //toggleFullscreen();
 	
