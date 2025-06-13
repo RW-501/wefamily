@@ -58,6 +58,9 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 
 const familyTree = document.getElementById('family-tree');
+// Add a zoom control UI
+const zoomControls = document.getElementById('zoom-controls');
+
 
 /*
 familyTree.addEventListener('click', () => {
@@ -111,16 +114,13 @@ function smoothZoomTo(newScale) {
     .duration(500)
     .call(zoom.transform, transform); // Apply with animation
 
-    centerChartOnScreen();
+    centerChartOnScreen()
 }
-
-
 
 setTimeout(() => {
   document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
   document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
 }, 2000);
-
 
 
 
@@ -1070,7 +1070,4 @@ function loadFamilyTreeChart(treeData) {
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
-
-            centerChartOnScreen();
-
 }
