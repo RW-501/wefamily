@@ -71,56 +71,42 @@ familyTree.addEventListener('click', () => {
 });
 
 */
-function centerChartOnScreen() {
-  const svg = d3.select("#family-tree-area svg");
-  const area = d3.select("#family-tree-area").node();
-  const group = chartGroup.node().getBBox();
-
-  const scale = currentScale;
-  const x = (area.clientWidth - group.width * scale) / 2 - group.x * scale;
-  const y = (area.clientHeight - group.height * scale) / 2 - group.y * scale;
-
-  const transform = d3.zoomIdentity.translate(x, y).scale(scale);
-
-  svg.transition().duration(400).call(zoom.transform, transform);
-}
 
 
-function zoomIn() {
-  const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
-  smoothZoomTo(newScale);
-}
+  setTimeout(() => {
+    console.log('1-second delay completed ✅');
 
-function zoomOut() {
-  const newScale = Math.max(currentScale / 1.2, 0.1); // Limit to min zoom
-  smoothZoomTo(newScale);
-}
+const zoomInButton = document.getElementById('zoom-in-tree');
+const zoomOutButton = document.getElementById('zoom-out-tree');
 
-function smoothZoomTo(newScale) {
-  const svg = d3.select("#family-tree-area svg");
+    if (zoomInButton && zoomOutButton) {
+      zoomInButton.addEventListener('click', () => {
+        console.log('Zoom In Clicked ✅');
 
-  // Calculate center of viewport
-  const viewport = d3.select("#family-tree-area").node().getBoundingClientRect();
-  const centerX = viewport.width / 2;
-  const centerY = viewport.height / 2;
+        // Adjust the view to center the SVG groups
+        centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+        centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
 
-  const transform = d3.zoomIdentity
-    .translate(centerX, centerY)
-    .scale(newScale)
-    .translate(-centerX, -centerY);
+        console.log('chartGroup width: ', chartGroup);
+        console.log('nodeGroup width: ', nodeGroup);
+      });
 
-  svg
-    .transition()
-    .duration(500)
-    .call(zoom.transform, transform); // Apply with animation
+      zoomOutButton.addEventListener('click', () => {
+        console.log('Zoom Out Clicked ✅');
+        console.log('zoom.transform :', zoom?.transform);
+        const width = window.screen.width;
+        console.log('width :', width);
+        console.log('zoom :', zoom);
+        console.log('d3.zoomIdentity :', d3.zoomIdentity);
 
-    centerChartOnScreen()
-}
+        closeFullscreen();
+      });
 
-setTimeout(() => {
-  document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
-  document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
-}, 2000);
+    } else {
+      console.warn('Zoom buttons not found in the DOM ❌');
+    }
+
+  }, 2000); // 1-second delay
 
 
 
