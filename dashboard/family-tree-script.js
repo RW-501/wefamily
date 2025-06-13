@@ -1070,4 +1070,7 @@ function loadFamilyTreeChart(treeData) {
         .catch((error) => {
             console.error('Error fetching family member data:', error);
         });
+
+            centerChartOnScreen();
+
 }
