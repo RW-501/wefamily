@@ -423,7 +423,7 @@ function zoomed(event) {
 
   //centerElementInSVG(nodeGroup);
 
-    centerChartOnScreen();
+  //  centerChartOnScreen();
 
 }
 
