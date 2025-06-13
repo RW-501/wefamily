@@ -64,6 +64,43 @@ familyTree.addEventListener('click', () => {
 });
 */
 
+// Add a zoom control UI
+familyTree.addEventListener('DOMContentLoaded', () => {
+const zoomControls = document.getElementById('zoom-controls');
+const zoomInButton = document.getElementById('zoom-in');
+const zoomOutButton = document.getElementById('zoom-out');
+
+
+zoomOutButton.addEventListener('click', () => {
+            console.log('zoom.transform :', zoom.transform);
+	    const width = window.screen.width;
+       console.log('width :', width);
+       console.log('zoom :', zoom);
+       console.log('d3.zoomIdentity :', d3.zoomIdentity);
+
+
+	closeFullscreen();
+
+
+	
+});
+
+zoomInButton.addEventListener('click', () => {
+
+  console.log('???????????????????????????????   ');
+
+//centerLayersOnScreen();
+centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
+	
+console.log('chartGroup width:   ', chartGroup);
+
+console.log('nodeGroup width:   ', nodeGroup);
+});
+ });
+
+
+
 function toggleFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
   expandableDiv.classList.toggle("show");
