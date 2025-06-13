@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
-});
+
 
 zoomOutButton.addEventListener('click', () => {
             console.log('zoom.transform :', zoom.transform);
@@ -82,6 +82,10 @@ console.log('chartGroup width:   ', chartGroup);
 
 console.log('nodeGroup width:   ', nodeGroup);
 });
+});
+
+
+
 
 const familyTree = document.getElementById('family-tree');
 
