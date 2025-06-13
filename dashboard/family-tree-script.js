@@ -311,7 +311,16 @@ function generateFamilyTreeChart(familyData) {
     .scaleExtent([0.1, 10]) // Define the zoom scale limits
     .on("zoom", zoomed);
 
-
+  chartGroup
+    .selectAll("path")
+    .data(links)
+    .enter()
+    .append("path")
+    .attr("class", "link")
+    .attr("d", curvedPath) // Use the curved path generator function
+    .style("fill", "none")
+    .style("stroke", "gray")
+    .style("stroke-width", 2);
 
   let memberData = familyData;
   //console.log('memberData data:', memberData.data);
@@ -405,17 +414,6 @@ function generateFamilyTreeChart(familyData) {
       showMemberPopup(d.data);
     });
 
-      chartGroup
-    .selectAll("path")
-    .data(links)
-    .enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("d", curvedPath) // Use the curved path generator function
-    .style("fill", "none")
-    .style("stroke", "gray")
-    .style("stroke-width", 2);
-    
   // After appending the images to nodeGroup
   nodes = root.descendants();
 
