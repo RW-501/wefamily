@@ -928,32 +928,6 @@ function getParentsOfParents(nodeID) {
 
 
 
-
-function loadFamilyTreeChart(treeData) {
-
-    fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
-        .then((hierarchicalTree) => {
-         //   console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
-
-		let data = hierarchicalTree.node;
-
-		
-		 console.log("Hierarchical data:", data); 
-            generateFamilyTreeChart(data);
-            console.log("Family tree chart generated."); // Log when the chart is generated
-
-		        })
-        .catch((error) => {
-            console.error('Error fetching family member data:', error);
-        });
-
-            centerChartOnScreen();
-
-}
-
-
-
-
 /// works
 function centerElementInSVG(element, svg) {
         console.log('centerElementInSVG');
@@ -1007,6 +981,48 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 }
 
 // Call this function to center the layers
+function centerChartOnScreen() {
+
+        console.log('centerChartOnScreen');
+
+  const svg = d3.select("#family-tree-area svg");
+  const area = d3.select("#family-tree-area").node();
+  const group = chartGroup.node().getBBox();
+
+  const scale = currentScale;
+  const x = (area.clientWidth - group.width * scale) / 2 - group.x * scale;
+  const y = (area.clientHeight - group.height * scale) / 2 - group.y * scale;
+
+  const transform = d3.zoomIdentity.translate(x, y).scale(scale);
+
+  svg.transition().duration(400).call(zoom.transform, transform);
+}
+
+
+
+
+
+function loadFamilyTreeChart(treeData) {
+
+    fetchFamilyMemberData('familyMembers', currentFamilyID, treeData)
+        .then((hierarchicalTree) => {
+         //   console.log("Hierarchical tree data:", hierarchicalTree); // Log the data
+
+		let data = hierarchicalTree.node;
+
+		
+		 console.log("Hierarchical data:", data); 
+            generateFamilyTreeChart(data);
+            console.log("Family tree chart generated."); // Log when the chart is generated
+
+		        })
+        .catch((error) => {
+            console.error('Error fetching family member data:', error);
+        });
+
+            centerChartOnScreen();
+
+}
 
 
 
@@ -1023,19 +1039,6 @@ familyTree.addEventListener('click', () => {
 });
 
 */
-function centerChartOnScreen() {
-  const svg = d3.select("#family-tree-area svg");
-  const area = d3.select("#family-tree-area").node();
-  const group = chartGroup.node().getBBox();
-
-  const scale = currentScale;
-  const x = (area.clientWidth - group.width * scale) / 2 - group.x * scale;
-  const y = (area.clientHeight - group.height * scale) / 2 - group.y * scale;
-
-  const transform = d3.zoomIdentity.translate(x, y).scale(scale);
-
-  svg.transition().duration(400).call(zoom.transform, transform);
-}
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
