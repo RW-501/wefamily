@@ -68,15 +68,15 @@ familyTree.addEventListener('click', () => {
 	
 });
 
+window.onload = () => {
+  console.log('window.onload ??????????????????????????');
 
-familyTree.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded ??????????????????????????');
-
+  const zoomInButton = document.getElementById('zoom-in');
+  const zoomOutButton = document.getElementById('zoom-out');
 
   if (zoomInButton && zoomOutButton) {
-
     zoomInButton.addEventListener('click', () => {
-      console.log('???????????????????????????????');
+      console.log('Zoom In Clicked ???????????????????????????????');
 
       // Adjust the view to center the SVG groups
       centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
@@ -87,6 +87,7 @@ familyTree.addEventListener('DOMContentLoaded', () => {
     });
 
     zoomOutButton.addEventListener('click', () => {
+      console.log('Zoom Out Clicked');
       console.log('zoom.transform :', zoom?.transform);
       const width = window.screen.width;
       console.log('width :', width);
@@ -99,8 +100,7 @@ familyTree.addEventListener('DOMContentLoaded', () => {
   } else {
     console.warn('Zoom buttons not found in the DOM.');
   }
-});
-
+};
 
 
 
