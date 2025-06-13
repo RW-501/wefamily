@@ -58,7 +58,7 @@ const familyTree = document.getElementById('family-tree');
 const zoomControls = document.getElementById('zoom-controls');
 
 
-
+/*
 familyTree.addEventListener('click', () => {
   console.log('familyTree clicked  !!!!!!!!!!!!!!?   ');
 
@@ -66,7 +66,7 @@ familyTree.addEventListener('click', () => {
 	
 });
 
-
+*/
 
   setTimeout(() => {
     console.log('1-second delay completed ✅');
@@ -101,7 +101,7 @@ const zoomOutButton = document.getElementById('zoom-out-tree');
       console.warn('Zoom buttons not found in the DOM ❌');
     }
 
-  }, 1000); // 1-second delay
+  }, 2000); // 1-second delay
 
 
 
