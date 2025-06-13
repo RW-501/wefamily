@@ -124,6 +124,42 @@ setTimeout(() => {
 
 
 
+(function enableViewBoxDrag() {
+  const svg = document.getElementById("family-tree-area");
+  let isDragging = false;
+  let startX, startY;
+  let viewBox = svg.getAttribute("viewBox").split(" ").map(Number);
+
+  svg.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    svg.style.cursor = "grabbing";
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    const dx = (startX - e.clientX);
+    const dy = (startY - e.clientY);
+
+    // Update viewBox
+    const scale = svg.clientWidth / viewBox[2]; // How many pixels per viewBox unit
+    viewBox[0] += dx / scale;
+    viewBox[1] += dy / scale;
+
+    svg.setAttribute("viewBox", viewBox.join(" "));
+
+    // Update starting point
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  window.addEventListener("mouseup", () => {
+    isDragging = false;
+    svg.style.cursor = "grab";
+  });
+})();
 
 function toggleFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
