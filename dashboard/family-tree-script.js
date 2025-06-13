@@ -126,6 +126,7 @@ function applyZoom(scale) {
 setTimeout(() => {
   document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
   document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
+  initializeZoom();
 }, 4000);
 
 
