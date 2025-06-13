@@ -230,7 +230,7 @@ select , label,
     height: auto;
     object-fit: fill;
 }
-}
+
 
 .image-container {
     border-radius: 0 !important;
@@ -293,7 +293,7 @@ input[type="text"], input[type="date"], textarea {
 border-radius:0;
 }
 
-{
+*{
     box-sizing: border-box;
 }
 
@@ -610,9 +610,10 @@ text-align: end;
 
     #search-button,
     #enter-code-button {
-  background-color: #007BFF; */
-    color: #fff;
-    /* border: none; */
+  background-color: #007BFF; 
+  
+       color: #fff;
+ border: none; 
     padding: 10px 20px;
     font-size: 16px;
     /* cursor: pointer; */
@@ -634,12 +635,16 @@ text-align: end;
         width: 400px;
     }
 
-    #add-member-form label {
+    #add-member-form label,
+        #add-member-form label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
     }
 
+        #add-member-form-start input[type="text"],
+    #add-member-form-start input[type="date"],
+    #add-member-form-start textarea,
     #add-member-form input[type="text"],
     #add-member-form input[type="date"],
     #add-member-form textarea {
@@ -650,7 +655,8 @@ text-align: end;
         border-radius: 4px;
     }
 
-    #add-member-form button {
+    #add-member-form button,
+        #add-member-form button {
          /* background-color: #007BFF; */
     color: #fff;
     /* border: none; */
@@ -661,7 +667,8 @@ text-align: end;
     transition: background-color 0.3s ease;
     }
 
-    #add-member-form button:hover {
+    #add-member-form button:hover,
+        #add-member-form button:hover {
         background-color: #0056b3;
     }
 
@@ -969,7 +976,7 @@ font-size: 2em;
 #meberDetailpopup{
 
 }
-#create-tree-section input[type="text"], input[type="date"], textarea { {
+#create-tree-section input[type="text"], input[type="date"], textarea  {
 
 }
 

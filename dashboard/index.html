@@ -76,492 +76,473 @@ function initializeFamilyTreeChart() {
 </script>
 </head>
 <body>
-    <!-- Navigation Bar -->
-   <nav class="navbar">
-    <div class="container">
-        <div class="logo">
-            <a id="logo-link" href="/wefamily/dashboard/">Family Ties</a>
-        </div>
-        <div class="navbar-toggler">
-            <div class="menu-icon">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
-        <div class="user-actions">
-            <button id="logout-button" onclick="logoutUser()">Logout</button>
-        </div>
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="container">
+    <div class="logo">
+      <a id="logo-link" href="/wefamily/dashboard/">Family Ties</a>
     </div>
-    <div class="dropdown-menu">
-        <ul>
-            <li><a href="#tree-details">Tree Details</a></li>
-            <li><a href="#tree-content">Family Members</a></li>
-            <li><a href="#family-tree">Family Tree</a></li>
-            <li><a href="#family-news">Family Chat</a></li>
-            <li><a href="#member_request">Member Request</a></li>
-            <li><a href="/wefamily/about/">About</a></li>
-        </ul>
+    <div class="navbar-toggler">
+      <div class="menu-icon">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
     </div>
+    <ul class="nav-links">
+      <li><a href="#tree-details">Tree Details</a></li>
+      <li><a href="#tree-content">Family Members</a></li>
+      <li><a href="#family-tree">Family Tree</a></li>
+      <li><a href="#family-news">Family Chat</a></li>
+      <li><a href="#member_request">Member Request</a></li>
+      <li><a href="/wefamily/about/">About</a></li>
+    </ul>
+    <div class="user-actions">
+      <button id="logout-button" onclick="logoutUser()">Logout</button>
+    </div>
+  </div>
+  <div class="dropdown-menu">
+    <ul>
+      <li><a href="#tree-details">Tree Details</a></li>
+      <li><a href="#tree-content">Family Members</a></li>
+      <li><a href="#family-tree">Family Tree</a></li>
+      <li><a href="#family-news">Family Chat</a></li>
+      <li><a href="#member_request">Member Request</a></li>
+      <li><a href="/wefamily/about/">About</a></li>
+    </ul>
+  </div>
 </nav>
 
+<div class="container">
+  <h1>Family Tree Management</h1>
+  <div id="family-tree-container">
 
+    <div id="user_Families_area" class="SECTION">
+      <h2>Your Families</h2>
+      <div id="user_Families" class="space_J">
 
+      </div>
 
-	
-    <div class="container">
-        <h1>Family Tree Management</h1>
-        <div id="family-tree-container">
+      <button onclick="openCreateTreePopup()">Join / Create Family Tree</button>
+    </div>
 
-            <div id="user_Families_area" class="SECTION">
-	<h2>Your Families</h2>
-            <div id="user_Families" class="space_J">
+    <div id="tree-details" class="SECTION">
 
-	    </div>
-		
-            <button onclick="openCreateTreePopup()">Join / Create Family Tree</button>
-	    </div>
+      <h2>Tree Details</h2>
 
-		
-            <div id="tree-details" class="SECTION">
-		    
-                <h2>Tree Details</h2>
-		    
-		    		    <div class="space_J">
+      <div class="space_J">
 
-		    <button onclick="openEditFamilyTreePopup()">Edit</button>
-		    		    <h4 id="famCode"></h4>
+        <button onclick="openEditFamilyTreePopup()">Edit</button>
+        <h4 id="famCode"></h4>
 
+      </div>
+      <div class="space_J">
+        <div class="image-container w30">
 
-				    </div>
-		    <div class="space_J">
-    <div class="image-container w30">
-  
-        <img id="tree-photo" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+          <img id="tree-photo" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+
+        </div>
+        <div class="w70">
+          <label for="tree-name">Name:</label>
+          <input type="text" id="tree-name" placeholder="Family Tree Name" required>
+          <label for="tree-location">Location:</label>
+          <input type="text" id="tree-location" placeholder="Location">
+          <label for="tree-description">Description:</label>
+          <textarea id="tree-description" placeholder="Brief Description"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id="tree-content" class="SECTION">
+      <div class="space_J">
+        <h2>Family Members</h2>
+        <div class="flex_w">
+          <button id="sortByNameBtn" onclick="sortedByNameFunc()">Sort by Name</button>
+          <button id="sortByBirthdayBtn" onclick="sortByBirthdayFunc()">Sort by Birthday</button>
+        </div>
+
+        <div class="grid">
+          <h5 id="familyCount"></h5>
+          <h4><small id="familyDepth"></small></h4>
+        </div>
+
+      </div>
+      <div id="family-members">
+        <!-- Family member details will be added here dynamically -->
+      </div>
+      <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
+    </div>
+
+    <div id="family-tree" class="SECTION expandable-div">
+      <div>
+        <h2>Family Tree</h2>
+      </div>
+      <div class="space_J" id="zoom-controls">
+        <div>
+          <button id="export-button">Export as Image</button>
+        </div>
+        <div>
+          <button id="zoom-in">Zoom In</button>
+          <button id="zoom-out">Zoom Out</button>
+        </div>
+      </div>
+
+      <svg id="family-tree-area">
+
+      </svg>
 
     </div>
-		    <div class="w70">
-                <label for="tree-name">Name:</label>
-                <input type="text" id="tree-name" placeholder="Family Tree Name" required>
-                <label for="tree-location">Location:</label>
-                <input type="text" id="tree-location" placeholder="Location">
-                <label for="tree-description">Description:</label>
-                <textarea id="tree-description" placeholder="Brief Description"></textarea>
-		    </div></div>
+
+    <div id="family-news" class="SECTION">
+      <h2>Family Chat</h2>
+
+      <div id="mainFamily-news-area">
+
+        <div id="pinnedFamily-news-area"></div>
+        <div id="family-news-area">
+          <!-- Posts will be added here dynamically -->
+        </div>
+      </div>
+      <div id="postUserInputarea">
+        <textarea id="post-content" placeholder="Write your post..."></textarea>
+
+        <div class="space_J">
+          <div class="flex">
+            <!-- Image container with onclick event -->
+            <div class="post-image-container" onclick="openFileInput(this)">
+              <!-- Display uploaded image here -->
+              <img id="postPic_img" class="uploaded-image" src="/wefamily/images/imgPlacehoder2.png" alt="Uploaded Image">
+              <!-- File input element -->
+              <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
             </div>
+            <div> <button onclick="addPost()">Add Post</button></div>
+          </div>
+        </div>
 
+        <!-- Add a button to enable/disable the newsPost function -->
+        <div class="flex"> <button id="toggleNewsButton">System Posting</button>
 
-
-
-
-
-		
-            <div id="tree-content" class="SECTION">
-             			    <div class="space_J">
-  <h2>Family Members</h2>
-					    <div class="flex_w"> 
- <button id="sortByNameBtn" onclick="sortedByNameFunc()">Sort by Name</button>
-<button id="sortByBirthdayBtn" onclick="sortByBirthdayFunc()">Sort by Birthday</button>
-				    </div>
-
-					    <div class="grid"> 
-					    <h5 id="familyCount"></h5>
-					    <h4 ><small id="familyDepth"></small></h4>
-					    </div>
-
-
-				    </div>
-                <div id="family-members">
-                    <!-- Family member details will be added here dynamically -->
-                </div>
-                <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
-            </div>
-
-
-		
-            <div id="family-tree" class="SECTION expandable-div">
-              <div>  <h2>Family Tree</h2></div>
-		    <div class="space_J" id="zoom-controls">
-<div>
-	<button id="export-button">Export as Image</button>
-</div>
-			   <div> 
-    <button id="zoom-in">Zoom In</button>
-    <button id="zoom-out">Zoom Out</button>
-			   </div>
-</div>
-
-                <svg id="family-tree-area">
-       
-                </svg>
-		    
-            </div>
-
-		
-<div id="family-news" class="SECTION">
-    <h2>Family Chat</h2>
-	
-    <div id="mainFamily-news-area">
-	    
-<div id="pinnedFamily-news-area"></div>
-    <div id="family-news-area">
-        <!-- Posts will be added here dynamically -->
+          <button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
+          <button class="posts-buttons" onclick="loadPosts()">All Posts</button>
+        </div>
+      </div>
     </div>
+
+    <div id="tree-uploader" class="SECTION">
+      <div class="space_J"></div>
+      <h2>Family Timeline Gallery</h2>
+      <div class="flex_w">
+        <!-- File input for uploading media -->
+        <input type="file" id="familyTimelineFiles" multiple>
+      </div>
+
+      <div class="grid">
+        <!-- Example media item (image) -->
+        <img src="/wefamily/images/imgPlacehoder.png" alt="Example Image" onclick="openMediaFile()">
+      </div>
     </div>
-	<div id="postUserInputarea">
-    <textarea id="post-content" placeholder="Write your post..."></textarea>
 
-			    <div class="space_J">
-			    <div class="flex">
-		 <!-- Image container with onclick event -->
-    <div class="post-image-container" onclick="openFileInput(this)">
-        <!-- Display uploaded image here -->
-        <img id="postPic_img" class="uploaded-image" src="/wefamily/images/imgPlacehoder2.png" alt="Uploaded Image">
-        <!-- File input element -->
-        <input id="members_post_images" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+    <!-- Family member checkboxes -->
+    <div id="family-member-checkbox-container"></div>
+
+    <div id="member_Request" class="SECTION">
+      <h2>Family Member Request</h2>
+      <button class="memberRequest" onclick="openJoinRequestPopup()">View Member Request</button>
+
     </div>
-				   <div> <button onclick="addPost()">Add Post</button></div>
-			    </div>
-  </div>
 
-
-
-	  <!-- Add a button to enable/disable the newsPost function -->
-  <div class="flex">  <button id="toggleNewsButton">System Posting</button>
-
-	<button class="posts-buttons" onclick="loadFamilyPosts()">Member Posts</button>
-	<button class="posts-buttons" onclick="loadPosts()">All Posts</button></div>
-</div>
-</div>
-
-
-<div id="tree-uploader" class="SECTION">
-  <div class="space_J"></div>
-  <h2>Family Timeline Gallery</h2>
-  <div class="flex_w">
-    <!-- File input for uploading media -->
-    <input type="file" id="familyTimelineFiles" multiple >
-  </div>
-
-  <div class="grid">
-    <!-- Example media item (image) -->
-    <img src="/wefamily/images/imgPlacehoder.png" alt="Example Image" onclick="openMediaFile()">
   </div>
 </div>
-
-<!-- Family member checkboxes -->
-<div id="family-member-checkbox-container"></div>
-            
- <div id="member_Request" class="SECTION">
-                <h2>Family Member Request</h2>
-                    <button class="memberRequest" onclick="openJoinRequestPopup()">View Member Request</button>
-
- </div>
-
-</div>
-    </div>
-
-
-
-
 
 <!-- Popup for uploaded media -->
 <div class="popup-container" id="timelinePopup">
-        <div class="popup">
-            <span onclick="closeMediaPopup()" class="close-button">&times;</span>
-		<!-- Media and editing options go here -->
-  <div id="media-preview"></div>
-  <input type="date" id="event-date-input" placeholder="Event Date"><br>
-		
-                <label for="event-Group-input">Group:</label>
-                 <input type="text" id="event-Group-input" placeholder="Group">
-		
-                <label for="event-Pubic-input">Public:</label>
-                 <input type="radio" id="event-Pubic-input" placeholder="public" checked>
-		
-<select id="event-Group-input">
-  <option value="family-events">Family Events</option>
-  <option value="classic">Classic</option>
-  <option value="special-occasions">Special Occasions</option>
-  <option value="daily-life">Daily Life</option>
-  <option value="travel-adventures">Travel Adventures</option>
-</select>
-		<input type="text" id="event-location-input" placeholder="Event Location"><br>
-  <input type="text" id="event-caption-input" placeholder="Caption"><br>
-  <button onclick="saveEventDetailsFromPopup()">Save Event Details</button>
-<div id="progress-bar"></div>
+  <div class="popup">
+    <span onclick="closeMediaPopup()" class="close-button">&times;</span>
+    <!-- Media and editing options go here -->
+    <div id="media-preview"></div>
+    <input type="date" id="event-date-input" placeholder="Event Date"><br>
 
+    <label for="event-Group-input">Group:</label>
+    <input type="text" id="event-Group-input" placeholder="Group">
+
+    <label for="event-Pubic-input">Public:</label>
+    <input type="radio" id="event-Pubic-input" placeholder="public" checked>
+
+    <select id="event-Group-input">
+      <option value="family-events">Family Events</option>
+      <option value="classic">Classic</option>
+      <option value="special-occasions">Special Occasions</option>
+      <option value="daily-life">Daily Life</option>
+      <option value="travel-adventures">Travel Adventures</option>
+    </select>
+    <input type="text" id="event-location-input" placeholder="Event Location"><br>
+    <input type="text" id="event-caption-input" placeholder="Caption"><br>
+    <button onclick="saveEventDetailsFromPopup()">Save Event Details</button>
+    <div id="progress-bar"></div>
+
+  </div>
 </div>
-</div>
 
+<!-- Pop-up for creating a family tree -->
+<div class="popup-container" id="popup-container">
+  <div class="popup">
+    <span onclick="closePopup()" class="close-button">&times;</span>
 
-
-
-
-	
-   <!-- Pop-up for creating a family tree -->
-    <div class="popup-container" id="popup-container">
-        <div class="popup">
-            <span onclick="closePopup()" class="close-button">&times;</span>
-            
-<div id="create-tree-section" class="tree-section">
-            <h2>Create a Family Tree</h2>
-<p>
-		 <!-- Image container with onclick event -->
-    <div class="image-container" onclick="openFileInput(this)">
+    <div id="create-tree-section" class="tree-section">
+      <h2>Create a Family Tree</h2>
+      <p>
+        <!-- Image container with onclick event -->
+      <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
         <img class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
         <!-- File input element -->
         <input id="family_Tree_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+      </div>
+
+      </p>
+      <p>
+        <label for="tree_name">Name:</label>
+        <input type="text" id="tree_name" placeholder="Family Tree Name" required>
+      </p>
+      <p>
+        <label for="tree_location">Location:</label>
+        <input type="text" id="tree_location" placeholder="Location">
+      </p>
+      <label for="tree_public">Public:</label>
+      <input type="radio" id="tree_public" placeholder="public" checked>
+      </p>
+      <p>
+        <label for="tree_code">Code:</label>
+        <input type="text" id="tree_code" placeholder="JoeFam411">
+      </p>
+      <p>
+        <label for="tree_description">Description:</label>
+        <textarea id="tree_description" placeholder="Brief Description"></textarea>
+      </p>
+      <button id="createBTN" onclick="createFamilyTree()">Create</button>
     </div>
+    <div id="join-tree-section" class="tree-section hidden">
+      <h2>Join a Family Tree</h2>
+      <hr>
+      <div id="search-family-tree">
+        <h2>Search for a Family Tree</h2>
+        <input type="text" id="family-tree-search" placeholder="Enter Family Tree Name">
+        <button id="search-button">Search</button>
+      </div>
 
-</p>
-                <p>
-                <label for="tree_name">Name:</label>
-                <input type="text" id="tree_name" placeholder="Family Tree Name" required>
-                    </p><p>
-                <label for="tree_location">Location:</label>
-                <input type="text" id="tree_location" placeholder="Location">
-                </p>
-                <label for="tree_public">Public:</label>
-                 <input type="radio" id="tree_public" placeholder="public" checked>
-                </p><p>
-                <label for="tree_code">Code:</label>
-                <input type="text" id="tree_code" placeholder="JoeFam411">
-                </p><p>
-                <label for="tree_description">Description:</label>
-                <textarea id="tree_description" placeholder="Brief Description"></textarea>
-                </p>
-                <button id="createBTN" onclick="createFamilyTree()">Create</button>
-            </div>
-<div id="join-tree-section" class="tree-section hidden">
-            <h2>Join a Family Tree</h2><hr>
-<div id="search-family-tree">
-    <h2>Search for a Family Tree</h2>
-    <input type="text" id="family-tree-search" placeholder="Enter Family Tree Name">
-    <button id="search-button">Search</button>
-</div>
-
-<div id="enter-family-tree-code">
-    <h2>Enter Family Tree Code</h2>
-    <input type="text" id="family-tree-code" placeholder="Enter Code">
-    <button id="enter-code-button">Enter</button>
-</div>
- </div>
-<div id="join-familytree-section" class="tree-section hidden">
-    <h2>Join Request</h2>
-		    <div class="space_J">
-    <div class="image-container w30">
-  
-        <img id="tree_photo_Join" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
-
+      <div id="enter-family-tree-code">
+        <h2>Enter Family Tree Code</h2>
+        <input type="text" id="family-tree-code" placeholder="Enter Code">
+        <button id="enter-code-button">Enter</button>
+      </div>
     </div>
-			    <div>
-            <label for="join_tree_name">Family Tree:</label>
-    <div id="join_tree_name">tree name</div>
-    
-            <label for="join_tree_location">Locations:</label>
-    <div id="join_tree_location">family locations</div>
-			    </div></div>
-<hr>
-   <form id="join-request-form">
-        
-        <label for="request_note">Note:</label>
-        <textarea id="request_note"></textarea><br><br>
-        
-        <button type="button" onclick="joinRequestFunc()">Resquest To Join</button>
-                <button  type="button" onclick="toggleJoinTree()">Back</button>
-    </form>
-    
-</div>       
-            <hr>
-                    <button id="join-create-button" onclick="toggleTreeSections()">Join a family tree</button>
+    <div id="join-familytree-section" class="tree-section hidden">
+      <h2>Join Request</h2>
+      <div class="space_J">
+        <div class="image-container w30">
+
+          <img id="tree_photo_Join" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
 
         </div>
+        <div>
+          <label for="join_tree_name">Family Tree:</label>
+          <div id="join_tree_name">tree name</div>
+
+          <label for="join_tree_location">Locations:</label>
+          <div id="join_tree_location">family locations</div>
+        </div>
+      </div>
+      <hr>
+      <form id="join-request-form">
+
+        <label for="request_note">Note:</label>
+        <textarea id="request_note"></textarea><br><br>
+
+        <button type="button" onclick="joinRequestFunc()">Resquest To Join</button>
+        <button type="button" onclick="toggleJoinTree()">Back</button>
+      </form>
+
     </div>
+    <hr>
+    <button id="join-create-button" onclick="toggleTreeSections()">Join a family tree</button>
+
+  </div>
+</div>
 
 <div id="add-member-modal" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="closeAddMemberModal()">&times;</span>
-        <h2>Add Family Member</h2>
-        <form id="add-member-form">
-            <p>
-	 <!-- Image container with onclick event -->
-    <div class="image-container" onclick="openFileInput(this)">
+  <div class="popup">
+    <span class="close-button" onclick="closeAddMemberModal()">&times;</span>
+    <h2>Add Family Member</h2>
+    <form id="add-member-form-start">
+      <p>
+        <!-- Image container with onclick event -->
+      <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
         <img id="member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="member_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
-    </div>
-		    	    </p>
-		<p>
-            <label for="member-first_name">First Name:</label>
-            <input type="text" id="member-first_name" required>
-                </p><p>
-<label for="member-last_name">Last Name:</label>
-            <input type="text" id="member-last_name" required>
-                </p><p>
-            <label for="member-birthdate">Birthdate:</label>
-            <input type="date" id="member-birthdate" required>
-                    </p><p>
-            <label for="member-private">Private:</label>
-            <input type="checkbox" id="member-private">
-                            </p><p>
-            <label for="member-contact">Contact:</label>
-            <input type="text" id="member-contact">
-                                </p><p>
-            <label for="member-note">Note:</label>
-            <textarea id="member-note"></textarea>
-                                </p>
-            <button type="submit">Add Member</button>
-        </form>
-    </div>
+      </div>
+      </p>
+      <p>
+        <label for="member-first_name">First Name:</label>
+        <input type="text" id="member-first_name" required>
+      </p>
+      <p>
+        <label for="member-last_name">Last Name:</label>
+        <input type="text" id="member-last_name" required>
+      </p>
+      <p>
+        <label for="member-birthdate">Birthdate:</label>
+        <input type="date" id="member-birthdate" required>
+      </p>
+      <p>
+        <label for="member-private">Private:</label>
+        <input type="checkbox" id="member-private">
+      </p>
+      <p>
+        <label for="member-contact">Contact:</label>
+        <input type="text" id="member-contact">
+      </p>
+      <p>
+        <label for="member-note">Note:</label>
+        <textarea id="member-note"></textarea>
+      </p>
+      <button type="submit">Add Member</button>
+    </form>
+  </div>
 </div>
 
 <div id="join-request-popup" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="closeJoinRequestPopup()">&times;</span>
-        <h2>Join Requests</h2>
-        <ul id="join-request-list">
-            <!-- Join requests will be added here dynamically -->
-             <div>Loading</div>
-        </ul>
-    </div>
+  <div class="popup">
+    <span class="close-button" onclick="closeJoinRequestPopup()">&times;</span>
+    <h2>Join Requests</h2>
+    <ul id="join-request-list">
+      <!-- Join requests will be added here dynamically -->
+      <div>Loading</div>
+    </ul>
+  </div>
 </div>
-    <div class="mainMessage-box" id="mainMessageBox">
+<div class="mainMessage-box" id="mainMessageBox">
   <div class="mainMessage-content">
     <p id="mainMessageText">Your message here</p>
     <button id="mainCloseButton">Close</button>
   </div>
 </div>
 
-	<div id="add-member-type" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="closeAddMemberTypePopup()">&times;</span>
-        <h2 id="memberType" >Add Family Member</h2>
-        <form id="add-member-form">
-<p>
-	 <!-- Image container with onclick event -->
-    <div class="image-container" onclick="openFileInput(this)">
+<div id="add-member-type" class="popup-container">
+  <div class="popup">
+    <span class="close-button" onclick="closeAddMemberTypePopup()">&times;</span>
+    <h2 id="memberType">Add Family Member</h2>
+    <form id="add-member-form">
+      <p>
+        <!-- Image container with onclick event -->
+      <div class="image-container" onclick="openFileInput(this)">
         <!-- Display uploaded image here -->
         <img class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
         <!-- File input element -->
         <input id="newMember_main_Image" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
-    </div>
-		
-	</p>	
-            <p>
-            <label for="member-first_name_type">First Name:</label>
-            <input type="text" id="member-first_name_type" required>
-                </p><p>
-<label for="member-last_name_type">Last Name:</label>
-            <input type="text" id="member-last_name_type" required>
-                </p><p>
-            <label for="member-birthdate_type">Birthdate:</label>
-            <input type="date" id="member-birthdate_type" required>
-                    </p><p>           
-	<label for="member-deceaseddate_type">Deceased Date:</label>
-            <input type="date" id="member-deceaseddate_type" >
-                    </p><p>
-            <label for="member-note_type">Note:</label>
-            <textarea id="member-note_type"></textarea>
-                                </p>
-            <button type="submit" id="memberTypeBTN">Add Member</button>
-        </form>
-    </div>
+      </div>
+
+      </p>
+      <p>
+        <label for="member-first_name_type">First Name:</label>
+        <input type="text" id="member-first_name_type" required>
+      </p>
+      <p>
+        <label for="member-last_name_type">Last Name:</label>
+        <input type="text" id="member-last_name_type" required>
+      </p>
+      <p>
+        <label for="member-birthdate_type">Birthdate:</label>
+        <input type="date" id="member-birthdate_type" required>
+      </p>
+      <p>
+        <label for="member-deceaseddate_type">Deceased Date:</label>
+        <input type="date" id="member-deceaseddate_type">
+      </p>
+      <p>
+        <label for="member-note_type">Note:</label>
+        <textarea id="member-note_type"></textarea>
+      </p>
+      <button type="submit" id="memberTypeBTN">Add Member</button>
+    </form>
+  </div>
 </div>
 
-
-
-
-
-	
 <div id="memberDetailPopup" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="hideMemberPopup()">&times;</span>
-        <h2 id="memberName">Add Family Member</h2>
-        <div class="popup-content">
-            <div class="popup-left">
-                <div class="popup-image">
-                    <img id="memberImage" src="/wefamily/images/memberPlaceholder.jpg" alt="Member Image">
-                </div>
-                <div class="popup-text">
-                    <textarea id="memberInfo" placeholder="Member Info"></textarea>
-                </div>
-            </div>
-            <div class="popup-right">
-                <ul id="memberDetails">
-                    <!-- Member details will be populated here -->
-                </ul>
-		      <div id="scrollTo">Loading</div>
-
-            </div>
+  <div class="popup">
+    <span class="close-button" onclick="hideMemberPopup()">&times;</span>
+    <h2 id="memberName">Add Family Member</h2>
+    <div class="popup-content">
+      <div class="popup-left">
+        <div class="popup-image">
+          <img id="memberImage" src="/wefamily/images/memberPlaceholder.jpg" alt="Member Image">
         </div>
+        <div class="popup-text">
+          <textarea id="memberInfo" placeholder="Member Info"></textarea>
+        </div>
+      </div>
+      <div class="popup-right">
+        <ul id="memberDetails">
+          <!-- Member details will be populated here -->
+        </ul>
+        <div id="scrollTo">Loading</div>
+
+      </div>
     </div>
+  </div>
 </div>
 
-
-	
- <div id="edit-family-tree-popup" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="closeEditFamilyTreePopup()">&times;</span>
-        <h2>Edit Family Tree</h2>
-        				 <!-- Image container with onclick event -->
+<div id="edit-family-tree-popup" class="popup-container">
+  <div class="popup">
+    <span class="close-button" onclick="closeEditFamilyTreePopup()">&times;</span>
+    <h2>Edit Family Tree</h2>
+    <!-- Image container with onclick event -->
     <div class="image-container" onclick="openFileInput(this)">
-        <!-- Display uploaded image here -->
-        <img id="editFamilyTreePhoto" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
-        <!-- File input element -->
-        <input id="family_Tree_ImageEdit" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+      <!-- Display uploaded image here -->
+      <img id="editFamilyTreePhoto" class="uploaded-image" src="/wefamily/images/imgPlacehoder.png" alt="Uploaded Image">
+      <!-- File input element -->
+      <input id="family_Tree_ImageEdit" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
     </div>
-        <label for="editFamilyTreeName">Name:</label>
-        <input type="text" id="editFamilyTreeName" placeholder="Family Name">
-        
-        <label for="editFamilyTreeDescription">Description:</label>
-        <input type="text" id="editFamilyTreeDescription" placeholder="Family Description">
-        
-        <label for="editFamilyTreeLocation">Location:</label>
-        <input type="text" id="editFamilyTreeLocation" placeholder="Location">
-        
-        <button onclick="saveEditedFamilyTree()">Save Changes</button>
-    </div>
+    <label for="editFamilyTreeName">Name:</label>
+    <input type="text" id="editFamilyTreeName" placeholder="Family Name">
+
+    <label for="editFamilyTreeDescription">Description:</label>
+    <input type="text" id="editFamilyTreeDescription" placeholder="Family Description">
+
+    <label for="editFamilyTreeLocation">Location:</label>
+    <input type="text" id="editFamilyTreeLocation" placeholder="Location">
+
+    <button onclick="saveEditedFamilyTree()">Save Changes</button>
+  </div>
 </div>
-
-
 
 <div id="edit-family-member-popup" class="popup-container">
-    <div class="popup">
-        <span class="close-button" onclick="closeEditFamilyMemberPopup()">&times;</span>
-        <h2>Edit Family Member</h2>
+  <div class="popup">
+    <span class="close-button" onclick="closeEditFamilyMemberPopup()">&times;</span>
+    <h2>Edit Family Member</h2>
 
-<div class="flex">
-	    	 <!-- Image container with onclick event -->
-<div class="image-container w30" onclick="openFileInput(this)">
-  <img id="edit_member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
-  <input id="edit-photo-file" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
-</div>
+    <div class="flex">
+      <!-- Image container with onclick event -->
+      <div class="image-container w30" onclick="openFileInput(this)">
+        <img id="edit_member_Image" class="uploaded-image" src="/wefamily/images/memberPlaceholder.jpg" alt="Uploaded Image">
+        <input id="edit-photo-file" type="file" name="image" accept="image/*" class="file-input" onchange="handleFileUpload(this)">
+      </div>
 
-	    <div class="grid">
+      <div class="grid">
         <input type="text" id="edit-first-name" placeholder="First Name">
         <input type="text" id="edit-middle-name" placeholder="Middle Name">
         <input type="text" id="edit-last-name" placeholder="Last Name">
-<select id="nameSuffix" name="nameSuffix">
-  <option value="">Select</option>
-  <option value="Jr">Jr</option>
-  <option value="Sr">Sr</option>
-  <option value="II">II</option>
-  <option value="III">III</option>
-  <option value="IV">IV</option>
-  <option value="V">V</option>
-  <!-- Add more options as needed -->
-</select>
+        <select id="nameSuffix" name="nameSuffix">
+          <option value="">Select</option>
+          <option value="Jr">Jr</option>
+          <option value="Sr">Sr</option>
+          <option value="II">II</option>
+          <option value="III">III</option>
+          <option value="IV">IV</option>
+          <option value="V">V</option>
+          <!-- Add more options as needed -->
+        </select>
         <input type="date" id="edit-birthdate" placeholder="Birthdate">
         <!-- Add other fields as needed (contact, location, etc.) -->
         <input type="text" id="edit-deceaseddate" placeholder="Deceased Date">
@@ -570,22 +551,20 @@ function initializeFamilyTreeChart() {
         <input type="text" id="edit-location" placeholder="Location">
         <input type="text" id="edit-private" placeholder="private">
 
-		    
         <textarea id="edit-bio" placeholder="Bio"></textarea>
-	
-	    </div>
 
-        <textarea id="edit-note" placeholder="Note"></textarea>
-	    <div class="space_J">
+      </div>
+
+      <textarea id="edit-note" placeholder="Note"></textarea>
+      <div class="space_J">
 
         <button onclick="saveEditedFamilyMember()">Save</button><button onclick="removeFamilyMember()">Remove</button>
-   </div>
-		    <small class="userID" id="userID_edit_Member"></small>
+      </div>
+      <small class="userID" id="userID_edit_Member"></small>
 
-</div>
     </div>
+  </div>
 </div>
-
  
 
 
@@ -597,45 +576,6 @@ var requestFamilyID = "";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	    
 
 
 function setupEnterKeyNavigation(inputIdArray) {
