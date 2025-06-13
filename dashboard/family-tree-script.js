@@ -51,7 +51,7 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
-const zoomInButton = document.getElementById('zoom-in');
+const zoomInButton = document.getElementById('zoom-inXXX');
 const zoomOutButton = document.getElementById('zoom-out');
 
 
