@@ -124,19 +124,21 @@ setTimeout(() => {
 
 
 function enableViewBoxDrag() {
-  const svg = document.getElementById("family-tree-area");
-  if (!svg || !svg.hasAttribute("viewBox")) {
-    console.warn("SVG or viewBox not found yet. Delaying drag setup...");
-    return setTimeout(enableViewBoxDrag, 100); // Retry after 100ms
+  const svgWrapper = document.getElementById("family-tree-area");
+  const innerSvg = svgWrapper.querySelector("svg");
+
+  if (!innerSvg || !innerSvg.hasAttribute("viewBox")) {
+    console.warn("Inner SVG or viewBox not found yet. Retrying...");
+    return setTimeout(enableViewBoxDrag, 100);
   }
 
   let isDragging = false;
   let startX, startY;
-  let viewBox = svg.getAttribute("viewBox").split(" ").map(Number);
+  let viewBox = innerSvg.getAttribute("viewBox").split(" ").map(Number);
 
-  svg.addEventListener("mousedown", (e) => {
+  svgWrapper.addEventListener("mousedown", (e) => {
     isDragging = true;
-    svg.style.cursor = "grabbing";
+    svgWrapper.style.cursor = "grabbing";
     startX = e.clientX;
     startY = e.clientY;
   });
@@ -144,14 +146,14 @@ function enableViewBoxDrag() {
   window.addEventListener("mousemove", (e) => {
     if (!isDragging) return;
 
-    const dx = (startX - e.clientX);
-    const dy = (startY - e.clientY);
+    const dx = startX - e.clientX;
+    const dy = startY - e.clientY;
 
-    const scale = svg.clientWidth / viewBox[2];
+    const scale = svgWrapper.clientWidth / viewBox[2];
     viewBox[0] += dx / scale;
     viewBox[1] += dy / scale;
 
-    svg.setAttribute("viewBox", viewBox.join(" "));
+    innerSvg.setAttribute("viewBox", viewBox.join(" "));
 
     startX = e.clientX;
     startY = e.clientY;
@@ -159,16 +161,14 @@ function enableViewBoxDrag() {
 
   window.addEventListener("mouseup", () => {
     isDragging = false;
-    svg.style.cursor = "grab";
+    svgWrapper.style.cursor = "grab";
   });
 
-  svg.style.cursor = "grab";
+  svgWrapper.style.cursor = "grab";
 }
 
-// 🟢 Call after SVG is rendered (like at the end of generateFamilyTreeChart)
-setTimeout(enableViewBoxDrag, 300);
 
-
+setTimeout(enableViewBoxDrag, 5000); // or call directly if you’re sure SVG is ready
 
 
 
