@@ -58,6 +58,7 @@ function centerChartOnScreen() {
 
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
+  currentScale = newScale;
   smoothZoomTo(newScale);
     console.log("zoomIn  :", newScale);
 
@@ -66,7 +67,7 @@ function zoomIn() {
 function zoomOut() {
   const newScale = Math.max(currentScale / 1.2, 0.1); // Limit to min zoom
       console.log("zoomOut  :", newScale);
-
+  currentScale = newScale;
   smoothZoomTo(newScale);
 
 }
@@ -409,7 +410,7 @@ console.log('Generated Path:', linkGenerator({ source, target }));
 
   //centerElementInSVG(nodeGroup);
 
-  //  centerChartOnScreen();
+    centerChartOnScreen();
 
 }
 
