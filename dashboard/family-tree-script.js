@@ -70,6 +70,9 @@ zoomOutButton.addEventListener('click', () => {
 });
 
 zoomInButton.addEventListener('click', () => {
+
+  console.log('???????????????????????????????   ');
+
 //centerLayersOnScreen();
 centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
 centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
