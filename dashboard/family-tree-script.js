@@ -54,7 +54,22 @@ function initializeZoom() {
   svg.call(zoom);
 }
 
+function centerChartOnScreen() {
+  console.log('centerChartOnScreen');
 
+  const svg = d3.select("#family-tree-area svg");
+  const area = d3.select("#family-tree-area").node();
+  const groupBBox = chartGroup.node().getBBox();
+
+  const scale = currentScale;
+
+  const x = (area.clientWidth - groupBBox.width * scale) / 2 - groupBBox.x * scale;
+  const y = (area.clientHeight - groupBBox.height * scale) / 2 - groupBBox.y * scale;
+
+  const transform = d3.zoomIdentity.translate(x, y).scale(scale);
+
+  svg.transition().duration(400).call(zoom.transform, transform);
+}
 
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10);
