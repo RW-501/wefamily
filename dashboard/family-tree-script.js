@@ -307,8 +307,8 @@ function generateFamilyTreeChart(familyData) {
 
   zoom = d3
     .zoom()
-    .scaleExtent([0.1, 10]) // Define the zoom scale limits
-    .on("zoom", zoomed);
+    .scaleExtent([0.1, 10]); // Define the zoom scale limits
+   // .on("zoom", zoomed);
 
   chartGroup
     .selectAll("path")
