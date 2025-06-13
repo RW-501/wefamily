@@ -284,6 +284,8 @@ function generateFamilyTreeChart(familyData) {
     const controlY = sourceY; // + targetY) / 2;
 
     // console.log('Control:', controlX, controlY);
+    
+  centerChartOnScreen();
 
     return `M${sourceX},${sourceY} Q${controlX},${controlY} ${targetX},${targetY}`;
   };
