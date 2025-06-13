@@ -69,7 +69,7 @@ familyTree.addEventListener('click', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+familyTree.addEventListener('DOMContentLoaded', () => {
   const zoomInButton = document.getElementById('zoom-in');
   const zoomOutButton = document.getElementById('zoom-out');
 
