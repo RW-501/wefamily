@@ -91,6 +91,7 @@ familyTree.addEventListener('click', () => {
 //toggleFullscreen();
 	
 });
+*/
 
 function toggleFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
@@ -101,7 +102,6 @@ function closeFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
   expandableDiv.classList.remove("show");
 }
-*/
 
 
     // Create a group element to hold the links
