@@ -1371,6 +1371,8 @@ currentFamilyID = familyTreeId;
 var userID;
 	    
 async function fetchFamilyTree() {
+                    console.log('fetchFamilyTree.');
+
     try {
         const userId = await checkUserLogin();
 userID = userId;
@@ -1817,6 +1819,7 @@ window.onclick = function(event) {
 // addSiblings(newID, addFamily_MemberID);  Sibling
 // addParentTChild(newID, addFamily_MemberID); Child
 	    
+                    console.log('window.onload.');
 
 
         // Call the fetchFamilyTree function on page load
