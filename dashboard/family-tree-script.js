@@ -52,7 +52,7 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 }
 
 // Call this function to center the layers
-function centerAndFitChart(chartGroup, svgNode) {
+function centerAndFitChart(svgNode) {
   const bbox = chartGroup.node().getBBox();
   console.log("📦 bbox:", bbox);
 
@@ -183,8 +183,7 @@ setTimeout(() => {
 
   
   const svg = d3.select("#family-tree-area svg");
-
-  centerAndFitChart(chartGroup, svg);
+  centerAndFitChart(svg);
         console.log('centerAndFitChart');
 
 }, 5000);
