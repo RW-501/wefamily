@@ -432,6 +432,11 @@ function generateFamilyTreeChart(familyData) {
   console.log("chartGroup transform:", chartGroup.attr("transform"));
 
   function zoomed(event) {
+
+          console.log("RETURN");
+
+    return;
+
     if (event.transform.k === currentScale) {
       console.log("No zoom change");
       return;
