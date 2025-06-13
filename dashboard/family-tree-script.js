@@ -69,9 +69,9 @@ familyTree.addEventListener('click', () => {
 });
 
 
-familyTree.addEventListener('DOMContentLoaded', () => {
-  const zoomInButton = document.getElementById('zoom-in');
-  const zoomOutButton = document.getElementById('zoom-out');
+document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded ??????????????????????????');
+
 
   if (zoomInButton && zoomOutButton) {
 
