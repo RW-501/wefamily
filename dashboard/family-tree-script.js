@@ -115,6 +115,8 @@ function applyZoom(scale) {
 
   // ✅ Leave the `d` attribute alone, assuming it's already based on unscaled data
   chartGroup.selectAll("path.link").attr("d", d => linkGenerator(d));
+
+  centerChartOnScreen();
 }
 
 
