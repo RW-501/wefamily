@@ -1073,7 +1073,8 @@ function smoothZoomTo(newScale) {
 }
 
 
-document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
-document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
-
+setTimeout(() => {
+  document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
+  document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
+}, 2000);
 
