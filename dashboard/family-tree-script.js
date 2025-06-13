@@ -54,6 +54,33 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 // Call this function to center the layers
 
 
+function centerAndFitChart(chartGroup, svg) {
+  const bbox = chartGroup.node().getBBox();
+
+  const browserWidth = window.innerWidth;
+  const browserHeight = window.innerHeight;
+
+  const scaleX = browserWidth / bbox.width;
+  const scaleY = browserHeight / bbox.height;
+  const optimalScale = Math.min(scaleX, scaleY, 1); // Don’t upscale if chart is smaller
+
+  const translateX = (browserWidth - bbox.width * optimalScale) / 2 - bbox.x * optimalScale;
+  const translateY = (browserHeight - bbox.height * optimalScale) / 2 - bbox.y * optimalScale;
+
+  currentScale = optimalScale;
+
+  svg.transition().duration(750)
+    .call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(optimalScale));
+}
+
+setTimeout(() => {
+  centerAndFitChart(chartGroup, svg);
+}, 3000);
+
+window.addEventListener("resize", () => {
+  centerAndFitChart(chartGroup, d3.select("svg"));
+});
+
 
 
 
