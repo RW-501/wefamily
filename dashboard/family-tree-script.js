@@ -96,16 +96,16 @@ function smoothZoomTo(newScale) {
 function applyZoom(scale) {
   //console.log("applyZoom: scale =", scale);
 
-  chartGroup.selectAll("image")
-    .attr("x", -imageWidth / (2 * scale))
-    .attr("y", -imageHeight / (2 * scale))
-    .attr("width", imageWidth / scale)
-    .attr("height", imageHeight / scale);
 
   chartGroup.selectAll("path.link")
     .attr("stroke-width", `${2 / scale}px`)
     .attr("d", d => linkGenerator(d)); // Use original data, not scaled manually
 
+  chartGroup.selectAll("image")
+    .attr("x", -imageWidth / (2 * scale))
+    .attr("y", -imageHeight / (2 * scale))
+    .attr("width", imageWidth / scale)
+    .attr("height", imageHeight / scale);
 
   chartGroup.selectAll("text")
     .attr("font-size", `${14 / scale}px`);
