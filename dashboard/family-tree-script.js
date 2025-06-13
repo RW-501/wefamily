@@ -98,6 +98,8 @@ function smoothZoomTo(newScale) {
     .translate(-centerX, -centerY);
 
   svg.transition().duration(500).call(zoom.transform, transform);
+
+  applyZoom(newScale);
 }
 
 function applyZoom(scale) {
@@ -126,7 +128,6 @@ function applyZoom(scale) {
 setTimeout(() => {
   document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
   document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
-  initializeZoom();
 }, 4000);
 
 
