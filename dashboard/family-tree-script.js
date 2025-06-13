@@ -92,7 +92,6 @@ function smoothZoomTo(newScale) {
 
     applyZoom(newScale);
 
-    centerChartOnScreen()
 }
 
 
@@ -132,6 +131,7 @@ function applyZoom(scale) {
     };
     return linkGenerator({ source, target });
   });
+    centerChartOnScreen()
 
 }
 
