@@ -102,64 +102,30 @@ function smoothZoomTo(newScale) {
   applyZoom(newScale);
 }
 
+
+
 function applyZoom(scale) {
-  console.log("=== APPLY ZOOM ===");
-  console.log("Scale:", scale);
+  console.log("applyZoom: scale =", scale);
 
-  currentScale = scale;
+  chartGroup.selectAll("text")
+    .attr("font-size", `${14 / scale}px`);
 
-  // Log image details before
-  chartGroup.selectAll("image").each(function (d, i) {
-    console.log(`Before Zoom - Image ${i}`, {
-      x: -imageWidth / 2,
-      y: -imageHeight / 2,
-      width: imageWidth,
-      height: imageHeight
-    });
-  });
-
-  // Log link data before
-  chartGroup.selectAll("path.link").each(function (d, i) {
-    console.log(`Before Zoom - Link ${i}`, {
-      source: d.source,
-      target: d.target
-    });
-  });
-
-  // Update styles
-  chartGroup.selectAll("text").attr("font-size", `${14 / scale}px`);
-  chartGroup.selectAll("path.link").attr("stroke-width", `${2 / scale}px`);
-  chartGroup.selectAll("circle").attr("r", imageWidth / (2 * scale));
+  chartGroup.selectAll("circle")
+    .attr("r", imageWidth / (2 * scale));
 
   chartGroup.selectAll("image")
     .attr("x", -imageWidth / (2 * scale))
     .attr("y", -imageHeight / (2 * scale))
     .attr("width", imageWidth / scale)
-    .attr("height", imageHeight / scale)
-    .each(function (d, i) {
-      console.log(`After Zoom - Image ${i}`, {
-        x: -imageWidth / (2 * scale),
-        y: -imageHeight / (2 * scale),
-        width: imageWidth / scale,
-        height: imageHeight / scale
-      });
-    });
+    .attr("height", imageHeight / scale);
 
-  // Re-apply the original link paths
   chartGroup.selectAll("path.link")
-    .attr("d", d => {
-      console.log(`After Zoom - Link`, {
-        source: d.source,
-        target: d.target
-      });
-      return linkGenerator(d);
-    });
+    .attr("stroke-width", `${2 / scale}px`)
+    .attr("d", d => linkGenerator(d)); // Use original data, not scaled manually
 
-  console.log("=== END APPLY ZOOM ===");
+      centerChartOnScreen();
 
-  centerChartOnScreen();
 }
-
 
 
 
@@ -307,8 +273,8 @@ function generateFamilyTreeChart(familyData) {
 
   zoom = d3
     .zoom()
-    .scaleExtent([0.1, 10]); // Define the zoom scale limits
-   // .on("zoom", zoomed);
+    .scaleExtent([0.1, 10]) // Define the zoom scale limits
+    .on("zoom", zoomed);
 
   chartGroup
     .selectAll("path")
@@ -436,47 +402,24 @@ function generateFamilyTreeChart(familyData) {
 
   console.log("chartGroup transform:", chartGroup.attr("transform"));
 
-  function zoomed(event) {
+function zoomed(event) {
+  const transform = event.transform;
+  const scale = transform.k;
 
-  
-
-    if (event.transform.k === currentScale) {
-      console.log("No zoom change");
-      return;
-    } else {
-      currentScale = event.transform.k;
-
-     // console.log(`currentScale of ${currentScale}:`);
-    }
-
-    chartGroup.attr("transform", event.transform);
-
-    updateImageAttributes();
-
-    // Update the 'd' attribute of the paths to create curved links
-    chartGroup.selectAll("path.link").attr("d", (d) => {
-      // Generate the updated path data using the link generator
-      const source = {
-        x: d.source.x * currentScale,
-        y: d.source.y * currentScale
-      };
-      const target = {
-        x: d.target.x * currentScale,
-        y: d.target.y * currentScale
-      };
-      // Update the 'd' attribute with the updated path data
-      const updatedPathData = linkGenerator({ source, target });
-
-      /*
-console.log('Source:', source);
-console.log('Target:', target);
-console.log('Generated Path:', linkGenerator({ source, target }));
-            console.log('updatedPathData :', updatedPathData);
-*/
-
-      return updatedPathData; // Return the updated path data
-    });
+  if (scale === currentScale) {
+    return;
   }
+
+  currentScale = scale;
+  console.log("Zoomed - New Scale:", currentScale);
+
+  // Apply the new transform to the chartGroup
+  chartGroup.attr("transform", transform);
+
+  // Apply visual updates (rescale images, text, stroke widths, etc)
+  applyZoom(currentScale);
+}
+
 
   //centerElementInSVG(nodeGroup);
 
