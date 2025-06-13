@@ -14,7 +14,7 @@ function centerElementInSVG(svg) {
     const translateY = (svgHeight - elementHeight) / 2;
 
     if (!isNaN(translateX) && !isNaN(translateY)) {
-      element.attr("transform", `translate(${translateX},${translateY})`);
+      nodeGroup.attr("transform", `translate(${translateX},${translateY})`);
     }
   }
 }
