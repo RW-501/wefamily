@@ -94,17 +94,6 @@ function centerAndFitChart(chartGroup, svg) {
 }
 
 
-setTimeout(() => {
-  centerAndFitChart(chartGroup, svg);
-        console.log('centerAndFitChart');
-
-}, 3000);
-
-window.addEventListener("resize", () => {
-  centerAndFitChart(chartGroup, d3.select("svg"));
-});
-
-
 
 
 const familyTree = document.getElementById('family-tree');
@@ -202,6 +191,20 @@ let imageHeight = 100;
 var nodeGroup;
 var bbox;
 var nodes;
+
+
+setTimeout(() => {
+    const svg = d3.select("#family-tree-area svg");
+  centerAndFitChart(chartGroup, svg);
+        console.log('centerAndFitChart');
+
+}, 3000);
+
+window.addEventListener("resize", () => {
+  centerAndFitChart(chartGroup, d3.select("svg"));
+});
+
+
 
 function generateFamilyTreeChart(familyData) {
   const chartWidth = 300 * maxGenerationWidth;
