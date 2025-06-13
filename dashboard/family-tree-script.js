@@ -409,7 +409,7 @@ console.log('Generated Path:', linkGenerator({ source, target }));
 
   //centerElementInSVG(nodeGroup);
 
-    centerChartOnScreen();
+  //  centerChartOnScreen();
 
 }
 
