@@ -49,6 +49,31 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 // Call this function to center the layers
 
+
+
+
+
+const familyTree = document.getElementById('family-tree');
+
+/*
+familyTree.addEventListener('click', () => {
+  console.log('!!!!!!!!!!!!!!?   ');
+
+//toggleFullscreen();
+	
+});
+*/
+
+function toggleFullscreen() {
+  var expandableDiv = document.getElementById("family-tree");
+  expandableDiv.classList.toggle("show");
+}
+
+function closeFullscreen() {
+  var expandableDiv = document.getElementById("family-tree");
+  expandableDiv.classList.remove("show");
+}
+
 // Add a zoom control UI
 document.addEventListener('DOMContentLoaded', () => {
 const zoomControls = document.getElementById('zoom-controls');
@@ -84,29 +109,6 @@ console.log('nodeGroup width:   ', nodeGroup);
 });
 });
 
-
-
-
-const familyTree = document.getElementById('family-tree');
-
-/*
-familyTree.addEventListener('click', () => {
-  console.log('!!!!!!!!!!!!!!?   ');
-
-//toggleFullscreen();
-	
-});
-*/
-
-function toggleFullscreen() {
-  var expandableDiv = document.getElementById("family-tree");
-  expandableDiv.classList.toggle("show");
-}
-
-function closeFullscreen() {
-  var expandableDiv = document.getElementById("family-tree");
-  expandableDiv.classList.remove("show");
-}
 
 
     // Create a group element to hold the links
