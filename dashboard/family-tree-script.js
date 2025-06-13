@@ -1,6 +1,8 @@
 
 /// works
 function centerElementInSVG(element, svg) {
+        console.log('centerElementInSVG');
+
   const svgWidth = parseInt(svg.attr("width"));
   const svgHeight = parseInt(svg.attr("height"));
 
@@ -21,6 +23,8 @@ function centerElementInSVG(element, svg) {
 
 
 function centerLayersOnScreen() {
+      console.log('centerLayersOnScreen');
+
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
 
