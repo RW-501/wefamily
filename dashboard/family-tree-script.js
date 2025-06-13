@@ -123,9 +123,13 @@ setTimeout(() => {
 }, 4000);
 
 
-
-(function enableViewBoxDrag() {
+function enableViewBoxDrag() {
   const svg = document.getElementById("family-tree-area");
+  if (!svg || !svg.hasAttribute("viewBox")) {
+    console.warn("SVG or viewBox not found yet. Delaying drag setup...");
+    return setTimeout(enableViewBoxDrag, 100); // Retry after 100ms
+  }
+
   let isDragging = false;
   let startX, startY;
   let viewBox = svg.getAttribute("viewBox").split(" ").map(Number);
@@ -143,14 +147,12 @@ setTimeout(() => {
     const dx = (startX - e.clientX);
     const dy = (startY - e.clientY);
 
-    // Update viewBox
-    const scale = svg.clientWidth / viewBox[2]; // How many pixels per viewBox unit
+    const scale = svg.clientWidth / viewBox[2];
     viewBox[0] += dx / scale;
     viewBox[1] += dy / scale;
 
     svg.setAttribute("viewBox", viewBox.join(" "));
 
-    // Update starting point
     startX = e.clientX;
     startY = e.clientY;
   });
@@ -159,7 +161,16 @@ setTimeout(() => {
     isDragging = false;
     svg.style.cursor = "grab";
   });
-})();
+
+  svg.style.cursor = "grab";
+}
+
+// 🟢 Call after SVG is rendered (like at the end of generateFamilyTreeChart)
+setTimeout(enableViewBoxDrag, 300);
+
+
+
+
 
 function toggleFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
