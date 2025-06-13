@@ -112,7 +112,6 @@ function applyZoom(scale) {
     .attr("stroke-width", `${2 / scale}px`)
     .attr("d", d => linkGenerator(d)); // Use original data, not scaled manually
 
-    centerChartOnScreen();
 
 }
 
@@ -407,12 +406,13 @@ function zoomed(event) {
 
   // Apply visual updates (rescale images, text, stroke widths, etc)
   applyZoom(currentScale);
+  
 }
 
 
   //centerElementInSVG(nodeGroup);
 
-  //  centerChartOnScreen();
+    centerChartOnScreen();
 
 }
 
