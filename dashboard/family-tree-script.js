@@ -978,9 +978,6 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
   // Apply the translation to center the layers
   nodeGroup.attr('transform', `translate(${nodeGroupTranslateX},${nodeGroupTranslateY})`);
   chartGroup.attr('transform', `translate(${chartGroupTranslateX},${chartGroupTranslateY})`);
-
-              centerChartOnScreen();
-
 }
 
 // Call this function to center the layers
@@ -1023,6 +1020,7 @@ function loadFamilyTreeChart(treeData) {
             console.error('Error fetching family member data:', error);
         });
 
+            centerChartOnScreen();
 
 }
 
