@@ -187,7 +187,7 @@ setTimeout(() => {
   centerAndFitChart(chartGroup, svg);
         console.log('centerAndFitChart');
 
-}, 3000);
+}, 5000);
 
 window.addEventListener("resize", () => {
   centerAndFitChart(chartGroup, d3.select("svg"));
