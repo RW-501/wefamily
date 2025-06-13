@@ -118,7 +118,7 @@ function zoomIn() {
  // smoothZoomTo(newScale);
 
 
-   centerAndFitChart(chartGroup, d3.select("svg"));
+  centerChartOnScreen();
 
 }
 
@@ -183,18 +183,7 @@ var bbox;
 var nodes;
 
 
-setTimeout(() => {
 
-  
-  centerAndFitChart(chartGroup, d3.select("svg"));
-
-        console.log('centerAndFitChart');
-
-}, 5000);
-
-window.addEventListener("resize", () => {
-  centerAndFitChart(chartGroup, d3.select("svg"));
-});
 
 
 
@@ -433,9 +422,7 @@ function generateFamilyTreeChart(familyData) {
 
   function zoomed(event) {
 
-          console.log("RETURN");
-
-    return;
+  
 
     if (event.transform.k === currentScale) {
       console.log("No zoom change");
