@@ -435,7 +435,7 @@ function generateFamilyTreeChart(familyData) {
       console.log("No zoom change");
       return;
     } else {
-      currentScale = event.transform.k;
+      //currentScale = event.transform.k;
 
       console.log(`currentScale of ${currentScale}:`);
     }
