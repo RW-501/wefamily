@@ -180,15 +180,9 @@ var nodes;
 
 
 setTimeout(() => {
-  const chartWidth = 300 * maxGenerationWidth;
-  const chartHeight = 150 * maxHierarchyDepth;
 
-const svg = d3.select("#family-tree-area")
-  .append("svg")
-  .attr("preserveAspectRatio", "xMidYMid meet")
-  .attr("viewBox", `0 0 ${chartWidth} ${chartHeight}`)
-  .style("width", "100%")
-  .style("height", "100%");
+  
+  const svg = d3.select("#family-tree-area svg");
 
   centerAndFitChart(chartGroup, svg);
         console.log('centerAndFitChart');
