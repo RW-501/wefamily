@@ -53,28 +53,51 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 // Call this function to center the layers
 
-
 function centerAndFitChart(chartGroup, svg) {
+  if (!chartGroup || !svg) {
+    console.error("chartGroup or svg is not defined.");
+    return;
+  }
+
   const bbox = chartGroup.node().getBBox();
+  console.log("📦 Chart Bounding Box:", bbox);
 
   const browserWidth = window.innerWidth;
   const browserHeight = window.innerHeight;
 
+  console.log("🖥️ Browser Dimensions:", { browserWidth, browserHeight });
+
   const scaleX = browserWidth / bbox.width;
   const scaleY = browserHeight / bbox.height;
-  const optimalScale = Math.min(scaleX, scaleY, 1); // Don’t upscale if chart is smaller
+  const optimalScale = Math.min(scaleX, scaleY, 1); // Avoid upscaling
+
+  console.log("🔍 Scale Factors:", { scaleX, scaleY, optimalScale });
 
   const translateX = (browserWidth - bbox.width * optimalScale) / 2 - bbox.x * optimalScale;
   const translateY = (browserHeight - bbox.height * optimalScale) / 2 - bbox.y * optimalScale;
 
+  console.log("🧭 Translation:", { translateX, translateY });
+
   currentScale = optimalScale;
 
+  // Apply the transform using d3-zoom behavior
   svg.transition().duration(750)
-    .call(zoom.transform, d3.zoomIdentity.translate(translateX, translateY).scale(optimalScale));
+    .call(
+      zoom.transform,
+      d3.zoomIdentity.translate(translateX, translateY).scale(optimalScale)
+    );
+
+  console.log("✅ Transform Applied:", {
+    scale: optimalScale,
+    transform: `translate(${translateX}, ${translateY}) scale(${optimalScale})`
+  });
 }
+
 
 setTimeout(() => {
   centerAndFitChart(chartGroup, svg);
+        console.log('centerAndFitChart');
+
 }, 3000);
 
 window.addEventListener("resize", () => {
