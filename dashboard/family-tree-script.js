@@ -72,6 +72,8 @@ familyTree.addEventListener('click', () => {
 
 */
 function centerChartOnScreen() {
+        console.log('centerChartOnScreen');
+
   const svg = d3.select("#family-tree-area svg");
   const area = d3.select("#family-tree-area").node();
   const group = chartGroup.node().getBBox();
