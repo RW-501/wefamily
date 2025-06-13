@@ -180,6 +180,9 @@ var nodes;
 
 
 setTimeout(() => {
+  const chartWidth = 300 * maxGenerationWidth;
+  const chartHeight = 150 * maxHierarchyDepth;
+
 const svg = d3.select("#family-tree-area")
   .append("svg")
   .attr("preserveAspectRatio", "xMidYMid meet")
