@@ -50,10 +50,11 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 // Call this function to center the layers
 
 // Add a zoom control UI
+document.addEventListener('DOMContentLoaded', () => {
 const zoomControls = document.getElementById('zoom-controls');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
-
+});
 
 zoomOutButton.addEventListener('click', () => {
             console.log('zoom.transform :', zoom.transform);
