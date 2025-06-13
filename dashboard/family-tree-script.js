@@ -41,18 +41,7 @@ familyTree.addEventListener('click', () => {
 */
 
 
-function initializeZoom() {
-  const svg = d3.select("#family-tree-area svg");
 
-  zoom = d3.zoom()
-    .scaleExtent([0.1, 10])
-    .on("zoom", (event) => {
-      chartGroup.attr("transform", event.transform);
-      applyZoom(event.transform.k);
-    });
-
-  svg.call(zoom);
-}
 
 function centerChartOnScreen() {
   console.log('centerChartOnScreen');
