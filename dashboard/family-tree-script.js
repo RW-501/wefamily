@@ -115,10 +115,9 @@ function centerChartOnScreen() {
 
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
- // smoothZoomTo(newScale);
+  smoothZoomTo(newScale);
 
 
-  centerChartOnScreen();
 
 }
 
