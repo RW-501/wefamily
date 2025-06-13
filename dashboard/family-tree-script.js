@@ -90,6 +90,8 @@ function smoothZoomTo(newScale) {
     .duration(500)
     .call(zoom.transform, transform); // Apply with animation
 
+    applyZoom(newScale);
+
     centerChartOnScreen()
 }
 
