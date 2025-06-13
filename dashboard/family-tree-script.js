@@ -334,37 +334,35 @@ function generateFamilyTreeChart(familyData) {
   //console.log("Member IDs:", memberIDs);
 
   // Add text for each node
-  chartGroup
-    .selectAll("text")
-    .data(root.descendants())
-    .enter()
-    .append("text")
-    .attr("x", (d) => d.x)
-    .attr("y", (d) => d.y)
-    .attr("dy", 70)
-    .attr("text-anchor", "middle")
-    .style("font-weight", "900") // Set font weight to bold
-    .style("font-size", "1.2em") // Set font size to 1em
-    .style("fill", "white") // Set font color to white
-    .style("pointer-events", "none") // Prevent text from blocking click events
-    .text((d) => d.data.name)
-    .on("click", function (event, d) {
-      console.log("Clicked text Data:", d.data);
-      showMemberPopup(d.data);
-    })
-    .each(function () {
-      bbox = this.getBBox();
-      d3.select(this.parentNode)
-        .insert("rect", ":first-child")
-        .attr("x", bbox.x - 5)
-        .attr("y", bbox.y - 2)
-        .attr("width", bbox.width + 10)
-        .attr("height", bbox.height + 4)
-        .attr("rx", 10)
-        .attr("ry", 10)
-        .style("fill", "black")
-        .style("opacity", 1); // Adjust the opacity as needed
-    });
+const labelGroups = chartGroup
+  .selectAll(".label-group")
+  .data(root.descendants())
+  .enter()
+  .append("g")
+  .attr("class", "label-group")
+  .attr("transform", d => `translate(${d.x}, ${d.y + 70})`); // dy = 70
+
+labelGroups
+  .append("text")
+  .attr("text-anchor", "middle")
+  .style("font-weight", "900")
+  .style("font-size", "1.2em")
+  .style("fill", "white")
+  .style("pointer-events", "none")
+  .text(d => d.data.name)
+  .each(function () {
+    const bbox = this.getBBox();
+    d3.select(this.parentNode)
+      .insert("rect", ":first-child")
+      .attr("x", bbox.x - 5)
+      .attr("y", bbox.y - 2)
+      .attr("width", bbox.width + 10)
+      .attr("height", bbox.height + 4)
+      .attr("rx", 10)
+      .attr("ry", 10)
+      .style("fill", "black");
+  });
+
 
   console.log("chartGroup transform:", chartGroup.attr("transform"));
 
