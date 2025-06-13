@@ -65,9 +65,10 @@ familyTree.addEventListener('click', () => {
 */
 
 // Add a zoom control UI
-const zoomControls = familyTree.getElementById('zoom-controls');
-const zoomInButton = zoomControls.getElementById('zoom-in');
-const zoomOutButton = zoomControls.getElementById('zoom-out');
+const zoomControls = familyTree.querySelector('#zoom-controls');
+const zoomInButton = zoomControls.querySelector('#zoom-in');
+const zoomOutButton = zoomControls.querySelector('#zoom-out');
+
 
 
 zoomOutButton.addEventListener('click', () => {
