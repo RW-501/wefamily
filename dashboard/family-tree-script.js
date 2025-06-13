@@ -54,22 +54,34 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 
 const familyTree = document.getElementById('family-tree');
-
-/*
-familyTree.addEventListener('click', () => {
-  console.log('!!!!!!!!!!!!!!?   ');
-
-//toggleFullscreen();
-	
-});
-*/
-
 // Add a zoom control UI
 const zoomControls = familyTree.querySelector('#zoom-controls');
 const zoomInButton = zoomControls.querySelector('#zoom-in');
 const zoomOutButton = zoomControls.querySelector('#zoom-out');
 
 
+
+familyTree.addEventListener('click', () => {
+  console.log('familyTree clicked  !!!!!!!!!!!!!!?   ');
+
+//toggleFullscreen();
+	
+});
+
+
+zoomInButton.addEventListener('click', () => {
+
+  console.log('???????????????????????????????   ');
+
+//centerLayersOnScreen();
+centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
+	
+console.log('chartGroup width:   ', chartGroup);
+
+console.log('nodeGroup width:   ', nodeGroup);
+});
+ 
 
 zoomOutButton.addEventListener('click', () => {
             console.log('zoom.transform :', zoom.transform);
@@ -85,19 +97,7 @@ zoomOutButton.addEventListener('click', () => {
 	
 });
 
-zoomInButton.addEventListener('click', () => {
 
-  console.log('???????????????????????????????   ');
-
-//centerLayersOnScreen();
-centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
-centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
-	
-console.log('chartGroup width:   ', chartGroup);
-
-console.log('nodeGroup width:   ', nodeGroup);
-});
- 
 
 
 
