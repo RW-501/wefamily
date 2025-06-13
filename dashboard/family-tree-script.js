@@ -69,32 +69,36 @@ familyTree.addEventListener('click', () => {
 });
 
 
-zoomInButton.addEventListener('click', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  const zoomInButton = document.getElementById('zoom-in');
+  const zoomOutButton = document.getElementById('zoom-out');
 
-  console.log('???????????????????????????????   ');
+  if (zoomInButton && zoomOutButton) {
 
-//centerLayersOnScreen();
-centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
-centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
-	
-console.log('chartGroup width:   ', chartGroup);
+    zoomInButton.addEventListener('click', () => {
+      console.log('???????????????????????????????');
 
-console.log('nodeGroup width:   ', nodeGroup);
-});
- 
+      // Adjust the view to center the SVG groups
+      centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+      centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
 
-zoomOutButton.addEventListener('click', () => {
-            console.log('zoom.transform :', zoom.transform);
-	    const width = window.screen.width;
-       console.log('width :', width);
-       console.log('zoom :', zoom);
-       console.log('d3.zoomIdentity :', d3.zoomIdentity);
+      console.log('chartGroup width: ', chartGroup);
+      console.log('nodeGroup width: ', nodeGroup);
+    });
 
+    zoomOutButton.addEventListener('click', () => {
+      console.log('zoom.transform :', zoom?.transform);
+      const width = window.screen.width;
+      console.log('width :', width);
+      console.log('zoom :', zoom);
+      console.log('d3.zoomIdentity :', d3.zoomIdentity);
 
-	closeFullscreen();
+      closeFullscreen();
+    });
 
-
-	
+  } else {
+    console.warn('Zoom buttons not found in the DOM.');
+  }
 });
 
 
