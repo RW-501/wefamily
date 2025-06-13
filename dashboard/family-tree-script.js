@@ -116,6 +116,8 @@ function centerChartOnScreen() {
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
   smoothZoomTo(newScale);
+    console.log("zoomIn  :", newScale);
+
   const svg = d3.select("#family-tree-area svg");
 
 centerElementInSVG(svg);
@@ -124,6 +126,8 @@ centerElementInSVG(svg);
 
 function zoomOut() {
   const newScale = Math.max(currentScale / 1.2, 0.1); // Limit to min zoom
+      console.log("zoomOut  :", newScale);
+
   smoothZoomTo(newScale);
 
    centerLayersOnScreen();
@@ -153,7 +157,7 @@ function smoothZoomTo(newScale) {
 setTimeout(() => {
   document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
   document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
-}, 2000);
+}, 4000);
 
 
 
