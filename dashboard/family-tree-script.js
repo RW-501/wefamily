@@ -95,6 +95,52 @@ function smoothZoomTo(newScale) {
     centerChartOnScreen()
 }
 
+
+// Create the zoom function
+
+function applyZoom(scale) {
+  currentScale = scale;
+
+  if (!chartGroup) {
+    console.error(
+      "chartGroup is not defined. Ensure that it is properly initialized."
+    );
+    return;
+  }
+
+  // Update circle radius, text font size, image dimensions, stroke width
+  chartGroup.selectAll(".circle").attr("r", imageWidth / (2 * currentScale));
+  chartGroup.selectAll("text").attr("font-size", "1.2em" / currentScale);
+  chartGroup
+    .selectAll("image")
+    .attr("x", (d) => -imageWidth / (2 * currentScale))
+    .attr("y", (d) => -imageHeight / (2 * currentScale))
+    .attr("width", imageWidth / currentScale)
+    .attr("height", imageHeight / currentScale);
+  chartGroup.selectAll("path.link").attr("stroke-width", 2 / currentScale);
+
+  // Update path 'd' attribute
+  chartGroup.selectAll("path.link").attr("d", (d) => {
+    // Generate the updated path data using the link generator
+    const source = {
+      x: d.source.x * currentScale,
+      y: d.source.y * currentScale
+    };
+    const target = {
+      x: d.target.x * currentScale,
+      y: d.target.y * currentScale
+    };
+    return linkGenerator({ source, target });
+  });
+
+}
+
+
+
+
+
+
+
 setTimeout(() => {
   document.getElementById("zoom-in-tree").addEventListener("click", zoomIn);
   document.getElementById("zoom-out-tree").addEventListener("click", zoomOut);
@@ -467,51 +513,6 @@ function handleCollisions(nodes) {
     });
   });
 }
-
-// Create the zoom function
-
-function applyZoom(scale) {
-  currentScale = scale;
-
-  if (!chartGroup) {
-    console.error(
-      "chartGroup is not defined. Ensure that it is properly initialized."
-    );
-    return;
-  }
-
-  // Update circle radius, text font size, image dimensions, stroke width
-  chartGroup.selectAll(".circle").attr("r", imageWidth / (2 * currentScale));
-  chartGroup.selectAll("text").attr("font-size", "1.2em" / currentScale);
-  chartGroup
-    .selectAll("image")
-    .attr("x", (d) => -imageWidth / (2 * currentScale))
-    .attr("y", (d) => -imageHeight / (2 * currentScale))
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale);
-  chartGroup.selectAll("path.link").attr("stroke-width", 2 / currentScale);
-
-  // Update path 'd' attribute
-  chartGroup.selectAll("path.link").attr("d", (d) => {
-    // Generate the updated path data using the link generator
-    const source = {
-      x: d.source.x * currentScale,
-      y: d.source.y * currentScale
-    };
-    const target = {
-      x: d.target.x * currentScale,
-      y: d.target.y * currentScale
-    };
-    return linkGenerator({ source, target });
-  });
-
-  updateImageAttributes();
-}
-
-
-
-
-
 
 
 
