@@ -55,9 +55,9 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 const familyTree = document.getElementById('family-tree');
 // Add a zoom control UI
-const zoomControls = familyTree.querySelector('#zoom-controls');
-const zoomInButton = zoomControls.querySelector('#zoom-in-tree');
-const zoomOutButton = zoomControls.querySelector('#zoom-out-tree');
+const zoomControls = document.getElementById('zoom-controls');
+const zoomInButton = document.getElementById('zoom-in-tree');
+const zoomOutButton = document.getElementById('zoom-out-tree');
 
 
 
