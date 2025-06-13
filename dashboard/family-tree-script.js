@@ -103,24 +103,62 @@ function smoothZoomTo(newScale) {
 }
 
 function applyZoom(scale) {
+  console.log("=== APPLY ZOOM ===");
+  console.log("Scale:", scale);
+
   currentScale = scale;
 
-  // Optional: Adjust styles, but DO NOT re-scale positions or links!
+  // Log image details before
+  chartGroup.selectAll("image").each(function (d, i) {
+    console.log(`Before Zoom - Image ${i}`, {
+      x: -imageWidth / 2,
+      y: -imageHeight / 2,
+      width: imageWidth,
+      height: imageHeight
+    });
+  });
+
+  // Log link data before
+  chartGroup.selectAll("path.link").each(function (d, i) {
+    console.log(`Before Zoom - Link ${i}`, {
+      source: d.source,
+      target: d.target
+    });
+  });
+
+  // Update styles
   chartGroup.selectAll("text").attr("font-size", `${14 / scale}px`);
   chartGroup.selectAll("path.link").attr("stroke-width", `${2 / scale}px`);
   chartGroup.selectAll("circle").attr("r", imageWidth / (2 * scale));
+
   chartGroup.selectAll("image")
     .attr("x", -imageWidth / (2 * scale))
     .attr("y", -imageHeight / (2 * scale))
     .attr("width", imageWidth / scale)
-    .attr("height", imageHeight / scale);
+    .attr("height", imageHeight / scale)
+    .each(function (d, i) {
+      console.log(`After Zoom - Image ${i}`, {
+        x: -imageWidth / (2 * scale),
+        y: -imageHeight / (2 * scale),
+        width: imageWidth / scale,
+        height: imageHeight / scale
+      });
+    });
 
-  // ✅ Leave the `d` attribute alone, assuming it's already based on unscaled data
-  chartGroup.selectAll("path.link").attr("d", d => linkGenerator(d));
+  // Re-apply the original link paths
+  chartGroup.selectAll("path.link")
+    .attr("d", d => {
+      console.log(`After Zoom - Link`, {
+        source: d.source,
+        target: d.target
+      });
+      return linkGenerator(d);
+    });
+
+  console.log("=== END APPLY ZOOM ===");
 
   centerChartOnScreen();
 }
-
 
 
 
