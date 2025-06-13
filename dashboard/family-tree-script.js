@@ -52,46 +52,32 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 }
 
 // Call this function to center the layers
-
-function centerAndFitChart(chartGroup, svg) {
-  if (!chartGroup || !svg) {
-    console.error("chartGroup or svg is not defined.");
-    return;
-  }
-
+function centerAndFitChart(chartGroup, svgNode) {
   const bbox = chartGroup.node().getBBox();
-  console.log("📦 Chart Bounding Box:", bbox);
+  console.log("📦 bbox:", bbox);
 
-  const browserWidth = window.innerWidth;
-  const browserHeight = window.innerHeight;
+  const browserW = window.innerWidth;
+  const browserH = window.innerHeight;
 
-  console.log("🖥️ Browser Dimensions:", { browserWidth, browserHeight });
+  const scaleX = browserW / bbox.width;
+  const scaleY = browserH / bbox.height;
+  const optimal = Math.min(scaleX, scaleY, 1);
 
-  const scaleX = browserWidth / bbox.width;
-  const scaleY = browserHeight / bbox.height;
-  const optimalScale = Math.min(scaleX, scaleY, 1); // Avoid upscaling
+  const tx = (browserW / 2) - (bbox.x + bbox.width / 2) * optimal;
+  const ty = (browserH / 2) - (bbox.y + bbox.height / 2) * optimal;
 
-  console.log("🔍 Scale Factors:", { scaleX, scaleY, optimalScale });
+  console.log("➡️ translate:", { tx, ty });
+  console.log("🔍 scale:", optimal);
 
-  const translateX = (browserWidth - bbox.width * optimalScale) / 2 - bbox.x * optimalScale;
-  const translateY = (browserHeight - bbox.height * optimalScale) / 2 - bbox.y * optimalScale;
+  currentScale = optimal;
 
-  console.log("🧭 Translation:", { translateX, translateY });
+  d3.select(svgNode).transition()
+    .duration(750)
+    .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(optimal));
 
-  currentScale = optimalScale;
-
-  // Apply the transform using d3-zoom behavior
-  svg.transition().duration(750)
-    .call(
-      zoom.transform,
-      d3.zoomIdentity.translate(translateX, translateY).scale(optimalScale)
-    );
-
-  console.log("✅ Transform Applied:", {
-    scale: optimalScale,
-    transform: `translate(${translateX}, ${translateY}) scale(${optimalScale})`
-  });
+  console.log("🚀 Final transform", zoom);
 }
+
 
 
 
@@ -194,7 +180,13 @@ var nodes;
 
 
 setTimeout(() => {
-    const svg = d3.select("#family-tree-area svg");
+const svg = d3.select("#family-tree-area")
+  .append("svg")
+  .attr("preserveAspectRatio", "xMidYMid meet")
+  .attr("viewBox", `0 0 ${chartWidth} ${chartHeight}`)
+  .style("width", "100%")
+  .style("height", "100%");
+
   centerAndFitChart(chartGroup, svg);
         console.log('centerAndFitChart');
 
@@ -234,6 +226,8 @@ function generateFamilyTreeChart(familyData) {
   const svg = d3
     .select("#family-tree-area")
     .append("svg")
+      .attr("preserveAspectRatio", "xMidYMid meet")
+  .attr("viewBox", `0 0 ${chartWidth} ${chartHeight}`)
     .attr("width", chartWidth)
     .attr("height", chartHeight);
 
