@@ -39,43 +39,40 @@ familyTree.addEventListener('click', () => {
 });
 
 */
-function centerChartOnScreen() {
-        console.log('centerChartOnScreen');
 
+
+function initializeZoom() {
   const svg = d3.select("#family-tree-area svg");
-  const area = d3.select("#family-tree-area").node();
-  const group = chartGroup.node().getBBox();
 
-  const scale = currentScale;
-  const x = (area.clientWidth - group.width * scale) / 2 - group.x * scale;
-  const y = (area.clientHeight - group.height * scale) / 2 - group.y * scale;
+  zoom = d3.zoom()
+    .scaleExtent([0.1, 10])
+    .on("zoom", (event) => {
+      chartGroup.attr("transform", event.transform);
+      applyZoom(event.transform.k);
+    });
 
-  const transform = d3.zoomIdentity.translate(x, y).scale(scale);
-
-  svg.transition().duration(400).call(zoom.transform, transform);
+  svg.call(zoom);
 }
+
 
 
 function zoomIn() {
-  const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
+  const newScale = Math.min(currentScale * 1.2, 10);
   currentScale = newScale;
   smoothZoomTo(newScale);
-    console.log("zoomIn  :", newScale);
-
+  console.log("zoomIn:", newScale);
 }
 
 function zoomOut() {
-  const newScale = Math.max(currentScale / 1.2, 0.1); // Limit to min zoom
-      console.log("zoomOut  :", newScale);
+  const newScale = Math.max(currentScale / 1.2, 0.1);
   currentScale = newScale;
   smoothZoomTo(newScale);
-
+  console.log("zoomOut:", newScale);
 }
 
 function smoothZoomTo(newScale) {
   const svg = d3.select("#family-tree-area svg");
 
-  // Calculate center of viewport
   const viewport = d3.select("#family-tree-area").node().getBoundingClientRect();
   const centerX = viewport.width / 2;
   const centerY = viewport.height / 2;
@@ -85,57 +82,25 @@ function smoothZoomTo(newScale) {
     .scale(newScale)
     .translate(-centerX, -centerY);
 
-  svg
-    .transition()
-    .duration(500)
-    .call(zoom.transform, transform); // Apply with animation
-
-    applyZoom(newScale);
-
+  svg.transition().duration(500).call(zoom.transform, transform);
 }
-
-
-// Create the zoom function
 
 function applyZoom(scale) {
   currentScale = scale;
 
-  if (!chartGroup) {
-    console.error(
-      "chartGroup is not defined. Ensure that it is properly initialized."
-    );
-    return;
-  }
+  // Optional: Adjust styles, but DO NOT re-scale positions or links!
+  chartGroup.selectAll("text").attr("font-size", `${14 / scale}px`);
+  chartGroup.selectAll("path.link").attr("stroke-width", `${2 / scale}px`);
+  chartGroup.selectAll("circle").attr("r", imageWidth / (2 * scale));
+  chartGroup.selectAll("image")
+    .attr("x", -imageWidth / (2 * scale))
+    .attr("y", -imageHeight / (2 * scale))
+    .attr("width", imageWidth / scale)
+    .attr("height", imageHeight / scale);
 
-  // Update circle radius, text font size, image dimensions, stroke width
-  chartGroup.selectAll(".circle").attr("r", imageWidth / (2 * currentScale));
-  chartGroup.selectAll("text").attr("font-size", "1.2em" / currentScale);
-  chartGroup
-    .selectAll("image")
-    .attr("x", (d) => -imageWidth / (2 * currentScale))
-    .attr("y", (d) => -imageHeight / (2 * currentScale))
-    .attr("width", imageWidth / currentScale)
-    .attr("height", imageHeight / currentScale);
-  chartGroup.selectAll("path.link").attr("stroke-width", 2 / currentScale);
-
-  // Update path 'd' attribute
-  chartGroup.selectAll("path.link").attr("d", (d) => {
-    // Generate the updated path data using the link generator
-    const source = {
-      x: d.source.x * currentScale,
-      y: d.source.y * currentScale
-    };
-    const target = {
-      x: d.target.x * currentScale,
-      y: d.target.y * currentScale
-    };
-    return linkGenerator({ source, target });
-  });
-    centerChartOnScreen()
-
+  // ✅ Leave the `d` attribute alone, assuming it's already based on unscaled data
+  chartGroup.selectAll("path.link").attr("d", d => linkGenerator(d));
 }
-
-
 
 
 
