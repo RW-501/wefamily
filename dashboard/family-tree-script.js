@@ -65,10 +65,9 @@ familyTree.addEventListener('click', () => {
 */
 
 // Add a zoom control UI
-familyTree.addEventListener('DOMContentLoaded', () => {
-const zoomControls = document.getElementById('zoom-controls');
-const zoomInButton = document.getElementById('zoom-in');
-const zoomOutButton = document.getElementById('zoom-out');
+const zoomControls = familyTree.getElementById('zoom-controls');
+const zoomInButton = zoomControls.getElementById('zoom-in');
+const zoomOutButton = zoomControls.getElementById('zoom-out');
 
 
 zoomOutButton.addEventListener('click', () => {
@@ -97,7 +96,7 @@ console.log('chartGroup width:   ', chartGroup);
 
 console.log('nodeGroup width:   ', nodeGroup);
 });
- });
+ 
 
 
 
