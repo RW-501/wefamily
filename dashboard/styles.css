@@ -463,7 +463,22 @@ text-align: center;
         margin-right: 10px;
     }
 
-	
+	#zoom-controls button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#zoom-controls button:hover,
+#zoom-controls button:focus {
+  background-color: #0056b3;
+  outline: none;
+}
+
 
 #tree-details  select,
 		    input[type="text"],
@@ -907,6 +922,8 @@ html, body{
     width: auto;
     height: 800px;	
     overflow: hidden;
+  max-width: 100%;
+
 }
       .node {
             cursor: pointer;

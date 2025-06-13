@@ -173,25 +173,24 @@ function initializeFamilyTreeChart() {
       <button id="add-member" onclick="showAddMemberModal()">Add Family Member</button>
     </div>
 
-    <div id="family-tree" class="SECTION expandable-div">
-      <div>
-        <h2>Family Tree</h2>
-      </div>
-      <div class="space_J" id="zoom-controls">
-        <div>
-          <button id="export-button">Export as Image</button>
-        </div>
-        <div>
-          <button id="zoom-in">Zoom In</button>
-          <button id="zoom-out">Zoom Out</button>
-        </div>
-      </div>
-
-      <svg id="family-tree-area">
-
-      </svg>
-
+<div id="family-tree" class="SECTION expandable-div" role="region" aria-label="Family Tree Section">
+  <div>
+    <h2 tabindex="0">Family Tree</h2> <!-- Make heading focusable -->
+  </div>
+  <div class="space_J" id="zoom-controls" role="group" aria-label="Zoom and Export Controls">
+    <div>
+      <button id="export-button" aria-label="Export family tree as image">Export as Image</button>
     </div>
+    <div>
+      <button id="zoom-in" aria-label="Zoom in on family tree">Zoom In</button>
+      <button id="zoom-out" aria-label="Zoom out of family tree">Zoom Out</button>
+<button id="toggle-family-tree" aria-expanded="true" aria-controls="family-tree-area">Collapse Family Tree</button>
+    </div>
+  </div>
+  <svg id="family-tree-area" role="img" aria-describedby="family-tree-desc"></svg>
+  <span id="family-tree-desc" class="sr-only">Interactive family tree visualization area</span>
+</div>
+
 
     <div id="family-news" class="SECTION">
       <h2>Family Chat</h2>
