@@ -123,7 +123,7 @@ function applyZoom(scale) {
     .attr("stroke-width", `${2 / scale}px`)
     .attr("d", d => linkGenerator(d)); // Use original data, not scaled manually
 
-  //    centerChartOnScreen();
+    centerChartOnScreen();
 
 }
 
