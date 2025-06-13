@@ -51,7 +51,7 @@ console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight)
 
 // Add a zoom control UI
 const zoomControls = document.getElementById('zoom-controls');
-const zoomInButton = document.getElementById('zoom-inXXX');
+const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 
 
@@ -87,7 +87,7 @@ const familyTree = document.getElementById('family-tree');
 
 familyTree.addEventListener('click', () => {
 
-toggleFullscreen();
+//toggleFullscreen();
 	
 });
 
