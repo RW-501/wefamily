@@ -94,13 +94,7 @@ function smoothZoomTo(newScale) {
 
 
 function applyZoom(scale) {
-  console.log("applyZoom: scale =", scale);
-
-  chartGroup.selectAll("text")
-    .attr("font-size", `${14 / scale}px`);
-
-  chartGroup.selectAll("circle")
-    .attr("r", imageWidth / (2 * scale));
+  //console.log("applyZoom: scale =", scale);
 
   chartGroup.selectAll("image")
     .attr("x", -imageWidth / (2 * scale))
@@ -112,6 +106,12 @@ function applyZoom(scale) {
     .attr("stroke-width", `${2 / scale}px`)
     .attr("d", d => linkGenerator(d)); // Use original data, not scaled manually
 
+
+  chartGroup.selectAll("text")
+    .attr("font-size", `${14 / scale}px`);
+
+  chartGroup.selectAll("circle")
+    .attr("r", imageWidth / (2 * scale));
 
 }
 
@@ -446,7 +446,7 @@ function zoomed(event) {
   }
 
   currentScale = scale;
-  console.log("Zoomed - New Scale:", currentScale);
+  //console.log("Zoomed - New Scale:", currentScale);
 
   // Apply the new transform to the chartGroup
   chartGroup.attr("transform", transform);
