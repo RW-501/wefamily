@@ -363,6 +363,7 @@ labelGroups
       .style("fill", "black");
   });
 
+svg.node().appendChild(labelGroups.node());
 
   console.log("chartGroup transform:", chartGroup.attr("transform"));
 
