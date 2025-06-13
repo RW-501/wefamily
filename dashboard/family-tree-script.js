@@ -1,14 +1,14 @@
 
 /// works
-function centerElementInSVG(element, svg) {
+function centerElementInSVG(svg) {
         console.log('centerElementInSVG');
 
   const svgWidth = parseInt(svg.attr("width"));
   const svgHeight = parseInt(svg.attr("height"));
 
   if (!isNaN(svgWidth) && !isNaN(svgHeight)) {
-    const elementWidth = element.node().getBBox().width;
-    const elementHeight = element.node().getBBox().height;
+    const elementWidth = nodeGroup.node().getBBox().width;
+    const elementHeight = nodeGroup.node().getBBox().height;
 
     const translateX = (svgWidth - elementWidth) / 2;
     const translateY = (svgHeight - elementHeight) / 2;
@@ -116,14 +116,17 @@ function centerChartOnScreen() {
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
   smoothZoomTo(newScale);
+  const svg = d3.select("#family-tree-area svg");
 
-
+centerElementInSVG(svg);
 
 }
 
 function zoomOut() {
   const newScale = Math.max(currentScale / 1.2, 0.1); // Limit to min zoom
   smoothZoomTo(newScale);
+
+   centerLayersOnScreen();
 }
 
 function smoothZoomTo(newScale) {
