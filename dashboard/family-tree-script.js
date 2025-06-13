@@ -84,7 +84,7 @@ console.log('nodeGroup width:   ', nodeGroup);
 
 const familyTree = document.getElementById('family-tree');
 
-
+/*
 familyTree.addEventListener('click', () => {
   console.log('!!!!!!!!!!!!!!?   ');
 
@@ -101,7 +101,7 @@ function closeFullscreen() {
   var expandableDiv = document.getElementById("family-tree");
   expandableDiv.classList.remove("show");
 }
-
+*/
 
 
     // Create a group element to hold the links
