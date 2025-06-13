@@ -61,9 +61,6 @@ function zoomIn() {
   smoothZoomTo(newScale);
     console.log("zoomIn  :", newScale);
 
-
-    centerChartOnScreen()
-
 }
 
 function zoomOut() {
@@ -72,7 +69,6 @@ function zoomOut() {
 
   smoothZoomTo(newScale);
 
-    centerChartOnScreen()
 }
 
 function smoothZoomTo(newScale) {
