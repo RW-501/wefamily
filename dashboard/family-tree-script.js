@@ -18,65 +18,8 @@ function centerElementInSVG(svg) {
     }
   }
 }
-// Usage example for centering nodeGroup
-//centerElementInSVG(nodeGroup);
 
 
-function centerLayersOnScreen() {
-      console.log('centerLayersOnScreen');
-
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-
-  // Get the dimensions of the layers
-  const nodeGroupWidth = nodeGroup.node().getBBox().width;
-  const nodeGroupHeight = nodeGroup.node().getBBox().height;
-
-  const chartGroupWidth = chartGroup.node().getBBox().width;
-  const chartGroupHeight = chartGroup.node().getBBox().height;
-
-  // Calculate the translation for nodeGroup to center horizontally
-  const nodeGroupTranslateX = (screenWidth - nodeGroupWidth) / 2;
-  const nodeGroupTranslateY = (screenHeight - nodeGroupHeight) / 2;
-
-  // Calculate the translation for chartGroup to center horizontally
-  const chartGroupTranslateX = (screenWidth - chartGroupWidth) / 2;
-  const chartGroupTranslateY = (screenHeight - chartGroupHeight) / 2;
-
-	updateImageAttributes();
-console.log('XXXX nodeGroup width:', nodeGroupWidth, 'height:', nodeGroupHeight);
-
-  // Apply the translation to center the layers
-  nodeGroup.attr('transform', `translate(${nodeGroupTranslateX},${nodeGroupTranslateY})`);
-  chartGroup.attr('transform', `translate(${chartGroupTranslateX},${chartGroupTranslateY})`);
-}
-
-// Call this function to center the layers
-function centerAndFitChart(svgNode) {
-  const bbox = chartGroup.node().getBBox();
-  console.log("📦 bbox:", bbox);
-
-  const browserW = window.innerWidth;
-  const browserH = window.innerHeight;
-
-  const scaleX = browserW / bbox.width;
-  const scaleY = browserH / bbox.height;
-  const optimal = Math.min(scaleX, scaleY, 1);
-
-  const tx = (browserW / 2) - (bbox.x + bbox.width / 2) * optimal;
-  const ty = (browserH / 2) - (bbox.y + bbox.height / 2) * optimal;
-
-  console.log("➡️ translate:", { tx, ty });
-  console.log("🔍 scale:", optimal);
-
-  currentScale = optimal;
-
-  d3.select(svgNode).transition()
-    .duration(750)
-    .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(optimal));
-
-  console.log("🚀 Final transform", zoom);
-}
 
 
 
@@ -118,9 +61,8 @@ function zoomIn() {
   smoothZoomTo(newScale);
     console.log("zoomIn  :", newScale);
 
-  const svg = d3.select("#family-tree-area svg");
 
-centerElementInSVG(svg);
+    centerChartOnScreen()
 
 }
 
@@ -130,7 +72,7 @@ function zoomOut() {
 
   smoothZoomTo(newScale);
 
-   centerLayersOnScreen();
+    centerChartOnScreen()
 }
 
 function smoothZoomTo(newScale) {
