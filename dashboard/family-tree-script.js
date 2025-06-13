@@ -68,39 +68,42 @@ familyTree.addEventListener('click', () => {
 	
 });
 
-window.onload = () => {
-  console.log('window.onload ??????????????????????????');
 
-  const zoomInButton = document.getElementById('zoom-in');
-  const zoomOutButton = document.getElementById('zoom-out');
 
-  if (zoomInButton && zoomOutButton) {
-    zoomInButton.addEventListener('click', () => {
-      console.log('Zoom In Clicked ???????????????????????????????');
+  setTimeout(() => {
+    console.log('1-second delay completed ✅');
 
-      // Adjust the view to center the SVG groups
-      centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
-      centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
+    const zoomInButton = document.getElementById('zoom-in');
+    const zoomOutButton = document.getElementById('zoom-out');
 
-      console.log('chartGroup width: ', chartGroup);
-      console.log('nodeGroup width: ', nodeGroup);
-    });
+    if (zoomInButton && zoomOutButton) {
+      zoomInButton.addEventListener('click', () => {
+        console.log('Zoom In Clicked ✅');
 
-    zoomOutButton.addEventListener('click', () => {
-      console.log('Zoom Out Clicked');
-      console.log('zoom.transform :', zoom?.transform);
-      const width = window.screen.width;
-      console.log('width :', width);
-      console.log('zoom :', zoom);
-      console.log('d3.zoomIdentity :', d3.zoomIdentity);
+        // Adjust the view to center the SVG groups
+        centerElementInSVG(chartGroup, d3.select("#family-tree-area"));
+        centerElementInSVG(nodeGroup, d3.select("#family-tree-area"));
 
-      closeFullscreen();
-    });
+        console.log('chartGroup width: ', chartGroup);
+        console.log('nodeGroup width: ', nodeGroup);
+      });
 
-  } else {
-    console.warn('Zoom buttons not found in the DOM.');
-  }
-};
+      zoomOutButton.addEventListener('click', () => {
+        console.log('Zoom Out Clicked ✅');
+        console.log('zoom.transform :', zoom?.transform);
+        const width = window.screen.width;
+        console.log('width :', width);
+        console.log('zoom :', zoom);
+        console.log('d3.zoomIdentity :', d3.zoomIdentity);
+
+        closeFullscreen();
+      });
+
+    } else {
+      console.warn('Zoom buttons not found in the DOM ❌');
+    }
+
+  }, 1000); // 1-second delay
 
 
 
