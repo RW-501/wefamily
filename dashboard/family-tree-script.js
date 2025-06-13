@@ -115,7 +115,11 @@ function centerChartOnScreen() {
 
 function zoomIn() {
   const newScale = Math.min(currentScale * 1.2, 10); // Limit to max zoom
-  smoothZoomTo(newScale);
+ // smoothZoomTo(newScale);
+
+
+   centerAndFitChart(chartGroup, d3.select("svg"));
+
 }
 
 function zoomOut() {
@@ -182,8 +186,8 @@ var nodes;
 setTimeout(() => {
 
   
-  const svg = d3.select("#family-tree-area svg");
-  centerAndFitChart(svg);
+  centerAndFitChart(chartGroup, d3.select("svg"));
+
         console.log('centerAndFitChart');
 
 }, 5000);
